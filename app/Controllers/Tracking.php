@@ -4,8 +4,12 @@ namespace App\Controllers;
 
 class Tracking extends BaseController
 {
-    public function index(): string
+    public function index(string $page = 'Tracking')
     {
-        return view('welcome_message');
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('tracking/index')
+            . view('templates/footer');
     }
 }

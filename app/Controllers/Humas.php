@@ -4,8 +4,10 @@ namespace App\Controllers;
 
 class Humas extends BaseController
 {
-    public function index(): string
+    public function index(string $page = 'humas')
     {
-        return view('welcome_message');
+        $data['title'] = ucfirst($page);
+
+        return view('humas/index');
     }
 }

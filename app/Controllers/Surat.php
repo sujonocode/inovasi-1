@@ -4,8 +4,12 @@ namespace App\Controllers;
 
 class Surat extends BaseController
 {
-    public function index(): string
+    public function index(string $page = 'Surat')
     {
-        return view('welcome_message');
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('sbml/index')
+            . view('templates/footer');
     }
 }

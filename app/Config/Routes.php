@@ -14,12 +14,15 @@ use App\Controllers\Surat;
 use App\Controllers\Sbml;
 use App\Controllers\Tracking;
 
+$routes->get('/calendar', 'CalendarController::index');
+$routes->get('/fetch-events', 'CalendarController::fetchEvents');
+
 $routes->get('news', [News::class, 'index']);
 $routes->get('news/new', [News::class, 'new']); // Add this line
 $routes->get('news/(:segment)', [News::class, 'show']); // Add this line
 
-$routes->get('pages', [Pages::class, 'index']);
-$routes->get('(:segment)', [Pages::class, 'view']);
+// $routes->get('pages', [Pages::class, 'index']);
+// $routes->get('(:segment)', [Pages::class, 'view']);
 
 $routes->post('news', 'News::create');
 
@@ -43,3 +46,6 @@ $routes->get('tracking', [Tracking::class, 'index']);
 // $routes->get('tracking', [Tracking::class, 'index']);
 // $routes->get('tracking', [Tracking::class, 'index']);
 // $routes->get('tracking', [Tracking::class, 'index']);
+
+$routes->get('/calendar', 'CalendarController::index');
+$routes->get('/calendar/events', 'CalendarController::events');
