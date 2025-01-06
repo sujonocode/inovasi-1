@@ -71,52 +71,24 @@
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
-                events: [{
-                        title: 'Event 1',
-                        start: '2025-01-10',
-                        description: 'Description for Event 1'
-                    },
-                    {
-                        title: 'Event 2',
-                        start: '2025-01-10',
-                        description: 'Description for Event 2'
-                    },
-                    {
-                        title: 'Event 3',
-                        start: '2025-01-10',
-                        description: 'Description for Event 3'
-                    },
-                    {
-                        title: 'Event 4',
-                        start: '2025-01-10',
-                        description: 'Description for Event 4'
-                    },
-                    {
-                        title: 'Event 5',
-                        start: '2025-01-10',
-                        description: 'Description for Event 5'
-                    },
-                    {
-                        title: 'Event 6',
-                        start: '2025-01-12',
-                        description: 'Description for Event 6'
-                    },
-                    {
-                        title: 'Event 7',
-                        start: '2025-01-12',
-                        description: 'Description for Event 7'
-                    },
-                    {
-                        title: 'Event 8',
-                        start: '2025-01-12',
-                        description: 'Description for Event 8'
-                    },
-                    {
-                        title: 'Event 9',
-                        start: '2025-01-12',
-                        description: 'Description for Event 9'
-                    }
-                ],
+                // events: [{
+                //         title: 'Event 1',
+                //         date: '2025-01-01',
+                //         description: 'Description for Event 1'
+                //     },
+                //     {
+                //         title: 'Event 2',
+                //         date: '2025-01-02',
+                //         description: 'Description for Event 2'
+                //     },
+                // ],
+                events: <?= json_encode(array_map(function ($event) {
+                            return [
+                                'title' => $event['title'],
+                                'date' => $event['date'],
+                                'description' => $event['description'],
+                            ];
+                        }, $events)) ?>,
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',

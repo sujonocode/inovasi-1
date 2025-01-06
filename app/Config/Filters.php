@@ -67,16 +67,23 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, array<string, string>>>|array<string, list<string>>
      */
+    // public array $globals = [
+    //     'before' => [
+    //         // 'honeypot',
+    //         // 'csrf',
+    //         // 'invalidchars',
+    //     ],
+    //     'after' => [
+    //         // 'honeypot',
+    //         // 'secureheaders',
+    //     ],
+    // ];
+
     public array $globals = [
         'before' => [
-            // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
+            'csrf' => ['except' => ['webhook/*']], // Add CSRF filter
         ],
-        'after' => [
-            // 'honeypot',
-            // 'secureheaders',
-        ],
+        'after'  => [],
     ];
 
     /**
