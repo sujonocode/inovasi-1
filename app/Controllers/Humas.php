@@ -8,6 +8,9 @@ class Humas extends BaseController
     {
         $data['title'] = ucfirst($page);
 
-        return view('humas/index');
+        // return view('humas/index');
+        return view('templates/header', $data)
+        . view('humas/index')
+        . view('templates/footer');
     }
 }
