@@ -1,139 +1,189 @@
-<div class="container my-4">
-    <h2 class="text-center mb-4">Searchable Table</h2>
+<!DOCTYPE html>
+<html lang="en">
 
-    <!-- Search bar -->
-    <div class="input-group mb-3">
-        <input
-            type="text"
-            id="searchInput"
-            class="form-control"
-            placeholder="Search..."
-            aria-label="Search"
-            aria-describedby="search-button">
-        <button class="btn btn-primary" type="button" id="search-button">
-            Search
-        </button>
-    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inovasi</title>
 
-    <!-- Buttons for Check All / Uncheck All -->
-    <div class="mb-3">
-        <button class="btn btn-success" id="checkAllButton">Check All</button>
-        <button class="btn btn-danger" id="uncheckAllButton">Uncheck All</button>
-    </div>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Table -->
-    <table class="table table-bordered table-hover" style="text-align: center;">
-        <thead class="table-dark">
-            <tr>
-                <th>Checklist</th> <!-- Header checkbox -->
-                <th>ID</th>
-                <th>Nomor</th>
-                <th>Nama</th>
-                <th>Kategori</th>
-                <th>Download</i></th>
-            </tr>
-        </thead>
-        <tbody id="tableBody">
-            <tr>
-                <td><input type="checkbox" class="rowCheckbox"></td>
-                <td>0001</td>
-                <td>B-1768/18020/KP.320/2024</td>
-                <td>Ahmad Faisal</td>
-                <td>Surat Tugas</td>
-                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i< /a>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="rowCheckbox"></td>
-                <td>0002</td>
-                <td>B-1769/18020/KP.320/2024</td>
-                <td>John Dalton</td>
-                <td>Surat Cuti</td>
-                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i< /a>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="rowCheckbox"></td>
-                <td>0003</td>
-                <td>B-1770/18020/KP.320/2024</td>
-                <td>John Doe</td>
-                <td>Surat Cuti</td>
-                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i< /a>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="rowCheckbox"></td>
-                <td>0004</td>
-                <td>B-1768/18020/KP.320/2024</td>
-                <td>Ahmad Faisal</td>
-                <td>Surat Tugas</td>
-                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i< /a>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="rowCheckbox"></td>
-                <td>0005</td>
-                <td>B-1769/18020/KP.320/2024</td>
-                <td>John Dalton</td>
-                <td>Surat Cuti</td>
-                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i< /a>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="rowCheckbox"></td>
-                <td>0006</td>
-                <td>B-1770/18020/KP.320/2024</td>
-                <td>John Doe</td>
-                <td>Surat Cuti</td>
-                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i< /a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://kit.fontawesome.com/33529d3488.js" crossorigin="anonymous"></script>
 
-<!-- JavaScript -->
-<script>
-    // Search functionality
-    document.getElementById('searchInput').addEventListener('keyup', function() {
-        const filter = this.value.toLowerCase();
-        const rows = document.querySelectorAll('#tableBody tr');
-        rows.forEach(row => {
-            const cells = row.querySelectorAll('td');
-            const match = Array.from(cells).some(cell =>
-                cell.textContent.toLowerCase().includes(filter)
-            );
-            row.style.display = match ? '' : 'none';
-        });
-    });
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            padding-top: 60px;
+            /* Adjusted padding for better spacing after fixed navbar */
+        }
 
-    // Check All / Uncheck All for filtered rows
-    const rowCheckboxes = document.querySelectorAll('.rowCheckbox');
-    const checkAllButton = document.getElementById('checkAllButton');
-    const uncheckAllButton = document.getElementById('uncheckAllButton');
+        .hero {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
 
-    // "Check All" button for visible rows
-    checkAllButton.addEventListener('click', function() {
-        const rows = document.querySelectorAll('#tableBody tr');
-        rows.forEach(row => {
-            if (row.style.display !== 'none') { // Only check visible rows
-                const checkbox = row.querySelector('.rowCheckbox');
-                checkbox.checked = true;
-            }
-        });
-    });
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
 
-    // "Uncheck All" button for visible rows
-    uncheckAllButton.addEventListener('click', function() {
-        const rows = document.querySelectorAll('#tableBody tr');
-        rows.forEach(row => {
-            if (row.style.display !== 'none') { // Only uncheck visible rows
-                const checkbox = row.querySelector('.rowCheckbox');
-                checkbox.checked = false;
-            }
-        });
-    });
-</script>
+        .hero p {
+            font-size: 1.2rem;
+        }
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        .features .icon-box {
+            text-align: center;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .features .icon-box i {
+            font-size: 3rem;
+            color: #2575fc;
+        }
+
+        .features .icon-box:hover {
+            transform: translateY(-10px);
+            /* Hover effect for features */
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: #6a11cb;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Ensure sections have clear spacing */
+        .section-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">1KnowFast-SI</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#features">Fitur</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">Tentang Kami</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Kontak</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>BPS Kabupaten Tanggamus</h1>
+            <p>Apa misi kita? Data akurat untuk rakyat!</p>
+            <a href="#features" class="btn btn-primary btn-lg">Jelajahi Fitur</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Fitur Kami</h2>
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-3 col-md-6">
+                    <a href="/surat" class="text-decoration-none text-dark">
+                        <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
+                            <i class="fas fa-file-circle-plus fa-3x"></i>
+                            <h4 class="mt-3">Generate Surat</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <a href="/tracking" class="text-decoration-none text-dark">
+                        <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
+                            <i class="fas fa-list-ol fa-3x"></i>
+                            <h4 class="mt-3">Penomoran Surat</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-4">Tentang Kami</h2>
+            <p class="text-center section-subtitle">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi enim tortor, auctor nec tellus sed, pulvinar tincidunt ex. Quisque sed blandit nunc.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-4">Hubungi Kami</h2>
+            <form>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <input type="text" class="form-control" placeholder="Nama" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <input type="email" class="form-control" placeholder="Email" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" rows="5" placeholder="Pesan" required></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025. Made with
+                <img width="20px" height="20px" alt="love" src="https://img.icons8.com/color/20/000000/filled-like.png">
+                by Tim Inovasi BPS Kabupaten Tanggamus
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -3,7 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\ScheduleModel;
-use CodeIgniter\Controller;
+use DateTime;
+use DateTimeZone;
 
 class Humas extends BaseController
 {
@@ -35,13 +36,102 @@ class Humas extends BaseController
     public function store()
     {
         $model = new ScheduleModel();
-        $model->save([
+
+        // Validate and save the data
+        $data = [
             'title' => $this->request->getPost('title'),
             'date' => $this->request->getPost('date'),
             'description' => $this->request->getPost('description'),
+        ];
+
+        if ($model->save($data)) {
+            // Schedule added successfully. Now send the notification.
+            $this->sendNotification();
+
+            // Redirect with success message
+            return redirect()->to('/humas/manage')->with('success', 'Schedule created and notification sent.');
+        }
+
+        // Handle failure case
+        return redirect()->back()->withInput()->with('error', 'Failed to create the schedule.');
+    }
+
+    // Convert Unix timestamp to human-readable date (GMT +7)
+    function unixToHuman($unixTimestamp)
+    {
+        $timezone = new DateTimeZone('Asia/Jakarta'); // GMT+7
+        $date = new DateTime('@' . $unixTimestamp); // Create DateTime from timestamp
+        $date->setTimezone($timezone); // Set to GMT+7 timezone
+        return $date->format('Y-m-d H:i:s'); // Format the date as needed
+    }
+
+    // Convert human-readable date to Unix timestamp (GMT +7)
+    function humanToUnix($humanDate)
+    {
+        $timezone = new DateTimeZone('Asia/Jakarta'); // GMT+7
+        $date = new DateTime($humanDate, $timezone); // Create DateTime from human date
+        return $date->getTimestamp(); // Get Unix timestamp
+    }
+
+    private function sendNotification()
+    {
+        $model = new ScheduleModel();
+
+        // Validate and save the data
+        $data = [
+            'title' => $this->request->getPost('title'),
+            'date' => $this->request->getPost('date'),
+            'description' => $this->request->getPost('description'),
+        ];
+
+        $dateHuman = $data['date'] . ' ' . '13:46:00';
+        $dateUnix = $this->humanToUnix($dateHuman);
+
+        // // Convert Unix to human-readable date
+        // echo "Human Date: " . $this->unixToHuman($data['date']); // Output: Human Date: 2022-11-03 07:00:00
+
+        // // Convert human-readable date to Unix
+        // $humanDate = '2022-11-03 07:00:00';
+        // echo "Unix Timestamp: " . $this->humanToUnix($humanDate); // Output: Unix Timestamp: 1667433600
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => [
+                'target' => '082228769126',
+                'message' =>
+                'A new schedule has been added!' . '
+                    ' . 'Nama   : ' . $data['title'] . '
+                    ' . 'Tanggal: ' . $dateHuman . '
+                    ' . 'Tanggal: ' . $dateUnix . '
+                    ' . 'Ket    : ' . $data['description'],
+                'schedule' => $dateUnix,
+                'countryCode' => '62',
+            ],
+            CURLOPT_HTTPHEADER => [
+                'Authorization: CczZN35pLJ6yvpDA9GFH', // Replace TOKEN with your actual token
+            ],
         ]);
 
-        return redirect()->to('/humas/manage');
+        $response = curl_exec($curl);
+        $error = curl_error($curl);
+
+        curl_close($curl);
+
+        // Log response or handle errors
+        if ($response === false) {
+            log_message('error', "Notification failed: $error");
+        } else {
+            log_message('info', "Notification sent: $response");
+        }
     }
 
     public function edit($id)

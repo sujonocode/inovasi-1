@@ -28,9 +28,6 @@ $routes->post('news', 'News::create');
 
 // Features
 $routes->get('humas', [Humas::class, 'index']);
-// $routes->get('humas', [Humas::class, 'index']);
-// $routes->get('humas', [Humas::class, 'index']);
-// $routes->get('humas', [Humas::class, 'index']);
 $routes->get('humas/manage', 'Humas::manage');
 $routes->get('/humas/create', 'Humas::create');
 $routes->post('/humas/store', 'Humas::store');
@@ -39,9 +36,12 @@ $routes->post('/humas/update/(:num)', 'Humas::update/$1');
 $routes->get('/humas/delete/(:num)', 'Humas::delete/$1');
 
 $routes->get('surat', [Surat::class, 'index']);
-// $routes->get('surat', [Surat::class, 'index']);
-// $routes->get('surat', [Surat::class, 'index']);
-// $routes->get('surat', [Surat::class, 'index']);
+$routes->get('surat/manage', 'Surat::manage');
+$routes->get('/surat/create', 'Surat::create');
+$routes->post('/surat/store', 'Surat::store');
+$routes->get('/surat/edit/(:num)', 'Surat::edit/$1');
+$routes->post('/surat/update/(:num)', 'Surat::update/$1');
+$routes->get('/surat/delete/(:num)', 'Surat::delete/$1');
 
 $routes->get('sbml', [Sbml::class, 'index']);
 // $routes->get('sbml', [Sbml::class, 'index']);
