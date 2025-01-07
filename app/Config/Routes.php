@@ -31,12 +31,12 @@ $routes->get('humas', [Humas::class, 'index']);
 // $routes->get('humas', [Humas::class, 'index']);
 // $routes->get('humas', [Humas::class, 'index']);
 // $routes->get('humas', [Humas::class, 'index']);
-$routes->get('/schedule', 'Schedule::index');
-$routes->get('/schedule/create', 'Schedule::create');
-$routes->post('/schedule/store', 'Schedule::store');
-$routes->get('/schedule/edit/(:num)', 'Schedule::edit/$1');
-$routes->post('/schedule/update/(:num)', 'Schedule::update/$1');
-$routes->get('/schedule/delete/(:num)', 'Schedule::delete/$1');
+$routes->get('humas/manage', 'Humas::manage');
+$routes->get('/humas/create', 'Humas::create');
+$routes->post('/humas/store', 'Humas::store');
+$routes->get('/humas/edit/(:num)', 'Humas::edit/$1');
+$routes->post('/humas/update/(:num)', 'Humas::update/$1');
+$routes->get('/humas/delete/(:num)', 'Humas::delete/$1');
 
 $routes->get('surat', [Surat::class, 'index']);
 // $routes->get('surat', [Surat::class, 'index']);
