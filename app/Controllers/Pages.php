@@ -25,4 +25,15 @@ class Pages extends BaseController
             . view('pages/' . $page)
             . view('templates/footer');
     }
+
+    public function letter()
+    {
+        $data = [
+            'title' => 'Surat'
+        ];
+
+        echo view('layout/header', $data);
+        echo view('pages/letter');
+        echo view('layout/footer');
+    }
 }

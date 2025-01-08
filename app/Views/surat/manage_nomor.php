@@ -41,7 +41,7 @@
     </div>
 <?php endif; ?>
 
-<a href="/surat/create">Add New Schedule</a>
+<a href="/surat/create_nomor">Add New Schedule</a>
 
 <table border="1" cellpadding="10">
     <thead>
@@ -55,23 +55,23 @@
         </tr>
     </thead>
     <tbody>
-        <?php if (!empty($surats)): ?>
-            <?php foreach ($surats as $surat): ?>
+        <?php if (!empty($surat_nomors)): ?>
+            <?php foreach ($surat_nomors as $surat_nomor): ?>
                 <tr>
-                    <td><?= $surat['id'] ?></td>
-                    <td><?= $surat['nomor'] ?></td>
-                    <td><?= $surat['title'] ?></td>
-                    <td><?= $surat['date'] ?></td>
-                    <td><?= $surat['description'] ?></td>
+                    <td><?= $surat_nomor['id'] ?></td>
+                    <td><?= $surat_nomor['nomor'] ?></td>
+                    <td><?= $surat_nomor['title'] ?></td>
+                    <td><?= $surat_nomor['date'] ?></td>
+                    <td><?= $surat_nomor['description'] ?></td>
                     <td>
-                        <a href="/surat/edit/<?= $surat['id'] ?>">Edit</a> |
-                        <a href="/surat/delete/<?= $surat['id'] ?>" onclick="return confirm('Are you sure you want to delete this surat?');">Delete</a>
+                        <a href="/surat/edit_nomor/<?= $surat_nomor['id'] ?>">Edit</a> |
+                        <a href="/surat/delete_nomor/<?= $surat_nomor['id'] ?>" onclick="return confirm('Are you sure you want to delete this surat_nomor?');">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
             <tr>
-                <td colspan="5" style="text-align: center; font-weight: bold;">No surat available.</td>
+                <td colspan="5" style="text-align: center; font-weight: bold;">No surat_nomor available.</td>
             </tr>
         <?php endif; ?>
     </tbody>
@@ -138,7 +138,7 @@
                 <td>B-1768/18020/KP.320/2024</td>
                 <td>Ahmad Faisal</td>
                 <td>Surat Tugas</td>
-                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i< /a>
+                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i></a>
                 </td>
             </tr>
             <tr>
@@ -147,7 +147,7 @@
                 <td>B-1769/18020/KP.320/2024</td>
                 <td>John Dalton</td>
                 <td>Surat Cuti</td>
-                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i< /a>
+                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i></a>
                 </td>
             </tr>
             <tr>
@@ -156,7 +156,7 @@
                 <td>B-1770/18020/KP.320/2024</td>
                 <td>John Doe</td>
                 <td>Surat Cuti</td>
-                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i< /a>
+                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i></a>
                 </td>
             </tr>
             <tr>
@@ -165,7 +165,7 @@
                 <td>B-1768/18020/KP.320/2024</td>
                 <td>Ahmad Faisal</td>
                 <td>Surat Tugas</td>
-                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i< /a>
+                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i></a>
                 </td>
             </tr>
             <tr>
@@ -174,7 +174,7 @@
                 <td>B-1769/18020/KP.320/2024</td>
                 <td>John Dalton</td>
                 <td>Surat Cuti</td>
-                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i< /a>
+                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i></a>
                 </td>
             </tr>
             <tr>
@@ -183,7 +183,7 @@
                 <td>B-1770/18020/KP.320/2024</td>
                 <td>John Doe</td>
                 <td>Surat Cuti</td>
-                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i< /a>
+                <td><a href="<?= site_url('generate-report') ?>"><i class="fa-solid fa-download"></i></a>
                 </td>
             </tr>
         </tbody>

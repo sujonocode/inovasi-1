@@ -84,7 +84,7 @@ class Humas extends BaseController
             'description' => $this->request->getPost('description'),
         ];
 
-        $dateHuman = $data['date'] . ' ' . '13:46:00';
+        $dateHuman = $data['date'] . ' ' . '11:30:00';
         $dateUnix = $this->humanToUnix($dateHuman);
 
         // // Convert Unix to human-readable date
