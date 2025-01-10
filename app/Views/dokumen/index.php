@@ -11,6 +11,7 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://kit.fontawesome.com/33529d3488.js" crossorigin="anonymous"></script>
 
     <!-- Custom CSS -->
     <style>
@@ -115,39 +116,30 @@
     <section id="features" class="features py-5">
         <div class="container">
             <h2 class="section-title text-center mb-5">Fitur Kami</h2>
-            <div class="row g-4">
+            <div class="row g-4 justify-content-center">
                 <div class="col-lg-3 col-md-6">
-                    <a href="/dokumen" class="text-decoration-none text-dark">
+                    <a href="/dokumen/surat" class="text-decoration-none text-dark">
                         <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
-                            <i class="fas fa-file-contract fa-3x"></i>
+                            <i class="fas fa-list-ol fa-3x"></i>
                             <h4 class="mt-3">Surat</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                         </div>
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <a href="/humas" class="text-decoration-none text-dark">
+                    <a href="/dokumen/sk" class="text-decoration-none text-dark">
                         <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
-                            <i class="fas fa-map-location-dot fa-3x"></i>
-                            <h4 class="mt-3">Humas</h4>
+                            <i class="fas fa-list-ol fa-3x"></i>
+                            <h4 class="mt-3">SK</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                         </div>
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <a href="/kendala" class="text-decoration-none text-dark">
+                    <a href="/dokumen/kontrak" class="text-decoration-none text-dark">
                         <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
-                            <i class="fas fa-calendar-days fa-3x"></i>
-                            <h4 class="mt-3">Kendala Lapangan</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <a href="/sbml" class="text-decoration-none text-dark">
-                        <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
-                            <i class="fas fa-filter-circle-dollar fa-3x"></i>
-                            <h4 class="mt-3">SBML</h4>
+                            <i class="fas fa-list-ol fa-3x"></i>
+                            <h4 class="mt-3">Kontrak</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                         </div>
                     </a>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit surat</title>
+    <title>Edit Surat</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -39,18 +39,14 @@
         <form action="/surat/update/<?= $surat['id'] ?>" method="POST">
             <?= csrf_field() ?> <!-- This will automatically generate the hidden CSRF token field -->
             <!-- Your form fields go here -->
-            <label for="tanggal">Tanggal:</label>
-            <input type="date" name="tanggal" id="tanggal" value="<?= $surat['tanggal'] ?>" required><br>
-            <label for="alamat">Alamat/tujuan:</label>
-            <input type="text" name="alamat" id="alamat" value="<?= $surat['alamat'] ?>" required><br>
-            <label for="ringkasan">Ringkasan isi:</label>
-            <input type="text" name="ringkasan" id="ringkasan" value="<?= $surat['ringkasan'] ?>" required><br>
-            <label for="pert_dahulu">Pertalian dengan nomor (terdahulu):</label>
-            <input type="text" name="pert_dahulu" id="pert_dahulu" value="<?= $surat['pert_dahulu'] ?>" required><br>
-            <label for="pert_berikut">Pertalian dengan nomor (berikut):</label>
-            <input type="text" name="pert_berikut" id="pert_berikut" value="<?= $surat['pert_berikut'] ?>" required><br>
-            <label for="catatan">Catatan:</label>
-            <textarea name="catatan" id="catatan" required><?= $surat['catatan'] ?></textarea><br>
+            <label for="title">Nomor:</label>
+            <input type="text" name="nomor" value="<?= $surat['nomor'] ?>" required><br>
+            <label for="title">Title:</label>
+            <input type="text" name="title" value="<?= $surat['title'] ?>" required><br>
+            <label for="date">Date:</label>
+            <input type="date" name="date" value="<?= $surat['date'] ?>" required><br>
+            <label for="description">Description:</label>
+            <textarea name="description"><?= $surat['description'] ?></textarea><br>
 
             <button type="submit">Update Surat</button>
         </form>

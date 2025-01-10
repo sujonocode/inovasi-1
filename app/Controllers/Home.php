@@ -8,7 +8,7 @@ class Home extends BaseController
 {
     public function index()
     {
-        return view('pages/home');
+        return view('index');
     }
 
     public function view(string $page = 'home')

@@ -1,5 +1,3 @@
-<h1>Schedule List</h1>
-
 <!-- Display success or error messages in a pop-up -->
 <?php if (session()->getFlashdata('error')): ?>
     <!-- Error Pop-up Modal -->
@@ -41,37 +39,37 @@
     </div>
 <?php endif; ?>
 
-<a href="/surat/create_nomor">Add New Schedule</a>
+<a href="/kontrak/create">Tambah Kontrak</a>
 
 <table border="1" cellpadding="10">
     <thead>
         <tr>
             <th>ID</th>
+            <th>Tanggal</th>
             <th>Nomor</th>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Actions</th>
+            <th>Uraian Kontrak</th>
+            <th>Catatan</th>
+            <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
-        <?php if (!empty($surat_nomors)): ?>
-            <?php foreach ($surat_nomors as $surat_nomor): ?>
+        <?php if (!empty($kontraks)): ?>
+            <?php foreach ($kontraks as $kontrak): ?>
                 <tr>
-                    <td><?= $surat_nomor['id'] ?></td>
-                    <td><?= $surat_nomor['nomor'] ?></td>
-                    <td><?= $surat_nomor['title'] ?></td>
-                    <td><?= $surat_nomor['date'] ?></td>
-                    <td><?= $surat_nomor['description'] ?></td>
+                    <td><?= $kontrak['id'] ?></td>
+                    <td><?= $kontrak['tanggal'] ?></td>
+                    <td><?= $kontrak['nomor'] ?></td>
+                    <td><?= $kontrak['uraian'] ?></td>
+                    <td><?= $kontrak['catatan'] ?></td>
                     <td>
-                        <a href="/surat/edit_nomor/<?= $surat_nomor['id'] ?>">Edit</a> |
-                        <a href="/surat/delete_nomor/<?= $surat_nomor['id'] ?>" onclick="return confirm('Are you sure you want to delete this surat_nomor?');">Delete</a>
+                        <a href="/surat/edit/<?= $kontrak['id'] ?>">Edit</a> |
+                        <a href="/surat/delete/<?= $kontrak['id'] ?>" onclick="return confirm('Are you sure you want to delete this kontrak?');">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
             <tr>
-                <td colspan="5" style="text-align: center; font-weight: bold;">No surat_nomor available.</td>
+                <td colspan="5" style="text-align: center; font-weight: bold;">No kontrak available.</td>
             </tr>
         <?php endif; ?>
     </tbody>

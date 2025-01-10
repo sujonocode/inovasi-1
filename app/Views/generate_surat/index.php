@@ -118,7 +118,16 @@
             <h2 class="section-title text-center mb-5">Fitur Kami</h2>
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-3 col-md-6">
-                    <a href="/surat/manage_nomor" class="text-decoration-none text-dark">
+                    <a href="/surat" class="text-decoration-none text-dark">
+                        <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
+                            <i class="fas fa-file-circle-plus fa-3x"></i>
+                            <h4 class="mt-3">Generate Surat</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <a href="/tracking" class="text-decoration-none text-dark">
                         <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
                             <i class="fas fa-list-ol fa-3x"></i>
                             <h4 class="mt-3">Penomoran Surat</h4>

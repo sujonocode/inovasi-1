@@ -2,26 +2,32 @@
 <html>
 
 <head>
-    <title>Add Surat</title>
+    <title>Surat</title>
 </head>
 
 <body>
-    <h1>Add Surat</h1>
+    <h1>Tambah Surat</h1>
     <form action="/surat/store" method="post">
-        <?= csrf_field() ?> <!-- Add this line -->
-        <label>Nomor:</label>
-        <input type="text" name="nomor" required>
+        <?= csrf_field() ?>
+        <label for="tanggal">Tanggal:</label>
+        <input type="date" name="tanggal" id="tanggal" required>
         <br>
-        <label>Title:</label>
-        <input type="text" name="title" required>
+        <label for="alamat">Alamat/Tujuan:</label>
+        <input type="text" name="alamat" id="alamat" required>
         <br>
-        <label>Date:</label>
-        <input type="date" name="date" required>
+        <label for="ringkasan">Ringkasan isi:</label>
+        <input type="text" name="ringkasan" id="ringkasan" required>
         <br>
-        <label>Description:</label>
-        <textarea name="description"></textarea>
+        <label for="pert_dahulu">Pertalian dengan nomor (terdahulu):</label>
+        <input type="text" name="pert_dahulu" id="pert_dahulu" required>
         <br>
-        <button type="submit">Save</button>
+        <label for="pert_berikut">Pertalian dengan nomor (berikut):</label>
+        <input type="text" name="pert_berikut" id="pert_berikut" required>
+        <br>
+        <label for="catatan">Catatan:</label>
+        <textarea name="catatan" id="catatan" required></textarea>
+        <br>
+        <button type="submit">Simpan</button>
     </form>
 </body>
 

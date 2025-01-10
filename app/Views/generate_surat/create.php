@@ -7,7 +7,7 @@
 
 <body>
     <h1>Add Surat</h1>
-    <form action="/surat/store_nomor" method="post">
+    <form action="/surat/store" method="post">
         <?= csrf_field() ?> <!-- Add this line -->
         <label>Nomor:</label>
         <input type="text" name="nomor" required>

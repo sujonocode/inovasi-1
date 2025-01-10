@@ -115,39 +115,48 @@
     <section id="features" class="features py-5">
         <div class="container">
             <h2 class="section-title text-center mb-5">Fitur Kami</h2>
-            <div class="row g-4">
+            <div class="row g-4 justify-content-center">
                 <div class="col-lg-3 col-md-6">
                     <a href="/dokumen" class="text-decoration-none text-dark">
                         <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
                             <i class="fas fa-file-contract fa-3x"></i>
-                            <h4 class="mt-3">Surat</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <h4 class="mt-3">Manajemen Dokumen</h4>
+                            <p>Surat, SK, dan Kontrak.</p>
                         </div>
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <a href="/humas" class="text-decoration-none text-dark">
                         <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
-                            <i class="fas fa-map-location-dot fa-3x"></i>
-                            <h4 class="mt-3">Humas</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <a href="/kendala" class="text-decoration-none text-dark">
-                        <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
                             <i class="fas fa-calendar-days fa-3x"></i>
-                            <h4 class="mt-3">Kendala Lapangan</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <h4 class="mt-3">Humas</h4>
+                            <p>Reminder (pengingat) membuat dan mengunggah konten humas.</p>
                         </div>
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <a href="/sbml" class="text-decoration-none text-dark">
+                    <a href="/#" class="text-decoration-none text-dark">
+                        <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
+                            <i class="fas fa-list-check fa-3x"></i>
+                            <h4 class="mt-3">Kendala Lapangan</h4>
+                            <p>Pengumpulan kendala selama melaksanakan tugas di lapangan.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <a href="/#" class="text-decoration-none text-dark">
                         <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
                             <i class="fas fa-filter-circle-dollar fa-3x"></i>
                             <h4 class="mt-3">SBML</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <a href="/#" class="text-decoration-none text-dark">
+                        <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
+                            <i class="fas fa-map-location-dot fa-3x"></i>
+                            <h4 class="mt-3">Tracking</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                         </div>
                     </a>

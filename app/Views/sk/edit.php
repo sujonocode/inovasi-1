@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit surat</title>
+    <title>Edit sk</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
-    <h1>Edit Surat</h1>
+    <h1>Edit SK</h1>
 
     <!-- Display error pop-up if an error message is passed -->
     <?php if (isset($error)): ?>
@@ -34,25 +34,21 @@
         </div>
     <?php endif; ?>
 
-    <!-- Check if surat data exists and render the edit form -->
-    <?php if (isset($surat)): ?>
-        <form action="/surat/update/<?= $surat['id'] ?>" method="POST">
+    <!-- Check if sk data exists and render the edit form -->
+    <?php if (isset($sk)): ?>
+        <form action="/sk/update/<?= $sk['id'] ?>" method="POST">
             <?= csrf_field() ?> <!-- This will automatically generate the hidden CSRF token field -->
             <!-- Your form fields go here -->
+            <label for="nomor">Nomor:</label>
+            <input type="text" name="nomor" id="nomor" value="<?= $sk['nomor'] ?>" required><br>
             <label for="tanggal">Tanggal:</label>
-            <input type="date" name="tanggal" id="tanggal" value="<?= $surat['tanggal'] ?>" required><br>
-            <label for="alamat">Alamat/tujuan:</label>
-            <input type="text" name="alamat" id="alamat" value="<?= $surat['alamat'] ?>" required><br>
-            <label for="ringkasan">Ringkasan isi:</label>
-            <input type="text" name="ringkasan" id="ringkasan" value="<?= $surat['ringkasan'] ?>" required><br>
-            <label for="pert_dahulu">Pertalian dengan nomor (terdahulu):</label>
-            <input type="text" name="pert_dahulu" id="pert_dahulu" value="<?= $surat['pert_dahulu'] ?>" required><br>
-            <label for="pert_berikut">Pertalian dengan nomor (berikut):</label>
-            <input type="text" name="pert_berikut" id="pert_berikut" value="<?= $surat['pert_berikut'] ?>" required><br>
+            <input type="date" name="tanggal" id="tanggal" value="<?= $sk['tanggal'] ?>" required><br>
+            <label for="perihal">Perihal:</label>
+            <input type="text" name="perihal" id="perihal" value="<?= $sk['perihal'] ?>" required><br>
             <label for="catatan">Catatan:</label>
-            <textarea name="catatan" id="catatan" required><?= $surat['catatan'] ?></textarea><br>
+            <textarea name="catatan" id="catatan" required><?= $sk['catatan'] ?></textarea><br>
 
-            <button type="submit">Update Surat</button>
+            <button type="submit">Update SK</button>
         </form>
 
     <?php endif; ?>

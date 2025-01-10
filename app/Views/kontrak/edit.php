@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit surat_nomor</title>
+    <title>Edit kontrak</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
-    <h1>Edit surat_nomor</h1>
+    <h1>Edit Kontrak</h1>
 
     <!-- Display error pop-up if an error message is passed -->
     <?php if (isset($error)): ?>
@@ -34,21 +34,21 @@
         </div>
     <?php endif; ?>
 
-    <!-- Check if surat_nomor data exists and render the edit form -->
-    <?php if (isset($surat_nomor)): ?>
-        <form action="/surat/update_nomor/<?= $surat_nomor['id'] ?>" method="POST">
+    <!-- Check if kontrak data exists and render the edit form -->
+    <?php if (isset($kontrak)): ?>
+        <form action="/kontrak/update/<?= $kontrak['id'] ?>" method="POST">
             <?= csrf_field() ?> <!-- This will automatically generate the hidden CSRF token field -->
             <!-- Your form fields go here -->
-            <label for="title">Nomor:</label>
-            <input type="text" name="nomor" value="<?= $surat_nomor['nomor'] ?>" required><br>
-            <label for="title">Title:</label>
-            <input type="text" name="title" value="<?= $surat_nomor['title'] ?>" required><br>
-            <label for="date">Date:</label>
-            <input type="date" name="date" value="<?= $surat_nomor['date'] ?>" required><br>
-            <label for="description">Description:</label>
-            <textarea name="description"><?= $surat_nomor['description'] ?></textarea><br>
+            <label for="tanggal">Tanggal:</label>
+            <input type="date" name="tanggal" id="tanggal" value="<?= $kontrak['tanggal'] ?>" required><br>
+            <label for="nomor">Nomor:</label>
+            <input type="text" name="nomor" id="nomor" value="<?= $kontrak['nomor'] ?>" required><br>
+            <label for="uraian">Uraian:</label>
+            <textarea name="uraian" id="uraian" required><?= $kontrak['uraian'] ?></textarea><br>
+            <label for="catatan">Catatan:</label>
+            <textarea name="catatan" id="catatan" required><?= $kontrak['catatan'] ?></textarea><br>
 
-            <button type="submit">Update surat_nomor</button>
+            <button type="submit">Update Kontrak</button>
         </form>
 
     <?php endif; ?>

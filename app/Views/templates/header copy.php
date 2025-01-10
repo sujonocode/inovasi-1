@@ -22,23 +22,12 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
     <!-- Custom CSS -->
     <style>
-        /* General Body Styles */
         body {
             font-family: 'Arial', sans-serif;
             padding-top: 60px;
-            /* Spacing for fixed navbar */
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+            /* Adjusted padding for better spacing after fixed navbar */
         }
 
-        html,
-        body {
-            height: 100%;
-        }
-
-        /* Hero Section */
         .hero {
             background: linear-gradient(to right, #6a11cb, #2575fc);
             color: white;
@@ -55,7 +44,6 @@
             font-size: 1.2rem;
         }
 
-        /* Features Section */
         .features .icon-box {
             text-align: center;
             padding: 25px;
@@ -71,12 +59,10 @@
 
         .features .icon-box:hover {
             transform: translateY(-10px);
-            /* Hover effect */
+            /* Hover effect for features */
         }
 
-        /* Footer */
         footer {
-            margin-top: auto;
             background-color: #343a40;
             color: white;
             padding: 20px 0;
@@ -92,7 +78,7 @@
             text-decoration: underline;
         }
 
-        /* Section Titles */
+        /* Ensure sections have clear spacing */
         .section-title {
             font-size: 2rem;
             font-weight: bold;
@@ -104,7 +90,6 @@
             color: #6c757d;
         }
     </style>
-
 </head>
 
 <body>
@@ -117,14 +102,43 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/dokumen">Manajemen Dokumen</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/humas">Remider Humas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/kendala">Kendala Lapangan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/sbml">SBML</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/tracking">Tracking</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Fitur</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">Tentang Kami</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Kontak</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <body>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">INNOVATION</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="<?= base_url('/'); ?>">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('/pages/letter'); ?>">Humas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('/pages/monitoring'); ?>">Surat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('/pages/letter'); ?>">SBML</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('/pages/monitoring'); ?>">Tracking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('/pages/about'); ?>">Tentang Kami</a>
+                        </li>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
