@@ -6,22 +6,17 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Home extends BaseController
 {
-    public function index()
+    public function index(string $page = 'beranda')
     {
-        return view('index');
-    }
+        $data['title'] = ucfirst($page);
 
-    public function view(string $page = 'home')
-    {
-        if (! is_file(APPPATH . 'Views/pages/' . $page . '.php')) {
-            // Whoops, we don't have a page for that!
+        if (! is_file(APPPATH . 'Views/index.php')) {
             throw new PageNotFoundException($page);
         }
 
-        $data['title'] = ucfirst($page); // Capitalize the first letter
-
-        return view('templates/header', $data)
-            . view('pages/' . $page)
+        return
+            view('templates/header')
+            . view('index', $data)
             . view('templates/footer');
     }
 }

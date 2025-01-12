@@ -1,0 +1,247 @@
+body {
+    font-family: 'Arial', sans-serif;
+    padding-top: 60px;
+}
+
+/* Ensure submenu appears on hover */
+.dropdown:hover .dropdown-menu {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0); /* Smooth appear animation */
+}
+
+.dropdown-menu {
+    display: none; /* Hide submenu by default */
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-10px); /* Subtle transition effect */
+    transition: visibility 0.2s, opacity 0.2s, transform 0.2s;
+}
+
+/* Hover functionality for larger screens */
+@media (min-width: 992px) { 
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .dropdown-menu {
+        display: none; /* Hide by default */
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: visibility 0.2s, opacity 0.2s, transform 0.2s;
+    }
+}
+
+.hero {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.hero p {
+    font-size: 1.2rem;
+}
+
+.features .icon-box {
+    text-align: center;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.features .icon-box i {
+    font-size: 3rem;
+    color: #2575fc;
+}
+
+.features .icon-box:hover {
+    transform: translateY(-10px);
+    /* Hover effect for features */
+}
+
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer a {
+    color: #6a11cb;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+        /* Ensure sections have clear spacing */
+        .section-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #343a40;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+.nav-link.active {
+    position: relative;
+}
+
+.nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+}
+
+.navbar-brand img {
+    max-width: 100%; /* Ensures it doesn't overflow its container */
+    height: auto;    /* Maintains aspect ratio */
+}
+
+@media (max-width: 768px) {
+    .navbar-brand img {
+        width: 25px; /* Adjust size for smaller screens */
+        height: 25px;
+    }
+}
+
+/* @media (max-width: 768px) {
+    .navbar-brand img {
+        display: none; //Hides the logo on small screens
+    }
+} */
+
+/* General Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    padding-top: 60px;
+    /* Spacing for fixed navbar */
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.hero p {
+    font-size: 1.2rem;
+}
+
+/* Features Section */
+.features .icon-box {
+    text-align: center;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.features .icon-box i {
+    font-size: 3rem;
+    color: #2575fc;
+}
+
+.features .icon-box:hover {
+    transform: translateY(-10px);
+    /* Hover effect */
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+    background-color: #343a40;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer a {
+    color: #6a11cb;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Section Titles */
+.section-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #343a40;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+.fc-daygrid-event-more {
+    cursor: pointer;
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Maintenance  */
+.loader {
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top: 5px solid #fff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+.image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1em;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

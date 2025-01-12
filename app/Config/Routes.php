@@ -60,24 +60,53 @@ $routes->get('/humas/edit/(:num)', 'Humas::edit/$1');
 $routes->post('/humas/update/(:num)', 'Humas::update/$1');
 $routes->get('/humas/delete/(:num)', 'Humas::delete/$1');
 
-$routes->get('/kendala', [Kendala::class, 'index']);
-$routes->get('/kendala/manage', 'Kendala::manage');
-$routes->get('/kendala/create', 'Kendala::create');
-$routes->post('/kendala/store', 'Kendala::store');
-$routes->get('/kendala/edit/(:num)', 'Kendala::edit/$1');
-$routes->post('/kendala/update/(:num)', 'Kendala::update/$1');
-$routes->get('/kendala/delete/(:num)', 'Kendala::delete/$1');
+// $routes->get('/kendala', [Kendala::class, 'index']);
+// $routes->get('/kendala/manage', 'Kendala::manage');
+// $routes->get('/kendala/create', 'Kendala::create');
+// $routes->post('/kendala/store', 'Kendala::store');
+// $routes->get('/kendala/edit/(:num)', 'Kendala::edit/$1');
+// $routes->post('/kendala/update/(:num)', 'Kendala::update/$1');
+// $routes->get('/kendala/delete/(:num)', 'Kendala::delete/$1');
+
+// $routes->get('/generate_surat', [GenerateSurat::class, 'index']);
+// $routes->get('/generate_surat/manage', 'GenerateSurat::manage');
+// $routes->get('/generate_surat/create', 'GenerateSurat::create');
+// $routes->post('/generate_surat/store', 'GenerateSurat::store');
+// $routes->get('/generate_surat/edit/(:num)', 'GenerateSurat::edit/$1');
+// $routes->post('/generate_surat/update/(:num)', 'GenerateSurat::update/$1');
+// $routes->get('/generate_surat/delete/(:num)', 'GenerateSurat::delete/$1');
+
+$routes->get('/kendala', [Kendala::class, 'maintenance']);
+$routes->get('/kendala/manage', 'Kendala::maintenance');
+$routes->get('/kendala/create', 'Kendala::maintenance');
+$routes->post('/kendala/store', 'Kendala::maintenance');
+$routes->get('/kendala/edit/(:num)', 'Kendala::maintenance');
+$routes->post('/kendala/update/(:num)', 'Kendala::maintenance');
+$routes->get('/kendala/delete/(:num)', 'Kendala::maintenance');
+
+$routes->get('sbml', [Sbml::class, 'maintenance']);
+$routes->get('/sbml/manage', 'Sbml::maintenance');
+$routes->get('/sbml/create', 'Sbml::maintenance');
+$routes->post('/sbml/store', 'Sbml::maintenance');
+$routes->get('/sbml/edit/(:num)', 'Sbml::maintenance');
+$routes->post('/sbml/update/(:num)', 'Sbml::maintenance');
+$routes->get('/sbml/delete/(:num)', 'Sbml::maintenance');
+
+$routes->get('tracking', [Tracking::class, 'maintenance']);
+$routes->get('/tracking/manage', 'Tracking::maintenance');
+$routes->get('/tracking/create', 'Tracking::maintenance');
+$routes->post('/tracking/store', 'Tracking::maintenance');
+$routes->get('/tracking/edit/(:num)', 'Tracking::maintenance');
+$routes->post('/tracking/update/(:num)', 'Tracking::maintenance');
+$routes->get('/tracking/delete/(:num)', 'Tracking::maintenance');
 
 $routes->get('/generate_surat', [GenerateSurat::class, 'index']);
-$routes->get('/generate_surat/manage', 'GenerateSurat::manage');
-$routes->get('/generate_surat/create', 'GenerateSurat::create');
-$routes->post('/generate_surat/store', 'GenerateSurat::store');
-$routes->get('/generate_surat/edit/(:num)', 'GenerateSurat::edit/$1');
-$routes->post('/generate_surat/update/(:num)', 'GenerateSurat::update/$1');
-$routes->get('/generate_surat/delete/(:num)', 'GenerateSurat::delete/$1');
-
-
-
+$routes->get('/generate_surat/manage', 'GenerateSurat::maintenance');
+$routes->get('/generate_surat/create', 'GenerateSurat::maintenance');
+$routes->post('/generate_surat/store', 'GenerateSurat::maintenance');
+$routes->get('/generate_surat/edit/(:num)', 'GenerateSurat::maintenance');
+$routes->post('/generate_surat/update/(:num)', 'GenerateSurat::maintenance');
+$routes->get('/generate_surat/delete/(:num)', 'GenerateSurat::maintenance');
 
 $routes->get('/calendar', 'CalendarController::index');
 $routes->get('/fetch-events', 'CalendarController::fetchEvents');
@@ -92,24 +121,7 @@ $routes->get('/fetch-events', 'CalendarController::fetchEvents');
 // $routes->post('news', 'News::create');
 
 // Features
-
-
-
-
-
 $routes->get('/generate-report', 'ReportController::generateReport');
-
-
-
-$routes->get('sbml', [Sbml::class, 'index']);
-// $routes->get('sbml', [Sbml::class, 'index']);
-// $routes->get('sbml', [Sbml::class, 'index']);
-// $routes->get('sbml', [Sbml::class, 'index']);
-
-$routes->get('tracking', [Tracking::class, 'index']);
-// $routes->get('tracking', [Tracking::class, 'index']);
-// $routes->get('tracking', [Tracking::class, 'index']);
-// $routes->get('tracking', [Tracking::class, 'index']);
 
 $routes->get('/calendar', 'CalendarController::index');
 $routes->get('/calendar/events', 'CalendarController::events');

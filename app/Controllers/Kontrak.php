@@ -6,9 +6,10 @@ use App\Models\KontrakModel;
 
 class Kontrak extends BaseController
 {
-    public function index(string $page = 'Manajemen Kontrak')
+    public function index(string $page = 'Manajemen Dokumen | Kontrak')
     {
         $model = new KontrakModel();
+
         $data['title'] = ucfirst($page);
         $data['kontraks'] = $model->findAll();
 
@@ -46,7 +47,7 @@ class Kontrak extends BaseController
         ];
 
         if ($model->save($data)) {
-            return redirect()->to('/kontrak/manage')->with('success', 'Nomor kontrak telah dibuat');
+            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Nomor kontrak telah dibuat');
         }
 
         return redirect()->back()->withInput()->with('error', 'Gagal membuat nomor kontrak');
@@ -59,10 +60,14 @@ class Kontrak extends BaseController
         $data['kontrak'] = $model->find($id);
 
         if (!$data['kontrak']) {
-            return view('kontrak/edit', ['error' => 'Kontrak dengan nomor tersebut tidak ditemukan']);
+            return view('templates/header')
+                . view('kontrak/edit', ['error' => 'Kontrak dengan nomor tersebut tidak ditemukan'])
+                . view('templates/footer');
         }
 
-        return view('/kontrak/edit', $data);
+        return view('templates/header')
+            . view('kontrak/edit', $data)
+            . view('templates/footer');
     }
 
     public function update($id)
@@ -75,7 +80,7 @@ class Kontrak extends BaseController
             'catatan' => $this->request->getPost('catatan'),
         ]);
 
-        return redirect()->to('/kontrak/manage');
+        return redirect()->to(base_url('kontrak/manage'));
     }
 
     public function delete($id)
@@ -85,12 +90,12 @@ class Kontrak extends BaseController
         $kontrak_nomor = $model->find($id);
 
         if (!$kontrak_nomor) {
-            return redirect()->to('/kontrak/manage')->with('error', 'Kontrak dengan nomor tersebut tidak ditemukan');
+            return redirect()->to(base_url('kontrak/manage'))->with('error', 'Kontrak dengan nomor tersebut tidak ditemukan');
         }
 
         $model->delete($id);
 
-        return redirect()->to('/kontrak/manage')->with('success', 'Nomor kontrak berhasil dihapus');
+        return redirect()->to(base_url('kontrak/manage'))->with('success', 'Nomor kontrak berhasil dihapus');
     }
 
     public function getKontraks()
@@ -98,6 +103,17 @@ class Kontrak extends BaseController
         $model = new KontrakModel();
         $kontraks = $model->findAll();
 
-        return view('kontrak/index', ['kontraks' => $kontraks]);
+        return view('templates/header')
+            . view('kontrak/index', ['kontraks' => $kontraks])
+            . view('templates/footer');
+    }
+
+    public function maintenance(string $page = 'Maintenance')
+    {
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header')
+            . view('pages/maintenance', $data)
+            . view('templates/footer');
     }
 }

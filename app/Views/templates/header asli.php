@@ -1,3 +1,8 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- Custom CSS -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,22 +14,15 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/33529d3488.js" crossorigin="anonymous"></script>
 
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- FullCalendar CSS -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
-
-    <!-- FullCalendar Core and Plugins CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/main.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/main.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.8/main.min.css" rel="stylesheet">
 
     <!-- FullCalendar JS -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
@@ -48,42 +46,46 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('') ?>">Beranda</a>
+                        <a class="nav-link" href="<?= base_url('/') ?>">Beranda</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('dokumen') ?>" id="dokumenDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Manajemen Dokumen</a>
                         <ul class="dropdown-menu" aria-labelledby="dokumenDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('dokumen/surat') ?>">Surat</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('dokumen/sk') ?>">SK</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('dokumen/kontrak') ?>">Kontrak</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('dokumen') ?>">A1</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('dokumen') ?>">A2</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('dokumen') ?>">A3</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reminder Humas</a>
                         <ul class="dropdown-menu" aria-labelledby="humasDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('humas') ?>">Kalender</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('humas/manage') ?>">Manage</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas') ?>">B1</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas') ?>">B2</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas') ?>">B3</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('kendala') ?>" id="kendalaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kendala Lapangan</a>
                         <ul class="dropdown-menu" aria-labelledby="kendalaDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('kendala') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('kendala/manage') ?>">Manage</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('kendala') ?>">C1</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('kendala') ?>">C2</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('kendala') ?>">C3</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('sbml') ?>" id="sbmlDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SBML</a>
                         <ul class="dropdown-menu" aria-labelledby="sbmlDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('sbml') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('sbml/manage') ?>">Manage</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('sbml') ?>">D1</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('sbml') ?>">D2</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('sbml') ?>">D3</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('tracking') ?>" id="trackingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tracking</a>
                         <ul class="dropdown-menu" aria-labelledby="trackingDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('tracking') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('tracking/manage') ?>">Manage</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('tracking') ?>">E1</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('tracking') ?>">E2</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('tracking') ?>">E3</a></li>
                         </ul>
                     </li>
                 </ul>
