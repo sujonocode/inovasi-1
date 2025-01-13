@@ -13,29 +13,29 @@
         <h2 class="section-title text-center mb-5">Fitur Kami</h2>
         <div class="row g-4 justify-content-center">
             <div class="col-lg-3 col-md-6">
-                <a href="/dokumen/surat" class="text-decoration-none text-dark">
+                <a href=<?= base_url('surat/manage') ?> class="text-decoration-none text-dark">
                     <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
-                        <i class="fas fa-list-ol fa-3x"></i>
+                        <i class="fas fa-file-lines fa-3x"></i>
                         <h4 class="mt-3">Surat</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <p>BAST, SOP, formulir permintaan, surat tugas, dan sebagaianya</p>
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6">
-                <a href="/dokumen/sk" class="text-decoration-none text-dark">
+                <a href=<?= base_url('sk/manage') ?> class="text-decoration-none text-dark">
                     <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
-                        <i class="fas fa-list-ol fa-3x"></i>
+                        <i class="fas fa-file-signature fa-3x"></i>
                         <h4 class="mt-3">SK</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <p>Semua jenis Surat Keputusan (SK), seperti penetapan dan perubahan</p>
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6">
-                <a href="/dokumen/kontrak" class="text-decoration-none text-dark">
+                <a href=<?= base_url('kontrak/manage') ?> class="text-decoration-none text-dark">
                     <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
-                        <i class="fas fa-list-ol fa-3x"></i>
+                        <i class="fas fa-file-contract fa-3x"></i>
                         <h4 class="mt-3">Kontrak</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <p>Kontrak petugas, kontrak mitra, outsourcing, dan sebagaianya</p>
                     </div>
                 </a>
             </div>

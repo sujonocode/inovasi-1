@@ -75,24 +75,50 @@
 <section id="contact" class="py-5">
     <div class="container">
         <h2 class="section-title text-center mb-4">Hubungi Kami</h2>
-        <form>
+        <form id="waForm">
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <input type="text" class="form-control" placeholder="Nama" required>
+                    <input id="nama" name="nama" type="text" class="form-control" placeholder="Nama" required>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <input type="email" class="form-control" placeholder="Email" required>
+                    <input id="jk" name="jk" type="text" class="form-control" placeholder="Jenis kelamin" required>
                 </div>
             </div>
             <div class="mb-3">
-                <textarea class="form-control" rows="5" placeholder="Pesan" required></textarea>
+                <textarea id="pesan" name="pesan" class="form-control" rows="5" placeholder="Pesan" required></textarea>
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+                <button type="button" onclick="generateWhatsAppLink()" class="btn btn-primary"><i class="fa-brands fa-whatsapp"></i> Kirim Pesan</button>
             </div>
         </form>
     </div>
 </section>
+
+<script>
+    function generateWhatsAppLink() {
+        // Get the name and email values from the form
+        const form = document.getElementById('waForm');
+        const nama = document.getElementById('nama').value;
+        const jk = document.getElementById('jk').value;
+        const pesan = document.getElementById('pesan').value;
+
+        // Check if both fields are filled
+        if (!nama || !jk || !pesan) {
+            alert('Lenkapi semua isian!');
+            return;
+        }
+
+        // Generate the WhatsApp link with encoded text
+        const message = `Nama         : ${nama}\nJenis Kelamin: ${jk}\n\n${pesan}`;
+        const whatsappLink = `https://wa.me/6282337039320?text=${encodeURIComponent(message)}`;
+
+        // Open the link in a new tab
+        window.open(whatsappLink, '_blank');
+
+        // Clear the form
+        form.reset();
+    }
+</script>
 
 <!-- Documents script -->
 <script>
