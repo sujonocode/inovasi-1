@@ -1,5 +1,3 @@
-<h1>jadwalKonten List</h1>
-
 <!-- Display success or error messages in a pop-up -->
 <?php if (session()->getFlashdata('error')): ?>
     <!-- Error Pop-up Modal -->
@@ -43,54 +41,95 @@
 
 <a href="/humas/create">Add New jadwalKonten</a>
 
-<table border="1" cellpadding="10">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php if (!empty($jadwalKontens)): ?>
-            <?php foreach ($jadwalKontens as $jadwalKonten): ?>
+<div class="container my-5">
+    <h1 class="text-center mb-4">Fixed Header Table</h1>
+    <div class="table-responsive">
+        <table id="example" class="table table-striped table-hover">
+            <thead>
                 <tr>
-                    <td><?= $jadwalKonten['id'] ?></td>
-                    <td><?= $jadwalKonten['nama'] ?></td>
-                    <td><?= $jadwalKonten['tanggal'] ?></td>
-                    <td><?= $jadwalKonten['waktu'] ?></td>
-                    <td><?= $jadwalKonten['kategori'] ?></td>
-                    <td><?= $jadwalKonten['kontak'] ?></td>
-                    <!-- Decode the "Pengingat" JSON string into an array -->
-                    <td>
-                        <?php
-                        // Decode the "pengingat" JSON string into an array
-                        $pengingat = json_decode($jadwalKonten['pengingat'], true);
-
-                        // If there are any values, display them
-                        if ($pengingat) {
-                            echo implode(", ", $pengingat);
-                        } else {
-                            echo "No Pengingat selected";
-                        }
-                        ?>
-                    </td>
-                    <td><?= $jadwalKonten['catatan'] ?></td>
-                    <td>
-                        <a href="/humas/edit/<?= $jadwalKonten['id'] ?>">Edit</a> |
-                        <a href="/humas/delete/<?= $jadwalKonten['id'] ?>" onclick="return confirm('Are you sure you want to delete this jadwalKonten?');">Delete</a>
-                    </td>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="5" style="text-align: center; font-weight: bold;">No jadwalKontens available.</td>
-            </tr>
-        <?php endif; ?>
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+                <?php if (!empty($jadwalKontens)): ?>
+                    <?php foreach ($jadwalKontens as $jadwalKonten): ?>
+                        <tr>
+                            <td><?= $jadwalKonten['id'] ?></td>
+                            <td><?= $jadwalKonten['nama'] ?></td>
+                            <td><?= $jadwalKonten['tanggal'] ?></td>
+                            <td><?= $jadwalKonten['waktu'] ?></td>
+                            <td><?= $jadwalKonten['kategori'] ?></td>
+                            <td><?= $jadwalKonten['kontak'] ?></td>
+                            <!-- Decode the "Pengingat" JSON string into an array -->
+                            <td>
+                                <?php
+                                // Decode the "pengingat" JSON string into an array
+                                $pengingat = json_decode($jadwalKonten['pengingat'], true);
+
+                                // If there are any values, display them
+                                if ($pengingat) {
+                                    echo implode(", ", $pengingat);
+                                } else {
+                                    echo "No Pengingat selected";
+                                }
+                                ?>
+                            </td>
+                            <td><?= $jadwalKonten['catatan'] ?></td>
+                            <td>
+                                <a href="/humas/edit/<?= $jadwalKonten['id'] ?>">Edit</a> |
+                                <a href="/humas/delete/<?= $jadwalKonten['id'] ?>" onclick="return confirm('Are you sure you want to delete this jadwalKonten?');">Delete</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5" style="text-align: center; font-weight: bold;">No jadwalKontens available.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<!-- Bootstrap JS -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"> -->
+</script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js">
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Initialize DataTable with scrollable fixed header
+        $('#example').DataTable({
+            scrollY: '400px', // Set vertical scroll height
+            scrollCollapse: true, // Enable collapsing for short tables
+            paging: true, // Enable pagination
+            fixedHeader: true, // Enable fixed header
+            pageLength: 5, // Default rows per page
+            lengthMenu: [5, 10, 15, 20], // Rows per page options
+            // columnDefs: [{
+            //         orderable: true,
+            //         targets: '_all'
+            //     } // Enable sorting on all columns
+            // ]
+            // columnDefs: [
+            //     { orderable: true, targets: [0, 1, 2] }, // Enable sorting only on columns 0, 1, and 2
+            //     { orderable: false, targets: [3, 4] }    // Disable sorting on columns 3 and 4
+            // ]
+        });
+    });
+</script>
 
 <script>
     // Automatically show the modal when the page loads if a flash message exists
