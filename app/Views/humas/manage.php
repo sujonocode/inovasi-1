@@ -39,10 +39,10 @@
     </div>
 <?php endif; ?>
 
-<a href="/humas/create">Add New jadwalKonten</a>
+<a href=<?= base_url("humas/create") ?>>Tambah</a>
 
 <div class="container my-5">
-    <h1 class="text-center mb-4">Fixed Header Table</h1>
+    <h1 class="text-center mb-4">Daftar Reminder Humas</h1>
     <div class="table-responsive">
         <table id="example" class="table table-striped table-hover">
             <thead>
@@ -101,17 +101,14 @@
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<!-- Bootstrap JS -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"> -->
-</script>
 <!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js">
-</script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <script>
     $(document).ready(function() {
         // Initialize DataTable with scrollable fixed header
         $('#example').DataTable({
+            scrollX: '1500px', // Set vertical scroll height
             scrollY: '400px', // Set vertical scroll height
             scrollCollapse: true, // Enable collapsing for short tables
             paging: true, // Enable pagination
@@ -119,13 +116,12 @@
             pageLength: 5, // Default rows per page
             lengthMenu: [5, 10, 15, 20], // Rows per page options
             // columnDefs: [{
-            //         orderable: true,
-            //         targets: '_all'
-            //     } // Enable sorting on all columns
-            // ]
+            //     orderable: true,
+            //     targets: '_all'
+            // }]
             // columnDefs: [
-            //     { orderable: true, targets: [0, 1, 2] }, // Enable sorting only on columns 0, 1, and 2
-            //     { orderable: false, targets: [3, 4] }    // Disable sorting on columns 3 and 4
+            //     { orderable: true, targets: [0, 1, 2] },
+            //     { orderable: false, targets: [3, 4] }
             // ]
         });
     });

@@ -1,67 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit kontrak</title>
-    <!-- Include Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-
-<body>
-    <h1>Edit Kontrak</h1>
-
-    <!-- Display error pop-up if an error message is passed -->
-    <?php if (isset($error)): ?>
-        <!-- Error Pop-up Modal -->
-        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <?= $error; ?>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
+<!-- Display error pop-up if an error message is passed -->
+<?php if (isset($error)): ?>
+    <!-- Error Pop-up Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?= $error; ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-    <?php endif; ?>
+    </div>
+<?php endif; ?>
 
-    <!-- Check if kontrak data exists and render the edit form -->
-    <?php if (isset($kontrak)): ?>
-        <form action="/kontrak/update/<?= $kontrak['id'] ?>" method="POST">
-            <?= csrf_field() ?> <!-- This will automatically generate the hidden CSRF token field -->
-            <!-- Your form fields go here -->
-            <label for="tanggal">Tanggal:</label>
-            <input type="date" name="tanggal" id="tanggal" value="<?= $kontrak['tanggal'] ?>" required><br>
-            <label for="nomor">Nomor:</label>
-            <input type="text" name="nomor" id="nomor" value="<?= $kontrak['nomor'] ?>" required><br>
-            <label for="uraian">Uraian:</label>
-            <textarea name="uraian" id="uraian" required><?= $kontrak['uraian'] ?></textarea><br>
-            <label for="catatan">Catatan:</label>
-            <textarea name="catatan" id="catatan" required><?= $kontrak['catatan'] ?></textarea><br>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="form-section">
+                <h2 class="text-center mb-4">Formulir Edit Jadwal Reminder Humas</h2>
+                <?php if (isset($kontrak)): ?>
+                    <form onsubmit="return validateCheckboxes()" action="<?= base_url('kontrak/update/' . $kontrak['id']) ?>" method="POST">
+                        <?= csrf_field() ?>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
+                            <label for="tanggal" class="col-md-3 form-label">Tanggal</label>
+                            <div class="col-md-9">
+                                <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $kontrak['tanggal'] ?>" required>
+                            </div>
+                        </div>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
+                            <label for="nomor" class="col-md-3 form-label">Nomor:</label>
+                            <div class="col-md-9">
+                                <input id="nomor" type="text" name="nomor" class="form-control"
+                                    value="<?= $kontrak['nomor'] ?>" required>
+                            </div>
+                        </div>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
+                            <label for="uraian" class="col-md-3 form-label">Uraian:</label>
+                            <div class="col-md-9">
+                                <input id="uraian" type="text" name="uraian" class="form-control"
+                                    value="<?= $kontrak['uraian'] ?>" required>
+                            </div>
+                        </div>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
+                            <label for="catatan" class="col-md-3 form-label">Catatan:</label>
+                            <div class="col-md-9">
+                                <textarea id="catatan" name="catatan" class="form-control" rows="3"
+                                    required> <?= $kontrak['catatan'] ?></textarea>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+                        </div>
+                    </form>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
 
-            <button type="submit">Update Kontrak</button>
-        </form>
-
-    <?php endif; ?>
-
-    <script>
-        // Automatically show the modal when the page loads if an error is passed
-        window.onload = function() {
-            <?php if (isset($error)): ?>
-                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
-                errorModal.show();
-            <?php endif; ?>
-        }
-    </script>
-</body>
-
-</html>
+<script>
+    // Automatically show the modal when the page loads if an error is passed
+    window.onload = function() {
+        <?php if (isset($error)): ?>
+            var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+            errorModal.show();
+        <?php endif; ?>
+    }
+</script>

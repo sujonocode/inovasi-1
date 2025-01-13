@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="form-section">
-                <h2 class="text-center mb-4">Responsive Form</h2>
+                <h2 class="text-center mb-4">Formulir Data Surat</h2>
                 <form action="/surat/store" method="post">
                     <?= csrf_field() ?>
                     <div class="row form-group align-items-center flex-column flex-md-row">

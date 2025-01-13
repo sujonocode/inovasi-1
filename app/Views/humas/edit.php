@@ -23,12 +23,10 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="form-section">
-                <h2 class="text-center mb-4">Responsive Form</h2>
+                <h2 class="text-center mb-4">Formulir Edit Jadwal Reminder Humas</h2>
                 <?php if (isset($jadwalKonten)): ?>
-                    <form onsubmit="return validateCheckboxes()" action="/humas/update/<?= $jadwalKonten['id'] ?>" method="POST">
+                    <form onsubmit="return validateCheckboxes()" action="<?= base_url('humas/update/' . $jadwalKonten['id']) ?>" method="POST">
                         <?= csrf_field() ?>
-
-                        <!-- Nama Konten -->
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="nama" class="col-md-3 form-label">Nama Konten:</label>
                             <div class="col-md-9">
@@ -36,24 +34,18 @@
                                     value="<?= $jadwalKonten['nama'] ?>" required>
                             </div>
                         </div>
-
-                        <!-- Tanggal Unggah -->
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="tanggal" class="col-md-3 form-label">Tanggal Unggah:</label>
                             <div class="col-md-9">
                                 <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $jadwalKonten['tanggal'] ?>" required>
                             </div>
                         </div>
-
-                        <!-- Waktu Unggah -->
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="waktu" class="col-md-3 form-label">Waktu Unggah:</label>
                             <div class="col-md-9">
                                 <input id="waktu" type="time" name="waktu" class="form-control" step="1" value="<?= $jadwalKonten['waktu'] ?>" required>
                             </div>
                         </div>
-
-                        <!-- Kategori -->
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label class="col-md-3 form-label">Kategori:</label>
                             <div class="col-md-9">
@@ -62,8 +54,7 @@
                                         <div class="form-check">
                                             <input type="radio" id="kegiatan_rutin" name="kategori"
                                                 value="Kegiatan Rutin" class="form-check-input">
-                                            <label for="kegiatan_rutin" class="form-check-label">Kegiatan
-                                                Rutin</label>
+                                            <label for="kegiatan_rutin" class="form-check-label">Kegiatan Rutin</label>
                                         </div>
                                     </div>
                                     <div class="col-6 col-md-3">
@@ -90,8 +81,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Pengingat -->
                         <?php $pengingatArray = explode(',', $jadwalKonten['pengingat']); ?>
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label class="col-md-3 form-label">Pengingat:</label>
@@ -121,8 +110,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Kontak -->
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="kontak" class="col-md-3 form-label">Kontak:</label>
                             <div class="col-md-9">
@@ -130,8 +117,6 @@
                                     value="<?= $jadwalKonten['kontak'] ?>" required>
                             </div>
                         </div>
-
-                        <!-- Catatan -->
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="catatan" class="col-md-3 form-label">Catatan:</label>
                             <div class="col-md-9">
@@ -139,8 +124,6 @@
                                     required> <?= $jadwalKonten['catatan'] ?></textarea>
                             </div>
                         </div>
-
-                        <!-- Buttons -->
                         <div class="d-flex justify-content-between mt-4">
                             <button type="submit" class="btn btn-primary">Simpan</button>
                             <button type="reset" class="btn btn-secondary">Reset</button>
@@ -151,7 +134,6 @@
         </div>
     </div>
 </div>
-</form>
 
 <script>
     function validateCheckboxes() {
@@ -185,9 +167,6 @@
 
     // Now safely parse the JSON string
     const pengingatArray = JSON.parse(pengingatString);
-
-    // Log to verify the array
-    console.log(pengingatArray); // ["Hari H", "H-3", "H-7"]
 
     // Map the "Pengingat" values to checkbox IDs
     const pengingatMapping = {

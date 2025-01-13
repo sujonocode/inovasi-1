@@ -39,40 +39,59 @@
     </div>
 <?php endif; ?>
 
-<a href=<?= base_url("kontrak/create") ?>>Tambah</a>
+<a href=<?= base_url("humas/create") ?>>Tambah</a>
 
 <div class="container my-5">
-    <h1 class="text-center mb-4">Daftar Kontrak</h1>
+    <h1 class="text-center mb-4">Daftar Reminder Humas</h1>
     <div class="table-responsive">
         <table id="example" class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Tanggal</th>
-                    <th>Nomor</th>
-                    <th>Uraian Kontrak</th>
-                    <th>Catatan</th>
-                    <th>Aksi</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <?php if (!empty($kontraks)): ?>
-                    <?php foreach ($kontraks as $kontrak): ?>
+                <?php if (!empty($jadwalKontens)): ?>
+                    <?php foreach ($jadwalKontens as $jadwalKonten): ?>
                         <tr>
-                            <td><?= $kontrak['id'] ?></td>
-                            <td><?= $kontrak['tanggal'] ?></td>
-                            <td><?= $kontrak['nomor'] ?></td>
-                            <td><?= $kontrak['uraian'] ?></td>
-                            <td><?= $kontrak['catatan'] ?></td>
+                            <td><?= $jadwalKonten['id'] ?></td>
+                            <td><?= $jadwalKonten['nama'] ?></td>
+                            <td><?= $jadwalKonten['tanggal'] ?></td>
+                            <td><?= $jadwalKonten['waktu'] ?></td>
+                            <td><?= $jadwalKonten['kategori'] ?></td>
+                            <td><?= $jadwalKonten['kontak'] ?></td>
+                            <!-- Decode the "Pengingat" JSON string into an array -->
                             <td>
-                                <a href="/surat/edit/<?= $kontrak['id'] ?>">Edit</a> |
-                                <a href="/surat/delete/<?= $kontrak['id'] ?>" onclick="return confirm('Are you sure you want to delete this kontrak?');">Delete</a>
+                                <?php
+                                // Decode the "pengingat" JSON string into an array
+                                $pengingat = json_decode($jadwalKonten['pengingat'], true);
+
+                                // If there are any values, display them
+                                if ($pengingat) {
+                                    echo implode(", ", $pengingat);
+                                } else {
+                                    echo "No Pengingat selected";
+                                }
+                                ?>
+                            </td>
+                            <td><?= $jadwalKonten['catatan'] ?></td>
+                            <td>
+                                <a href="/humas/edit/<?= $jadwalKonten['id'] ?>">Edit</a> |
+                                <a href="/humas/delete/<?= $jadwalKonten['id'] ?>" onclick="return confirm('Are you sure you want to delete this jadwalKonten?');">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="5" style="text-align: center; font-weight: bold;">No kontrak available.</td>
+                        <td colspan="5" style="text-align: center; font-weight: bold;">No jadwalKontens available.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
@@ -82,8 +101,12 @@
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<!-- Bootstrap JS -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"> -->
+</script>
 <!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js">
+</script>
 
 <script>
     $(document).ready(function() {
