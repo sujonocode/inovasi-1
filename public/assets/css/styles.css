@@ -245,3 +245,19 @@ footer a:hover {
         transform: rotate(360deg);
     }
 }
+
+/* Form */
+.form-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
