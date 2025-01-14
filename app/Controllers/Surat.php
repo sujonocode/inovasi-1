@@ -39,6 +39,13 @@ class Surat extends BaseController
     {
         $model = new SuratModel();
 
+        // Query to get min, max, and count
+        $data = $model->selectMin('nomor_urut')
+            ->selectMax('nomor_urut')
+            ->selectCount('nomor_urut')
+            ->get()
+            ->getRowArray();
+
         $data = [
             'tanggal' => $this->request->getPost('tanggal'),
             'alamat' => $this->request->getPost('alamat'),
@@ -53,6 +60,48 @@ class Surat extends BaseController
         }
 
         return redirect()->back()->withInput()->with('error', 'Gagal membuat nomor surat');
+
+        // if ($model->save($data)) {
+        //     // Pass additional data in the redirect
+        //     return redirect()
+        //         ->to(base_url('surat/manage'))
+        //         ->with('success', 'Data has been added successfully.')
+        //         ->with('newData', $data); // Add additional data here
+        // }
+
+        // return redirect()->back()->withInput()->with('error', 'Failed to add data.');
+
+        //         <body>
+        //     <h1>Manage Surat</h1>
+        //     <p>Minimum Nomor Urut: <?= $data['nomor_urut'] ? ></p>
+        //     <p>Maximum Nomor Urut: <?= $data['nomor_urut_max'] ? ></p>
+        //     <p>Total Count: <?= $data['nomor_urut_count'] ? ></p>
+        // </body>
+
+        // $suratModel = new SuratModel();
+
+        // // Get the minimum value
+        // $min = $suratModel->selectMin('nomor_urut')->get()->getRowArray()['nomor_urut'];
+
+        // // Get the maximum value
+        // $max = $suratModel->selectMax('nomor_urut')->get()->getRowArray()['nomor_urut'];
+
+        // // Get the count
+        // $count = $suratModel->selectCount('nomor_urut')->get()->getRowArray()['nomor_urut'];
+
+        // // Pass data to the view
+        // return view('surat/manage', [
+        //     'min' => $min,
+        //     'max' => $max,
+        //     'count' => $count,
+        // ]);
+
+        //         <body>
+        //     <h1>Manage Surat</h1>
+        //     <p>Minimum Nomor Urut: <?= $min ? ></p>
+        //     <p>Maximum Nomor Urut: <?= $max ? ></p>
+        //     <p>Total Count: <?= $count ? ></p>
+        // </body>
     }
 
     public function edit($id)
