@@ -31,6 +31,9 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/css/styles.css') ?>">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.css" />
+
+    <script src="https://cdn.datatables.net/2.2.1/js/dataTables.js"></script> -->
 </head>
 
 <body>

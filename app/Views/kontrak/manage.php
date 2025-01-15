@@ -65,8 +65,8 @@
                             <td><?= $kontrak['uraian'] ?></td>
                             <td><?= $kontrak['catatan'] ?></td>
                             <td>
-                                <a href="/surat/edit/<?= $kontrak['id'] ?>">Edit</a> |
-                                <a href="/surat/delete/<?= $kontrak['id'] ?>" onclick="return confirm('Are you sure you want to delete this kontrak?');">Delete</a>
+                                <a href="/kontrak/edit/<?= $kontrak['id'] ?>">Edit</a> |
+                                <a href="/kontrak/delete/<?= $kontrak['id'] ?>" onclick="return confirm('Are you sure you want to delete this kontrak?');">Delete</a>
                                 <a href=<?= $kontrak['url'] ?>>Download</a>
                             </td>
                         </tr>
@@ -104,6 +104,9 @@
             //     { orderable: true, targets: [0, 1, 2] },
             //     { orderable: false, targets: [3, 4] }
             // ]
+            order: [
+                [1, 'desc']
+            ],
         });
     });
 </script>

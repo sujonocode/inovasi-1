@@ -23,10 +23,22 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="form-section">
-                <h2 class="text-center mb-4">Formulir Edit Jadwal Reminder Humas</h2>
+                <h2 class="text-center mb-4">Formulir Edit Data Kontrak</h2>
                 <?php if (isset($kontrak)): ?>
                     <form onsubmit="return validateCheckboxes()" action="<?= base_url('kontrak/update/' . $kontrak['id']) ?>" method="POST">
                         <?= csrf_field() ?>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
+                            <label for="nomor" class="col-md-3 form-label">Nomor</label>
+                            <div class="col-md-9">
+                                <input id="tanggal" type="text" name="nomor" class="form-control" value="<?= $kontrak['nomor'] ?>" required disabled>
+                            </div>
+                        </div>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
+                            <label for="tanggal" class="col-md-3 form-label">Tanggal</label>
+                            <div class="col-md-9">
+                                <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $kontrak['tanggal'] ?>" required disabled>
+                            </div>
+                        </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="kode_arsip" class="col-md-3 form-label">Kode arsip:</label>
                             <div class="col-md-9">
@@ -35,9 +47,9 @@
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="tanggal" class="col-md-3 form-label">Tanggal</label>
+                            <label for="ket" class="col-md-3 form-label">Keterangan:</label>
                             <div class="col-md-9">
-                                <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $kontrak['tanggal'] ?>" required>
+                                <input id="ket" type="text" name="ket" class="form-control" value="<?= $kontrak['ket'] ?>" required>
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
@@ -55,7 +67,7 @@
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="url" class="col-md-3 form-label">Link:</label>
+                            <label for="url" class="col-md-3 form-label">Link: <a target="_blank" href="<?= $kontrak['url'] ?>" title="Lihat"><i class="fa-solid fa-eye"></i></a></label>
                             <div class="col-md-9">
                                 <input id="url" type="text" name="url" class="form-control"
                                     value="<?= $kontrak['url'] ?>">

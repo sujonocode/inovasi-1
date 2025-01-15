@@ -99,11 +99,14 @@
             // columnDefs: [{
             //     orderable: true,
             //     targets: '_all'
-            // }]
+            // }],
             // columnDefs: [
             //     { orderable: true, targets: [0, 1, 2] },
             //     { orderable: false, targets: [3, 4] }
             // ]
+            order: [
+                [1, 'desc']
+            ],
         });
     });
 </script>
