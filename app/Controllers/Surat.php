@@ -6,6 +6,8 @@ use App\Models\SuratModel;
 
 class Surat extends BaseController
 {
+    protected $db;
+
     public function index(string $page = 'Manajemen Dokumen | Surat')
     {
         $model = new SuratModel();
@@ -35,75 +37,81 @@ class Surat extends BaseController
             . view('templates/footer');
     }
 
+    function textToNumber3($text)
+    {
+        return (int)$text;
+    }
+
+    function numberToText3($number)
+    {
+        return str_pad($number, 3, '0', STR_PAD_LEFT);
+    }
+
+    function textToNumber2($text)
+    {
+        return (int)$text;
+    }
+
+    function numberToText2($number)
+    {
+        return str_pad($number, 2, '0', STR_PAD_LEFT);
+    }
+
     public function store()
     {
         $model = new SuratModel();
 
-        // Query to get min, max, and count
-        $data = $model->selectMin('nomor_urut')
-            ->selectMax('nomor_urut')
-            ->selectCount('nomor_urut')
-            ->get()
-            ->getRowArray();
+        $tanggal = $this->request->getPost('tanggal');
+        list($year, $month, $day) = explode('-', $tanggal);
+
+        if ($this->request->getPost('jenis_penomoran') == 'urut') {
+            $nomor_urut_akhir = $model->selectMax('nomor_urut')->get()->getRowArray()['nomor_urut'];
+            $nomor_urut = $nomor_urut_akhir + 1;
+            $nomor_urut_text = $this->numberToText3($nomor_urut);
+            $nomor_sisip = 0;
+
+            $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+        } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
+            $tanggal = $this->request->getPost('tanggal');
+            // Query to get the desired value
+            $builder = $this->db->table('kontrak');
+            $query = $builder->select('id, nomor_urut, nomor_sisip')
+                ->where('tanggal', $tanggal)
+                ->orderBy('nomor_urut', 'DESC')
+                ->orderBy('nomor_sisip', 'DESC')
+                ->limit(1)
+                ->get();
+
+            $result = $query->getRow();
+
+            $nomor_urut = $result->nomor_urut;
+            $nomor_sisip = $result->nomor_sisip + 1;
+
+            $nomor_urut_text = $this->numberToText3($nomor_urut);
+            $nomor_sisip_text = $this->numberToText2($nomor_sisip);
+
+            $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+        }
 
         $data = [
             'tanggal' => $this->request->getPost('tanggal'),
             'alamat' => $this->request->getPost('alamat'),
             'ringkasan' => $this->request->getPost('ringkasan'),
-            'pert_dahulu' => $this->request->getPost('pert_dahulu'),
-            'pert_berikut' => $this->request->getPost('pert_berikut'),
             'kode_arsip' => $this->request->getPost('kode_arsip'),
+            'kategori' => $this->request->getPost('kategori'),
             'catatan' => $this->request->getPost('catatan'),
             'url' => $this->request->getPost('url'),
+            'pert_dahulu' => $nomor,
+            'pert_berikut' => $this->request->getPost('pert_berikut'),
+            'nomor_urut' => $nomor_urut,
+            'nomor_sisip' => $nomor_sisip,
         ];
 
         if ($model->save($data)) {
-            return redirect()->to(base_url('surat/manage'))->with('success', 'Nomor surat telah dibuat');
+            return redirect()->to(base_url('surat/manage'))->with('success', 'Data surat berhasil disimpan');
         }
 
-        return redirect()->back()->withInput()->with('error', 'Gagal membuat nomor surat');
-
-        // if ($model->save($data)) {
-        //     // Pass additional data in the redirect
-        //     return redirect()
-        //         ->to(base_url('surat/manage'))
-        //         ->with('success', 'Data has been added successfully.')
-        //         ->with('newData', $data); // Add additional data here
-        // }
-
-        // return redirect()->back()->withInput()->with('error', 'Failed to add data.');
-
-        //         <body>
-        //     <h1>Manage Surat</h1>
-        //     <p>Minimum Nomor Urut: <?= $data['nomor_urut'] ? ></p>
-        //     <p>Maximum Nomor Urut: <?= $data['nomor_urut_max'] ? ></p>
-        //     <p>Total Count: <?= $data['nomor_urut_count'] ? ></p>
-        // </body>
-
-        // $suratModel = new SuratModel();
-
-        // // Get the minimum value
-        // $min = $suratModel->selectMin('nomor_urut')->get()->getRowArray()['nomor_urut'];
-
-        // // Get the maximum value
-        // $max = $suratModel->selectMax('nomor_urut')->get()->getRowArray()['nomor_urut'];
-
-        // // Get the count
-        // $count = $suratModel->selectCount('nomor_urut')->get()->getRowArray()['nomor_urut'];
-
-        // // Pass data to the view
-        // return view('surat/manage', [
-        //     'min' => $min,
-        //     'max' => $max,
-        //     'count' => $count,
-        // ]);
-
-        //         <body>
-        //     <h1>Manage Surat</h1>
-        //     <p>Minimum Nomor Urut: <?= $min ? ></p>
-        //     <p>Maximum Nomor Urut: <?= $max ? ></p>
-        //     <p>Total Count: <?= $count ? ></p>
-        // </body>
+        return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data surat');
     }
 
     public function edit($id)
@@ -126,13 +134,38 @@ class Surat extends BaseController
     public function update($id)
     {
         $model = new SuratModel();
+
+        $builder = $this->db->table('kontrak');
+        $query = $builder->select('id, tanggal, jenis_penomoran, nomor_urut, nomor_sisip')
+            ->where('id', $id)
+            ->orderBy('nomor_urut', 'DESC')
+            ->orderBy('nomor_sisip', 'DESC')
+            ->limit(1)
+            ->get();
+
+        $result = $query->getRow();
+        $tanggal = $result->tanggal;
+        list($year, $month, $day) = explode('-', $tanggal);
+
+        if ($result->jenis_penomoran == 'urut') {
+            $nomor_urut_text = $this->numberToText3($result->nomor_urut);
+
+            $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+        } elseif ($result->jenis_penomoran == 'sisip') {
+            $nomor_urut_text = $this->numberToText3($result->nomor_urut);
+            $nomor_sisip_text = $this->numberToText2($result->nomor_sisip);
+
+            $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+        }
+
         $model->update($id, [
-            'tanggal' => $this->request->getPost('tanggal'),
+            'kode_arsip' => $this->request->getPost('kode_arsip'),
             'alamat' => $this->request->getPost('alamat'),
             'ringkasan' => $this->request->getPost('ringkasan'),
-            'pert_dahulu' => $this->request->getPost('pert_dahulu'),
-            'pert_berikut' => $this->request->getPost('pert_berikut'),
             'catatan' => $this->request->getPost('catatan'),
+            'url' => $this->request->getPost('url'),
+            'pert_dahulu' => $nomor,
+            'pert_berikut' => $this->request->getPost('pert_berikut'),
         ]);
 
         return redirect()->to(base_url('surat/manage'));
