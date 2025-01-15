@@ -28,10 +28,10 @@
                     <form onsubmit="return validateCheckboxes()" action="<?= base_url('sk/update/' . $sk['id']) ?>" method="POST">
                         <?= csrf_field() ?>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="nomor" class="col-md-3 form-label">Nomor:</label>
+                            <label for="kode_arsip" class="col-md-3 form-label">Kode arsip:</label>
                             <div class="col-md-9">
-                                <input id="nomor" type="text" name="nomor" class="form-control"
-                                    value="<?= $sk['nomor'] ?>" required>
+                                <input id="kode_arsip" type="text" name="kode_arsip" class="form-control"
+                                    value="<?= $sk['kode_arsip'] ?>" required>
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
@@ -52,6 +52,13 @@
                             <div class="col-md-9">
                                 <textarea id="catatan" name="catatan" class="form-control" rows="3"
                                     required> <?= $sk['catatan'] ?></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
+                            <label for="url" class="col-md-3 form-label">Link:</label>
+                            <div class="col-md-9">
+                                <input id="url" type="text" name="url" class="form-control"
+                                    value="<?= $sk['url'] ?>">
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-4">

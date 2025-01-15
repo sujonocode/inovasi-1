@@ -43,8 +43,10 @@ class SK extends BaseController
         $data = [
             'tanggal' => $this->request->getPost('tanggal'),
             'nomor' => $this->request->getPost('nomor'),
+            'kode_arsip' => $this->request->getPost('kode_arsip'),
             'perihal' => $this->request->getPost('perihal'),
             'catatan' => $this->request->getPost('catatan'),
+            'url' => $this->request->getPost('url'),
         ];
 
         if ($model->save($data)) {

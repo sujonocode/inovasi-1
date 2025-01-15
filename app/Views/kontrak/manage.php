@@ -67,6 +67,7 @@
                             <td>
                                 <a href="/surat/edit/<?= $kontrak['id'] ?>">Edit</a> |
                                 <a href="/surat/delete/<?= $kontrak['id'] ?>" onclick="return confirm('Are you sure you want to delete this kontrak?');">Delete</a>
+                                <a href=<?= $kontrak['url'] ?>>Download</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

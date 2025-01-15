@@ -24,6 +24,47 @@
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">
+                        <label for="kode_arsip" class="col-md-3 form-label">Kode arsip:</label>
+                        <div class="col-md-9">
+                            <input id="kode_arsip" type="text" name="kode_arsip" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row form-group align-items-center flex-column flex-md-row">
+                        <label class="col-md-3 form-label">Kategori:</label>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-6 col-md-3">
+                                    <div class="form-check">
+                                        <input type="radio" id="masuk_int" name="kategori"
+                                            value="Surat Masuk (Internal)" class="form-check-input">
+                                        <label for="masuk_int" class="form-check-label">Surat Masuk (Internal)</label>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="form-check">
+                                        <input type="radio" id="masuk_eks" name="kategori"
+                                            value="Surat Masuk (Eksternal)" class="form-check-input">
+                                        <label for="masuk_eks" class="form-check-label">Surat Masuk (Eksternal)</label>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="form-check">
+                                        <input type="radio" id="keluar_int" name="kategori" value="Surat Keluar (Internal)"
+                                            class="form-check-input">
+                                        <label for="keluar_int" class="form-check-label">Surat Keluar (Internal)</label>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="form-check">
+                                        <input type="radio" id="keluar_eks" name="kategori" value="Surat Keluar (Eksternal)"
+                                            class="form-check-input">
+                                        <label for="keluar_eks" class="form-check-label">Surat Keluar (Eksternal)</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group align-items-center flex-column flex-md-row">
                         <label for="pert_dahulu" class="col-md-3 form-label">Pertalian dengan nomor (terdahulu):</label>
                         <div class="col-md-9">
                             <input id="pert_dahulu" type="text" name="pert_dahulu" class="form-control" required>

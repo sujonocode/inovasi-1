@@ -66,7 +66,8 @@
                             <td><?= $sk['catatan'] ?></td>
                             <td>
                                 <a href="/sk/edit/<?= $sk['id'] ?>">Edit</a> |
-                                <a href="/sk/delete/<?= $sk['id'] ?>" onclick="return confirm('Are you sure you want to delete this sk_nomor?');">Delete</a>
+                                <a href="/sk/delete/<?= $sk['id'] ?>" onclick="return confirm('Are you sure you want to delete this sk_nomor?');">Delete</a> |
+                                <a href=<?= $sk['url'] ?>>Download</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

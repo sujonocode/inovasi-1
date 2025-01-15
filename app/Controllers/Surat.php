@@ -52,7 +52,9 @@ class Surat extends BaseController
             'ringkasan' => $this->request->getPost('ringkasan'),
             'pert_dahulu' => $this->request->getPost('pert_dahulu'),
             'pert_berikut' => $this->request->getPost('pert_berikut'),
+            'kode_arsip' => $this->request->getPost('kode_arsip'),
             'catatan' => $this->request->getPost('catatan'),
+            'url' => $this->request->getPost('url'),
         ];
 
         if ($model->save($data)) {
