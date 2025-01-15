@@ -25,7 +25,7 @@
             <div class="form-section">
                 <h2 class="text-center mb-4">Formulir Edit Data Kontrak</h2>
                 <?php if (isset($kontrak)): ?>
-                    <form onsubmit="return validateCheckboxes()" action="<?= base_url('kontrak/update/' . $kontrak['id']) ?>" method="POST">
+                    <form onsubmit="return validateCheckboxes()" action="<?= base_url('kontrak/update/' . $kontrak['id']) ?>" method="post">
                         <?= csrf_field() ?>
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="nomor" class="col-md-3 form-label">Nomor</label>
@@ -73,9 +73,9 @@
                                     value="<?= $kontrak['url'] ?>">
                             </div>
                         </div>
-                        <div class="d-flex justify-content-between mt-4">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                            <button type="reset" class="btn btn-secondary">Reset</button>
+                        <div class="d-flex justify-content-end mt-4">
+                            <!-- <button type="reset" class="btn btn-secondary"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button> -->
+                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                         </div>
                     </form>
                 <?php endif; ?>

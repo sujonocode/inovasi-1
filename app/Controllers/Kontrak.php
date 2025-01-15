@@ -89,7 +89,7 @@ class Kontrak extends BaseController
             $tanggal = $this->request->getPost('tanggal');
             // Query to get the desired value
             $builder = $this->db->table('kontrak');
-            $query = $builder->select('id', 'nomor_urut', 'nomor_sisip')
+            $query = $builder->select('id, nomor_urut, nomor_sisip')
                 ->where('tanggal', $tanggal)
                 ->orderBy('nomor_urut', 'DESC')
                 ->orderBy('nomor_sisip', 'DESC')
@@ -147,13 +147,15 @@ class Kontrak extends BaseController
     public function update($id)
     {
         $builder = $this->db->table('kontrak');
-        $query = $builder->select('id', 'tanggal', 'jenis_penomoran', 'nomor_urut', 'nomor_sisip')
+        $query = $builder->select('id, tanggal, jenis_penomoran, nomor_urut, nomor_sisip')
             ->where('id', $id)
+            ->orderBy('nomor_urut', 'DESC')
+            ->orderBy('nomor_sisip', 'DESC')
             ->limit(1)
             ->get();
 
         $result = $query->getRow();
-
+        // var_dump($result);
         $tanggal = $result->tanggal;
         list($year, $month, $day) = explode('-', $tanggal);
 

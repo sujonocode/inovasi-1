@@ -39,10 +39,13 @@
     </div>
 <?php endif; ?>
 
-<a href=<?= base_url("kontrak/create") ?>>Tambah</a>
-
 <div class="container my-5">
-    <h1 class="text-center mb-4">Daftar Kontrak</h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="text-center mb-4">Daftar Kontrak</h1>
+        <a href=<?= base_url("kontrak/create") ?> class="btn btn-primary btn-sm" title="Tambah Kontrak Baru">
+            <i class="fa-solid fa-plus"></i> Tambah
+        </a>
+    </div>
     <div class="table-responsive">
         <table id="example" class="table table-striped table-hover">
             <thead>
@@ -66,7 +69,6 @@
                                 <a href=<?= $kontrak['url'] ?>><i class="fa-solid fa-eye" title="Lihat"></i></a>
                                 <a href="/kontrak/edit/<?= $kontrak['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
                                 <a href="/kontrak/delete/<?= $kontrak['id'] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data kontrak ini?');"><i class="fa-solid fa-trash" title="Hapus"></i></a>
-
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -82,16 +84,15 @@
 
 <script>
     $(document).ready(function() {
-        // Initialize DataTable with scrollable fixed header
         $('#example').DataTable({
-            scrollY: '400px', // Set vertical scroll height
-            scrollX: true, // Enable horizontal scroll
+            scrollY: '400px',
+            scrollX: true,
             autoWidth: false,
-            scrollCollapse: true, // Enable collapsing for short tables
-            paging: true, // Enable pagination
-            fixedHeader: true, // Enable fixed header
-            pageLength: 10, // Default rows per page
-            lengthMenu: [5, 10, 15, 20], // Rows per page options
+            scrollCollapse: true,
+            paging: true,
+            fixedHeader: true,
+            pageLength: 10,
+            lengthMenu: [5, 10, 15, 20],
             columnDefs: [{
                     orderable: true,
                     targets: [0, 1, 2, 3]

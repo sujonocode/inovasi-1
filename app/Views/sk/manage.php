@@ -39,15 +39,17 @@
     </div>
 <?php endif; ?>
 
-<a href=<?= base_url("sk/create") ?>>Tambah</a>
-
 <div class="container my-5">
-    <h1 class="text-center mb-4">Daftar SK</h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="text-center mb-4">Daftar Surat Keputusan (SK)</h1>
+        <a href=<?= base_url("sk/create") ?> class="btn btn-primary btn-sm" title="Tambah SK Baru">
+            <i class="fa-solid fa-plus"></i> Tambah
+        </a>
+    </div>
     <div class="table-responsive">
         <table id="example" class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nomor</th>
                     <th>Tanggal</th>
                     <th>Perihal</th>
@@ -59,21 +61,20 @@
                 <?php if (!empty($sks)): ?>
                     <?php foreach ($sks as $sk): ?>
                         <tr>
-                            <td><?= $sk['id'] ?></td>
                             <td><?= $sk['nomor'] ?></td>
                             <td><?= $sk['tanggal'] ?></td>
                             <td><?= $sk['perihal'] ?></td>
                             <td><?= $sk['catatan'] ?></td>
                             <td>
-                                <a href="/sk/edit/<?= $sk['id'] ?>">Edit</a> |
-                                <a href="/sk/delete/<?= $sk['id'] ?>" onclick="return confirm('Are you sure you want to delete this sk_nomor?');">Delete</a> |
-                                <a href=<?= $sk['url'] ?>>Download</a>
+                                <a href=<?= $sk['url'] ?>><i class="fa-solid fa-eye" title="Lihat"></i></a>
+                                <a href="/sk/edit/<?= $sk['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
+                                <a href="/sk/delete/<?= $sk['id'] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data SK ini?');"><i class="fa-solid fa-trash" title="Hapus"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="5" style="text-align: center; font-weight: bold;">No sk_nomor available.</td>
+                        <td colspan="5" style="text-align: center; font-weight: bold;">Belum ada data SK.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
@@ -81,37 +82,32 @@
     </div>
 </div>
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
 <script>
     $(document).ready(function() {
-        // Initialize DataTable with scrollable fixed header
         $('#example').DataTable({
-            scrollY: '400px', // Set vertical scroll height
-            scrollCollapse: true, // Enable collapsing for short tables
-            paging: true, // Enable pagination
-            fixedHeader: true, // Enable fixed header
-            pageLength: 5, // Default rows per page
-            lengthMenu: [5, 10, 15, 20], // Rows per page options
-            // columnDefs: [{
-            //     orderable: true,
-            //     targets: '_all'
-            // }],
-            // columnDefs: [
-            //     { orderable: true, targets: [0, 1, 2] },
-            //     { orderable: false, targets: [3, 4] }
-            // ]
+            scrollY: '400px',
+            scrollX: true,
+            autoWidth: false,
+            scrollCollapse: true,
+            paging: true,
+            fixedHeader: true,
+            pageLength: 10,
+            lengthMenu: [5, 10, 15, 20],
+            columnDefs: [{
+                    orderable: true,
+                    targets: [0, 1, 2, 3]
+                },
+                {
+                    orderable: false,
+                    targets: [4]
+                }
+            ],
             order: [
-                [1, 'desc']
+                [0, 'desc']
             ],
         });
     });
-</script>
 
-<script>
     // Automatically show the modal when the page loads if a flash message exists
     window.onload = function() {
         <?php if (session()->getFlashdata('error')): ?>
