@@ -6,6 +6,27 @@
                 <form action="/surat/store" method="post">
                     <?= csrf_field() ?>
                     <div class="row form-group align-items-center flex-column flex-md-row">
+                        <label class="col-md-3 form-label">Jenis penomoran:</label>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-6 col-md-3">
+                                    <div class="form-check">
+                                        <input type="radio" id="urut" name="jenis_penomoran"
+                                            value="urut" class="form-check-input">
+                                        <label for="urut" class="form-check-label">Urut</label>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="form-check">
+                                        <input type="radio" id="sisip" name="jenis_penomoran"
+                                            value="sisip" class="form-check-input">
+                                        <label for="sisip" class="form-check-label">Sisip</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group align-items-center flex-column flex-md-row">
                         <label for="tanggal" class="col-md-3 form-label">Tanggal Unggah:</label>
                         <div class="col-md-9">
                             <input id="tanggal" type="date" name="tanggal" class="form-control" required>

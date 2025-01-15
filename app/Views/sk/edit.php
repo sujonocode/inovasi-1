@@ -28,6 +28,18 @@
                     <form onsubmit="return validateCheckboxes()" action="<?= base_url('sk/update/' . $sk['id']) ?>" method="POST">
                         <?= csrf_field() ?>
                         <div class="row form-group align-items-center flex-column flex-md-row">
+                            <label for="nomor" class="col-md-3 form-label">Nomor</label>
+                            <div class="col-md-9">
+                                <input id="tanggal" type="text" name="nomor" class="form-control" value="<?= $sk['nomor'] ?>" required disabled>
+                            </div>
+                        </div>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
+                            <label for="tanggal" class="col-md-3 form-label">Tanggal</label>
+                            <div class="col-md-9">
+                                <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $sk['tanggal'] ?>" required disabled>
+                            </div>
+                        </div>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="kode_arsip" class="col-md-3 form-label">Kode arsip:</label>
                             <div class="col-md-9">
                                 <input id="kode_arsip" type="text" name="kode_arsip" class="form-control"

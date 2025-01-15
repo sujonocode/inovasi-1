@@ -47,7 +47,6 @@
         <table id="example" class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Tanggal</th>
                     <th>Nomor</th>
                     <th>Uraian Kontrak</th>
@@ -59,21 +58,21 @@
                 <?php if (!empty($kontraks)): ?>
                     <?php foreach ($kontraks as $kontrak): ?>
                         <tr>
-                            <td><?= $kontrak['id'] ?></td>
                             <td><?= $kontrak['tanggal'] ?></td>
                             <td><?= $kontrak['nomor'] ?></td>
                             <td><?= $kontrak['uraian'] ?></td>
                             <td><?= $kontrak['catatan'] ?></td>
                             <td>
-                                <a href="/kontrak/edit/<?= $kontrak['id'] ?>">Edit</a> |
-                                <a href="/kontrak/delete/<?= $kontrak['id'] ?>" onclick="return confirm('Are you sure you want to delete this kontrak?');">Delete</a>
-                                <a href=<?= $kontrak['url'] ?>>Download</a>
+                                <a href=<?= $kontrak['url'] ?>><i class="fa-solid fa-eye" title="Lihat"></i></a>
+                                <a href="/kontrak/edit/<?= $kontrak['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
+                                <a href="/kontrak/delete/<?= $kontrak['id'] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data kontrak ini?');"><i class="fa-solid fa-trash" title="Hapus"></i></a>
+
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="5" style="text-align: center; font-weight: bold;">No kontrak available.</td>
+                        <td colspan="5" style="text-align: center; font-weight: bold;">Belum ada data kontrak.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
@@ -81,37 +80,33 @@
     </div>
 </div>
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
 <script>
     $(document).ready(function() {
         // Initialize DataTable with scrollable fixed header
         $('#example').DataTable({
             scrollY: '400px', // Set vertical scroll height
+            scrollX: true, // Enable horizontal scroll
+            autoWidth: false,
             scrollCollapse: true, // Enable collapsing for short tables
             paging: true, // Enable pagination
             fixedHeader: true, // Enable fixed header
-            pageLength: 5, // Default rows per page
+            pageLength: 10, // Default rows per page
             lengthMenu: [5, 10, 15, 20], // Rows per page options
-            // columnDefs: [{
-            //     orderable: true,
-            //     targets: '_all'
-            // }]
-            // columnDefs: [
-            //     { orderable: true, targets: [0, 1, 2] },
-            //     { orderable: false, targets: [3, 4] }
-            // ]
+            columnDefs: [{
+                    orderable: true,
+                    targets: [0, 1, 2, 3]
+                },
+                {
+                    orderable: false,
+                    targets: [4]
+                }
+            ],
             order: [
-                [1, 'desc']
+                [0, 'desc']
             ],
         });
     });
-</script>
 
-<script>
     // Automatically show the modal when the page loads if a flash message exists
     window.onload = function() {
         <?php if (session()->getFlashdata('error')): ?>
