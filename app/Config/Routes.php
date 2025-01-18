@@ -52,6 +52,11 @@ $routes->get('/kontrak/edit/(:num)', 'Kontrak::edit/$1');
 $routes->post('/kontrak/update/(:num)', 'Kontrak::update/$1');
 $routes->get('/kontrak/delete/(:num)', 'Kontrak::delete/$1');
 
+$routes->get('/form', 'FormController::index');
+$routes->post('/form/getKode1', 'FormController::getKode1');
+$routes->post('/form/getKodeKlasifikasi', 'FormController::getKodeKlasifikasi');
+$routes->post('form/submitForm', 'FormController::submitForm');
+
 $routes->get('/humas', [Humas::class, 'index']);
 $routes->get('/humas/manage', 'Humas::manage');
 $routes->get('/humas/create', 'Humas::create');
