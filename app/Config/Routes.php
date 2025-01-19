@@ -17,25 +17,59 @@ use App\Controllers\Kendala;
 use App\Controllers\Sbml;
 use App\Controllers\Tracking;
 
+$routes->group('', ['filter' => 'role:admin,user'], function ($routes) {
+    $routes->get('/dashboard', 'DashboardController::index');
+});
+
+$routes->group('', ['filter' => 'role:admin'], function ($routes) {
+    $routes->get('/admin', 'AdminController::index');
+});
+
+$routes->get('/login', 'AuthController::login');
+$routes->post('/login', 'AuthController::authenticate');
+$routes->get('/register', 'AuthController::register');
+$routes->post('/register', 'AuthController::storeUser');
+$routes->get('/logout', 'AuthController::logout');
+// $routes->get('/unauthorized', function () {
+//     return 'Access Denied';
+// });
+
+$routes->get('/unauthorized', function () {
+    return view('errors/unauthorized');
+});
+
 // $routes->group('pages', function ($routes) {
 //     $routes->get('index', 'Pages::index');
 //     $routes->get('about', 'Pages::about');
 //     $routes->get('letter', 'Pages::letter');
 //     $routes->get('monitoring', 'Pages::monitoring');
 // });
+/// ini asli
+// $routes->get('/', 'Home::index');
 
-$routes->get('/', 'Home::index');
+// $routes->get('/dokumen', [Dokumen::class, 'index']);
 
-$routes->get('/dokumen', [Dokumen::class, 'index']);
+// $routes->get('/dokumen/surat', [Surat::class, 'index']);
+// $routes->get('/surat/manage', 'Surat::manage');
+// $routes->get('/surat/create', 'Surat::create');
+// $routes->post('/surat/store', 'Surat::store');
+// $routes->get('/surat/edit/(:num)', 'Surat::edit/$1');
+// $routes->post('/surat/update/(:num)', 'Surat::update/$1');
+// $routes->get('/surat/delete/(:num)', 'Surat::delete/$1');
+/// ini modif
+$routes->group('', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'Home::index');
+    $routes->get('/dokumen', [Dokumen::class, 'index']);
+    $routes->get('/dokumen/surat', [Surat::class, 'index']);
+    $routes->get('/surat/manage', 'Surat::manage');
+    $routes->get('/surat/create', 'Surat::create');
+    $routes->post('/surat/store', 'Surat::store');
+    $routes->get('/surat/edit/(:num)', 'Surat::edit/$1');
+    $routes->post('/surat/update/(:num)', 'Surat::update/$1');
+    $routes->get('/surat/delete/(:num)', 'Surat::delete/$1');
+});
 
-$routes->get('/dokumen/surat', [Surat::class, 'index']);
-$routes->get('/surat/manage', 'Surat::manage');
-$routes->get('/surat/create', 'Surat::create');
-$routes->post('/surat/store', 'Surat::store');
-$routes->get('/surat/edit/(:num)', 'Surat::edit/$1');
-$routes->post('/surat/update/(:num)', 'Surat::update/$1');
-$routes->get('/surat/delete/(:num)', 'Surat::delete/$1');
-
+///
 $routes->get('/dokumen/sk', [SK::class, 'index']);
 $routes->get('/sk/manage', 'SK::manage');
 $routes->get('/sk/create', 'SK::create');
