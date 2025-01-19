@@ -31,16 +31,16 @@
                             </div>
                         </div>
 
-                        <!-- <div class="row form-group align-items-center flex-column flex-md-row">
+                        <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="jenis">Jenis:</label>
                             <select name="jenis" id="jenis">
                                 <option value="">Select Jenis</option>
-                                < ?php foreach ($ jenisOptions as $option): ?>
-                                    <option value="< ?= $option['jenis'] ?>">< ?= $option['jenis'] ?></option>
-                                < ?php endforeach; ?>
+                                <?php foreach ($jenisOptions as $option): ?>
+                                    <option value="<?= $option['jenis'] ?>"><?= $option['jenis'] ?></option>
+                                <?php endforeach; ?>
                             </select>
-                        </div> -->
-                        <!-- <div class="row form-group align-items-center flex-column flex-md-row">
+                        </div>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="kode_1">Kode 1:</label>
                             <select name="kode_1" id="kode_1">
                                 <option value="">Select Kode 1</option>
@@ -51,7 +51,7 @@
                             <select name="kode_klasifikasi" id="kode_klasifikasi">
                                 <option value="">Select Kode Klasifikasi</option>
                             </select>
-                        </div> -->
+                        </div>
 
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="kode_arsip" class="col-md-3 form-label">Kode arsip:</label>

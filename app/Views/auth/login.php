@@ -35,7 +35,7 @@
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="card shadow-sm p-4" style="width: 100%; max-width: 400px;">
             <h2 class="text-center mb-4">Login</h2>
-            <form method="POST" action="/login">
+            <form method="POST" action="<?= base_url('/login') ?>">
                 <?= csrf_field() ?>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
@@ -45,10 +45,10 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <button type="submit" class="btn btn-primary w-100">Masuk</button>
             </form>
             <div class="text-center mt-3">
-                <p>Don't have an account? <a href="/register">Register here</a></p>
+                <p>Belum punya akun? <a href="<?= base_url('/register') ?>">Daftar Sekarang</a></p>
             </div>
         </div>
     </div>

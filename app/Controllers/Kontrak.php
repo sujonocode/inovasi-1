@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\KontrakModel;
+use App\Models\KodeArsipModel;
 
 class Kontrak extends BaseController
 {
@@ -25,6 +26,29 @@ class Kontrak extends BaseController
             . view('kontrak/index', $data)
             . view('templates/footer');
     }
+    // public function index(string $page = 'Manajemen Dokumen | Kontrak')
+    // {
+    //     $model = new KontrakModel();
+
+    //     // Set up the data array
+    //     $data = [
+    //         'title' => ucfirst($page),
+    //         'kontraks' => $model->findAll(),
+    //     ];
+
+    //     // Fetch distinct 'jenis' options from the 'kode_arsip' table
+    //     $db = \Config\Database::connect();
+    //     $data['jenisOptions'] = $db->table('kode_arsip')
+    //         ->select('jenis')
+    //         ->distinct()
+    //         ->get()
+    //         ->getResultArray();
+
+    //     // Pass the complete $data array to the view
+    //     return view('templates/header')
+    //         . view('kontrak/index', $data)
+    //         . view('templates/footer');
+    // }
 
     public function manage()
     {
@@ -36,12 +60,88 @@ class Kontrak extends BaseController
             . view('templates/footer');
     }
 
-    public function create()
+    public function create(string $page = 'Kontrak | Tambah')
     {
+        // Set up the data array
+        $data = [
+            'title' => ucfirst($page),
+        ];
+
+        // Fetch distinct 'jenis' options from the 'kode_arsip' table
+        $db = \Config\Database::connect();
+        $data['jenisOptions'] = $db->table('kode_arsip')
+            ->select('jenis')
+            ->distinct()
+            ->get()
+            ->getResultArray();
+
         return view('templates/header')
-            . view('kontrak/create')
+            . view('kontrak/create', $data)
             . view('templates/footer');
     }
+
+    public function getKode1()
+    {
+        if ($this->request->isAJAX()) {
+            $jenis = $this->request->getPost('jenis');
+            $db = \Config\Database::connect();
+            $kode1Options = $db->table('kode_arsip')
+                ->select('kode_1')
+                ->distinct()
+                ->where('jenis', $jenis)
+                ->get()
+                ->getResultArray();
+
+            return $this->response
+                ->setHeader('X-CSRF-TOKEN', csrf_hash()) // Send new token
+                ->setJSON($kode1Options);
+        }
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    }
+
+    public function getKodeKlasifikasi()
+    {
+        if ($this->request->isAJAX()) {
+            $kode1 = $this->request->getPost('kode_1');
+            $db = \Config\Database::connect();
+            $kodeKlasifikasiOptions = $db->table('kode_arsip')
+                ->select('kode_klasifikasi')
+                ->distinct()
+                ->where('kode_1', $kode1)
+                ->get()
+                ->getResultArray();
+
+            // Debug CSRF token
+            log_message('debug', 'New CSRF Token (getKodeKlasifikasi): ' . csrf_hash());
+
+            return $this->response
+                ->setHeader('X-CSRF-TOKEN', csrf_hash()) // Send new token
+                ->setJSON($kodeKlasifikasiOptions);
+        }
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    }
+
+    public function getKodeArsip()
+    {
+        // Get the selected 'kode_klasifikasi' from the request
+        $kodeKlasifikasi = $this->request->getPost('kode_klasifikasi');
+
+        // Assuming you have a model for the table, e.g., KodeArsipModel
+        $kodeArsipModel = new KodeArsipModel();
+
+        // Retrieve the 'kode_arsip' based on the selected 'kode_klasifikasi'
+        $result = $kodeArsipModel->where('kode_klasifikasi', $kodeKlasifikasi)->first();
+
+        // Return the result as JSON
+        if ($result) {
+            return $this->response->setJSON(['kode_arsip' => $result['kode']]);
+        } else {
+            return $this->response->setJSON(null);
+        }
+    }
+
+
+
 
     function textToNumber3($text)
     {

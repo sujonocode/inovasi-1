@@ -67,11 +67,20 @@ class AuthController extends Controller
         ];
         $model->insert($data);
 
-        return redirect()->to('/login')->with('success', 'Registration successful.');
+        return redirect()->to(base_url('/login'))->with('success', 'Registration successful.');
     }
 
     public function login()
     {
+        $session = session();
+
+        // Check if the user is already logged in
+        if ($session->has('isLoggedIn') && $session->get('isLoggedIn')) {
+            // Redirect to home page or another suitable page
+            return redirect()->to(base_url('/'));
+        }
+
+        // If not logged in, show the login page
         return view('auth/login');
     }
 
@@ -115,15 +124,15 @@ class AuthController extends Controller
                 'isLoggedIn' => true,
             ]);
 
-            return redirect()->to('/dashboard');
+            return redirect()->to(base_url('/'));
         }
 
-        return redirect()->to('/login')->with('error', 'Invalid credentials.');
+        return redirect()->to(base_url('/login'))->with('error', 'Invalid credentials.');
     }
 
     public function logout()
     {
         $this->session->destroy();
-        return redirect()->to('/login');
+        return redirect()->to(base_url('/login'));
     }
 }
