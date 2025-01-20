@@ -7,8 +7,9 @@
             <div class="col-lg-8">
                 <div class="form-section">
                     <h2 class="text-center mb-4">Formulir Data Kontrak</h2>
-                    <form action="/kontrak/store" method="post">
-                        <?= csrf_field() ?>
+                    <form id="yourFormId" action="/kontrak/store" method="post">
+                        <!-- CSRF Token Input -->
+                        <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label class="col-md-3 form-label">Jenis penomoran:</label>
                             <div class="col-md-9">
@@ -30,17 +31,16 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- <div class="row form-group align-items-center flex-column flex-md-row">
+                        <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="jenis">Jenis:</label>
                             <select name="jenis" id="jenis">
                                 <option value="">Select Jenis</option>
-                                < ?php foreach ($ jenisOptions as $option): ?>
-                                    <option value="< ?= $option['jenis'] ?>">< ?= $option['jenis'] ?></option>
-                                < ?php endforeach; ?>
+                                <?php foreach ($jenisOptions as $option): ?>
+                                    <option value="<?= $option['jenis'] ?>"><?= $option['jenis'] ?></option>
+                                <?php endforeach; ?>
                             </select>
-                        </div> -->
-                        <!-- <div class="row form-group align-items-center flex-column flex-md-row">
+                        </div>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="kode_1">Kode 1:</label>
                             <select name="kode_1" id="kode_1">
                                 <option value="">Select Kode 1</option>
@@ -51,7 +51,7 @@
                             <select name="kode_klasifikasi" id="kode_klasifikasi">
                                 <option value="">Select Kode Klasifikasi</option>
                             </select>
-                        </div> -->
+                        </div>
 
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="kode_arsip" class="col-md-3 form-label">Kode arsip:</label>
@@ -96,6 +96,7 @@
                                 <input id="url" type="text" name="url" class="form-control">
                             </div>
                         </div>
+
                         <div class="d-flex justify-content-between mt-4">
                             <button type="reset" class="btn btn-secondary"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button>
                             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
@@ -108,13 +109,16 @@
 
     <script>
         $(document).ready(function() {
+
+            // Update CSRF token dynamically after form submission
             function updateCSRFToken(xhr) {
                 const newToken = xhr.getResponseHeader('X-CSRF-TOKEN');
                 if (newToken) {
-                    $('input[name="<?= csrf_token() ?>"]').val(newToken); // Update hidden input token
+                    $('input[name="<?= csrf_token() ?>"]').val(newToken); // Update the CSRF token field in the form
                 }
             }
 
+            // Change handler for 'jenis' dropdown
             $('#jenis').change(function() {
                 const jenis = $(this).val();
                 $('#kode_1').html('<option value="">Loading...</option>');
@@ -125,11 +129,10 @@
                     method: 'POST',
                     data: {
                         jenis: jenis,
-                        '<?= csrf_token() ?>': $('input[name="<?= csrf_token() ?>"]').val()
+                        '<?= csrf_token() ?>': $('input[name="<?= csrf_token() ?>"]').val() // Send CSRF token with request
                     },
                     success: function(data, status, xhr) {
-                        updateCSRFToken(xhr); // Update CSRF token
-                        console.log('CSRF Token Updated:', $('input[name="<?= csrf_token() ?>"]').val()); // Debug CSRF token
+                        updateCSRFToken(xhr); // Update CSRF token from response headers
                         let options = '<option value="">Select Kode 1</option>';
                         data.forEach(item => {
                             options += `<option value="${item.kode_1}">${item.kode_1}</option>`;
@@ -137,11 +140,12 @@
                         $('#kode_1').html(options);
                     },
                     error: function() {
-                        alert('An error occurred while fetching data.');
+                        alert('Error fetching Kode 1 options.');
                     }
                 });
             });
 
+            // Change handler for 'kode_1' dropdown
             $('#kode_1').change(function() {
                 const kode1 = $(this).val();
                 $('#kode_klasifikasi').html('<option value="">Loading...</option>');
@@ -151,11 +155,10 @@
                     method: 'POST',
                     data: {
                         kode_1: kode1,
-                        '<?= csrf_token() ?>': $('input[name="<?= csrf_token() ?>"]').val()
+                        '<?= csrf_token() ?>': $('input[name="<?= csrf_token() ?>"]').val() // Send CSRF token
                     },
                     success: function(data, status, xhr) {
-                        updateCSRFToken(xhr); // Update CSRF token
-                        console.log('CSRF Token Updated:', $('input[name="<?= csrf_token() ?>"]').val()); // Debug CSRF token
+                        updateCSRFToken(xhr); // Update CSRF token from response headers
                         let options = '<option value="">Select Kode Klasifikasi</option>';
                         data.forEach(item => {
                             options += `<option value="${item.kode_klasifikasi}">${item.kode_klasifikasi}</option>`;
@@ -163,37 +166,37 @@
                         $('#kode_klasifikasi').html(options);
                     },
                     error: function() {
-                        alert('An error occurred while fetching data.');
+                        alert('Error fetching Kode Klasifikasi options.');
                     }
                 });
             });
-        });
 
-        // New functionality to fetch 'kode_arsip' based on 'kode_klasifikasi'
-        $('#kode_klasifikasi').change(function() {
-            const kodeKlasifikasi = $(this).val();
-            if (kodeKlasifikasi) {
-                $.ajax({
-                    url: '<?= base_url('/kontrak/create/getKodeArsip') ?>',
-                    method: 'POST',
-                    data: {
-                        kode_klasifikasi: kodeKlasifikasi,
-                        '<?= csrf_token() ?>': $('input[name="<?= csrf_token() ?>"]').val()
-                    },
-                    success: function(data, status, xhr) {
-                        updateCSRFToken(xhr); // Update CSRF token
-                        if (data) {
-                            $('#kode_arsip').val(data.kode_arsip); // Populate the 'kode_arsip' field
-                        } else {
-                            $('#kode_arsip').val(''); // If no data is found
+            // Change handler for 'kode_klasifikasi' dropdown
+            $('#kode_klasifikasi').change(function() {
+                const kodeKlasifikasi = $(this).val();
+                if (kodeKlasifikasi) {
+                    $.ajax({
+                        url: '<?= base_url('/kontrak/create/getKodeArsip') ?>',
+                        method: 'POST',
+                        data: {
+                            kode_klasifikasi: kodeKlasifikasi,
+                            '<?= csrf_token() ?>': $('input[name="<?= csrf_token() ?>"]').val() // Send CSRF token
+                        },
+                        success: function(data, status, xhr) {
+                            updateCSRFToken(xhr); // Update CSRF token from response headers
+                            if (data) {
+                                $('#kode_arsip').val(data.kode_arsip); // Populate kode_arsip field
+                            } else {
+                                $('#kode_arsip').val(''); // Clear field if no data
+                            }
+                        },
+                        error: function() {
+                            alert('Error fetching Kode Arsip.');
                         }
-                    },
-                    error: function() {
-                        alert('An error occurred while fetching Kode Arsip.');
-                    }
-                });
-            } else {
-                $('#kode_arsip').val(''); // Clear the field if no kode_klasifikasi is selected
-            }
+                    });
+                } else {
+                    $('#kode_arsip').val(''); // Clear field if no kode_klasifikasi selected
+                }
+            });
         });
     </script>

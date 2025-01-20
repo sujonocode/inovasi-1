@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Website for BPS Kabupaten Tanggamus providing document management, reminders, tracking, and more.">
-    <meta name="csrf-token" content="<?= csrf_hash() ?>">
+    <!-- <meta name="csrf-token" content="< ?= csrf_hash() ?>"> -->
     <link rel="shortcut icon" type="image/png" href="/assista.ico">
     <title>Assista</title>
     <!-- DataTables CSS -->

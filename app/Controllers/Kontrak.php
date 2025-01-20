@@ -62,6 +62,8 @@ class Kontrak extends BaseController
 
     public function create(string $page = 'Kontrak | Tambah')
     {
+        $response = $this->response;
+        $response->setHeader('X-CSRF-TOKEN', csrf_hash());
         // Set up the data array
         $data = [
             'title' => ucfirst($page),
@@ -82,6 +84,8 @@ class Kontrak extends BaseController
 
     public function getKode1()
     {
+        $response = $this->response;
+        $response->setHeader('X-CSRF-TOKEN', csrf_hash());
         if ($this->request->isAJAX()) {
             $jenis = $this->request->getPost('jenis');
             $db = \Config\Database::connect();
@@ -101,6 +105,8 @@ class Kontrak extends BaseController
 
     public function getKodeKlasifikasi()
     {
+        $response = $this->response;
+        $response->setHeader('X-CSRF-TOKEN', csrf_hash());
         if ($this->request->isAJAX()) {
             $kode1 = $this->request->getPost('kode_1');
             $db = \Config\Database::connect();
@@ -131,7 +137,7 @@ class Kontrak extends BaseController
 
         // Retrieve the 'kode_arsip' based on the selected 'kode_klasifikasi'
         $result = $kodeArsipModel->where('kode_klasifikasi', $kodeKlasifikasi)->first();
-
+        $this->response->setHeader('X-CSRF-Token', csrf_hash());
         // Return the result as JSON
         if ($result) {
             return $this->response->setJSON(['kode_arsip' => $result['kode']]);
@@ -165,8 +171,16 @@ class Kontrak extends BaseController
 
     public function store()
     {
+        if ($this->request->getMethod() === 'post' && !$this->validate([
+            'csrf_token' => 'required|csrf_token'
+        ])) {
+            return redirect()->back()->with('error', 'Invalid CSRF token!');
+        }
+        $response = $this->response;
+        $response->setHeader('X-CSRF-TOKEN', csrf_hash());
         $model = new KontrakModel();
-
+        log_message('debug', 'CSRF Token from Form: ' . $this->request->getPost('csrf_token_name'));
+        log_message('debug', 'CSRF Token from Session: ' . session()->get('csrf_token_name'));
         $tanggal = $this->request->getPost('tanggal');
         list($year, $month, $day) = explode('-', $tanggal);
 
@@ -211,7 +225,7 @@ class Kontrak extends BaseController
             'nomor_urut' => $nomor_urut,
             'nomor_sisip' => $nomor_sisip,
         ];
-
+        log_message('debug', 'CSRF Token from POST: ' . $this->request->getPost('_csrf'));
         if ($model->save($data)) {
             return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil disimpan');
         }
