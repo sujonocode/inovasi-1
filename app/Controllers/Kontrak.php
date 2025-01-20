@@ -218,7 +218,7 @@ class Kontrak extends BaseController
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data kontrak');
     }
 
-    public function edit($id, string $page = 'Kontrak | Tambah')
+    public function edit($id, string $page = 'Kontrak | Edit')
     {
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
@@ -232,7 +232,7 @@ class Kontrak extends BaseController
         // If kontrak data is not found, show error and redirect
         if (!$kontrak) {
             session()->setFlashdata('error', 'Data kontrak tidak ditemukan.');
-            return redirect()->to('/kontrak/manage');
+            return redirect()->to(base_url('/kontrak/manage'));
         }
 
         // Fetch distinct 'jenis' options from the 'kode_arsip' table

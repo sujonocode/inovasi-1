@@ -3,10 +3,17 @@
 namespace App\Controllers;
 
 use App\Models\SuratModel;
+use App\Models\KodeArsipModel;
 
 class Surat extends BaseController
 {
     protected $db;
+
+    public function __construct()
+    {
+        // Load the database connection
+        $this->db = \Config\Database::connect();
+    }
 
     public function index(string $page = 'Manajemen Dokumen | Surat')
     {
@@ -30,11 +37,91 @@ class Surat extends BaseController
             . view('templates/footer');
     }
 
-    public function create()
+    public function create(string $page = 'Kontrak | Tambah')
     {
+        $response = $this->response;
+        $response->setHeader('X-CSRF-TOKEN', csrf_hash());
+
+        // Set up the data array
+        $data = [
+            'title' => ucfirst($page),
+        ];
+
+        // Fetch distinct 'jenis' options from the 'kode_arsip' table
+        $db = \Config\Database::connect();
+        $data['jenisOptions'] = $db->table('kode_arsip')
+            ->select('jenis')
+            ->distinct()
+            ->get()
+            ->getResultArray();
+
         return view('templates/header')
             . view('surat/create')
             . view('templates/footer');
+    }
+
+    public function getKode1()
+    {
+        $response = $this->response;
+        $response->setHeader('X-CSRF-TOKEN', csrf_hash());
+        if ($this->request->isAJAX()) {
+            $jenis = $this->request->getPost('jenis');
+            $db = \Config\Database::connect();
+            $kode1Options = $db->table('kode_arsip')
+                ->select('kode_1')
+                ->distinct()
+                ->where('jenis', $jenis)
+                ->get()
+                ->getResultArray();
+
+            return $this->response
+                ->setHeader('X-CSRF-TOKEN', csrf_hash()) // Send new token
+                ->setJSON($kode1Options);
+        }
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    }
+
+    public function getKodeKlasifikasi()
+    {
+        $response = $this->response;
+        $response->setHeader('X-CSRF-TOKEN', csrf_hash());
+        if ($this->request->isAJAX()) {
+            $kode1 = $this->request->getPost('kode_1');
+            $db = \Config\Database::connect();
+            $kodeKlasifikasiOptions = $db->table('kode_arsip')
+                ->select('kode_klasifikasi')
+                ->distinct()
+                ->where('kode_1', $kode1)
+                ->get()
+                ->getResultArray();
+
+            // Debug CSRF token
+            // log_message('debug', 'New CSRF Token (getKodeKlasifikasi): ' . csrf_hash());
+
+            return $this->response
+                ->setHeader('X-CSRF-TOKEN', csrf_hash()) // Send new token
+                ->setJSON($kodeKlasifikasiOptions);
+        }
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    }
+
+    public function getKodeArsip()
+    {
+        // Get the selected 'kode_klasifikasi' from the request
+        $kodeKlasifikasi = $this->request->getPost('kode_klasifikasi');
+
+        // Assuming you have a model for the table, e.g., KodeArsipModel
+        $kodeArsipModel = new KodeArsipModel();
+
+        // Retrieve the 'kode_arsip' based on the selected 'kode_klasifikasi'
+        $result = $kodeArsipModel->where('kode_klasifikasi', $kodeKlasifikasi)->first();
+        $this->response->setHeader('X-CSRF-Token', csrf_hash());
+        // Return the result as JSON
+        if ($result) {
+            return $this->response->setJSON(['kode_arsip' => $result['kode']]);
+        } else {
+            return $this->response->setJSON(null);
+        }
     }
 
     function textToNumber3($text)
@@ -59,7 +146,18 @@ class Surat extends BaseController
 
     public function store()
     {
+        if ($this->request->getMethod() === 'post' && !$this->validate([
+            'csrf_token' => 'required|csrf_token'
+        ])) {
+            return redirect()->back()->with('error', 'Invalid CSRF token!');
+        }
+
+        $response = $this->response;
+        $response->setHeader('X-CSRF-TOKEN', csrf_hash());
+
         $model = new SuratModel();
+
+        $username = session()->get('username');
 
         $tanggal = $this->request->getPost('tanggal');
         list($year, $month, $day) = explode('-', $tanggal);
@@ -73,8 +171,9 @@ class Surat extends BaseController
             $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
         } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
             $tanggal = $this->request->getPost('tanggal');
+
             // Query to get the desired value
-            $builder = $this->db->table('kontrak');
+            $builder = $this->db->table('surat');
             $query = $builder->select('id, nomor_urut, nomor_sisip')
                 ->where('tanggal', $tanggal)
                 ->orderBy('nomor_urut', 'DESC')
@@ -105,6 +204,7 @@ class Surat extends BaseController
             'pert_berikut' => $this->request->getPost('pert_berikut'),
             'nomor_urut' => $nomor_urut,
             'nomor_sisip' => $nomor_sisip,
+            'created_by' => $username,
         ];
 
         if ($model->save($data)) {
@@ -114,18 +214,35 @@ class Surat extends BaseController
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data surat');
     }
 
-    public function edit($id)
+    public function edit($id, string $page = 'Kontrak | Edit')
     {
+        $response = $this->response;
+        $response->setHeader('X-CSRF-TOKEN', csrf_hash());
+
         $model = new SuratModel();
 
-        $data['surat'] = $model->find($id);
+        // Fetch the kontrak data by id
+        $surat = $model->find($id);
+        $data = ['surat' => $surat];
 
-        if (!$data['surat']) {
-            return view('templates/header')
-                . view('surat/edit', ['error' => 'Surat dengan nomor tersebut tidak ditemukan'])
-                . view('templates/footer');
+        // If kontrak data is not found, show error and redirect
+        if (!$surat) {
+            session()->setFlashdata('error', 'Data surat tidak ditemukan.');
+            return redirect()->to(base_url('/surat/manage'));
         }
 
+        // Fetch distinct 'jenis' options from the 'kode_arsip' table
+        $db = \Config\Database::connect();
+        $data['jenisOptions'] = $db->table('kode_arsip')
+            ->select('jenis')
+            ->distinct()
+            ->get()
+            ->getResultArray();
+
+        // Add title to the data array
+        $data['title'] = ucfirst($page);
+
+        // Return the view with all the data
         return view('templates/header')
             . view('surat/edit', $data)
             . view('templates/footer');
@@ -133,9 +250,20 @@ class Surat extends BaseController
 
     public function update($id)
     {
+        // CSRF validation
+        if ($this->request->getMethod() === 'post' && !$this->validate([
+            'csrf_token' => 'required|csrf_token'
+        ])) {
+            return redirect()->back()->with('error', 'Invalid CSRF token!');
+        }
+
+        // Set CSRF header
+        $response = $this->response;
+        $response->setHeader('X-CSRF-TOKEN', csrf_hash());
+
         $model = new SuratModel();
 
-        $builder = $this->db->table('kontrak');
+        $builder = $this->db->table('surat');
         $query = $builder->select('id, tanggal, jenis_penomoran, nomor_urut, nomor_sisip')
             ->where('id', $id)
             ->orderBy('nomor_urut', 'DESC')
@@ -144,6 +272,10 @@ class Surat extends BaseController
             ->get();
 
         $result = $query->getRow();
+        if (!$result) {
+            return redirect()->to(base_url('surat/manage'))->with('error', 'Surat not found.');
+        }
+
         $tanggal = $result->tanggal;
         list($year, $month, $day) = explode('-', $tanggal);
 
@@ -158,7 +290,7 @@ class Surat extends BaseController
             $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
         }
 
-        $model->update($id, [
+        $updateSuccessful = $model->update($id, [
             'kode_arsip' => $this->request->getPost('kode_arsip'),
             'alamat' => $this->request->getPost('alamat'),
             'ringkasan' => $this->request->getPost('ringkasan'),
@@ -168,7 +300,12 @@ class Surat extends BaseController
             'pert_berikut' => $this->request->getPost('pert_berikut'),
         ]);
 
-        return redirect()->to(base_url('surat/manage'));
+        // Check if update was successful and pass the appropriate message
+        if ($updateSuccessful) {
+            return redirect()->to(base_url('surat/manage'))->with('success', 'Surat updated successfully!');
+        } else {
+            return redirect()->to(base_url('surat/manage'))->with('error', 'Failed to update surat.');
+        }
     }
 
     public function delete($id)
