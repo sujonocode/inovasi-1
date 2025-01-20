@@ -39,6 +39,27 @@
     </div>
 <?php endif; ?>
 
+<!-- Confirmation Modal (Bootstrap) -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus data kontrak ini?
+            </div>
+            <div class="modal-footer">
+                <!-- Cancel Button -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <!-- Delete Button -->
+                <a id="confirmDeleteBtn" class="btn btn-danger" href="#">Hapus</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container my-5">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="text-center mb-4">Daftar Kontrak</h1>
@@ -80,27 +101,6 @@
                 <?php endif; ?>
             </tbody>
         </table>
-    </div>
-</div>
-
-<!-- Confirmation Modal (Bootstrap) -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Apakah Anda yakin ingin menghapus data kontrak ini?
-            </div>
-            <div class="modal-footer">
-                <!-- Cancel Button -->
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <!-- Delete Button -->
-                <a id="confirmDeleteBtn" class="btn btn-danger" href="#">Hapus</a>
-            </div>
-        </div>
     </div>
 </div>
 

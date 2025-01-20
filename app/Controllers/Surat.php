@@ -56,7 +56,7 @@ class Surat extends BaseController
             ->getResultArray();
 
         return view('templates/header')
-            . view('surat/create')
+            . view('surat/create', $data)
             . view('templates/footer');
     }
 
@@ -193,6 +193,7 @@ class Surat extends BaseController
         }
 
         $data = [
+            'jenis_penomoran' => $this->request->getPost('jenis_penomoran'),
             'tanggal' => $this->request->getPost('tanggal'),
             'alamat' => $this->request->getPost('alamat'),
             'ringkasan' => $this->request->getPost('ringkasan'),
@@ -214,7 +215,7 @@ class Surat extends BaseController
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data surat');
     }
 
-    public function edit($id, string $page = 'Kontrak | Edit')
+    public function edit($id, string $page = 'Surat | Edit')
     {
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());

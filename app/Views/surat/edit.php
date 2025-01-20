@@ -51,19 +51,13 @@
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="nomor" class="col-md-3 form-label">Nomor</label>
                             <div class="col-md-9">
-                                <input id="tanggal" type="text" name="nomor" class="form-control" value="<?= $surat['nomor'] ?>" required disabled>
+                                <input id="tanggal" type="text" name="nomor" class="form-control" value="<?= $surat['pert_dahulu'] ?>" required disabled>
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="tanggal" class="col-md-3 form-label">Tanggal</label>
                             <div class="col-md-9">
                                 <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $surat['tanggal'] ?>" required disabled>
-                            </div>
-                        </div>
-                        <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="tanggal" class="col-md-3 form-label">Tanggal</label>
-                            <div class="col-md-9">
-                                <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $surat['tanggal'] ?>" required>
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">

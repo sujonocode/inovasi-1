@@ -44,7 +44,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="form-section">
-                <h2 class="text-center mb-4">Formulir Edit Jadwal Reminder Humas</h2>
+                <h2 class="text-center mb-4">Ubah Data SK</h2>
                 <?php if (isset($sk)): ?>
                     <form onsubmit="return validateCheckboxes()" action="<?= base_url('sk/update/' . $sk['id']) ?>" method="POST">
                         <?= csrf_field() ?>

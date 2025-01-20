@@ -39,6 +39,27 @@
     </div>
 <?php endif; ?>
 
+<!-- Confirmation Modal (Bootstrap) -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus data surat ini?
+            </div>
+            <div class="modal-footer">
+                <!-- Cancel Button -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <!-- Delete Button -->
+                <a id="confirmDeleteBtn" class="btn btn-danger" href="#">Hapus</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container my-5">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="text-center mb-4">Daftar Surat</h1>
@@ -72,8 +93,7 @@
                             <td>
                                 <a href=<?= $surat['url'] ?>><i class="fa-solid fa-eye" title="Lihat"></i></a>
                                 <a href="/surat/edit/<?= $surat['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
-                                <a href="/surat/delete/<?= $surat['id'] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data surat ini?');"><i class="fa-solid fa-trash" title="Hapus"></i></a>
-
+                                <a href="#" onclick="openDeleteModal(<?= $surat['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -86,6 +106,19 @@
         </table>
     </div>
 </div>
+
+<script>
+    // Open the modal and set the delete URL dynamically
+    function openDeleteModal(suratId) {
+        // Set the URL for deletion dynamically
+        const deleteUrl = "/surat/delete/" + suratId;
+        document.getElementById('confirmDeleteBtn').href = deleteUrl;
+
+        // Show the modal
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show();
+    }
+</script>
 
 <script>
     $(document).ready(function() {

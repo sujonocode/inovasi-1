@@ -33,7 +33,7 @@ class AuthFilter implements FilterInterface
 
         // Redirect unauthenticated users to the login page
         if (!$session->get('isLoggedIn')) {
-            return redirect()->to(base_url('/login'))->with('error', 'You must log in first to access this page.');
+            return redirect()->to(base_url('/login'))->with('error', 'Anda harus masuk terlebih dahulu untuk mengakses halaman ini.');
         }
     }
 

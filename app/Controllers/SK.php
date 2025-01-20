@@ -37,7 +37,7 @@ class SK extends BaseController
             . view('templates/footer');
     }
 
-    public function create(string $page = 'Kontrak | Tambah')
+    public function create(string $page = 'SK | Tambah')
     {
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
@@ -56,7 +56,7 @@ class SK extends BaseController
             ->getResultArray();
 
         return view('templates/header')
-            . view('sk/create')
+            . view('sk/create', $data)
             . view('templates/footer');
     }
 
@@ -194,7 +194,7 @@ class SK extends BaseController
 
         $data = [
             'tanggal' => $this->request->getPost('tanggal'),
-            'nomor' => $this->request->getPost('nomor'),
+            'jenis_penomoran' => $this->request->getPost('jenis_penomoran'),
             'kode_arsip' => $this->request->getPost('kode_arsip'),
             'perihal' => $this->request->getPost('perihal'),
             'catatan' => $this->request->getPost('catatan'),
@@ -212,18 +212,18 @@ class SK extends BaseController
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data SK');
     }
 
-    public function edit($id, string $page = 'Kontrak | Edit')
+    public function edit($id, string $page = 'SK | Edit')
     {
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
 
         $model = new SKModel();
 
-        // Fetch the kontrak data by id
+        // Fetch the sk data by id
         $sk = $model->find($id);
         $data = ['sk' => $sk];
 
-        // If kontrak data is not found, show error and redirect
+        // If sk data is not found, show error and redirect
         if (!$sk) {
             session()->setFlashdata('error', 'Data sk tidak ditemukan.');
             return redirect()->to(base_url('/sk/manage'));
@@ -277,6 +277,7 @@ class SK extends BaseController
         $tanggal = $result->tanggal;
         list($year, $month, $day) = explode('-', $tanggal);
 
+        $nomor = '';
         if ($result->jenis_penomoran == 'urut') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
             $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
@@ -292,7 +293,7 @@ class SK extends BaseController
             'perihal' => $this->request->getPost('perihal'),
             'catatan' => $this->request->getPost('catatan'),
             'url' => $this->request->getPost('url'),
-            'nomor' => $this->request->$nomor,
+            'nomor' => $nomor,
         ]);
 
         // Check if update was successful and pass the appropriate message
