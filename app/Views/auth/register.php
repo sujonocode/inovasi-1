@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
     <style>
         body {
-            background: url('https://ppid.bps.go.id/upload/img/bps-baru_1643968985122.jpg') no-repeat center center fixed;
+            background: url(<?= base_url('/assets/image/bps_pixelcut.jpeg') ?>) no-repeat center center fixed;
             background-size: cover;
         }
 
@@ -22,10 +22,16 @@
         a {
             color: #0d6efd;
             text-decoration: none;
+            /* Ensures all links are not underlined */
         }
 
         a:hover {
             text-decoration: underline;
+        }
+
+        a.btn {
+            text-decoration: none;
+            /* Ensures the button link is not underlined */
         }
     </style>
 </head>
@@ -34,7 +40,10 @@
 
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="card shadow-sm p-4" style="width: 100%; max-width: 400px;">
-            <h2 class="text-center mb-4">Register</h2>
+            <!-- Conditional title -->
+            <h2 class="text-center mb-4">
+                <?= session()->get('isLoggedIn') ? 'Daftarkan Pengguna Baru' : 'Daftar' ?>
+            </h2>
             <form method="POST" action="<?= base_url('/register') ?>">
                 <?= csrf_field() ?>
                 <div class="mb-3">
@@ -60,16 +69,20 @@
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Daftar</button>
             </form>
-            <div class="text-center mt-3">
-                <p>Already have an account? <a href="<?= base_url('/login') ?>">Masuk</a></p>
-            </div>
+            <?php if (!session()->get('isLoggedIn')): ?>
+                <div class="text-center mt-3">
+                    <p>Sudah mempunyai akun? <a href="<?= base_url('/login') ?>">Masuk Sekarang</a></p>
+                </div>
+            <?php endif; ?>
+            <?php if (session()->get('isLoggedIn')): ?>
+                <div class="text-center mt-4">
+                    <button class="btn btn-secondary w-100" onclick="window.location.href='<?= base_url('/') ?>'">Beranda</button>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        if (<?= session('role') ?> == )
-    </script>
 </body>
 
 </html>

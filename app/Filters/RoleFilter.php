@@ -13,12 +13,12 @@ class RoleFilter implements FilterInterface
         $session = session();
 
         if (!$session->get('isLoggedIn')) {
-            return redirect()->to('/login')->with('error', 'You must log in first.');
+            return redirect()->to(base_url('/login'))->with('error', 'Anda harus login terlebih dahulu.');
         }
 
         if ($arguments && !in_array($session->get('role'), $arguments)) {
             // Redirect to custom unauthorized page
-            return redirect()->to('/unauthorized')->with(
+            return redirect()->to(base_url('/unauthorized'))->with(
                 'error',
                 'Access denied: insufficient privileges.'
             );

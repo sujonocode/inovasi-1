@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 
-class AdminController extends Controller
+class Admin extends Controller
 {
     public function index()
     {

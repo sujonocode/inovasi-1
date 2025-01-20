@@ -12,7 +12,7 @@
                     <?= session()->getFlashdata('error'); ?>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
                     <?= session()->getFlashdata('success'); ?>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
@@ -68,7 +68,8 @@
                             <td>
                                 <a href=<?= $kontrak['url'] ?>><i class="fa-solid fa-eye" title="Lihat"></i></a>
                                 <a href="/kontrak/edit/<?= $kontrak['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
-                                <a href="/kontrak/delete/<?= $kontrak['id'] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data kontrak ini?');"><i class="fa-solid fa-trash" title="Hapus"></i></a>
+                                <!-- <a href="/kontrak/delete/< ?= $kontrak['id'] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data kontrak ini?');"><i class="fa-solid fa-trash" title="Hapus"></i></a> -->
+                                <a href="#" onclick="openDeleteModal(<?= $kontrak['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -81,6 +82,40 @@
         </table>
     </div>
 </div>
+
+<!-- Confirmation Modal (Bootstrap) -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus data kontrak ini?
+            </div>
+            <div class="modal-footer">
+                <!-- Cancel Button -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <!-- Delete Button -->
+                <a id="confirmDeleteBtn" class="btn btn-danger" href="#">Hapus</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Open the modal and set the delete URL dynamically
+    function openDeleteModal(kontrakId) {
+        // Set the URL for deletion dynamically
+        const deleteUrl = "/kontrak/delete/" + kontrakId;
+        document.getElementById('confirmDeleteBtn').href = deleteUrl;
+
+        // Show the modal
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show();
+    }
+</script>
 
 <script>
     $(document).ready(function() {

@@ -48,7 +48,7 @@
         <p><?= session('error') ?: 'You do not have permission to view this page.' ?></p>
         <h1>Access Denied</h1>
         <p>You do not have permission to view this page.</p>
-        <a href="/dashboard">Go back to Dashboard</a>
+        <a href="/">Kembali ke beranda</a>
     </div>
 </body>
 

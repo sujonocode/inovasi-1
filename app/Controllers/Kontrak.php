@@ -26,29 +26,6 @@ class Kontrak extends BaseController
             . view('kontrak/index', $data)
             . view('templates/footer');
     }
-    // public function index(string $page = 'Manajemen Dokumen | Kontrak')
-    // {
-    //     $model = new KontrakModel();
-
-    //     // Set up the data array
-    //     $data = [
-    //         'title' => ucfirst($page),
-    //         'kontraks' => $model->findAll(),
-    //     ];
-
-    //     // Fetch distinct 'jenis' options from the 'kode_arsip' table
-    //     $db = \Config\Database::connect();
-    //     $data['jenisOptions'] = $db->table('kode_arsip')
-    //         ->select('jenis')
-    //         ->distinct()
-    //         ->get()
-    //         ->getResultArray();
-
-    //     // Pass the complete $data array to the view
-    //     return view('templates/header')
-    //         . view('kontrak/index', $data)
-    //         . view('templates/footer');
-    // }
 
     public function manage()
     {
@@ -64,6 +41,7 @@ class Kontrak extends BaseController
     {
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
+
         // Set up the data array
         $data = [
             'title' => ucfirst($page),
@@ -118,7 +96,7 @@ class Kontrak extends BaseController
                 ->getResultArray();
 
             // Debug CSRF token
-            log_message('debug', 'New CSRF Token (getKodeKlasifikasi): ' . csrf_hash());
+            // log_message('debug', 'New CSRF Token (getKodeKlasifikasi): ' . csrf_hash());
 
             return $this->response
                 ->setHeader('X-CSRF-TOKEN', csrf_hash()) // Send new token
@@ -145,9 +123,6 @@ class Kontrak extends BaseController
             return $this->response->setJSON(null);
         }
     }
-
-
-
 
     function textToNumber3($text)
     {
@@ -176,11 +151,17 @@ class Kontrak extends BaseController
         ])) {
             return redirect()->back()->with('error', 'Invalid CSRF token!');
         }
+
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
+
         $model = new KontrakModel();
-        log_message('debug', 'CSRF Token from Form: ' . $this->request->getPost('csrf_token_name'));
-        log_message('debug', 'CSRF Token from Session: ' . session()->get('csrf_token_name'));
+
+        $username = session()->get('username');
+
+        // log_message('debug', 'CSRF Token from Form: ' . $this->request->getPost('csrf_token_name'));
+        // log_message('debug', 'CSRF Token from Session: ' . session()->get('csrf_token_name'));
+
         $tanggal = $this->request->getPost('tanggal');
         list($year, $month, $day) = explode('-', $tanggal);
 
@@ -193,6 +174,7 @@ class Kontrak extends BaseController
             $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
         } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
             $tanggal = $this->request->getPost('tanggal');
+
             // Query to get the desired value
             $builder = $this->db->table('kontrak');
             $query = $builder->select('id, nomor_urut, nomor_sisip')
@@ -224,8 +206,11 @@ class Kontrak extends BaseController
             'nomor' => $nomor,
             'nomor_urut' => $nomor_urut,
             'nomor_sisip' => $nomor_sisip,
+            'created_by' => $username,
         ];
-        log_message('debug', 'CSRF Token from POST: ' . $this->request->getPost('_csrf'));
+
+        // log_message('debug', 'CSRF Token from POST: ' . $this->request->getPost('_csrf'));
+
         if ($model->save($data)) {
             return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil disimpan');
         }
@@ -233,25 +218,103 @@ class Kontrak extends BaseController
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data kontrak');
     }
 
-    public function edit($id)
+    public function edit($id, string $page = 'Kontrak | Tambah')
     {
+        $response = $this->response;
+        $response->setHeader('X-CSRF-TOKEN', csrf_hash());
+
         $model = new KontrakModel();
 
-        $data['kontrak'] = $model->find($id);
+        // Fetch the kontrak data by id
+        $kontrak = $model->find($id);
+        $data = ['kontrak' => $kontrak];
 
-        if (!$data['kontrak']) {
-            return view('templates/header')
-                . view('kontrak/edit', ['error' => 'Kontrak dengan nomor tersebut tidak ditemukan'])
-                . view('templates/footer');
+        // If kontrak data is not found, show error and redirect
+        if (!$kontrak) {
+            session()->setFlashdata('error', 'Data kontrak tidak ditemukan.');
+            return redirect()->to('/kontrak/manage');
         }
 
+        // Fetch distinct 'jenis' options from the 'kode_arsip' table
+        $db = \Config\Database::connect();
+        $data['jenisOptions'] = $db->table('kode_arsip')
+            ->select('jenis')
+            ->distinct()
+            ->get()
+            ->getResultArray();
+
+        // Add title to the data array
+        $data['title'] = ucfirst($page);
+
+        // Return the view with all the data
         return view('templates/header')
             . view('kontrak/edit', $data)
             . view('templates/footer');
     }
 
+
+    // public function update($id)
+    // {
+    //     if ($this->request->getMethod() === 'post' && !$this->validate([
+    //         'csrf_token' => 'required|csrf_token'
+    //     ])) {
+    //         return redirect()->back()->with('error', 'Invalid CSRF token!');
+    //     }
+
+    //     $response = $this->response;
+    //     $response->setHeader('X-CSRF-TOKEN', csrf_hash());
+
+    //     $model = new KontrakModel();
+
+    //     $builder = $this->db->table('kontrak');
+    //     $query = $builder->select('id, tanggal, jenis_penomoran, nomor_urut, nomor_sisip')
+    //         ->where('id', $id)
+    //         ->orderBy('nomor_urut', 'DESC')
+    //         ->orderBy('nomor_sisip', 'DESC')
+    //         ->limit(1)
+    //         ->get();
+
+    //     $result = $query->getRow();
+    //     $tanggal = $result->tanggal;
+    //     list($year, $month, $day) = explode('-', $tanggal);
+
+    //     if ($result->jenis_penomoran == 'urut') {
+    //         $nomor_urut_text = $this->numberToText3($result->nomor_urut);
+
+    //         $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+    //     } elseif ($result->jenis_penomoran == 'sisip') {
+    //         $nomor_urut_text = $this->numberToText3($result->nomor_urut);
+    //         $nomor_sisip_text = $this->numberToText2($result->nomor_sisip);
+
+    //         $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+    //     }
+
+    //     $model->update($id, [
+    //         'kode_arsip' => $this->request->getPost('kode_arsip'),
+    //         'ket' => $this->request->getPost('ket'),
+    //         'uraian' => $this->request->getPost('uraian'),
+    //         'catatan' => $this->request->getPost('catatan'),
+    //         'url' => $this->request->getPost('url'),
+    //         'nomor' => $nomor,
+    //     ]);
+
+    //     return redirect()->to(base_url('kontrak/manage'))->with('error', 'Contract not found.');;
+    // }
+
     public function update($id)
     {
+        // CSRF validation
+        if ($this->request->getMethod() === 'post' && !$this->validate([
+            'csrf_token' => 'required|csrf_token'
+        ])) {
+            return redirect()->back()->with('error', 'Invalid CSRF token!');
+        }
+
+        // Set CSRF header
+        $response = $this->response;
+        $response->setHeader('X-CSRF-TOKEN', csrf_hash());
+
+        // Initialize model and get the data to be updated
         $model = new KontrakModel();
 
         $builder = $this->db->table('kontrak');
@@ -263,21 +326,25 @@ class Kontrak extends BaseController
             ->get();
 
         $result = $query->getRow();
+        if (!$result) {
+            return redirect()->to(base_url('kontrak/manage'))->with('error', 'Contract not found.');
+        }
+
+        // Prepare the contract number based on the type of numbering (urut or sisip)
         $tanggal = $result->tanggal;
         list($year, $month, $day) = explode('-', $tanggal);
 
         if ($result->jenis_penomoran == 'urut') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
-
             $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
         } elseif ($result->jenis_penomoran == 'sisip') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
             $nomor_sisip_text = $this->numberToText2($result->nomor_sisip);
-
             $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
         }
 
-        $model->update($id, [
+        // Perform the update
+        $updateSuccessful = $model->update($id, [
             'kode_arsip' => $this->request->getPost('kode_arsip'),
             'ket' => $this->request->getPost('ket'),
             'uraian' => $this->request->getPost('uraian'),
@@ -286,7 +353,12 @@ class Kontrak extends BaseController
             'nomor' => $nomor,
         ]);
 
-        return redirect()->to(base_url('kontrak/manage'));
+        // Check if update was successful and pass the appropriate message
+        if ($updateSuccessful) {
+            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Contract updated successfully!');
+        } else {
+            return redirect()->to(base_url('kontrak/manage'))->with('error', 'Failed to update contract.');
+        }
     }
 
     public function delete($id)

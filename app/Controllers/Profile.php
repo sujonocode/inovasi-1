@@ -11,10 +11,12 @@ class Profile extends BaseController
         $userModel = new UserModel();
         $user = $userModel->find(session('user_id'));
 
-        return view('profile/index', [
-            'title' => 'Profile',
-            'user' => $user,
-        ]);
+        return view('templates/header')
+            . view('profile/index', [
+                'title' => 'Profile',
+                'user' => $user,
+            ])
+            . view('templates/footer');
     }
 
     public function updateProfile()
@@ -24,7 +26,7 @@ class Profile extends BaseController
 
         // Validate input
         $rules = [
-            'name' => 'required|min_length[3]|max_length[255]',
+            // 'name' => 'required|min_length[3]|max_length[255]',
             'email' => 'required|valid_email',
         ];
 
@@ -34,7 +36,7 @@ class Profile extends BaseController
 
         // Update user data
         $userModel->update($userId, [
-            'name' => $this->request->getPost('name'),
+            // 'name' => $this->request->getPost('name'),
             'email' => $this->request->getPost('email'),
         ]);
 

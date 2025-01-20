@@ -42,7 +42,9 @@ $routes->group('', ['filter' => 'role:admin,user'], function ($routes) {
 });
 
 $routes->group('', ['filter' => 'role:admin'], function ($routes) {
-    $routes->get('/admin', 'AdminController::index');
+    $routes->get('/admin_dashboard', 'Admin::index');
+    $routes->get('/register', 'AuthController::register');
+    $routes->post('/register', 'AuthController::storeUser');
 });
 
 $routes->group('', ['filter' => 'auth'], function ($routes) {
@@ -74,16 +76,9 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/kontrak/update/(:num)', 'Kontrak::update/$1');
     $routes->get('/kontrak/delete/(:num)', 'Kontrak::delete/$1');
 
-    // $routes->get('/form', 'FormController::index');
-    // $routes->post('/form/getKode1', 'FormController::getKode1');
-    // $routes->post('/form/getKodeKlasifikasi', 'FormController::getKodeKlasifikasi');
-    // $routes->post('form/submitForm', 'FormController::submitForm');
     $routes->post('/kontrak/create/getKode1', 'FormController::getKode1');
     $routes->post('/kontrak/create/getKodeKlasifikasi', 'FormController::getKodeKlasifikasi');
-    // $routes->post('/kontrak/create/getKodeArsip', 'Kontrak::getKodeArsip');
     $routes->post('kontrak/create/getKodeArsip', 'Kontrak::getKodeArsip');
-
-    // $routes->post('form/submitForm', 'FormController::submitForm');
 
     $routes->get('/humas', [Humas::class, 'index']);
     $routes->get('/humas/manage', 'Humas::manage');
@@ -101,7 +96,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/kendala/update/(:num)', 'Kendala::maintenance');
     $routes->get('/kendala/delete/(:num)', 'Kendala::maintenance');
 
-    $routes->get('sbml', [Sbml::class, 'maintenance']);
+    $routes->get('/sbml', [Sbml::class, 'maintenance']);
     $routes->get('/sbml/manage', 'Sbml::maintenance');
     $routes->get('/sbml/create', 'Sbml::maintenance');
     $routes->post('/sbml/store', 'Sbml::maintenance');
@@ -141,8 +136,8 @@ $routes->post('/profile/change-password', 'Profile::changePassword', ['filter' =
 
 $routes->get('/login', 'AuthController::login');
 $routes->post('/login', 'AuthController::authenticate');
-$routes->get('/register', 'AuthController::register');
-$routes->post('/register', 'AuthController::storeUser');
+// $routes->get('/register', 'AuthController::register');
+// $routes->post('/register', 'AuthController::storeUser');
 $routes->get('/logout', 'AuthController::logout');
 $routes->get('/unauthorized', function () {
     return view('errors/unauthorized');

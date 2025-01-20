@@ -97,13 +97,25 @@
                             <li><a class="dropdown-item" href="<?= base_url('tracking/manage') ?>">Manage</a></li>
                         </ul>
                     </li>
+                    <!-- < ?php if (session()->get('role') == 'admin'): ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="< ?= base_url('tracking') ?>" id="trackingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                            <ul class="dropdown-menu" aria-labelledby="trackingDropdown">
+                                <li><a class="dropdown-item" href="< ?= base_url('tracking') ?>">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="< ?= base_url('tracking/manage') ?>">Manage</a></li>
+                            </ul>
+                        </li>
+                    < ?php endif; ?> -->
                     <!-- User dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-user"></i> <?= session()->get('username') ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('profile') ?>">Profile</a></li>
+                            <?php if (session()->get('role') == 'admin'): ?>
+                                <li><a class="dropdown-item" href="<?= base_url('profile') ?>">Profile</a></li>
+                            <?php endif; ?>
+                            <li><a class="dropdown-item" href="<?= base_url('/admin_dashboard') ?>">Admin Dashboard</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
