@@ -22,17 +22,19 @@ class SK extends BaseController
         $data['title'] = ucfirst($page);
         $data['sks'] = $model->findAll();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('sk/index', $data)
             . view('templates/footer');
     }
 
-    public function manage()
+    public function manage(string $page = 'SK | Manage')
     {
         $model = new SKModel();
+
+        $data['title'] = ucfirst($page);
         $data['sks'] = $model->findAll();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('sk/manage', $data)
             . view('templates/footer');
     }
@@ -55,7 +57,7 @@ class SK extends BaseController
             ->get()
             ->getResultArray();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('sk/create', $data)
             . view('templates/footer');
     }
@@ -222,6 +224,7 @@ class SK extends BaseController
         // Fetch the sk data by id
         $sk = $model->find($id);
         $data = ['sk' => $sk];
+        $data['title'] = ucfirst('SK | Edit');
 
         // If sk data is not found, show error and redirect
         if (!$sk) {
@@ -333,7 +336,7 @@ class SK extends BaseController
     {
         $data['title'] = ucfirst($page);
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('pages/maintenance', $data)
             . view('templates/footer');
     }

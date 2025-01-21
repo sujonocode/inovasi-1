@@ -6,12 +6,14 @@ use App\Models\UserModel;
 
 class Profile extends BaseController
 {
-    public function index()
+    public function index(string $page = 'Profile')
     {
         $userModel = new UserModel();
         $user = $userModel->find(session('user_id'));
 
-        return view('templates/header')
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
             . view('profile/index', [
                 'title' => 'Profile',
                 'user' => $user,

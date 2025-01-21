@@ -8,32 +8,36 @@ use DateTimeZone;
 
 class Kendala extends BaseController
 {
-    public function index(string $page = 'Manajemen Dokumen | Kendala')
+    public function index(string $page = 'Kendala')
     {
         $model = new KendalaModel();
 
         $data['title'] = ucfirst($page);
         $data['kendalas'] = $model->findAll();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('kendala/index', $data)
             . view('templates/footer');
     }
 
-    public function manage()
+    public function manage(string $page = 'Kendala | Manage')
     {
         $model = new KendalaModel();
+
+        $data['title'] = ucfirst($page);
         $data['kendalas'] = $model->findAll();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('kendala/manage', $data)
             . view('templates/footer');
     }
 
-    public function create()
+    public function create(string $page = 'Kendala | Create')
     {
-        return view('templates/header')
-            . view('kendala/create')
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('kendala/create', $data)
             . view('templates/footer');
     }
 
@@ -62,6 +66,7 @@ class Kendala extends BaseController
         $model = new KendalaModel();
 
         $data['kendala'] = $model->find($id);
+        $data['title'] = ucfirst('Kendala | Edit');
 
         if (!$data['kendala']) {
             return view('templates/header')
@@ -69,7 +74,7 @@ class Kendala extends BaseController
                 . view('templates/footer');
         }
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('kendala/edit', $data)
             . view('templates/footer');
     }
@@ -114,11 +119,11 @@ class Kendala extends BaseController
             . view('templates/footer');
     }
 
-    public function maintenance(string $page = 'Maintenance')
+    public function maintenance(string $page = 'Kendala | Maintenance')
     {
         $data['title'] = ucfirst($page);
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('pages/maintenance', $data)
             . view('templates/footer');
     }

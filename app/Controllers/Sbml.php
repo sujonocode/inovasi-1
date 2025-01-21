@@ -8,31 +8,35 @@ use DateTimeZone;
 
 class Sbml extends BaseController
 {
-    public function index(string $page = 'Manajemen Dokumen | Sbml')
+    public function index(string $page = 'Sbml')
     {
         $model = new SbmlModel();
 
         $data['title'] = ucfirst($page);
         $data['sbmls'] = $model->findAll();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('sbml/index', $data)
             . view('templates/footer');
     }
 
-    public function manage()
+    public function manage(string $page = 'SBML | Manage')
     {
         $model = new SbmlModel();
+
+        $data['title'] = ucfirst($page);
         $data['sbmls'] = $model->findAll();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('sbml/manage', $data)
             . view('templates/footer');
     }
 
-    public function create()
+    public function create(string $page = 'SBML | Create')
     {
-        return view('templates/header')
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
             . view('sbml/create')
             . view('templates/footer');
     }
@@ -62,6 +66,7 @@ class Sbml extends BaseController
         $model = new SbmlModel();
 
         $data['sbml'] = $model->find($id);
+        $data['title'] = ucfirst('SBML | Edit');
 
         if (!$data['sbml']) {
             return view('templates/header')
@@ -69,7 +74,7 @@ class Sbml extends BaseController
                 . view('templates/footer');
         }
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('sbml/edit', $data)
             . view('templates/footer');
     }
@@ -114,11 +119,11 @@ class Sbml extends BaseController
             . view('templates/footer');
     }
 
-    public function maintenance(string $page = 'Maintenance')
+    public function maintenance(string $page = 'SBML | Maintenance')
     {
         $data['title'] = ucfirst($page);
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('pages/maintenance', $data)
             . view('templates/footer');
     }

@@ -15,26 +15,29 @@ class Humas extends BaseController
         $data['title'] = ucfirst($page);
         $data['jadwalKontens'] = $model->findAll();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('humas/index', $data)
             . view('templates/footer');
     }
 
-    public function manage()
+    public function manage(string $page = 'Humas | Manage')
     {
         $model = new JadwalKontenModel();
 
+        $data['title'] = ucfirst($page);
         $data['jadwalKontens'] = $model->findAll();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('humas/manage', $data)
             . view('templates/footer');
     }
 
-    public function create()
+    public function create(string $page = 'Humas | Create')
     {
-        return view('templates/header')
-            . view('humas/create')
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('humas/create', $data)
             . view('templates/footer');
     }
 
@@ -167,6 +170,7 @@ class Humas extends BaseController
         $model = new JadwalKontenModel();
 
         $data['jadwalKonten'] = $model->find($id);
+        $data['title'] = ucfirst('Humas | Edit');
 
         // If the record doesn't exist, show an error message on the edit page
         if (!$data['jadwalKonten']) {
@@ -177,7 +181,7 @@ class Humas extends BaseController
         }
 
         // If the record exists, load the edit form
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('humas/edit', $data)
             . view('templates/footer');
     }
@@ -240,11 +244,11 @@ class Humas extends BaseController
             . view('templates/footer');
     }
 
-    public function maintenance(string $page = 'Maintenance')
+    public function maintenance(string $page = 'Humas | Maintenance')
     {
         $data['title'] = ucfirst($page);
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('pages/maintenance', $data)
             . view('templates/footer');
     }

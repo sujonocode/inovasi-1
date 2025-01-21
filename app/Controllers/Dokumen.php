@@ -33,7 +33,7 @@ class Dokumen extends BaseController
                 ->findAll(),
         ];
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('dokumen/index', $data)
             . view('templates/footer');
     }

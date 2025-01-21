@@ -22,22 +22,24 @@ class Surat extends BaseController
         $data['title'] = ucfirst($page);
         $data['surats'] = $model->findAll();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('surat/index', $data)
             . view('templates/footer');
     }
 
-    public function manage()
+    public function manage(string $page = 'Surat | Manage')
     {
         $model = new SuratModel();
+
+        $data['title'] = ucfirst($page);
         $data['surats'] = $model->findAll();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('surat/manage', $data)
             . view('templates/footer');
     }
 
-    public function create(string $page = 'Kontrak | Tambah')
+    public function create(string $page = 'Surat | Create')
     {
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
@@ -55,7 +57,7 @@ class Surat extends BaseController
             ->get()
             ->getResultArray();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('surat/create', $data)
             . view('templates/footer');
     }
@@ -225,6 +227,7 @@ class Surat extends BaseController
         // Fetch the kontrak data by id
         $surat = $model->find($id);
         $data = ['surat' => $surat];
+        $data['title'] = ucfirst('Surat | Edit');
 
         // If kontrak data is not found, show error and redirect
         if (!$surat) {
@@ -244,7 +247,7 @@ class Surat extends BaseController
         $data['title'] = ucfirst($page);
 
         // Return the view with all the data
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('surat/edit', $data)
             . view('templates/footer');
     }
@@ -338,7 +341,7 @@ class Surat extends BaseController
     {
         $data['title'] = ucfirst($page);
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('pages/maintenance', $data)
             . view('templates/footer');
     }

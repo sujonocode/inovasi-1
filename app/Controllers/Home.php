@@ -15,8 +15,8 @@ class Home extends BaseController
         }
 
         return
-            view('templates/header')
-            . view('index', $data)
+            view('templates/header', $data)
+            . view('index')
             . view('templates/footer');
     }
 }

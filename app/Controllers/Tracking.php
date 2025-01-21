@@ -8,31 +8,35 @@ use DateTimeZone;
 
 class Tracking extends BaseController
 {
-    public function index(string $page = 'Manajemen Dokumen | Tracking')
+    public function index(string $page = 'Tracking')
     {
         $model = new TrackingModel();
 
         $data['title'] = ucfirst($page);
         $data['trackings'] = $model->findAll();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('tracking/index', $data)
             . view('templates/footer');
     }
 
-    public function manage()
+    public function manage(string $page = 'Tracking | Create')
     {
         $model = new TrackingModel();
+
+        $data['title'] = ucfirst($page);
         $data['trackings'] = $model->findAll();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('tracking/manage', $data)
             . view('templates/footer');
     }
 
-    public function create()
+    public function create(string $page = 'Tracking | Create')
     {
-        return view('templates/header')
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
             . view('tracking/create')
             . view('templates/footer');
     }
@@ -62,6 +66,7 @@ class Tracking extends BaseController
         $model = new TrackingModel();
 
         $data['tracking'] = $model->find($id);
+        $data['title'] = ucfirst('Tracking | Edit');
 
         if (!$data['tracking']) {
             return view('templates/header')
@@ -69,7 +74,7 @@ class Tracking extends BaseController
                 . view('templates/footer');
         }
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('tracking/edit', $data)
             . view('templates/footer');
     }
@@ -114,11 +119,11 @@ class Tracking extends BaseController
             . view('templates/footer');
     }
 
-    public function maintenance(string $page = 'Maintenance')
+    public function maintenance(string $page = 'Tracking | Maintenance')
     {
         $data['title'] = ucfirst($page);
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('pages/maintenance', $data)
             . view('templates/footer');
     }

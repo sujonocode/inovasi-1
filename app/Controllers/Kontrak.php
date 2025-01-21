@@ -22,22 +22,24 @@ class Kontrak extends BaseController
         $data['title'] = ucfirst($page);
         $data['kontraks'] = $model->findAll();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('kontrak/index', $data)
             . view('templates/footer');
     }
 
-    public function manage()
+    public function manage(string $page = 'Kontrak | Manage')
     {
         $model = new KontrakModel();
+
+        $data['title'] = ucfirst($page);
         $data['kontraks'] = $model->findAll();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('kontrak/manage', $data)
             . view('templates/footer');
     }
 
-    public function create(string $page = 'Kontrak | Tambah')
+    public function create(string $page = 'Kontrak | Create')
     {
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
@@ -55,7 +57,7 @@ class Kontrak extends BaseController
             ->get()
             ->getResultArray();
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('kontrak/create', $data)
             . view('templates/footer');
     }
@@ -228,6 +230,7 @@ class Kontrak extends BaseController
         // Fetch the kontrak data by id
         $kontrak = $model->find($id);
         $data = ['kontrak' => $kontrak];
+        $data['title'] = ucfirst('Kontrak | Edit');
 
         // If kontrak data is not found, show error and redirect
         if (!$kontrak) {
@@ -247,7 +250,7 @@ class Kontrak extends BaseController
         $data['title'] = ucfirst($page);
 
         // Return the view with all the data
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('kontrak/edit', $data)
             . view('templates/footer');
     }
@@ -386,11 +389,11 @@ class Kontrak extends BaseController
             . view('templates/footer');
     }
 
-    public function maintenance(string $page = 'Maintenance')
+    public function maintenance(string $page = 'Kontrak | Maintenance')
     {
         $data['title'] = ucfirst($page);
 
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('pages/maintenance', $data)
             . view('templates/footer');
     }
