@@ -6,6 +6,9 @@
                 <a href="<?= base_url("sk/create") ?>" class="btn btn-primary btn-sm" title="Tambah SK Baru">
                     <i class="fa-solid fa-plus"></i> Tambah
                 </a>
+                <!-- <a href="< ?= base_url("sk/create") ?>" class="btn btn-primary btn-sm" title="Tambah SK Baru">
+                    <i class="fa-solid fa-plus"></i> Tambah
+                </a> -->
             </div>
         </div>
         <div class="card-body">
@@ -29,7 +32,7 @@
                                     <td><?= $sk['perihal'] ?></td>
                                     <td><?= $sk['catatan'] ?></td>
                                     <td>
-                                        <a href="javascript:void(0);" onclick="handleLinkClick('<?= $sk['url'] ?>')"><i class="fa-solid fa-eye" title="Lihat"></i></a>
+                                        <a href=<?= $sk['url'] ?>><i class="fa-solid fa-eye" title="Lihat"></i></a>
                                         <a href="/sk/edit/<?= $sk['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
                                         <a href="#" onclick="openDeleteModal(<?= $sk['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
                                     </td>
@@ -88,64 +91,6 @@
     </div>
 <?php endif; ?>
 
-<?php if (session()->getFlashdata('limited')): ?>
-    <!-- Success Pop-up Modal -->
-    <div class="modal fade" id="limitedModal" tabindex="-1" aria-labelledby="limitedModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="limitedModalLabel">Limited</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <?= session()->getFlashdata('limited'); ?>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif; ?>
-
-<!-- Modal when click eye -->
-<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="limitedModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="limitedModalLabel">Limited</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p id="modal-message"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    // Function to handle the link click event
-    function handleLinkClick(url) {
-        const modalMessage = document.getElementById('modal-message');
-        const modal = new bootstrap.Modal(document.getElementById('modal')); // Initialize Bootstrap modal
-
-        if (url.trim() === '') {
-            // If URL is empty, show modal with "link empty" message
-            modalMessage.innerText = 'Link empty';
-        } else {
-            // If URL is not empty, open the link in a new tab
-            window.open(url, '_blank');
-            return; // Prevent the modal from showing when the link is opened
-        }
-
-        // Show the modal
-        modal.show();
-    }
-</script>
-
 <!-- Confirmation Modal (Bootstrap) -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -161,40 +106,66 @@
                 <!-- Cancel Button -->
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                 <!-- Delete Button -->
-                <button id="confirmDeleteBtn" class="btn btn-danger">Hapus</button>
+                <a id="confirmDeleteBtn" class="btn btn-danger" href="#">Hapus</a>
             </div>
         </div>
     </div>
 </div>
 
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="text-center mb-4">Daftar Surat Keputusan (SK)</h1>
+        <a href=<?= base_url("sk/create") ?> class="btn btn-primary btn-sm" title="Tambah SK Baru">
+            <i class="fa-solid fa-plus"></i> Tambah
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table id="example" class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Nomor</th>
+                    <th>Tanggal</th>
+                    <th>Perihal</th>
+                    <th>Catatan</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($sks)): ?>
+                    <?php foreach ($sks as $sk): ?>
+                        <tr>
+                            <td><?= $sk['nomor'] ?></td>
+                            <td><?= $sk['tanggal'] ?></td>
+                            <td><?= $sk['perihal'] ?></td>
+                            <td><?= $sk['catatan'] ?></td>
+                            <td>
+                                <a href=<?= $sk['url'] ?>><i class="fa-solid fa-eye" title="Lihat"></i></a>
+                                <a href="/sk/edit/<?= $sk['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
+                                <a href="#" onclick="openDeleteModal(<?= $sk['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5" style="text-align: center; font-weight: bold;">Belum ada data SK.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <script>
     // Open the modal and set the delete URL dynamically
     function openDeleteModal(skId) {
-        // Set the delete ID in a custom attribute, or store it globally
-        const deleteUrl = "<?= base_url() ?>" + "sk/delete/" + skId;
-
-        // Store the URL in the delete button as a data attribute
-        document.getElementById('confirmDeleteBtn').setAttribute('data-delete-url', deleteUrl);
+        // Set the URL for deletion dynamically
+        const deleteUrl = "/sk/delete/" + skId;
+        document.getElementById('confirmDeleteBtn').href = deleteUrl;
 
         // Show the modal
         const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
         deleteModal.show();
-
-
     }
-
-    // Handle the delete button click
-    document.getElementById('confirmDeleteBtn').addEventListener('click', function(event) {
-        // Prevent the default behavior
-        event.preventDefault();
-
-        // Get the URL to be deleted from the data attribute
-        const deleteUrl = this.getAttribute('data-delete-url');
-
-        // Redirect to the delete URL (or you can use AJAX to delete data without a page reload)
-        window.location.href = deleteUrl;
-    });
 </script>
 
 <script>
@@ -233,11 +204,6 @@
         <?php if (session()->getFlashdata('success')): ?>
             var successModal = new bootstrap.Modal(document.getElementById('successModal'));
             successModal.show();
-        <?php endif; ?>
-
-        <?php if (session()->getFlashdata('limited')): ?>
-            var limitedModal = new bootstrap.Modal(document.getElementById('limitedModal'));
-            limitedModal.show();
         <?php endif; ?>
     }
 </script>

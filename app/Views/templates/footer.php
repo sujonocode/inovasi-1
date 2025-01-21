@@ -15,17 +15,7 @@
     </div>
 </footer>
 
-
-
 <script>
-    // Smooth Scroll Script
-    document.querySelector('.btn').addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelector('#features').scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-
     // Ensure click toggles dropdowns on all devices
     document.addEventListener('DOMContentLoaded', () => {
         const dropdowns = document.querySelectorAll('.dropdown');

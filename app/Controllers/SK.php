@@ -232,6 +232,14 @@ class SK extends BaseController
             return redirect()->to(base_url('/sk/manage'));
         }
 
+        // Get the current logged-in user's username
+        $currentUsername = session()->get('username');
+
+        // Check if the current user is the creator of the data
+        if ($sk['created_by'] !== $currentUsername) {
+            return redirect()->back()->with('limited', 'SK hanya bisa diubah oleh orang yang membuatnya.');
+        }
+
         // Fetch distinct 'jenis' options from the 'kode_arsip' table
         $db = \Config\Database::connect();
         $data['jenisOptions'] = $db->table('kode_arsip')
@@ -244,7 +252,7 @@ class SK extends BaseController
         $data['title'] = ucfirst($page);
 
         // Return the view with all the data
-        return view('templates/header')
+        return view('templates/header', $data)
             . view('sk/edit', $data)
             . view('templates/footer');
     }
@@ -311,16 +319,47 @@ class SK extends BaseController
     {
         $model = new SKModel();
 
-        $sk_nomor = $model->find($id);
+        $sk = $model->find($id);
 
-        if (!$sk_nomor) {
-            return redirect()->to(base_url('sk/manage'))->with('error', 'SK dengan nomor tersebut tidak ditemukan');
+        if (!$sk) {
+            return redirect()->back()->with('error', 'SK dengan nomor tersebut tidak ditemukan');
         }
 
+        if (session()->get('username') !== $sk['created_by']) {
+            return redirect()->back()->with('limited', 'SK hanya bisa dihapus oleh orang yang membuatnya');
+        }
+
+        // Call the delete logic directly here
         $model->delete($id);
 
         return redirect()->to(base_url('sk/manage'))->with('success', 'Nomor SK berhasil dihapus');
     }
+
+    // public function getCredentialToDelete($id)
+    // {
+    //     $model = new SKModel();
+
+    //     $sk = $model->find($id);
+
+    //     if (!$sk) {
+    //         return redirect()->back()->with('error', 'SK dengan nomor tersebut tidak ditemukan');
+    //     }
+
+    //     if (session()->get('username') !== $sk['created_by']) {
+    //         return redirect()->back()->with('limited', 'SK hanya bisa dihapus oleh orang yang membuatnya');
+    //     }
+
+    //     $this->delete($id);
+    // }
+
+    // public function delete($id)
+    // {
+    //     $model = new SKModel();
+
+    //     $model->delete($id);
+
+    //     return redirect()->to(base_url('sk/manage'))->with('success', 'Nomor SK berhasil dihapus');
+    // }
 
     public function getSKs()
     {
