@@ -47,9 +47,7 @@
     </div>
 </div>
 
-<!-- Display success or error messages in a pop-up -->
 <?php if (session()->getFlashdata('error')): ?>
-    <!-- Error Pop-up Modal -->
     <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -69,7 +67,6 @@
 <?php endif; ?>
 
 <?php if (session()->getFlashdata('success')): ?>
-    <!-- Success Pop-up Modal -->
     <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -88,65 +85,6 @@
     </div>
 <?php endif; ?>
 
-<?php if (session()->getFlashdata('limited')): ?>
-    <!-- Success Pop-up Modal -->
-    <div class="modal fade" id="limitedModal" tabindex="-1" aria-labelledby="limitedModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="limitedModalLabel">Limited</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <?= session()->getFlashdata('limited'); ?>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif; ?>
-
-<!-- Modal when click eye -->
-<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="limitedModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="limitedModalLabel">Limited</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p id="modal-message"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    // Function to handle the link click event
-    function handleLinkClick(url) {
-        const modalMessage = document.getElementById('modal-message');
-        const modal = new bootstrap.Modal(document.getElementById('modal')); // Initialize Bootstrap modal
-
-        if (url.trim() === '') {
-            // If URL is empty, show modal with "link empty" message
-            modalMessage.innerText = 'Link empty';
-        } else {
-            // If URL is not empty, open the link in a new tab
-            window.open(url, '_blank');
-            return; // Prevent the modal from showing when the link is opened
-        }
-
-        // Show the modal
-        modal.show();
-    }
-</script>
-
-<!-- Confirmation Modal (Bootstrap) -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -167,6 +105,61 @@
     </div>
 </div>
 
+<?php if (session()->getFlashdata('limited')): ?>
+    <div class="modal fade" id="limitedModal" tabindex="-1" aria-labelledby="limitedModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="limitedModalLabel">Limited</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?= session()->getFlashdata('limited'); ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<div class="modal fade" id="modal-see" tabindex="-1" aria-labelledby="limitedModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="limitedModalLabel">Limited</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-message"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to handle the link click event
+    function handleLinkClick(url) {
+        const modalMessage = document.getElementById('modal-message');
+        const modal = new bootstrap.Modal(document.getElementById('modal-eye')); // Initialize Bootstrap modal
+
+        if (url.trim() === '') {
+            // If URL is empty, show modal with "link empty" message
+            modalMessage.innerText = 'Link empty';
+        } else {
+            // If URL is not empty, open the link in a new tab
+            window.open(url, '_blank');
+            return; // Prevent the modal from showing when the link is opened
+        }
+
+        // Show the modal
+        modal.show();
+    }
+</script>
 
 <script>
     // Open the modal and set the delete URL dynamically
@@ -180,8 +173,6 @@
         // Show the modal
         const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
         deleteModal.show();
-
-
     }
 
     // Handle the delete button click

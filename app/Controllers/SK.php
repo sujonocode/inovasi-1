@@ -11,7 +11,6 @@ class SK extends BaseController
 
     public function __construct()
     {
-        // Load the database connection
         $this->db = \Config\Database::connect();
     }
 
@@ -298,7 +297,6 @@ class SK extends BaseController
             $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
         }
 
-        // Perform the update
         $updateSuccessful = $model->update($id, [
             'kode_arsip' => $this->request->getPost('kode_arsip'),
             'perihal' => $this->request->getPost('perihal'),
@@ -309,9 +307,9 @@ class SK extends BaseController
 
         // Check if update was successful and pass the appropriate message
         if ($updateSuccessful) {
-            return redirect()->to(base_url('sk/manage'))->with('success', 'SK updated successfully!');
+            return redirect()->to(base_url('sk/manage'))->with('success', 'Berhasil mengupdate data SK');
         } else {
-            return redirect()->to(base_url('sk/manage'))->with('error', 'Failed to update SK.');
+            return redirect()->to(base_url('sk/manage'))->with('error', 'Gagal mengupdate data SK');
         }
     }
 
@@ -322,44 +320,18 @@ class SK extends BaseController
         $sk = $model->find($id);
 
         if (!$sk) {
-            return redirect()->back()->with('error', 'SK dengan nomor tersebut tidak ditemukan');
+            return redirect()->back()->with('error', ' Data SK dengan nomor tersebut tidak ditemukan');
         }
 
         if (session()->get('username') !== $sk['created_by']) {
-            return redirect()->back()->with('limited', 'SK hanya bisa dihapus oleh orang yang membuatnya');
+            return redirect()->back()->with('limited', 'Data SK hanya bisa dihapus oleh orang yang membuatnya');
         }
 
         // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('sk/manage'))->with('success', 'Nomor SK berhasil dihapus');
+        return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus');
     }
-
-    // public function getCredentialToDelete($id)
-    // {
-    //     $model = new SKModel();
-
-    //     $sk = $model->find($id);
-
-    //     if (!$sk) {
-    //         return redirect()->back()->with('error', 'SK dengan nomor tersebut tidak ditemukan');
-    //     }
-
-    //     if (session()->get('username') !== $sk['created_by']) {
-    //         return redirect()->back()->with('limited', 'SK hanya bisa dihapus oleh orang yang membuatnya');
-    //     }
-
-    //     $this->delete($id);
-    // }
-
-    // public function delete($id)
-    // {
-    //     $model = new SKModel();
-
-    //     $model->delete($id);
-
-    //     return redirect()->to(base_url('sk/manage'))->with('success', 'Nomor SK berhasil dihapus');
-    // }
 
     public function getSKs()
     {

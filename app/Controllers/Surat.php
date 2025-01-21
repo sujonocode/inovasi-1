@@ -11,7 +11,6 @@ class Surat extends BaseController
 
     public function __construct()
     {
-        // Load the database connection
         $this->db = \Config\Database::connect();
     }
 
@@ -235,6 +234,14 @@ class Surat extends BaseController
             return redirect()->to(base_url('/surat/manage'));
         }
 
+        // Get the current logged-in user's username
+        $currentUsername = session()->get('username');
+
+        // Check if the current user is the creator of the data
+        if ($surat['created_by'] !== $currentUsername) {
+            return redirect()->back()->with('limited', 'SK hanya bisa diubah oleh orang yang membuatnya.');
+        }
+
         // Fetch distinct 'jenis' options from the 'kode_arsip' table
         $db = \Config\Database::connect();
         $data['jenisOptions'] = $db->table('kode_arsip')
@@ -283,6 +290,7 @@ class Surat extends BaseController
         $tanggal = $result->tanggal;
         list($year, $month, $day) = explode('-', $tanggal);
 
+        $nomor = '';
         if ($result->jenis_penomoran == 'urut') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
 
@@ -306,9 +314,9 @@ class Surat extends BaseController
 
         // Check if update was successful and pass the appropriate message
         if ($updateSuccessful) {
-            return redirect()->to(base_url('surat/manage'))->with('success', 'Surat updated successfully!');
+            return redirect()->to(base_url('surat/manage'))->with('success', 'Berhasil mengupdate data surat');
         } else {
-            return redirect()->to(base_url('surat/manage'))->with('error', 'Failed to update surat.');
+            return redirect()->to(base_url('surat/manage'))->with('error', 'Gagal mengupdate data surat');
         }
     }
 
@@ -316,15 +324,20 @@ class Surat extends BaseController
     {
         $model = new SuratModel();
 
-        $surat_nomor = $model->find($id);
+        $surat = $model->find($id);
 
-        if (!$surat_nomor) {
-            return redirect()->to(base_url('surat/manage'))->with('error', 'Surat dengan nomor tersebut tidak ditemukan');
+        if (!$surat) {
+            return redirect()->back()->with('error', 'Data surat dengan nomor tersebut tidak ditemukan');
         }
 
+        if (session()->get('username') !== $surat['created_by']) {
+            return redirect()->back()->with('limited', 'Data surat hanya bisa dihapus oleh orang yang membuatnya');
+        }
+
+        // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('surat/manage'))->with('success', 'Nomor surat berhasil dihapus');
+        return redirect()->to(base_url('surat/manage'))->with('success', 'Data surat berhasil dihapus');
     }
 
     public function getSurats()

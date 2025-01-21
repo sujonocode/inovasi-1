@@ -73,7 +73,6 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/sk/create/getKode1', 'FormController::getKode1');
     $routes->post('/sk/create/getKodeKlasifikasi', 'FormController::getKodeKlasifikasi');
     $routes->post('sk/create/getKodeArsip', 'SK::getKodeArsip');
-    // $routes->get('/sk/getCredentialToDelete/(:num)', 'SK::getCredentialToDelete/$1');
 
     $routes->get('/dokumen/kontrak', [Kontrak::class, 'index']);
     $routes->get('/kontrak/manage', 'Kontrak::manage');

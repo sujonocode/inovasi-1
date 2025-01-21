@@ -44,7 +44,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="form-section">
-                <h2 class="text-center mb-4">Ubah Data SK</h2>
+                <h2 class="text-center mb-4">Formulir Edit Data SK</h2>
                 <?php if (isset($sk)): ?>
                     <form id="editForm" onsubmit="return validateCheckboxes()" action="<?= base_url('sk/update/' . $sk['id']) ?>" method="POST">
                         <?= csrf_field() ?>
@@ -277,7 +277,6 @@
 </script>
 
 <script>
-    // Automatically show the modal when the page loads if an error or success message is passed
     window.onload = function() {
         <?php if (isset($error)): ?>
             var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));

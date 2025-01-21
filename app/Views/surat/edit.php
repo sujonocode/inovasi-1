@@ -44,9 +44,9 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="form-section">
-                <h2 class="text-center mb-4">Formulir Edit Jadwal Reminder Humas</h2>
+                <h2 class="text-center mb-4">Formulir Edit Data Surat</h2>
                 <?php if (isset($surat)): ?>
-                    <form onsubmit="return validateCheckboxes()" action="<?= base_url('surat/update/' . $surat['id']) ?>" method="POST">
+                    <form id="editForm" onsubmit="return validateCheckboxes()" action="<?= base_url('surat/update/' . $surat['id']) ?>" method="POST">
                         <?= csrf_field() ?>
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="nomor" class="col-md-3 form-label">Nomor</label>
@@ -165,6 +165,14 @@
                                     required> <?= $surat['catatan'] ?></textarea>
                             </div>
                         </div>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
+                            <label for="url" class="col-md-3 form-label">Link: <a target="_blank" href="<?= $surat['url'] ?>" title="Lihat"><i class="fa-solid fa-eye"></i></a></label>
+                            <div class="col-md-9">
+                                <p id="error-message" style="color: red; display: none;">Link tidak valid. Pastikan link valid atau kosongkan saja!</p>
+                                <input id="url" type="text" name="url" class="form-control"
+                                    value="<?= $surat['url'] ?>">
+                            </div>
+                        </div>
                         <div class="d-flex justify-content-between mt-4">
                             <a href="<?= base_url('surat/manage') ?>" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
                             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
@@ -176,6 +184,54 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Function to validate URL
+    function validateCheckboxes() {
+        return true;
+    }
+
+    // Function to validate URL
+    function isValidUrl(url) {
+        try {
+            const parsedUrl = new URL(url); // Check if it's a valid URL format
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // Function to check if it's a valid Google Drive link (optional, customize as needed)
+    function isGoogleDriveLink(url) {
+        return url.includes("drive.google.com");
+    }
+
+    // Function to check if it's a valid BPS Drive link (optional, customize as needed)
+    function isBpsDriveLink(url) {
+        return url.includes("drive.bps.go.id");
+    }
+
+    function isEmpty(url) {
+        return url == '';
+    }
+
+    document.getElementById("editForm").addEventListener("submit", function(e) {
+        const urlInput = document.getElementById("url").value.trim();
+        const errorMessage = document.getElementById("error-message");
+
+        // Check if at least one of the conditions is true (submit the form if one is true)
+        if (isValidUrl(urlInput) || isGoogleDriveLink(urlInput) || isBpsDriveLink(urlInput) || isEmpty(urlInput)) {
+            // Proceed with form submission
+            errorMessage.style.display = "none";
+            return true;
+        } else {
+            // Prevent form submission if none of the conditions is true
+            e.preventDefault();
+            errorMessage.style.display = "block";
+            return false;
+        }
+    });
+</script>
 
 <script>
     $(document).ready(function() {
@@ -282,7 +338,6 @@
 </script>
 
 <script>
-    // Automatically show the modal when the page loads if an error or success message is passed
     window.onload = function() {
         <?php if (isset($error)): ?>
             var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));

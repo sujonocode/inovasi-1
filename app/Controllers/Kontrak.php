@@ -11,7 +11,6 @@ class Kontrak extends BaseController
 
     public function __construct()
     {
-        // Load the database connection
         $this->db = \Config\Database::connect();
     }
 
@@ -161,9 +160,6 @@ class Kontrak extends BaseController
 
         $username = session()->get('username');
 
-        // log_message('debug', 'CSRF Token from Form: ' . $this->request->getPost('csrf_token_name'));
-        // log_message('debug', 'CSRF Token from Session: ' . session()->get('csrf_token_name'));
-
         $tanggal = $this->request->getPost('tanggal');
         list($year, $month, $day) = explode('-', $tanggal);
 
@@ -238,6 +234,14 @@ class Kontrak extends BaseController
             return redirect()->to(base_url('/kontrak/manage'));
         }
 
+        // Get the current logged-in user's username
+        $currentUsername = session()->get('username');
+
+        // Check if the current user is the creator of the data
+        if ($kontrak['created_by'] !== $currentUsername) {
+            return redirect()->back()->with('limited', 'SK hanya bisa diubah oleh orang yang membuatnya.');
+        }
+
         // Fetch distinct 'jenis' options from the 'kode_arsip' table
         $db = \Config\Database::connect();
         $data['jenisOptions'] = $db->table('kode_arsip')
@@ -254,55 +258,6 @@ class Kontrak extends BaseController
             . view('kontrak/edit', $data)
             . view('templates/footer');
     }
-
-
-    // public function update($id)
-    // {
-    //     if ($this->request->getMethod() === 'post' && !$this->validate([
-    //         'csrf_token' => 'required|csrf_token'
-    //     ])) {
-    //         return redirect()->back()->with('error', 'Invalid CSRF token!');
-    //     }
-
-    //     $response = $this->response;
-    //     $response->setHeader('X-CSRF-TOKEN', csrf_hash());
-
-    //     $model = new KontrakModel();
-
-    //     $builder = $this->db->table('kontrak');
-    //     $query = $builder->select('id, tanggal, jenis_penomoran, nomor_urut, nomor_sisip')
-    //         ->where('id', $id)
-    //         ->orderBy('nomor_urut', 'DESC')
-    //         ->orderBy('nomor_sisip', 'DESC')
-    //         ->limit(1)
-    //         ->get();
-
-    //     $result = $query->getRow();
-    //     $tanggal = $result->tanggal;
-    //     list($year, $month, $day) = explode('-', $tanggal);
-
-    //     if ($result->jenis_penomoran == 'urut') {
-    //         $nomor_urut_text = $this->numberToText3($result->nomor_urut);
-
-    //         $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
-    //     } elseif ($result->jenis_penomoran == 'sisip') {
-    //         $nomor_urut_text = $this->numberToText3($result->nomor_urut);
-    //         $nomor_sisip_text = $this->numberToText2($result->nomor_sisip);
-
-    //         $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
-    //     }
-
-    //     $model->update($id, [
-    //         'kode_arsip' => $this->request->getPost('kode_arsip'),
-    //         'ket' => $this->request->getPost('ket'),
-    //         'uraian' => $this->request->getPost('uraian'),
-    //         'catatan' => $this->request->getPost('catatan'),
-    //         'url' => $this->request->getPost('url'),
-    //         'nomor' => $nomor,
-    //     ]);
-
-    //     return redirect()->to(base_url('kontrak/manage'))->with('error', 'Contract not found.');;
-    // }
 
     public function update($id)
     {
@@ -333,10 +288,10 @@ class Kontrak extends BaseController
             return redirect()->to(base_url('kontrak/manage'))->with('error', 'Contract not found.');
         }
 
-        // Prepare the contract number based on the type of numbering (urut or sisip)
         $tanggal = $result->tanggal;
         list($year, $month, $day) = explode('-', $tanggal);
 
+        $nomor = '';
         if ($result->jenis_penomoran == 'urut') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
             $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
@@ -346,7 +301,6 @@ class Kontrak extends BaseController
             $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
         }
 
-        // Perform the update
         $updateSuccessful = $model->update($id, [
             'kode_arsip' => $this->request->getPost('kode_arsip'),
             'ket' => $this->request->getPost('ket'),
@@ -358,9 +312,9 @@ class Kontrak extends BaseController
 
         // Check if update was successful and pass the appropriate message
         if ($updateSuccessful) {
-            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Contract updated successfully!');
+            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Berhasil mengupdate data kontrak');
         } else {
-            return redirect()->to(base_url('kontrak/manage'))->with('error', 'Failed to update contract.');
+            return redirect()->to(base_url('kontrak/manage'))->with('error', 'Gagal mengupdate data kontrak');
         }
     }
 
@@ -368,15 +322,20 @@ class Kontrak extends BaseController
     {
         $model = new KontrakModel();
 
-        $kontrak_nomor = $model->find($id);
+        $kontrak = $model->find($id);
 
-        if (!$kontrak_nomor) {
-            return redirect()->to(base_url('kontrak/manage'))->with('error', 'Kontrak dengan nomor tersebut tidak ditemukan');
+        if (!$kontrak) {
+            return redirect()->back()->with('error', 'Data kontrak dengan nomor tersebut tidak ditemukan');
         }
 
+        if (session()->get('username') !== $kontrak['created_by']) {
+            return redirect()->back()->with('limited', ' Data kontrak hanya bisa dihapus oleh orang yang membuatnya');
+        }
+
+        // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('kontrak/manage'))->with('success', 'Nomor kontrak berhasil dihapus');
+        return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil dihapus');
     }
 
     public function getKontraks()
