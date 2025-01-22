@@ -6,10 +6,12 @@ use CodeIgniter\Controller;
 
 class Admin extends Controller
 {
-    public function index()
+    public function index(string $page = 'Kontrak | Edit')
     {
-        return view('templates/header')
-            . view('admin/dashboard')
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('admin/dashboard', $data)
             . view('templates/footer');
     }
 }

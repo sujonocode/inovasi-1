@@ -10,7 +10,7 @@
             -o-background-clip: text;
             background-clip: text; 
             color: transparent;"></i>
-            by Tim Inovasi BPS Kabupaten Tanggamus
+            by Tim TI BPS Kabupaten Tanggamus
         </p>
     </div>
 </footer>

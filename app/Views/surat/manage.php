@@ -19,6 +19,7 @@
                             <th>Pertalian Nomor Terdahulu</th>
                             <th>Pertalian Nomor Berikut</th>
                             <th>Catatan</th>
+                            <th>PIC</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -32,8 +33,9 @@
                                     <td><?= $surat['pert_dahulu'] ?></td>
                                     <td><?= $surat['pert_berikut'] ?></td>
                                     <td><?= $surat['catatan'] ?></td>
+                                    <td><?= $surat['created_by'] ?></td>
                                     <td>
-                                        <a href=<?= $surat['url'] ?>><i class="fa-solid fa-eye" title="Lihat"></i></a>
+                                        <a href="#" onclick="handleLinkClick('<?= $surat['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a>
                                         <a href="/surat/edit/<?= $surat['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
                                         <a href="#" onclick="openDeleteModal(<?= $surat['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
                                     </td>
@@ -126,11 +128,11 @@
     </div>
 <?php endif; ?>
 
-<div class="modal fade" id="modal-see" tabindex="-1" aria-labelledby="limitedModalLabel" aria-hidden="true">
+<div class="modal fade" id="seeModal" tabindex="-1" aria-labelledby="seeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="limitedModalLabel">Limited</h5>
+                <h5 class="modal-title" id="seeModalLabel">Notification</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -144,22 +146,19 @@
 </div>
 
 <script>
-    // Function to handle the link click event
+    // Function to handle the "eye" icon click event
     function handleLinkClick(url) {
         const modalMessage = document.getElementById('modal-message');
-        const modal = new bootstrap.Modal(document.getElementById('modal-eye')); // Initialize Bootstrap modal
+        const seeModal = new bootstrap.Modal(document.getElementById('seeModal'));
 
-        if (url.trim() === '') {
+        if (!url || url.trim() === '') {
             // If URL is empty, show modal with "link empty" message
-            modalMessage.innerText = 'Link empty';
+            modalMessage.innerText = 'Link masih kosong';
+            seeModal.show();
         } else {
-            // If URL is not empty, open the link in a new tab
+            // If URL is not empty, open it in a new tab
             window.open(url, '_blank');
-            return; // Prevent the modal from showing when the link is opened
         }
-
-        // Show the modal
-        modal.show();
     }
 </script>
 
@@ -203,11 +202,11 @@
             lengthMenu: [5, 10, 15, 20],
             columnDefs: [{
                     orderable: true,
-                    targets: [0, 1, 2, 3]
+                    targets: [0, 1, 2, 3, 4, 5, 6]
                 },
                 {
                     orderable: false,
-                    targets: [4]
+                    targets: [7]
                 }
             ],
             order: [

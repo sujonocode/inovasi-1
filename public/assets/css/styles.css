@@ -83,16 +83,23 @@ body {
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s;
+    background: #ffffff;
 }
 
 .features .icon-box i {
     font-size: 3rem;
     color: #2575fc;
+    transition: color 0.3s;
 }
 
 .features .icon-box:hover {
-    transform: translateY(-10px); /* Hover effect */
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.features .icon-box:hover i {
+    color: #1b5dbf;
 }
 
 /* Footer */
@@ -173,8 +180,3 @@ footer a:hover {
 .form-group {
     margin-bottom: 1.5rem;
 }
-
-/* .btn {
-    position: relative;
-    z-index: 10;
-} */

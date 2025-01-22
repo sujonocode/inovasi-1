@@ -6,7 +6,7 @@ use App\Models\UserModel;
 
 class Profile extends BaseController
 {
-    public function index(string $page = 'Profile')
+    public function index(string $page = 'Profil Pengguna')
     {
         $userModel = new UserModel();
         $user = $userModel->find(session('user_id'));
@@ -15,7 +15,7 @@ class Profile extends BaseController
 
         return view('templates/header', $data)
             . view('profile/index', [
-                'title' => 'Profile',
+                'title' => 'Profil Pengguna',
                 'user' => $user,
             ])
             . view('templates/footer');
@@ -28,21 +28,20 @@ class Profile extends BaseController
 
         // Validate input
         $rules = [
-            // 'name' => 'required|min_length[3]|max_length[255]',
             'email' => 'required|valid_email',
         ];
 
         if (!$this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            return redirect()->back()->withInput()->with('errorsProfile', $this->validator->getErrors());
         }
 
         // Update user data
         $userModel->update($userId, [
-            // 'name' => $this->request->getPost('name'),
+            'nama' => $this->request->getPost('nama'),
             'email' => $this->request->getPost('email'),
         ]);
 
-        return redirect()->to(base_url('profile'))->with('success', 'Profile updated successfully.');
+        return redirect()->to(base_url('profile'))->with('successProfile', 'Profile updated successfully.');
     }
 
     public function changePassword()
@@ -58,13 +57,13 @@ class Profile extends BaseController
         ];
 
         if (!$this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            return redirect()->back()->withInput()->with('errorsPassword', $this->validator->getErrors());
         }
 
         // Check current password
         $user = $userModel->find($userId);
         if (!password_verify($this->request->getPost('current_password'), $user['password'])) {
-            return redirect()->back()->with('error', 'Current password is incorrect.');
+            return redirect()->back()->with('errorPassword', 'Current password is incorrect.');
         }
 
         // Update password
@@ -72,6 +71,6 @@ class Profile extends BaseController
             'password' => password_hash($this->request->getPost('new_password'), PASSWORD_DEFAULT),
         ]);
 
-        return redirect()->to(base_url('profile'))->with('success', 'Password changed successfully.');
+        return redirect()->to(base_url('profile'))->with('successPassword', 'Password changed successfully.');
     }
 }

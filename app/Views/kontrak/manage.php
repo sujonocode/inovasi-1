@@ -17,6 +17,7 @@
                             <th>Nomor</th>
                             <th>Uraian Kontrak</th>
                             <th>Catatan</th>
+                            <th>PIC</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -28,8 +29,9 @@
                                     <td><?= $kontrak['nomor'] ?></td>
                                     <td><?= $kontrak['uraian'] ?></td>
                                     <td><?= $kontrak['catatan'] ?></td>
+                                    <td><?= $kontrak['created_by'] ?></td>
                                     <td>
-                                        <a href=<?= $kontrak['url'] ?>><i class="fa-solid fa-eye" title="Lihat"></i></a>
+                                        <a href="#" onclick="handleLinkClick('<?= $kontrak['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a>
                                         <a href="/kontrak/edit/<?= $kontrak['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
                                         <!-- <a href="/kontrak/delete/< ?= $kontrak['id'] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data kontrak ini?');"><i class="fa-solid fa-trash" title="Hapus"></i></a> -->
                                         <a href="#" onclick="openDeleteModal(<?= $kontrak['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
@@ -123,11 +125,11 @@
     </div>
 <?php endif; ?>
 
-<div class="modal fade" id="modal-see" tabindex="-1" aria-labelledby="limitedModalLabel" aria-hidden="true">
+<div class="modal fade" id="seeModal" tabindex="-1" aria-labelledby="seeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="limitedModalLabel">Limited</h5>
+                <h5 class="modal-title" id="seeModalLabel">Notification</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -141,22 +143,19 @@
 </div>
 
 <script>
-    // Function to handle the link click event
+    // Function to handle the "eye" icon click event
     function handleLinkClick(url) {
         const modalMessage = document.getElementById('modal-message');
-        const modal = new bootstrap.Modal(document.getElementById('modal-eye')); // Initialize Bootstrap modal
+        const seeModal = new bootstrap.Modal(document.getElementById('seeModal'));
 
-        if (url.trim() === '') {
+        if (!url || url.trim() === '') {
             // If URL is empty, show modal with "link empty" message
-            modalMessage.innerText = 'Link empty';
+            modalMessage.innerText = 'Link masih kosong';
+            seeModal.show();
         } else {
-            // If URL is not empty, open the link in a new tab
+            // If URL is not empty, open it in a new tab
             window.open(url, '_blank');
-            return; // Prevent the modal from showing when the link is opened
         }
-
-        // Show the modal
-        modal.show();
     }
 </script>
 
@@ -200,11 +199,11 @@
             lengthMenu: [5, 10, 15, 20],
             columnDefs: [{
                     orderable: true,
-                    targets: [0, 1, 2, 3]
+                    targets: [0, 1, 2, 3, 4]
                 },
                 {
                     orderable: false,
-                    targets: [4]
+                    targets: [5]
                 }
             ],
             order: [
@@ -224,7 +223,6 @@
             var successModal = new bootstrap.Modal(document.getElementById('successModal'));
             successModal.show();
         <?php endif; ?>
-
         <?php if (session()->getFlashdata('limited')): ?>
             var limitedModal = new bootstrap.Modal(document.getElementById('limitedModal'));
             limitedModal.show();

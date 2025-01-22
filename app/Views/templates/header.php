@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Website for BPS Kabupaten Tanggamus providing document management, reminders, tracking, and more.">
-    <!-- <meta name="csrf-token" content="< ?= csrf_hash() ?>"> -->
     <link rel="shortcut icon" type="image/png" href="/assista.ico">
     <title><?= esc($title) ?></title>
     <!-- DataTables CSS -->
@@ -37,7 +36,6 @@
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -91,13 +89,13 @@
                             <li><a class="dropdown-item" href="<?= base_url('sbml/manage') ?>">Manage</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="<?= base_url('tracking') ?>" id="trackingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tracking</a>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="< ?= base_url('tracking') ?>" id="trackingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tracking</a>
                         <ul class="dropdown-menu" aria-labelledby="trackingDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('tracking') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('tracking/manage') ?>">Manage</a></li>
+                            <li><a class="dropdown-item" href="< ?= base_url('tracking') ?>">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="< ?= base_url('tracking/manage') ?>">Manage</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('profile') ?>" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-user"></i> <?= session()->get('username') ?>

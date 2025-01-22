@@ -12,54 +12,60 @@
     <div class="container">
         <h2 class="section-title text-center mb-5">Fitur Kami</h2>
         <div class="row g-4 justify-content-center">
+            <!-- Feature Item -->
             <div class="col-lg-3 col-md-6">
                 <a href="/dokumen" class="text-decoration-none text-dark">
-                    <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
-                        <i class="fas fa-file-contract fa-3x"></i>
+                    <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
+                        <i class="fas fa-file-contract"></i>
                         <h4 class="mt-3">Manajemen Dokumen</h4>
                         <p>Surat, SK, dan Kontrak.</p>
                     </div>
                 </a>
             </div>
+            <!-- Feature Item -->
             <div class="col-lg-3 col-md-6">
                 <a href="/humas" class="text-decoration-none text-dark">
-                    <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
-                        <i class="fas fa-calendar-days fa-3x"></i>
+                    <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
+                        <i class="fas fa-calendar-days"></i>
                         <h4 class="mt-3">Humas</h4>
-                        <p>Reminder (pengingat) membuat dan mengunggah konten humas.</p>
+                        <p>Pengingat membuat dan mengunggah konten humas.</p>
                     </div>
                 </a>
             </div>
+            <!-- Feature Item -->
             <div class="col-lg-3 col-md-6">
                 <a href="/kendala" class="text-decoration-none text-dark">
-                    <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
-                        <i class="fas fa-list-check fa-3x"></i>
+                    <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
+                        <i class="fas fa-list-check"></i>
                         <h4 class="mt-3">Kendala Lapangan</h4>
-                        <p>Pengumpulan kendala selama melaksanakan tugas di lapangan.</p>
+                        <p>Kumpulkan kendala saat melaksanakan tugas lapangan.</p>
                     </div>
                 </a>
             </div>
+            <!-- Feature Item -->
             <div class="col-lg-3 col-md-6">
                 <a href="/sbml" class="text-decoration-none text-dark">
-                    <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
-                        <i class="fas fa-filter-circle-dollar fa-3x"></i>
+                    <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
+                        <i class="fas fa-filter-circle-dollar"></i>
                         <h4 class="mt-3">SBML</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <p>Proses pengelolaan anggaran lebih mudah dan cepat.</p>
                     </div>
                 </a>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <!-- Feature Item -->
+            <!-- <div class="col-lg-3 col-md-6">
                 <a href="/tracking" class="text-decoration-none text-dark">
-                    <div class="icon-box text-center bg-light border rounded h-100 d-flex flex-column justify-content-center align-items-center">
-                        <i class="fas fa-map-location-dot fa-3x"></i>
+                    <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
+                        <i class="fas fa-map-location-dot"></i>
                         <h4 class="mt-3">Tracking</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <p>Pantau progres tugas secara real-time.</p>
                     </div>
                 </a>
-            </div>
+            </div> -->
         </div>
     </div>
 </section>
+
 
 <!-- About Section -->
 <section id="about" class="py-5 bg-light">
@@ -70,75 +76,6 @@
         </p>
     </div>
 </section>
-
-<!-- Contact Section -->
-<!-- <section id="contact" class="py-5">
-    <div class="container">
-        <h2 class="section-title text-center mb-4">Hubungi Kami</h2>
-
-        <div id="flashMessage" class="alert alert-danger d-none" role="alert"></div>
-
-        <form id="waForm">
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <input id="nama" name="nama" type="text" class="form-control" placeholder="Nama" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <input id="jk" name="jk" type="text" class="form-control" placeholder="Jenis kelamin" required>
-                </div>
-            </div>
-            <div class="mb-3">
-                <textarea id="pesan" name="pesan" class="form-control" rows="5" placeholder="Pesan" required></textarea>
-            </div>
-            <div class="text-center">
-                <button type="button" onclick="generateWhatsAppLink()" class="btn btn-primary">
-                    <i class="fa-brands fa-whatsapp"></i> Kirim Pesan
-                </button>
-            </div>
-        </form>
-    </div>
-</section> -->
-
-<!-- <script>
-    function generateWhatsAppLink() {
-        // Get the flash message container
-        const flashMessage = document.getElementById('flashMessage');
-
-        // Get the name, gender, and message values from the form
-        const form = document.getElementById('waForm');
-        const nama = document.getElementById('nama').value;
-        const jk = document.getElementById('jk').value;
-        const pesan = document.getElementById('pesan').value;
-
-        // Check if fields are filled
-        if (!nama || !jk || !pesan) {
-            // Show the flash message
-            flashMessage.textContent = 'Lengkapi semua isian!';
-            flashMessage.classList.remove('d-none'); // Make it visible
-            flashMessage.classList.add('alert-danger'); // Add styling
-
-            // Hide the message after 3 seconds
-            setTimeout(() => {
-                flashMessage.classList.add('d-none'); // Hide it
-            }, 3000);
-
-            return;
-        }
-
-        // Generate the WhatsApp link with encoded text
-        const message = `Nama         : ${nama}\nJenis Kelamin: ${jk}\n\n${pesan}`;
-        const whatsappLink = `https://wa.me/6282337039320?text=${encodeURIComponent(message)}`;
-
-        // Open the link in a new tab
-        window.open(whatsappLink, '_blank');
-
-        // Clear the form
-        form.reset();
-
-        // Clear any visible flash messages
-        flashMessage.classList.add('d-none');
-    }
-</script> -->
 
 <!-- Contact Section -->
 <section id="contact" class="py-5">

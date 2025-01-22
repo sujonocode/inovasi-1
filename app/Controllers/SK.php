@@ -223,7 +223,7 @@ class SK extends BaseController
         // Fetch the sk data by id
         $sk = $model->find($id);
         $data = ['sk' => $sk];
-        $data['title'] = ucfirst('SK | Edit');
+        $data['title'] = ucfirst($page);
 
         // If sk data is not found, show error and redirect
         if (!$sk) {

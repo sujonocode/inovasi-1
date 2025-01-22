@@ -8,18 +8,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
     <style>
         body {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            color: #333;
-            font-family: Arial, sans-serif;
-            min-height: 100vh;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: url(<?= base_url('/assets/image/d.jpg') ?>) no-repeat center center fixed;
+            background-size: cover;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -60,11 +54,26 @@
             margin: 0 15px;
         }
 
+        /* .made-by {
+            font-size: 14px;
+            color: #666;
+            flex: 1;
+            white-space: normal;
+            word-wrap: break-word;
+            text-align: left;
+        } */
+
         .made-by {
             font-size: 14px;
+            /* Increased font size */
             font-weight: bold;
+            /* Make text bold */
             color: #666;
+            /* Darker color for stronger contrast */
+            /* text-transform: uppercase; */
+            /* Transform text to uppercase for emphasis */
             letter-spacing: 1px;
+            /* Add space between letters for a stronger appearance */
             flex: 1;
             white-space: normal;
             word-wrap: break-word;
@@ -97,8 +106,11 @@
 </head>
 
 <body>
+
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="card shadow-sm p-4" style="width: 100%; max-width: 400px;">
+
+            <!-- Header with Logo, Vertical Line, and Made By Text -->
             <div class="header">
                 <div class="logo">
                     <img src="<?= base_url('/assets/image/logo_assista.png') ?>" alt="ASSISTA Logo">
@@ -114,7 +126,8 @@
 
                 <?php if (session()->getFlashdata('error')): ?>
                     <div class="alert alert-danger mt-3">
-                        Username atau password salah.
+                        <!-- < ?= session()->getFlashdata('error') ?> -->
+                        Anda harus login sebagai admin terlebih dahulu.
                     </div>
                 <?php endif; ?>
 

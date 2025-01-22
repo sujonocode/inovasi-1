@@ -109,21 +109,21 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/sbml/update/(:num)', 'Sbml::maintenance');
     $routes->get('/sbml/delete/(:num)', 'Sbml::maintenance');
 
-    $routes->get('tracking', [Tracking::class, 'maintenance']);
-    $routes->get('/tracking/manage', 'Tracking::maintenance');
-    $routes->get('/tracking/create', 'Tracking::maintenance');
-    $routes->post('/tracking/store', 'Tracking::maintenance');
-    $routes->get('/tracking/edit/(:num)', 'Tracking::maintenance');
-    $routes->post('/tracking/update/(:num)', 'Tracking::maintenance');
-    $routes->get('/tracking/delete/(:num)', 'Tracking::maintenance');
+    // $routes->get('tracking', [Tracking::class, 'maintenance']);
+    // $routes->get('/tracking/manage', 'Tracking::maintenance');
+    // $routes->get('/tracking/create', 'Tracking::maintenance');
+    // $routes->post('/tracking/store', 'Tracking::maintenance');
+    // $routes->get('/tracking/edit/(:num)', 'Tracking::maintenance');
+    // $routes->post('/tracking/update/(:num)', 'Tracking::maintenance');
+    // $routes->get('/tracking/delete/(:num)', 'Tracking::maintenance');
 
-    $routes->get('/generate_surat', [GenerateSurat::class, 'index']);
-    $routes->get('/generate_surat/manage', 'GenerateSurat::maintenance');
-    $routes->get('/generate_surat/create', 'GenerateSurat::maintenance');
-    $routes->post('/generate_surat/store', 'GenerateSurat::maintenance');
-    $routes->get('/generate_surat/edit/(:num)', 'GenerateSurat::maintenance');
-    $routes->post('/generate_surat/update/(:num)', 'GenerateSurat::maintenance');
-    $routes->get('/generate_surat/delete/(:num)', 'GenerateSurat::maintenance');
+    // $routes->get('/generate_surat', [GenerateSurat::class, 'index']);
+    // $routes->get('/generate_surat/manage', 'GenerateSurat::maintenance');
+    // $routes->get('/generate_surat/create', 'GenerateSurat::maintenance');
+    // $routes->post('/generate_surat/store', 'GenerateSurat::maintenance');
+    // $routes->get('/generate_surat/edit/(:num)', 'GenerateSurat::maintenance');
+    // $routes->post('/generate_surat/update/(:num)', 'GenerateSurat::maintenance');
+    // $routes->get('/generate_surat/delete/(:num)', 'GenerateSurat::maintenance');
 
     $routes->get('/calendar', 'CalendarController::index');
     $routes->get('/fetch-events', 'CalendarController::fetchEvents');
@@ -141,8 +141,6 @@ $routes->post('/profile/change-password', 'Profile::changePassword', ['filter' =
 
 $routes->get('/login', 'AuthController::login');
 $routes->post('/login', 'AuthController::authenticate');
-// $routes->get('/register', 'AuthController::register');
-// $routes->post('/register', 'AuthController::storeUser');
 $routes->get('/logout', 'AuthController::logout');
 $routes->get('/unauthorized', function () {
     return view('errors/unauthorized');

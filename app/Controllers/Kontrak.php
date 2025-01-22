@@ -226,7 +226,7 @@ class Kontrak extends BaseController
         // Fetch the kontrak data by id
         $kontrak = $model->find($id);
         $data = ['kontrak' => $kontrak];
-        $data['title'] = ucfirst('Kontrak | Edit');
+        $data['title'] = ucfirst($page);
 
         // If kontrak data is not found, show error and redirect
         if (!$kontrak) {

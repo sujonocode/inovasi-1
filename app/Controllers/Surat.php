@@ -226,7 +226,7 @@ class Surat extends BaseController
         // Fetch the kontrak data by id
         $surat = $model->find($id);
         $data = ['surat' => $surat];
-        $data['title'] = ucfirst('Surat | Edit');
+        $data['title'] = ucfirst($page);
 
         // If kontrak data is not found, show error and redirect
         if (!$surat) {
