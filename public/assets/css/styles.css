@@ -180,3 +180,42 @@ footer a:hover {
 .form-group {
     margin-bottom: 1.5rem;
 }
+
+
+/* dashboard */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+.card-header {
+    background-color: #2575fc;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 12px 12px 0 0;
+}
+
+.card-body {
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+.section-header {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #3f51b5;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+}
+
+.chart-container .canvas-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+}

@@ -18,7 +18,7 @@
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
                         <i class="fas fa-file-contract"></i>
                         <h4 class="mt-3">Manajemen Dokumen</h4>
-                        <p>Surat, SK, dan Kontrak.</p>
+                        <p>Manajemen dokumen, seperti surat, SK, dan kontrak</p>
                     </div>
                 </a>
             </div>
@@ -28,7 +28,7 @@
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
                         <i class="fas fa-calendar-days"></i>
                         <h4 class="mt-3">Humas</h4>
-                        <p>Pengingat membuat dan mengunggah konten humas.</p>
+                        <p>Pengingat Tim Humas untuk membuat dan mengunggah konten</p>
                     </div>
                 </a>
             </div>
@@ -38,7 +38,7 @@
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
                         <i class="fas fa-list-check"></i>
                         <h4 class="mt-3">Kendala Lapangan</h4>
-                        <p>Kumpulkan kendala saat melaksanakan tugas lapangan.</p>
+                        <p>Pengumpulan kendala saat melaksanakan tugas lapangan</p>
                     </div>
                 </a>
             </div>
@@ -48,7 +48,7 @@
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
                         <i class="fas fa-filter-circle-dollar"></i>
                         <h4 class="mt-3">SBML</h4>
-                        <p>Proses pengelolaan anggaran lebih mudah dan cepat.</p>
+                        <p>Proses pengelolaan anggaran mitra lebih terstruktur</p>
                     </div>
                 </a>
             </div>
@@ -72,7 +72,9 @@
     <div class="container">
         <h2 class="section-title text-center mb-4">Tentang Kami</h2>
         <p class="text-center section-subtitle">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi enim tortor, auctor nec tellus sed, pulvinar tincidunt ex. Quisque sed blandit nunc.
+            Assista adalah aplikasi website yang dikembangkan oleh Tim TI BPS Kabupaten Tanggamus, Provinsi Lampung. Aplikasi ini
+            menyediakan berbagai fitur inovatif yang mendukung kelancaran kegiatan administrasi serta meningkatkan efisiensi dalam
+            pengelolaan data dan informasi di lingkungan BPS Kabuaten Tanggamus.
         </p>
     </div>
 </section>
