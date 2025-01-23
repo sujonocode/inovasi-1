@@ -16,43 +16,47 @@ class Dokumen extends BaseController
         $modelSK = new SKModel();
         $modelKontrak = new KontrakModel();
 
-        $data = [
-            'title' => ucfirst($page),
+        // Using a more concise approach to pass data to the view
+        $data = [];
 
-            'totalUser' => $modelUser->countAll(),
-            'totalSurat' => $modelSurat->countAll(),
-            'totalSK' => $modelSK->countAll(),
-            'totalKontrak' => $modelKontrak->countAll(),
+        // Assign all counts and groupings into the $data array
+        $data['title'] = ucfirst($page);
+        $data['totalSurat'] = $modelSurat->countAll();
+        $data['totalSk'] = $modelSK->countAll();
+        $data['totalKontrak'] = $modelKontrak->countAll();
 
-            'totalSuratByKodeArsip' => $modelSurat
-                ->select('kode_arsip, COUNT(*) as count')
-                ->groupBy('kode_arsip')
-                ->findAll(),
-            'totalSKByKodeArsip' => $modelSK
-                ->select('kode_arsip, COUNT(*) as count')
-                ->groupBy('kode_arsip')
-                ->findAll(),
-            'totalKontrakByKodeArsip' => $modelKontrak
-                ->select('kode_arsip, COUNT(*) as count')
-                ->groupBy('kode_arsip')
-                ->findAll(),
+        $data['totalSuratByKodeArsip'] = $modelSurat
+            ->select('kode_arsip, COUNT(*) as count')
+            ->groupBy('kode_arsip')
+            ->findAll();
 
-            'totalSuratByCreatedBy' => $modelSurat
-                ->select('created_by, COUNT(*) as count')
-                ->groupBy('created_by')
-                ->findAll(),
-            'totalSKByCreatedBy' => $modelSK
-                ->select('created_by, COUNT(*) as count')
-                ->groupBy('created_by')
-                ->findAll(),
-            'totalKontrakByCreatedBy' => $modelKontrak
-                ->select('created_by, COUNT(*) as count')
-                ->groupBy('created_by')
-                ->findAll(),
-        ];
+        $data['totalSkByKodeArsip'] = $modelSK
+            ->select('kode_arsip, COUNT(*) as count')
+            ->groupBy('kode_arsip')
+            ->findAll();
+
+        $data['totalKontrakByKodeArsip'] = $modelKontrak
+            ->select('kode_arsip, COUNT(*) as count')
+            ->groupBy('kode_arsip')
+            ->findAll();
+
+        $data['totalSuratByCreatedBy'] = $modelSurat
+            ->select('created_by, COUNT(*) as count')
+            ->groupBy('created_by')
+            ->findAll();
+
+        $data['totalSkByCreatedBy'] = $modelSK
+            ->select('created_by, COUNT(*) as count')
+            ->groupBy('created_by')
+            ->findAll();
+
+        $data['totalKontrakByCreatedBy'] = $modelKontrak
+            ->select('created_by, COUNT(*) as count')
+            ->groupBy('created_by')
+            ->findAll();
 
         return view('templates/header', $data)
             . view('dokumen/index', $data)
-            . view('templates/footer');
+            . view('templates/footer', $data);
     }
 }
