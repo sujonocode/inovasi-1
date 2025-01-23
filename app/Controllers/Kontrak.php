@@ -207,10 +207,11 @@ class Kontrak extends BaseController
             'created_by' => $username,
         ];
 
-        // log_message('debug', 'CSRF Token from POST: ' . $this->request->getPost('_csrf'));
+        $link = base_url('kontrak/manage');
 
         if ($model->save($data)) {
-            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil disimpan');
+            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil disimpan' . PHP_EOL . 'Nomor kontrak: ' . $nomor . PHP_EOL . 'Lihat di sini: ' . $nomor
+                . PHP_EOL . ' (<a href="' . $link . '">Lihat di sini</a>)');
         }
 
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data kontrak');
@@ -312,7 +313,7 @@ class Kontrak extends BaseController
 
         // Check if update was successful and pass the appropriate message
         if ($updateSuccessful) {
-            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Berhasil mengupdate data kontrak');
+            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil diupdate' . PHP_EOL . 'Nomor kontrak: ' . $nomor);
         } else {
             return redirect()->to(base_url('kontrak/manage'))->with('error', 'Gagal mengupdate data kontrak');
         }
@@ -332,10 +333,12 @@ class Kontrak extends BaseController
             return redirect()->back()->with('limited', ' Data kontrak hanya bisa dihapus oleh orang yang membuatnya');
         }
 
+        $nomor = $kontrak['nomor'];
+
         // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil dihapus');
+        return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
     }
 
     public function getKontraks()

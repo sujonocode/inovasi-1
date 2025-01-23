@@ -85,13 +85,13 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/kontrak/create/getKodeKlasifikasi', 'FormController::getKodeKlasifikasi');
     $routes->post('kontrak/create/getKodeArsip', 'Kontrak::getKodeArsip');
 
-    $routes->get('/humas', [Humas::class, 'index']);
-    $routes->get('/humas/manage', 'Humas::manage');
-    $routes->get('/humas/create', 'Humas::create');
-    $routes->post('/humas/store', 'Humas::store');
-    $routes->get('/humas/edit/(:num)', 'Humas::edit/$1');
-    $routes->post('/humas/update/(:num)', 'Humas::update/$1');
-    $routes->get('/humas/delete/(:num)', 'Humas::delete/$1');
+    $routes->get('/humas', [Humas::class, 'maintenance']);
+    $routes->get('/humas/manage', 'Humas::maintenance');
+    $routes->get('/humas/create', 'Humas::maintenance');
+    $routes->post('/humas/store', 'Humas::maintenance');
+    $routes->get('/humas/edit/(:num)', 'Humas::maintenance');
+    $routes->post('/humas/update/(:num)', 'Humas::maintenance');
+    $routes->get('/humas/delete/(:num)', 'Humas::maintenance');
 
     $routes->get('/kendala', [Kendala::class, 'maintenance']);
     $routes->get('/kendala/manage', 'Kendala::maintenance');

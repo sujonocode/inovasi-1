@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1 class="text-center mb-4">Daftar Surat Keputusan (SK)</h1>
+                <h1 class="text-center mb-4">Daftar Data Surat Keputusan (SK)</h1>
                 <a href="<?= base_url("sk/create") ?>" class="btn btn-primary btn-sm" title="Tambah SK Baru">
                     <i class="fa-solid fa-plus"></i> Tambah
                 </a>

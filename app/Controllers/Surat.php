@@ -169,7 +169,11 @@ class Surat extends BaseController
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip = 0;
 
-            $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            if ($this->request->getPost('kode_arsip' == "")) {
+                $nomor = 'B-' . $nomor_urut_text . '/' . '18020' . '/' . $year;
+            } else {
+                $nomor = 'B-' . $nomor_urut_text . '/' . '18020' . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
+            }
         } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
             $tanggal = $this->request->getPost('tanggal');
 
@@ -190,7 +194,11 @@ class Surat extends BaseController
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip_text = $this->numberToText2($nomor_sisip);
 
-            $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            if ($this->request->getPost('kode_arsip' == "")) {
+                $nomor = 'B-' . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '18020' . '/' . $year;
+            } else {
+                $nomor = 'B-' . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '18020' . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
+            }
         }
 
         $data = [
@@ -209,8 +217,11 @@ class Surat extends BaseController
             'created_by' => $username,
         ];
 
+        $link = base_url('surat/manage');
+
         if ($model->save($data)) {
-            return redirect()->to(base_url('surat/manage'))->with('success', 'Data surat berhasil disimpan');
+            return redirect()->to(base_url('surat/manage'))->with('success', 'Data surat berhasil disimpan' . PHP_EOL . 'Nomor surat: ' . $nomor
+                . PHP_EOL . ' (<a href="' . $link . '">Lihat di sini</a>)');
         }
 
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data surat');
@@ -239,7 +250,7 @@ class Surat extends BaseController
 
         // Check if the current user is the creator of the data
         if ($surat['created_by'] !== $currentUsername) {
-            return redirect()->back()->with('limited', 'SK hanya bisa diubah oleh orang yang membuatnya.');
+            return redirect()->back()->with('limited', 'Data surat hanya bisa diubah oleh orang yang membuatnya.');
         }
 
         // Fetch distinct 'jenis' options from the 'kode_arsip' table
@@ -294,12 +305,20 @@ class Surat extends BaseController
         if ($result->jenis_penomoran == 'urut') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
 
-            $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            if ($this->request->getPost('kode_arsip' == "")) {
+                $nomor = 'B-' . $nomor_urut_text . '/' . '18020' . '/' . $year;
+            } else {
+                $nomor = 'B-' . $nomor_urut_text . '/' . '18020' . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
+            }
         } elseif ($result->jenis_penomoran == 'sisip') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
             $nomor_sisip_text = $this->numberToText2($result->nomor_sisip);
 
-            $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            if ($this->request->getPost('kode_arsip' == "")) {
+                $nomor = 'B-' . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '18020' . '/' . $year;
+            } else {
+                $nomor = 'B-' . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '18020' . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
+            }
         }
 
         $updateSuccessful = $model->update($id, [
@@ -314,7 +333,7 @@ class Surat extends BaseController
 
         // Check if update was successful and pass the appropriate message
         if ($updateSuccessful) {
-            return redirect()->to(base_url('surat/manage'))->with('success', 'Berhasil mengupdate data surat');
+            return redirect()->to(base_url('surat/manage'))->with('success', 'Data surat berhasil diupdate' . PHP_EOL . 'Nomor surat: ' . $nomor);
         } else {
             return redirect()->to(base_url('surat/manage'))->with('error', 'Gagal mengupdate data surat');
         }
@@ -334,10 +353,12 @@ class Surat extends BaseController
             return redirect()->back()->with('limited', 'Data surat hanya bisa dihapus oleh orang yang membuatnya');
         }
 
+        $nomor = $surat['nomor'];
+
         // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('surat/manage'))->with('success', 'Data surat berhasil dihapus');
+        return redirect()->to(base_url('surat/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
     }
 
     public function getSurats()

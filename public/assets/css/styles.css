@@ -11,6 +11,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%; /* Full height of the screen */
+    background-color: #e5e7eb; /* Light gray for contrast */
 }
 
 /* Main content section should take remaining space */
@@ -181,26 +182,26 @@ footer a:hover {
     margin-bottom: 1.5rem;
 }
 
-
-/* dashboard */
+/* Ensure consistent border-radius */
 .card {
     border: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px; /* Uniform radius for the entire card */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     background-color: #ffffff;
+    overflow: hidden; /* Prevent any overflow mismatch */
 }
 
 .card-header {
-    background-color: #2575fc;
-    color: white;
     font-size: 1.2rem;
     font-weight: bold;
-    border-radius: 12px 12px 0 0;
+    border-radius: 0; /* Remove individual radius */
+    background-clip: padding-box; /* Ensure visual consistency */
 }
 
 .card-body {
-    background-color: #f9f9f9;
+    /* background-color: #f1f5f9; */
     padding: 20px;
+    border-radius: 0; /* Remove individual radius */
 }
 
 .section-header {

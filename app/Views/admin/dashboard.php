@@ -3,7 +3,7 @@
     <div class="row mb-4 g-4">
         <div class="col-lg-3 col-md-6 col-sm-12">
             <div class="card">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header bg-success text-white">
                     <i class="fas fa-users"></i> Total Employees
                 </div>
                 <div class="card-body text-center">

@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1 class="text-center mb-4">Daftar Surat</h1>
+                <h1 class="text-center mb-4">Daftar Data Surat</h1>
                 <a href=<?= base_url("surat/create") ?> class="btn btn-primary btn-sm" title="Tambah Surat Baru">
                     <i class="fa-solid fa-plus"></i> Tambah
                 </a>
@@ -164,9 +164,9 @@
 
 <script>
     // Open the modal and set the delete URL dynamically
-    function openDeleteModal(skId) {
+    function openDeleteModal(suratId) {
         // Set the delete ID in a custom attribute, or store it globally
-        const deleteUrl = "<?= base_url() ?>" + "surat/delete/" + skId;
+        const deleteUrl = "<?= base_url() ?>" + "surat/delete/" + suratId;
 
         // Store the URL in the delete button as a data attribute
         document.getElementById('confirmDeleteBtn').setAttribute('data-delete-url', deleteUrl);

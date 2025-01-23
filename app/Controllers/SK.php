@@ -169,7 +169,11 @@ class SK extends BaseController
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip = 0;
 
-            $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            if ($this->request->getPost('kode_arsip' == "")) {
+                $nomor = $nomor_urut_text . '/' . '1802' . ' TAHUN ' . $year;
+            } else {
+                $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+            }
         } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
             $tanggal = $this->request->getPost('tanggal');
 
@@ -190,7 +194,11 @@ class SK extends BaseController
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip_text = $this->numberToText2($nomor_sisip);
 
-            $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            if ($this->request->getPost('kode_arsip' == "")) {
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . ' TAHUN ' . $year;
+            } else {
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+            }
         }
 
         $data = [
@@ -206,8 +214,11 @@ class SK extends BaseController
             'created_by' => $username,
         ];
 
+        $link = base_url('sk/manage');
+
         if ($model->save($data)) {
-            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil disimpan');
+            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil disimpan' . PHP_EOL . 'Nomor SK: ' . $nomor
+                . PHP_EOL . ' (<a href="' . $link . '">Lihat di sini</a>)');
         }
 
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data SK');
@@ -290,11 +301,20 @@ class SK extends BaseController
         $nomor = '';
         if ($result->jenis_penomoran == 'urut') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
-            $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+
+            if ($this->request->getPost('kode_arsip' == "")) {
+                $nomor = $nomor_urut_text . '/' . '1802' . ' TAHUN ' . $year;
+            } else {
+                $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+            }
         } elseif ($result->jenis_penomoran == 'sisip') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
             $nomor_sisip_text = $this->numberToText2($result->nomor_sisip);
-            $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            if ($this->request->getPost('kode_arsip' == "")) {
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . ' TAHUN ' . $year;
+            } else {
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+            }
         }
 
         $updateSuccessful = $model->update($id, [
@@ -307,7 +327,7 @@ class SK extends BaseController
 
         // Check if update was successful and pass the appropriate message
         if ($updateSuccessful) {
-            return redirect()->to(base_url('sk/manage'))->with('success', 'Berhasil mengupdate data SK');
+            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil diupdate' . PHP_EOL . 'Nomor SK: ' . $nomor);
         } else {
             return redirect()->to(base_url('sk/manage'))->with('error', 'Gagal mengupdate data SK');
         }
@@ -327,10 +347,12 @@ class SK extends BaseController
             return redirect()->back()->with('limited', 'Data SK hanya bisa dihapus oleh orang yang membuatnya');
         }
 
+        $nomor = $sk['nomor'];
+
         // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus');
+        return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
     }
 
     public function getSKs()

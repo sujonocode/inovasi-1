@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1 class="text-center mb-4">Daftar Kontrak</h1>
+                <h1 class="text-center mb-4">Daftar Data Kontrak</h1>
                 <a href=<?= base_url("kontrak/create") ?> class="btn btn-primary btn-sm" title="Tambah Kontrak Baru">
                     <i class="fa-solid fa-plus"></i> Tambah
                 </a>
