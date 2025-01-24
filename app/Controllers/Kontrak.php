@@ -169,7 +169,11 @@ class Kontrak extends BaseController
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip = 0;
 
-            $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            if ($this->request->getPost('kode_arsip' == "")) {
+                $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $month . '/' . $year;
+            } else {
+                $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            }
         } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
             $tanggal = $this->request->getPost('tanggal');
 
@@ -184,13 +188,31 @@ class Kontrak extends BaseController
 
             $result = $query->getRow();
 
+            if (!$result) {
+                $builder = $this->db->table('kontrak');
+                $query = $builder
+                    ->select('id, nomor_urut, nomor_sisip, tanggal')
+                    ->where('tanggal <', $tanggal)
+                    ->orderBy('tanggal', 'DESC')
+                    ->orderBy('nomor_urut', 'DESC')
+                    ->orderBy('nomor_sisip', 'DESC')
+                    ->limit(1)
+                    ->get();
+
+                $result = $query->getRow();
+            }
+
             $nomor_urut = $result->nomor_urut;
             $nomor_sisip = $result->nomor_sisip + 1;
 
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip_text = $this->numberToText2($nomor_sisip);
 
-            $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            if ($this->request->getPost('kode_arsip' == "")) {
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $month . '/' . $year;
+            } else {
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            }
         }
 
         $data = [
@@ -210,8 +232,7 @@ class Kontrak extends BaseController
         $link = base_url('kontrak/manage');
 
         if ($model->save($data)) {
-            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil disimpan' . PHP_EOL . 'Nomor kontrak: ' . $nomor . PHP_EOL . 'Lihat di sini: ' . $nomor
-                . PHP_EOL . ' (<a href="' . $link . '">Lihat di sini</a>)');
+            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil disimpan' . PHP_EOL . 'Nomor kontrak: ' . $nomor . ' (<a href="' . $link . '">Lihat di sini</a>)');
         }
 
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data kontrak');
@@ -238,9 +259,26 @@ class Kontrak extends BaseController
         // Get the current logged-in user's username
         $currentUsername = session()->get('username');
 
-        // Check if the current user is the creator of the data
-        if ($kontrak['created_by'] !== $currentUsername) {
-            return redirect()->back()->with('limited', 'SK hanya bisa diubah oleh orang yang membuatnya.');
+        if (session()->get('role') === 'admin') {
+            // Fetch distinct 'jenis' options from the 'kode_arsip' table
+            $db = \Config\Database::connect();
+            $data['jenisOptions'] = $db->table('kode_arsip')
+                ->select('jenis')
+                ->distinct()
+                ->get()
+                ->getResultArray();
+
+            // Add title to the data array
+            $data['title'] = ucfirst($page);
+
+            // Return the view with all the data
+            return view('templates/header', $data)
+                . view('kontrak/edit', $data)
+                . view('templates/footer');
+        } else {
+            if ($kontrak['created_by'] !== $currentUsername) {
+                return redirect()->back()->with('limited', 'Kontrak hanya bisa diubah oleh orang yang membuatnya.');
+            }
         }
 
         // Fetch distinct 'jenis' options from the 'kode_arsip' table
@@ -295,11 +333,19 @@ class Kontrak extends BaseController
         $nomor = '';
         if ($result->jenis_penomoran == 'urut') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
-            $nomor = $nomor_urut_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            if ($this->request->getPost('kode_arsip' == "")) {
+                $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $month . '/' . $year;
+            } else {
+                $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            }
         } elseif ($result->jenis_penomoran == 'sisip') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
             $nomor_sisip_text = $this->numberToText2($result->nomor_sisip);
-            $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            if ($this->request->getPost('kode_arsip' == "")) {
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $month . '/' . $year;
+            } else {
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            }
         }
 
         $updateSuccessful = $model->update($id, [
@@ -329,8 +375,17 @@ class Kontrak extends BaseController
             return redirect()->back()->with('error', 'Data kontrak dengan nomor tersebut tidak ditemukan');
         }
 
-        if (session()->get('username') !== $kontrak['created_by']) {
-            return redirect()->back()->with('limited', ' Data kontrak hanya bisa dihapus oleh orang yang membuatnya');
+        if (session()->get('role') === 'admin') {
+            $nomor = $kontrak['nomor'];
+
+            // Call the delete logic directly here
+            $model->delete($id);
+
+            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+        } else {
+            if (session()->get('username') !== $kontrak['created_by']) {
+                return redirect()->back()->with('limited', 'Data kontrak hanya bisa dihapus oleh orang yang membuatnya');
+            }
         }
 
         $nomor = $kontrak['nomor'];

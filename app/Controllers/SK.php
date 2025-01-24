@@ -188,6 +188,20 @@ class SK extends BaseController
 
             $result = $query->getRow();
 
+            if (!$result) {
+                $builder = $this->db->table('sk');
+                $query = $builder
+                    ->select('id, nomor_urut, nomor_sisip')
+                    ->where('tanggal <', $tanggal)
+                    ->orderBy('tanggal', 'DESC')
+                    ->orderBy('nomor_urut', 'DESC')
+                    ->orderBy('nomor_sisip', 'DESC')
+                    ->limit(1)
+                    ->get();
+
+                $result = $query->getRow();
+            }
+
             $nomor_urut = $result->nomor_urut;
             $nomor_sisip = $result->nomor_sisip + 1;
 
@@ -245,9 +259,26 @@ class SK extends BaseController
         // Get the current logged-in user's username
         $currentUsername = session()->get('username');
 
-        // Check if the current user is the creator of the data
-        if ($sk['created_by'] !== $currentUsername) {
-            return redirect()->back()->with('limited', 'SK hanya bisa diubah oleh orang yang membuatnya.');
+        if (session()->get('role') === 'admin') {
+            // Fetch distinct 'jenis' options from the 'kode_arsip' table
+            $db = \Config\Database::connect();
+            $data['jenisOptions'] = $db->table('kode_arsip')
+                ->select('jenis')
+                ->distinct()
+                ->get()
+                ->getResultArray();
+
+            // Add title to the data array
+            $data['title'] = ucfirst($page);
+
+            // Return the view with all the data
+            return view('templates/header', $data)
+                . view('sk/edit', $data)
+                . view('templates/footer');
+        } else {
+            if ($sk['created_by'] !== $currentUsername) {
+                return redirect()->back()->with('limited', 'SK hanya bisa diubah oleh orang yang membuatnya.');
+            }
         }
 
         // Fetch distinct 'jenis' options from the 'kode_arsip' table
@@ -343,8 +374,17 @@ class SK extends BaseController
             return redirect()->back()->with('error', ' Data SK dengan nomor tersebut tidak ditemukan');
         }
 
-        if (session()->get('username') !== $sk['created_by']) {
-            return redirect()->back()->with('limited', 'Data SK hanya bisa dihapus oleh orang yang membuatnya');
+        if (session()->get('role') === 'admin') {
+            $nomor = $sk['nomor'];
+
+            // Call the delete logic directly here
+            $model->delete($id);
+
+            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+        } else {
+            if (session()->get('username') !== $sk['created_by']) {
+                return redirect()->back()->with('limited', 'Data SK hanya bisa dihapus oleh orang yang membuatnya');
+            }
         }
 
         $nomor = $sk['nomor'];

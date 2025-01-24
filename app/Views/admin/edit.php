@@ -44,7 +44,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="form-section">
-                <h2 class="text-center mb-4">Formulir Edit Data User</h2>
+                <h2 class="text-center mb-4">Formulir Edit Data Akun</h2>
                 <?php if (isset($user)): ?>
                     <form id="editForm" onsubmit="return validateCheckboxes()" action="<?= base_url('admin/update/' . $user['id']) ?>" method="POST">
                         <?= csrf_field() ?>

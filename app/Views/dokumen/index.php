@@ -5,7 +5,7 @@
     <div class="row g-4 mb-4">
         <div class="col-lg-3 col-md-6">
             <div class="card">
-                <div class="card-header text-white" style="background-color: rgba(78, 121, 167, 1);">
+                <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
                     <i class="fas fa-folder-tree"></i> Total Dokumen
                 </div>
                 <div class="card-body text-center">
@@ -16,7 +16,7 @@
         </div>
         <div class="col-lg-3 col-md-6">
             <div class="card">
-                <div class="card-header text-white" style="background-color: rgba(78, 121, 167, 1);">
+                <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
                     <i class="fas fa-file-lines"></i> Total Surat
                 </div>
                 <div class="card-body text-center">
@@ -27,7 +27,7 @@
         </div>
         <div class="col-lg-3 col-md-6">
             <div class="card">
-                <div class="card-header text-white" style="background-color: rgba(78, 121, 167, 1);">
+                <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
                     <i class="fas fa-file-signature"></i> Total SK
                 </div>
                 <div class="card-body text-center">
@@ -38,7 +38,7 @@
         </div>
         <div class="col-lg-3 col-md-6">
             <div class="card">
-                <div class="card-header text-white" style="background-color: rgba(78, 121, 167, 1);">
+                <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
                     <i class="fas fa-file-contract"></i> Total Kontrak
                 </div>
                 <div class="card-body text-center">

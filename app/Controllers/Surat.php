@@ -188,6 +188,20 @@ class Surat extends BaseController
 
             $result = $query->getRow();
 
+            if (!$result) {
+                $builder = $this->db->table('surat');
+                $query = $builder
+                    ->select('id, nomor_urut, nomor_sisip')
+                    ->where('tanggal <', $tanggal)
+                    ->orderBy('tanggal', 'DESC')
+                    ->orderBy('nomor_urut', 'DESC')
+                    ->orderBy('nomor_sisip', 'DESC')
+                    ->limit(1)
+                    ->get();
+
+                $result = $query->getRow();
+            }
+
             $nomor_urut = $result->nomor_urut;
             $nomor_sisip = $result->nomor_sisip + 1;
 
@@ -248,9 +262,26 @@ class Surat extends BaseController
         // Get the current logged-in user's username
         $currentUsername = session()->get('username');
 
-        // Check if the current user is the creator of the data
-        if ($surat['created_by'] !== $currentUsername) {
-            return redirect()->back()->with('limited', 'Data surat hanya bisa diubah oleh orang yang membuatnya.');
+        if (session()->get('role') === 'admin') {
+            // Fetch distinct 'jenis' options from the 'kode_arsip' table
+            $db = \Config\Database::connect();
+            $data['jenisOptions'] = $db->table('kode_arsip')
+                ->select('jenis')
+                ->distinct()
+                ->get()
+                ->getResultArray();
+
+            // Add title to the data array
+            $data['title'] = ucfirst($page);
+
+            // Return the view with all the data
+            return view('templates/header', $data)
+                . view('surat/edit', $data)
+                . view('templates/footer');
+        } else {
+            if ($surat['created_by'] !== $currentUsername) {
+                return redirect()->back()->with('limited', 'Surat hanya bisa diubah oleh orang yang membuatnya.');
+            }
         }
 
         // Fetch distinct 'jenis' options from the 'kode_arsip' table
@@ -349,8 +380,18 @@ class Surat extends BaseController
             return redirect()->back()->with('error', 'Data surat dengan nomor tersebut tidak ditemukan');
         }
 
-        if (session()->get('username') !== $surat['created_by']) {
-            return redirect()->back()->with('limited', 'Data surat hanya bisa dihapus oleh orang yang membuatnya');
+        if (session()->get('role') === 'admin') {
+
+            $nomor = $surat['pert_dahulu'];
+
+            // Call the delete logic directly here
+            $model->delete($id);
+
+            return redirect()->to(base_url('surat/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+        } else {
+            if (session()->get('username') !== $surat['created_by']) {
+                return redirect()->back()->with('limited', 'Data surat hanya bisa dihapus oleh orang yang membuatnya');
+            }
         }
 
         $nomor = $surat['nomor'];

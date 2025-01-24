@@ -1,43 +1,33 @@
 <div class="container my-5">
     <h2 class="section-title text-center mb-4">Dashboard Admin</h2>
     <div class="row g-4 mb-4">
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="card">
-                <div class="card-header text-white" style="background-color: rgba(78, 121, 167, 1);">
-                    <i class="fas fa-folder-tree"></i> Total Dokumen
+                <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
+                    <i class="fa-solid fa-users"></i> Total Akun (Admin + User)
                 </div>
                 <div class="card-body text-center">
-                    <h5 id="card-1" class="card-title display-6 fw-bold">1,245</h5>
+                    <h5 id="card-1" class="card-title display-6 fw-bold"></h5>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="card">
-                <div class="card-header text-white" style="background-color: rgba(78, 121, 167, 1);">
-                    <i class="fas fa-file-lines"></i> Total Surat
+                <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
+                    <i class="fa-solid fa-user-gear"></i> Total Admin
                 </div>
                 <div class="card-body text-center">
-                    <h5 id="card-2" class="card-title display-6 fw-bold">850</h5>
+                    <h5 id="card-2" class="card-title display-6 fw-bold"></h5>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="card">
-                <div class="card-header text-white" style="background-color: rgba(78, 121, 167, 1);">
-                    <i class="fas fa-file-signature"></i> Total user
+                <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
+                    <i class="fa-solid fa-user"></i> Total User
                 </div>
                 <div class="card-body text-center">
-                    <h5 id="card-3" class="card-title display-6 fw-bold">120</h5>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="card">
-                <div class="card-header text-white" style="background-color: rgba(78, 121, 167, 1);">
-                    <i class="fas fa-file-contract"></i> Total Kontrak
-                </div>
-                <div class="card-body text-center">
-                    <h5 id="card-4" class="card-title display-6 fw-bold">150</h5>
+                    <h5 id="card-3" class="card-title display-6 fw-bold"></h5>
                 </div>
             </div>
         </div>
@@ -147,6 +137,44 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    const totalAkun = <?php echo json_encode($totalAkun); ?>;
+
+    const totalAkunByRole = <?php echo json_encode($totalAkunByRole); ?>;
+
+    function getRoleAndCount(data) {
+        const countByCategory = data.reduce((acc, item) => {
+            if (acc[item.role]) {
+                acc[item.role] += parseInt(item.count);
+            } else {
+                acc[item.role] = parseInt(item.count);
+            }
+            return acc;
+        }, {});
+
+        const akunRole = Object.keys(countByCategory);
+        const akunRoleCount = Object.values(countByCategory);
+
+        return {
+            akunRole,
+            akunRoleCount
+        };
+    }
+
+    const {
+        akunRole,
+        akunRoleCount
+    } = getRoleAndCount(totalAkunByRole);
+</script>
+
+<!-- Card Chart -->
+<script>
+    document.getElementById('card-1').innerText = `${totalAkun}`;
+    document.getElementById('card-2').innerText = `${akunRoleCount[0]}`;
+    document.getElementById('card-3').innerText = `${akunRoleCount[1]}`;
+</script>
 
 <script>
     // Open the modal and set the delete URL dynamically

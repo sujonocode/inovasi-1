@@ -15,10 +15,21 @@ class Admin extends BaseController
 
     public function index(string $page = 'Dashboard Admin')
     {
-        $model = new UserModel();
+        $modelUser = new UserModel();
+
+        // Using a more concise approach to pass data to the view
+        $data = [];
 
         $data['title'] = ucfirst($page);
-        $data['users'] = $model->findAll();
+
+        $data['users'] = $modelUser->findAll();
+
+        $data['totalAkun'] = $modelUser->countAll();
+
+        $data['totalAkunByRole'] = $modelUser
+            ->select('role, COUNT(*) as count')
+            ->groupBy('role')
+            ->findAll();
 
         return view('templates/header', $data)
             . view('admin/dashboard', $data)

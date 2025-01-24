@@ -98,17 +98,17 @@
                     </li> -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('profile') ?>" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-user"></i> <?= session()->get('username') ?>
+                            <i class="fa-solid fa-circle-user"></i> <?= session()->get('username') ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('profile') ?>">Profile</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('profile') ?>"><i class="fa-solid fa-user"></i> Profil Saya</a></li>
                             <?php if (session()->get('role') == 'admin'): ?>
-                                <li><a class="dropdown-item" href="<?= base_url('admin_dashboard') ?>">Admin Dashboard</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('admin_dashboard') ?>"><i class="fa-solid fa-users-gear"></i> Admin Dashboard</a></li>
                             <?php endif; ?>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="<?= base_url('logout') ?>">Logout</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('logout') ?>"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
                         </ul>
                     </li>
                 </ul>

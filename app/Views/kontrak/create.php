@@ -98,6 +98,7 @@
                     <div class="row form-group align-items-center flex-column flex-md-row">
                         <label for="url" class="col-md-3 form-label">Link:</label>
                         <div class="col-md-9">
+                            <p id="error-message" style="color: red; display: none;">Link tidak valid. Pastikan link valid atau kosongkan saja!</p>
                             <input id="url" type="text" name="url" class="form-control">
                         </div>
                     </div>
@@ -111,6 +112,54 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Function to validate URL
+    function validateCheckboxes() {
+        return true;
+    }
+
+    // Function to validate URL
+    function isValidUrl(url) {
+        try {
+            const parsedUrl = new URL(url); // Check if it's a valid URL format
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // Function to check if it's a valid Google Drive link (optional, customize as needed)
+    function isGoogleDriveLink(url) {
+        return url.includes("drive.google.com");
+    }
+
+    // Function to check if it's a valid BPS Drive link (optional, customize as needed)
+    function isBpsDriveLink(url) {
+        return url.includes("drive.bps.go.id");
+    }
+
+    function isEmpty(url) {
+        return url == '';
+    }
+
+    document.getElementById("createForm").addEventListener("submit", function(e) {
+        const urlInput = document.getElementById("url").value.trim();
+        const errorMessage = document.getElementById("error-message");
+
+        // Check if at least one of the conditions is true (submit the form if one is true)
+        if (isValidUrl(urlInput) || isGoogleDriveLink(urlInput) || isBpsDriveLink(urlInput) || isEmpty(urlInput)) {
+            // Proceed with form submission
+            errorMessage.style.display = "none";
+            return true;
+        } else {
+            // Prevent form submission if none of the conditions is true
+            e.preventDefault();
+            errorMessage.style.display = "block";
+            return false;
+        }
+    });
+</script>
 
 <script>
     $(document).ready(function() {

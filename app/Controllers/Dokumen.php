@@ -11,7 +11,6 @@ class Dokumen extends BaseController
 {
     public function index(string $page = 'Manajemen Dokumen')
     {
-        $modelUser = new UserModel();
         $modelSurat = new SuratModel();
         $modelSK = new SKModel();
         $modelKontrak = new KontrakModel();
