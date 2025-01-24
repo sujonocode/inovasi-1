@@ -63,8 +63,8 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->get('edit/(:num)', 'Surat::edit/$1');
         $routes->post('update/(:num)', 'Surat::update/$1');
         $routes->get('delete/(:num)', 'Surat::delete/$1');
-        $routes->post('create/getKode1', 'FormController::getKode1');
-        $routes->post('create/getKodeKlasifikasi', 'FormController::getKodeKlasifikasi');
+        $routes->post('create/getKode1', 'Surat::getKode1');
+        $routes->post('create/getKodeKlasifikasi', 'Surat::getKodeKlasifikasi');
         $routes->post('create/getKodeArsip', 'Surat::getKodeArsip');
     });
 
@@ -75,8 +75,8 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/sk/edit/(:num)', 'SK::edit/$1');
     $routes->post('/sk/update/(:num)', 'SK::update/$1');
     $routes->get('/sk/delete/(:num)', 'SK::delete/$1');
-    $routes->post('/sk/create/getKode1', 'FormController::getKode1');
-    $routes->post('/sk/create/getKodeKlasifikasi', 'FormController::getKodeKlasifikasi');
+    $routes->post('/sk/create/getKode1', 'SK::getKode1');
+    $routes->post('/sk/create/getKodeKlasifikasi', 'SK::getKodeKlasifikasi');
     $routes->post('sk/create/getKodeArsip', 'SK::getKodeArsip');
 
     $routes->get('/dokumen/kontrak', [Kontrak::class, 'index']);
@@ -86,8 +86,8 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/kontrak/edit/(:num)', 'Kontrak::edit/$1');
     $routes->post('/kontrak/update/(:num)', 'Kontrak::update/$1');
     $routes->get('/kontrak/delete/(:num)', 'Kontrak::delete/$1');
-    $routes->post('/kontrak/create/getKode1', 'FormController::getKode1');
-    $routes->post('/kontrak/create/getKodeKlasifikasi', 'FormController::getKodeKlasifikasi');
+    $routes->post('/kontrak/create/getKode1', 'Kontrak::getKode1');
+    $routes->post('/kontrak/create/getKodeKlasifikasi', 'Kontrak::getKodeKlasifikasi');
     $routes->post('kontrak/create/getKodeArsip', 'Kontrak::getKodeArsip');
 
     $routes->get('/humas', [Humas::class, 'maintenance']);

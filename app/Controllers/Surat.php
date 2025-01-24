@@ -63,8 +63,6 @@ class Surat extends BaseController
 
     public function getKode1()
     {
-        $response = $this->response;
-        $response->setHeader('X-CSRF-TOKEN', csrf_hash());
         if ($this->request->isAJAX()) {
             $jenis = $this->request->getPost('jenis');
             $db = \Config\Database::connect();
@@ -84,8 +82,6 @@ class Surat extends BaseController
 
     public function getKodeKlasifikasi()
     {
-        $response = $this->response;
-        $response->setHeader('X-CSRF-TOKEN', csrf_hash());
         if ($this->request->isAJAX()) {
             $kode1 = $this->request->getPost('kode_1');
             $db = \Config\Database::connect();
@@ -97,7 +93,7 @@ class Surat extends BaseController
                 ->getResultArray();
 
             // Debug CSRF token
-            // log_message('debug', 'New CSRF Token (getKodeKlasifikasi): ' . csrf_hash());
+            log_message('debug', 'New CSRF Token (getKodeKlasifikasi): ' . csrf_hash());
 
             return $this->response
                 ->setHeader('X-CSRF-TOKEN', csrf_hash()) // Send new token
