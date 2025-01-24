@@ -43,6 +43,11 @@ $routes->group('', ['filter' => 'role:admin,user'], function ($routes) {
 
 $routes->group('', ['filter' => 'role:admin'], function ($routes) {
     $routes->get('/admin_dashboard', 'Admin::index');
+    $routes->get('/admin/create', 'Admin::create');
+    $routes->post('/admin/store', 'Admin::store');
+    $routes->get('/admin/edit/(:num)', 'Admin::edit/$1');
+    $routes->post('/admin/update/(:num)', 'Admin::update/$1');
+    $routes->get('/admin/delete/(:num)', 'Admin::delete/$1');
     $routes->get('/register', 'AuthController::register');
     $routes->post('/register', 'AuthController::storeUser');
 });

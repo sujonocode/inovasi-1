@@ -139,7 +139,7 @@
         }
 
         // Generate the WhatsApp link with encoded text
-        const message = `Nama         : ${nama}\nJenis Kelamin: ${jk}\n\n${pesan}`;
+        const message = `Nama            : ${nama}\nJenis Kelamin: ${jk}\n\n${pesan}`;
         const whatsappLink = `https://wa.me/6282337039320?text=${encodeURIComponent(message)}`;
 
         // Open the link in a new tab

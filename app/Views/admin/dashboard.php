@@ -1,271 +1,216 @@
 <div class="container my-5">
-    <!-- Statistics Cards -->
-    <div class="row mb-4 g-4">
-        <div class="col-lg-3 col-md-6 col-sm-12">
+    <h2 class="section-title text-center mb-4">Dashboard Admin</h2>
+    <div class="row g-4 mb-4">
+        <div class="col-lg-3 col-md-6">
             <div class="card">
-                <div class="card-header bg-success text-white">
-                    <i class="fas fa-users"></i> Total Employees
+                <div class="card-header text-white" style="background-color: rgba(78, 121, 167, 1);">
+                    <i class="fas fa-folder-tree"></i> Total Dokumen
                 </div>
                 <div class="card-body text-center">
-                    <h5 class="card-title" style="font-size: 2.5rem; font-weight: bold;">1,245</h5>
-                    <p class="card-text">Employees currently in the system</p>
+                    <h5 id="card-1" class="card-title display-6 fw-bold">1,245</h5>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-12">
+        <div class="col-lg-3 col-md-6">
             <div class="card">
-                <div class="card-header bg-success text-white">
-                    <i class="fas fa-user-tie"></i> Active Employees
+                <div class="card-header text-white" style="background-color: rgba(78, 121, 167, 1);">
+                    <i class="fas fa-file-lines"></i> Total Surat
                 </div>
                 <div class="card-body text-center">
-                    <h5 class="card-title" style="font-size: 2.5rem; font-weight: bold;">850</h5>
-                    <p class="card-text">Employees actively working</p>
+                    <h5 id="card-2" class="card-title display-6 fw-bold">850</h5>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-12">
+        <div class="col-lg-3 col-md-6">
             <div class="card">
-                <div class="card-header bg-warning text-white">
-                    <i class="fas fa-user-clock"></i> Employees On Leave
+                <div class="card-header text-white" style="background-color: rgba(78, 121, 167, 1);">
+                    <i class="fas fa-file-signature"></i> Total user
                 </div>
                 <div class="card-body text-center">
-                    <h5 class="card-title" style="font-size: 2.5rem; font-weight: bold;">120</h5>
-                    <p class="card-text">Employees currently on leave</p>
+                    <h5 id="card-3" class="card-title display-6 fw-bold">120</h5>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-12">
+        <div class="col-lg-3 col-md-6">
             <div class="card">
-                <div class="card-header bg-danger text-white">
-                    <i class="fas fa-briefcase"></i> Vacant Positions
+                <div class="card-header text-white" style="background-color: rgba(78, 121, 167, 1);">
+                    <i class="fas fa-file-contract"></i> Total Kontrak
                 </div>
                 <div class="card-body text-center">
-                    <h5 class="card-title" style="font-size: 2.5rem; font-weight: bold;">150</h5>
-                    <p class="card-text">Available job openings</p>
+                    <h5 id="card-4" class="card-title display-6 fw-bold">150</h5>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Charts Section -->
-    <div class="row mb-4"> <!-- Add margin-bottom for spacing -->
-        <!-- Pie Chart 1 -->
-        <div class="col-lg-4 col-md-12 mb-2"> <!-- Add margin-bottom for each column -->
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    Bar Chart - Employee Distribution
-                </div>
-                <div class="card-body">
-                    <canvas id="pieChart1"></canvas>
-                </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 class="text-center mb-4">Daftar User</h1>
+                <a href="<?= base_url("admin/create") ?>" class="btn btn-primary btn-sm" title="Tambah user Baru">
+                    <i class="fa-solid fa-plus"></i> Tambah
+                </a>
             </div>
         </div>
-        <!-- Pie Chart 2 -->
-        <div class="col-lg-4 col-md-12 mb-2"> <!-- Add margin-bottom for each column -->
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    Bar Chart - Department Overview
-                </div>
-                <div class="card-body">
-                    <canvas id="pieChart2"></canvas>
-                </div>
-            </div>
-        </div>
-        <!-- Pie Chart 3 -->
-        <div class="col-lg-4 col-md-12 mb-2"> <!-- Add margin-bottom for each column -->
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    Bar Chart - Employee Distribution
-                </div>
-                <div class="card-body">
-                    <canvas id="pieChart3"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row mb-4"> <!-- Add margin-bottom for spacing -->
-        <!-- Bar Chart 1 -->
-        <div class="col-lg-6 col-md-12 mb-2"> <!-- Add margin-bottom for each column -->
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    Bar Chart - Employee Distribution
-                </div>
-                <div class="card-body">
-                    <canvas id="barChart1"></canvas>
-                </div>
-            </div>
-        </div>
-        <!-- Bar Chart 2 -->
-        <div class="col-lg-6 col-md-12 mb-2"> <!-- Add margin-bottom for each column -->
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    Bar Chart - Department Overview
-                </div>
-                <div class="card-body">
-                    <canvas id="barChart2"></canvas>
-                </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="example" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($users)): ?>
+                            <?php foreach ($users as $user): ?>
+                                <tr>
+                                    <td><?= $user['username'] ?></td>
+                                    <td><?= $user['nama'] ?></td>
+                                    <td><?= $user['email'] ?></td>
+                                    <td><?= $user['role'] ?></td>
+                                    <td>
+                                        <a href="/admin/edit/<?= $user['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
+                                        <a href="#" onclick="openDeleteModal(<?= $user['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="5" style="text-align: center; font-weight: bold;">Belum ada data user.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Include Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<?php if (session()->getFlashdata('error')): ?>
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?= session()->getFlashdata('error'); ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php if (session()->getFlashdata('success')): ?>
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Success</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?= session()->getFlashdata('success'); ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus data user ini?
+            </div>
+            <div class="modal-footer">
+                <!-- Cancel Button -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <!-- Delete Button -->
+                <button id="confirmDeleteBtn" class="btn btn-danger">Hapus</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
-    // ChartJS Initialization
-    const ctx_p1 = document.getElementById('pieChart1').getContext('2d');
-    const employeeChart_p1 = new Chart(ctx_p1, {
-        type: 'pie',
-        data: {
-            labels: ['Active Employees', 'On Leave', 'Vacant Positions'],
-            datasets: [{
-                label: 'Employee Distribution',
-                data: [850, 120, 150],
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.6)', // Active
-                    'rgba(255, 206, 86, 0.6)', // On Leave
-                    'rgba(255, 99, 132, 0.6)' // Vacant
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                }
-            }
-        }
-    });
+    // Open the modal and set the delete URL dynamically
+    function openDeleteModal(userId) {
+        // Set the delete ID in a custom attribute, or store it globally
+        const deleteUrl = "<?= base_url() ?>" + "admin/delete/" + userId;
 
-    // ChartJS Initialization
-    const ctx_p2 = document.getElementById('pieChart2').getContext('2d');
-    const employeeChart_p2 = new Chart(ctx_p2, {
-        type: 'pie',
-        data: {
-            labels: ['Active Employees', 'On Leave', 'Vacant Positions'],
-            datasets: [{
-                label: 'Employee Distribution',
-                data: [850, 120, 150],
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.6)', // Active
-                    'rgba(255, 206, 86, 0.6)', // On Leave
-                    'rgba(255, 99, 132, 0.6)' // Vacant
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                }
-            }
-        }
-    });
+        // Store the URL in the delete button as a data attribute
+        document.getElementById('confirmDeleteBtn').setAttribute('data-delete-url', deleteUrl);
 
-    // ChartJS Initialization
-    const ctx_p3 = document.getElementById('pieChart3').getContext('2d');
-    const employeeChart_p3 = new Chart(ctx_p3, {
-        type: 'pie',
-        data: {
-            labels: ['Active Employees', 'On Leave', 'Vacant Positions'],
-            datasets: [{
-                label: 'Employee Distribution',
-                data: [850, 120, 150],
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.6)', // Active
-                    'rgba(255, 206, 86, 0.6)', // On Leave
-                    'rgba(255, 99, 132, 0.6)' // Vacant
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                }
-            }
-        }
+        // Show the modal
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show();
+    }
+
+    // Handle the delete button click
+    document.getElementById('confirmDeleteBtn').addEventListener('click', function(event) {
+        // Prevent the default behavior
+        event.preventDefault();
+
+        // Get the URL to be deleted from the data attribute
+        const deleteUrl = this.getAttribute('data-delete-url');
+
+        // Redirect to the delete URL (or you can use AJAX to delete data without a page reload)
+        window.location.href = deleteUrl;
     });
 </script>
 
 <script>
-    // Bar Chart 1
-    const ctx1 = document.getElementById('barChart1').getContext('2d');
-    new Chart(ctx1, {
-        type: 'bar',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                label: 'Employees',
-                data: [120, 150, 180, 200, 170, 160],
-                backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false
+    $(document).ready(function() {
+        $('#example').DataTable({
+            scrollY: '400px',
+            scrollX: true,
+            autoWidth: false,
+            scrollCollapse: true,
+            paging: true,
+            fixedHeader: true,
+            pageLength: 10,
+            lengthMenu: [5, 10, 15, 20],
+            columnDefs: [{
+                    orderable: true,
+                    targets: [0, 1, 2, 3, 4]
+                },
+                {
+                    orderable: false,
+                    targets: [4]
                 }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
+            ],
+            // order: [
+            //     [0, 'desc']
+            // ],
+        });
     });
 
-    // Bar Chart 2
-    const ctx2 = document.getElementById('barChart2').getContext('2d');
-    new Chart(ctx2, {
-        type: 'bar',
-        data: {
-            labels: ['HR', 'IT', 'Finance', 'Marketing', 'Admin'],
-            datasets: [{
-                label: 'Departments',
-                data: [50, 80, 40, 70, 60],
-                backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
+    // Automatically show the modal when the page loads if a flash message exists
+    window.onload = function() {
+        <?php if (session()->getFlashdata('error')): ?>
+            var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+            errorModal.show();
+        <?php endif; ?>
+
+        <?php if (session()->getFlashdata('success')): ?>
+            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        <?php endif; ?>
+    }
 </script>

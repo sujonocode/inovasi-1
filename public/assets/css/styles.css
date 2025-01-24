@@ -185,7 +185,7 @@ footer a:hover {
 /* Ensure consistent border-radius */
 .card {
     border: none;
-    border-radius: 12px; /* Uniform radius for the entire card */
+    border-radius: 6px; /* Uniform radius for the entire card */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     background-color: #ffffff;
     overflow: hidden; /* Prevent any overflow mismatch */
@@ -217,6 +217,6 @@ footer a:hover {
 
 .chart-container .canvas-container {
     background-color: #ffffff;
-    border-radius: 12px;
+    border-radius: 6px;
     padding: 20px;
 }

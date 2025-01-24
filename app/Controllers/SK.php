@@ -170,9 +170,9 @@ class SK extends BaseController
             $nomor_sisip = 0;
 
             if ($this->request->getPost('kode_arsip' == "")) {
-                $nomor = $nomor_urut_text . '/' . '1802' . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
             $tanggal = $this->request->getPost('tanggal');
@@ -195,9 +195,9 @@ class SK extends BaseController
             $nomor_sisip_text = $this->numberToText2($nomor_sisip);
 
             if ($this->request->getPost('kode_arsip' == "")) {
-                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         }
 
@@ -303,17 +303,17 @@ class SK extends BaseController
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
 
             if ($this->request->getPost('kode_arsip' == "")) {
-                $nomor = $nomor_urut_text . '/' . '1802' . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         } elseif ($result->jenis_penomoran == 'sisip') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
             $nomor_sisip_text = $this->numberToText2($result->nomor_sisip);
             if ($this->request->getPost('kode_arsip' == "")) {
-                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         }
 
