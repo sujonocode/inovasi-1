@@ -44,87 +44,42 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="form-section">
-                <h2 class="text-center mb-4">Formulir Edit Data SK</h2>
-                <?php if (isset($sk)): ?>
-                    <form id="editForm" onsubmit="return validateCheckboxes()" action="<?= base_url('sk/update/' . $sk['id']) ?>" method="POST">
+                <h2 class="text-center mb-4">Formulir Edit Data User</h2>
+                <?php if (isset($user)): ?>
+                    <form id="editForm" onsubmit="return validateCheckboxes()" action="<?= base_url('admin/update/' . $user['id']) ?>" method="POST">
                         <?= csrf_field() ?>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="nomor" class="col-md-3 form-label">Nomor</label>
+                            <label for="username" class="col-md-3 form-label">Username</label>
                             <div class="col-md-9">
-                                <input id="tanggal" type="text" name="nomor" class="form-control" value="<?= $sk['nomor'] ?>" required disabled>
+                                <input id="username" type="text" name="username" class="form-control" value="<?= $user['username'] ?>" required disabled>
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="tanggal" class="col-md-3 form-label">Tanggal</label>
+                            <label for="nama" class="col-md-3 form-label">Nama:</label>
                             <div class="col-md-9">
-                                <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $sk['tanggal'] ?>" required disabled>
+                                <input id="nama" type="text" name="nama" class="form-control"
+                                    value="<?= $user['nama'] ?>" required>
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="jenis" class="col-md-3 form-label">Arsip:</label>
+                            <label for="email" class="col-md-3 form-label">Email:</label>
                             <div class="col-md-9">
-                                <select name="jenis" id="jenis" class="form-control">
-                                    <option value="">Select Jenis</option>
-                                    <?php foreach ($jenisOptions as $option): ?>
-                                        <option value="<?= $option['jenis'] ?>"><?= $option['jenis'] ?></option>
-                                    <?php endforeach; ?>
+                                <textarea id="email" name="email" class="form-control" rows="3"
+                                    required><?= $user['email'] ?></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
+                            <label for="role" class="col-md-3 form-label">Role:</label>
+                            <div class="col-md-9">
+                                <select name="role" id="role" class="form-control">
+                                    <option value="">Pilih</option>
+                                    <option value="user" <?= $user['role'] === 'user' ? 'selected' : '' ?>>User</option>
+                                    <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="kode_1" class="col-md-3 form-label">Kode:</label>
-                            <div class="col-md-9">
-                                <select name="kode_1" id="kode_1" class="form-control">
-                                    <option value="">Select Kode 1</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="kode_klasifikasi" class="col-md-3 form-label">Klasifikasi:</label>
-                            <div class="col-md-9">
-                                <select name="kode_klasifikasi" id="kode_klasifikasi" class="form-control">
-                                    <option value="">Select Kode Klasifikasi</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="kode_arsip" class="col-md-3 form-label">Kode arsip:</label>
-                            <div class="col-md-9">
-                                <input id="kode_arsip" type="text" name="kode_arsip" class="form-control" required readonly
-                                    style="background-color: #f0f0f0; color: #555555; border: 1px solid #ccc;"
-                                    value="<?= $sk['kode_arsip'] ?>">
-                            </div>
-                        </div>
-                        <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="tanggal" class="col-md-3 form-label">Tanggal</label>
-                            <div class="col-md-9">
-                                <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $sk['tanggal'] ?>" required>
-                            </div>
-                        </div>
-                        <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="perihal" class="col-md-3 form-label">Perihal:</label>
-                            <div class="col-md-9">
-                                <input id="perihal" type="text" name="perihal" class="form-control"
-                                    value="<?= $sk['perihal'] ?>" required>
-                            </div>
-                        </div>
-                        <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="catatan" class="col-md-3 form-label">Catatan:</label>
-                            <div class="col-md-9">
-                                <textarea id="catatan" name="catatan" class="form-control" rows="3"
-                                    required><?= $sk['catatan'] ?></textarea>
-                            </div>
-                        </div>
-                        <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="url" class="col-md-3 form-label">Link:</label>
-                            <div class="col-md-9">
-                                <p id="error-message" style="color: red; display: none;">Link tidak valid. Pastikan link valid atau kosongkan saja!</p>
-                                <input id="url" type="text" name="url" class="form-control"
-                                    value="<?= $sk['url'] ?>">
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-4">
-                            <a href="<?= base_url('sk/manage') ?>" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
+                            <a href="<?= base_url('admin_dashboard') ?>" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
                             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                             <!-- <button type="reset" class="btn btn-secondary"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button> -->
                         </div>
@@ -139,30 +94,6 @@
     // Function to validate URL
     function validateCheckboxes() {
         return true;
-    }
-
-    // Function to validate URL
-    function isValidUrl(url) {
-        try {
-            const parsedUrl = new URL(url); // Check if it's a valid URL format
-            return true;
-        } catch (e) {
-            return false;
-        }
-    }
-
-    // Function to check if it's a valid Google Drive link (optional, customize as needed)
-    function isGoogleDriveLink(url) {
-        return url.includes("drive.google.com");
-    }
-
-    // Function to check if it's a valid BPS Drive link (optional, customize as needed)
-    function isBpsDriveLink(url) {
-        return url.includes("drive.bps.go.id");
-    }
-
-    function isEmpty(url) {
-        return url == '';
     }
 
     document.getElementById("editForm").addEventListener("submit", function(e) {
@@ -192,87 +123,6 @@
                 $('input[name="<?= csrf_token() ?>"]').val(newToken); // Update the CSRF token field in the form
             }
         }
-
-        // Change handler for 'jenis' dropdown
-        $('#jenis').change(function() {
-            const jenis = $(this).val();
-            $('#kode_1').html('<option value="">Loading...</option>');
-            $('#kode_klasifikasi').html('<option value="">Select Kode Klasifikasi</option>');
-
-            $.ajax({
-                url: '<?= base_url('/sk/create/getKode1') ?>',
-                method: 'POST',
-                data: {
-                    jenis: jenis,
-                    '<?= csrf_token() ?>': $('input[name="<?= csrf_token() ?>"]').val() // Send CSRF token with request
-                },
-                success: function(data, status, xhr) {
-                    updateCSRFToken(xhr); // Update CSRF token from response headers
-                    let options = '<option value="">Select Kode 1</option>';
-                    data.forEach(item => {
-                        options += `<option value="${item.kode_1}">${item.kode_1}</option>`;
-                    });
-                    $('#kode_1').html(options);
-                },
-                error: function() {
-                    alert('Error fetching Kode 1 options.');
-                }
-            });
-        });
-
-        // Change handler for 'kode_1' dropdown
-        $('#kode_1').change(function() {
-            const kode1 = $(this).val();
-            $('#kode_klasifikasi').html('<option value="">Loading...</option>');
-
-            $.ajax({
-                url: '<?= base_url('/sk/create/getKodeKlasifikasi') ?>',
-                method: 'POST',
-                data: {
-                    kode_1: kode1,
-                    '<?= csrf_token() ?>': $('input[name="<?= csrf_token() ?>"]').val() // Send CSRF token
-                },
-                success: function(data, status, xhr) {
-                    updateCSRFToken(xhr); // Update CSRF token from response headers
-                    let options = '<option value="">Select Kode Klasifikasi</option>';
-                    data.forEach(item => {
-                        options += `<option value="${item.kode_klasifikasi}">${item.kode_klasifikasi}</option>`;
-                    });
-                    $('#kode_klasifikasi').html(options);
-                },
-                error: function() {
-                    alert('Error fetching Kode Klasifikasi options.');
-                }
-            });
-        });
-
-        // Change handler for 'kode_klasifikasi' dropdown
-        $('#kode_klasifikasi').change(function() {
-            const kodeKlasifikasi = $(this).val();
-            if (kodeKlasifikasi) {
-                $.ajax({
-                    url: '<?= base_url('/sk/create/getKodeArsip') ?>',
-                    method: 'POST',
-                    data: {
-                        kode_klasifikasi: kodeKlasifikasi,
-                        '<?= csrf_token() ?>': $('input[name="<?= csrf_token() ?>"]').val() // Send CSRF token
-                    },
-                    success: function(data, status, xhr) {
-                        updateCSRFToken(xhr); // Update CSRF token from response headers
-                        if (data) {
-                            $('#kode_arsip').val(data.kode_arsip); // Populate kode_arsip field
-                        } else {
-                            $('#kode_arsip').val(''); // Clear field if no data
-                        }
-                    },
-                    error: function() {
-                        alert('Error fetching Kode Arsip.');
-                    }
-                });
-            } else {
-                $('#kode_arsip').val(''); // Clear field if no kode_klasifikasi selected
-            }
-        });
     });
 </script>
 
