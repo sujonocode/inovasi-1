@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="form-section">
                 <h2 class="text-center mb-4">Formulir Data Kontrak</h2>
-                <form action="/kontrak/store" method="post">
+                <form id="createForm" action="/kontrak/store" method="post">
                     <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
                     <div class="row form-group align-items-center flex-column flex-md-row">
                         <label class="col-md-3 form-label">Jenis penomoran:</label>

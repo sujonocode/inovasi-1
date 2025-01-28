@@ -173,8 +173,8 @@ class Kontrak extends BaseController
         } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
             $tanggal = $this->request->getPost('tanggal');
 
-            // Query to get the desired value
             $builder = $this->db->table('kontrak');
+
             $query = $builder->select('id, nomor_urut, nomor_sisip')
                 ->where('tanggal', $tanggal)
                 ->orderBy('nomor_urut', 'DESC')
@@ -183,6 +183,18 @@ class Kontrak extends BaseController
                 ->get();
 
             $result = $query->getRow();
+
+            if ($result) {
+                $nomor_urut = $result->nomor_urut;
+
+                $query2 = $builder->select('id, nomor_urut, nomor_sisip')
+                    ->where('nomor_urut', $nomor_urut)
+                    ->orderBy('nomor_sisip', 'DESC')
+                    ->limit(1)
+                    ->get();
+
+                $result2 = $query2->getRow();
+            }
 
             if (!$result) {
                 $builder = $this->db->table('kontrak');
@@ -196,10 +208,22 @@ class Kontrak extends BaseController
                     ->get();
 
                 $result = $query->getRow();
+
+                if ($result) {
+                    $nomor_urut = $result->nomor_urut;
+
+                    $query2 = $builder->select('id, nomor_urut, nomor_sisip')
+                        ->where('nomor_urut', $nomor_urut)
+                        ->orderBy('nomor_sisip', 'DESC')
+                        ->limit(1)
+                        ->get();
+
+                    $result2 = $query2->getRow();
+                }
             }
 
-            $nomor_urut = $result->nomor_urut;
-            $nomor_sisip = $result->nomor_sisip + 1;
+            $nomor_urut = $result2->nomor_urut;
+            $nomor_sisip = $result2->nomor_sisip + 1;
 
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip_text = $this->numberToText2($nomor_sisip);
@@ -225,10 +249,8 @@ class Kontrak extends BaseController
             'created_by' => $username,
         ];
 
-        $link = base_url('kontrak/manage');
-
         if ($model->save($data)) {
-            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil disimpan' . PHP_EOL . 'Nomor kontrak: ' . $nomor . ' (<a href="' . $link . '">Lihat di sini</a>)');
+            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil disimpan' . PHP_EOL . 'Nomor kontrak: ' . $nomor);
         }
 
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data kontrak');

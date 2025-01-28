@@ -2,48 +2,54 @@
     <h2 class="section-title text-center mb-4">Dashboard Dokumen</h2>
 
     <!-- Statistics Cards -->
-    <div class="row g-4 mb-4">
+    <div class="row g-4 mb-4" style="display: flex; justify-content: center; align-items: center;">
         <div class="col-lg-3 col-md-6">
-            <div class="card">
+            <div class="card h-100 d-flex flex-column justify-content-center">
                 <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
                     <i class="fas fa-folder-tree"></i> Total Dokumen
                 </div>
                 <div class="card-body text-center">
-                    <h5 id="card-1" class="card-title display-6 fw-bold">1,245</h5>
-                    <!-- <p class="card-text">Employees currently in the system</p> -->
+                    <h5 id="card-1" class="card-title display-6 fw-bold"></h5>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
-            <div class="card">
+            <div class="card h-100 d-flex flex-column justify-content-center">
                 <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
-                    <i class="fas fa-file-lines"></i> Total Surat
+                    <i class="fas fa-file-lines"></i> Total Surat Keluar
                 </div>
                 <div class="card-body text-center">
-                    <h5 id="card-2" class="card-title display-6 fw-bold">850</h5>
-                    <!-- <p class="card-text">Employees actively working</p> -->
+                    <h5 id="card-2" class="card-title display-6 fw-bold"></h5>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
-            <div class="card">
+            <div class="card h-100 d-flex flex-column justify-content-center">
+                <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
+                    <i class="fas fa-file-lines"></i> Total Surat Masuk
+                </div>
+                <div class="card-body text-center">
+                    <h5 id="card-5" class="card-title display-6 fw-bold">-</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100 d-flex flex-column justify-content-center">
                 <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
                     <i class="fas fa-file-signature"></i> Total SK
                 </div>
                 <div class="card-body text-center">
-                    <h5 id="card-3" class="card-title display-6 fw-bold">120</h5>
-                    <!-- <p class="card-text">Employees currently on leave</p> -->
+                    <h5 id="card-3" class="card-title display-6 fw-bold"></h5>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
-            <div class="card">
+            <div class="card h-100 d-flex flex-column justify-content-center">
                 <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
                     <i class="fas fa-file-contract"></i> Total Kontrak
                 </div>
                 <div class="card-body text-center">
                     <h5 id="card-4" class="card-title display-6 fw-bold">150</h5>
-                    <!-- <p class="card-text">Available job openings</p> -->
                 </div>
             </div>
         </div>
@@ -51,7 +57,6 @@
 
     <!-- Charts Section -->
     <div class="row g-4 mb-4">
-        <!-- Chart 1 -->
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
@@ -62,22 +67,20 @@
                 </div>
             </div>
         </div>
-        <!-- Chart 2 -->
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
-                    Jumlah Surat Berdasarkan Kode Arsip
+                    Surat Berdasarkan Kode Arsip
                 </div>
                 <div class="card-body">
                     <canvas id="pieChart2"></canvas>
                 </div>
             </div>
         </div>
-        <!-- Chart 3 -->
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
-                    Jumlah Surat Berdasarkan PIC
+                    Surat Berdasarkan PIC
                 </div>
                 <div class="card-body">
                     <canvas id="pieChart3"></canvas>
@@ -85,29 +88,6 @@
             </div>
         </div>
     </div>
-
-    <!-- <div class="row g-4 mb-4">
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
-                    Jumlah Dokumen Per Hari
-                </div>
-                <div class="card-body">
-                    <canvas id="barChart1"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
-                    Jumlah Surat Per Hari
-                </div>
-                <div class="card-body">
-                    <canvas id="lineChart1"></canvas>
-                </div>
-            </div>
-        </div>
-    </div> -->
 </div>
 
 <!-- ChartJS -->

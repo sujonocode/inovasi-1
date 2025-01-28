@@ -1,23 +1,62 @@
 <div class="container my-5">
     <div class="card">
-        <div class="card-header">
+        <!-- <div class="card-header">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1 class="text-center mb-4">Daftar Data Surat</h1>
-                <a href=<?= base_url("surat/create") ?> class="btn btn-primary btn-sm" title="Tambah Surat Baru">
+                <h1 class="text-center mb-4">Data Surat Keluar</h1>
+                <a href=< ?= base_url("surat_keluar/create") ?> class="btn btn-primary btn-sm" title="Tambah Surat Baru">
                     <i class="fa-solid fa-plus"></i> Tambah
                 </a>
+                <a href=< ?= base_url("surat_keluar/export_xlsx") ?> class="btn btn-success btn-sm" title="Download Data Surat">
+                    <i class="fa-solid fa-download"></i> Download
+                </a>
+            </div>
+        </div> -->
+        <!-- <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 class="text-center mb-4">Data Surat Keluar</h1>
+                <div class="d-flex gap-2">
+                    <a href="< ?= base_url('surat_keluar/create') ?>" class="btn btn-primary btn-sm d-flex align-items-center" title="Tambah Surat Baru">
+                        <i class="fa-solid fa-plus me-1"></i> Tambah
+                    </a>
+                    <a href="< ?= base_url('surat_keluar/export_xlsx') ?>" class="btn btn-success btn-sm d-flex align-items-center" title="Download Data Surat">
+                        <i class="fa-solid fa-download me-1"></i> Download
+                    </a>
+                </div>
+            </div>
+        </div> -->
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <!-- Title aligned to the left -->
+                <h1 class="mb-3 mb-md-0">Data Surat Keluar</h1>
+
+                <!-- Buttons aligned to the right -->
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="<?= base_url('surat_keluar/create') ?>"
+                        class="btn btn-primary btn-sm flex-fill text-center"
+                        style="min-width: 120px;"
+                        title="Tambah Surat Baru">
+                        <i class="fa-solid fa-plus me-1"></i> Tambah
+                    </a>
+                    <a href="<?= base_url('surat_keluar/export_xlsx') ?>"
+                        class="btn btn-success btn-sm flex-fill text-center"
+                        style="min-width: 120px;"
+                        title="Download Data Surat">
+                        <i class="fa-solid fa-download me-1"></i> Download
+                    </a>
+                </div>
             </div>
         </div>
+
+
         <div class="card-body">
             <div class="table-responsive">
                 <table id="example" class="table table-striped table-hover">
                     <thead>
                         <tr>
+                            <th>Nomor</th>
                             <th>Tanggal</th>
                             <th>Alamat/Tujuan</th>
                             <th>Ringkasan Isi</th>
-                            <th>Pertalian Nomor Terdahulu</th>
-                            <th>Pertalian Nomor Berikut</th>
                             <th>Catatan</th>
                             <th>PIC</th>
                             <th>Aksi</th>
@@ -27,16 +66,15 @@
                         <?php if (!empty($surats)): ?>
                             <?php foreach ($surats as $surat): ?>
                                 <tr>
+                                    <td><?= $surat['nomor'] ?></td>
                                     <td><?= $surat['tanggal'] ?></td>
                                     <td><?= $surat['alamat'] ?></td>
                                     <td><?= $surat['ringkasan'] ?></td>
-                                    <td><?= $surat['pert_dahulu'] ?></td>
-                                    <td><?= $surat['pert_berikut'] ?></td>
                                     <td><?= $surat['catatan'] ?></td>
                                     <td><?= $surat['created_by'] ?></td>
                                     <td>
                                         <a href="#" onclick="handleLinkClick('<?= $surat['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a>
-                                        <a href="/surat/edit/<?= $surat['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
+                                        <a href="/surat_keluar/edit/<?= $surat['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
                                         <a href="#" onclick="openDeleteModal(<?= $surat['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
                                     </td>
                                 </tr>
@@ -166,7 +204,7 @@
     // Open the modal and set the delete URL dynamically
     function openDeleteModal(suratId) {
         // Set the delete ID in a custom attribute, or store it globally
-        const deleteUrl = "<?= base_url() ?>" + "surat/delete/" + suratId;
+        const deleteUrl = "<?= base_url() ?>" + "surat_keluar/delete/" + suratId;
 
         // Store the URL in the delete button as a data attribute
         document.getElementById('confirmDeleteBtn').setAttribute('data-delete-url', deleteUrl);
@@ -202,11 +240,11 @@
             lengthMenu: [5, 10, 15, 20],
             columnDefs: [{
                     orderable: true,
-                    targets: [0, 1, 2, 3, 4, 5, 6]
+                    targets: [0, 1, 2, 3, 4, 5]
                 },
                 {
                     orderable: false,
-                    targets: [7]
+                    targets: [6]
                 }
             ],
             order: [

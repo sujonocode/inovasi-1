@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="form-section">
                 <h2 class="text-center mb-4">Formulir Data Surat</h2>
-                <form action="/surat/store" method="post">
+                <form id="createForm" action="/surat_keluar/store" method="post">
                     <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
                     <div class="row form-group align-items-center flex-column flex-md-row">
                         <label class="col-md-3 form-label">Jenis penomoran:</label>
@@ -88,20 +88,6 @@
                             <div class="row">
                                 <div class="col-6 col-md-3">
                                     <div class="form-check">
-                                        <input type="radio" id="masuk_int" name="kategori"
-                                            value="Surat Masuk (Internal)" class="form-check-input">
-                                        <label for="masuk_int" class="form-check-label">Surat Masuk (Internal)</label>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <div class="form-check">
-                                        <input type="radio" id="masuk_eks" name="kategori"
-                                            value="Surat Masuk (Eksternal)" class="form-check-input">
-                                        <label for="masuk_eks" class="form-check-label">Surat Masuk (Eksternal)</label>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <div class="form-check">
                                         <input type="radio" id="keluar_int" name="kategori" value="Surat Keluar (Internal)"
                                             class="form-check-input">
                                         <label for="keluar_int" class="form-check-label">Surat Keluar (Internal)</label>
@@ -115,18 +101,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="pert_dahulu" class="col-md-3 form-label">Pertalian dengan nomor (terdahulu):</label>
-                        <div class="col-md-9">
-                            <input id="pert_dahulu" type="text" name="pert_dahulu" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="pert_berikut" class="col-md-3 form-label">Pertalian dengan nomor (berikut):</label>
-                        <div class="col-md-9">
-                            <input id="pert_berikut" type="text" name="pert_berikut" class="form-control" required>
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">
@@ -144,7 +118,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="<?= base_url('surat/manage') ?>" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
+                        <a href="<?= base_url('surat_keluar/manage') ?>" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
                         <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                         <!-- <button type="reset" class="btn btn-secondary"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button> -->
                     </div>
@@ -219,7 +193,7 @@
             $('#kode_klasifikasi').html('<option value="">Select Kode Klasifikasi</option>');
 
             $.ajax({
-                url: '<?= base_url('/surat/create/getKode1') ?>',
+                url: '<?= base_url('/surat_keluar/create/getKode1') ?>',
                 method: 'POST',
                 data: {
                     jenis: jenis,
@@ -245,7 +219,7 @@
             $('#kode_klasifikasi').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: '<?= base_url('/surat/create/getKodeKlasifikasi') ?>',
+                url: '<?= base_url('/surat_keluar/create/getKodeKlasifikasi') ?>',
                 method: 'POST',
                 data: {
                     kode_1: kode1,
@@ -270,7 +244,7 @@
             const kodeKlasifikasi = $(this).val();
             if (kodeKlasifikasi) {
                 $.ajax({
-                    url: '<?= base_url('/surat/create/getKodeArsip') ?>',
+                    url: '<?= base_url('/surat_keluar/create/getKodeArsip') ?>',
                     method: 'POST',
                     data: {
                         kode_klasifikasi: kodeKlasifikasi,

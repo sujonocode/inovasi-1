@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1 class="text-center mb-4">Daftar Data Kontrak</h1>
+                <h1 class="text-center mb-4">Data Kontrak</h1>
                 <a href=<?= base_url("kontrak/create") ?> class="btn btn-primary btn-sm" title="Tambah Kontrak Baru">
                     <i class="fa-solid fa-plus"></i> Tambah
                 </a>
@@ -13,8 +13,8 @@
                 <table id="example" class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Tanggal</th>
                             <th>Nomor</th>
+                            <th>Tanggal</th>
                             <th>Uraian Kontrak</th>
                             <th>Catatan</th>
                             <th>PIC</th>
@@ -25,8 +25,8 @@
                         <?php if (!empty($kontraks)): ?>
                             <?php foreach ($kontraks as $kontrak): ?>
                                 <tr>
-                                    <td><?= $kontrak['tanggal'] ?></td>
                                     <td><?= $kontrak['nomor'] ?></td>
+                                    <td><?= $kontrak['tanggal'] ?></td>
                                     <td><?= $kontrak['uraian'] ?></td>
                                     <td><?= $kontrak['catatan'] ?></td>
                                     <td><?= $kontrak['created_by'] ?></td>

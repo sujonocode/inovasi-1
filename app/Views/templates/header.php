@@ -63,16 +63,19 @@
                         <a class="nav-link dropdown-toggle" href="<?= base_url('dokumen') ?>" id="dokumenDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Manajemen Dokumen</a>
                         <ul class="dropdown-menu" aria-labelledby="dokumenDropdown">
                             <li><a class="dropdown-item" href="<?= base_url('dokumen') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('surat/manage') ?>">Surat</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('surat_keluar/manage') ?>">Surat Keluar</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('surat_masuk/manage') ?>">Surat Masuk</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('sk/manage') ?>">SK</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('kontrak/manage') ?>">Kontrak</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reminder Humas</a>
+                        <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reminder</a>
                         <ul class="dropdown-menu" aria-labelledby="humasDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('humas') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('humas/manage') ?>">Manage</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas') ?>">Humas</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas/manage') ?>">Reminder Humas</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('qg') ?>">Quality Gates</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('qg/manage') ?>">Reminder Quality Gates</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

@@ -112,11 +112,11 @@
             <form method="POST" action="<?= base_url('/login') ?>">
                 <?= csrf_field() ?>
 
-                <?php if (session()->getFlashdata('error')): ?>
-                    <div class="alert alert-danger mt-3">
-                        Username atau password salah.
+                <!-- < ?php if (session()->getFlashdata('error')): ?>
+                    <div class="alert alert-danger mt-2">
+                        Login untuk mengakses website ini
                     </div>
-                <?php endif; ?>
+                < ?php endif; ?> -->
 
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>

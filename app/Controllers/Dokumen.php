@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
-use App\Models\SuratModel;
+use App\Models\SuratKeluarModel;
+use App\Models\SuratMasukModel;
 use App\Models\SKModel;
 use App\Models\KontrakModel;
 
@@ -11,7 +11,7 @@ class Dokumen extends BaseController
 {
     public function index(string $page = 'Manajemen Dokumen')
     {
-        $modelSurat = new SuratModel();
+        $modelSurat = new SuratKeluarModel();
         $modelSK = new SKModel();
         $modelKontrak = new KontrakModel();
 

@@ -8,7 +8,8 @@ use CodeIgniter\Router\RouteCollection;
 
 // use App\Controllers\News; // Add this line
 use App\Controllers\Dokumen;
-use App\Controllers\Surat;
+use App\Controllers\SuratKeluar;
+use App\Controllers\SuratMasuk;
 use App\Controllers\SK;
 use App\Controllers\Kontrak;
 use App\Controllers\Humas;
@@ -16,26 +17,6 @@ use App\Controllers\GenerateSurat;
 use App\Controllers\Kendala;
 use App\Controllers\Sbml;
 use App\Controllers\Tracking;
-
-// $routes->group('pages', function ($routes) {
-//     $routes->get('index', 'Pages::index');
-//     $routes->get('about', 'Pages::about');
-//     $routes->get('letter', 'Pages::letter');
-//     $routes->get('monitoring', 'Pages::monitoring');
-// });
-/// ini asli
-// $routes->get('/', 'Home::index');
-
-// $routes->get('/dokumen', [Dokumen::class, 'index']);
-
-// $routes->get('/dokumen/surat', [Surat::class, 'index']);
-// $routes->get('/surat/manage', 'Surat::manage');
-// $routes->get('/surat/create', 'Surat::create');
-// $routes->post('/surat/store', 'Surat::store');
-// $routes->get('/surat/edit/(:num)', 'Surat::edit/$1');
-// $routes->post('/surat/update/(:num)', 'Surat::update/$1');
-// $routes->get('/surat/delete/(:num)', 'Surat::delete/$1');
-/// ini modif
 
 $routes->group('', ['filter' => 'role:admin,user'], function ($routes) {
     $routes->get('/dashboard', 'DashboardController::index');
@@ -55,17 +36,27 @@ $routes->group('', ['filter' => 'role:admin'], function ($routes) {
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Home::index');
     $routes->get('/dokumen', [Dokumen::class, 'index']);
-    $routes->get('/dokumen/surat', [Surat::class, 'index']);
-    $routes->group('/surat', function ($routes) {
-        $routes->get('manage', 'Surat::manage');
-        $routes->get('create', 'Surat::create');
-        $routes->post('store', 'Surat::store');
-        $routes->get('edit/(:num)', 'Surat::edit/$1');
-        $routes->post('update/(:num)', 'Surat::update/$1');
-        $routes->get('delete/(:num)', 'Surat::delete/$1');
-        $routes->post('create/getKode1', 'Surat::getKode1');
-        $routes->post('create/getKodeKlasifikasi', 'Surat::getKodeKlasifikasi');
-        $routes->post('create/getKodeArsip', 'Surat::getKodeArsip');
+    $routes->get('/dokumen/surat_keluar', [SuratKeluar::class, 'index']);
+    $routes->group('/surat_keluar', function ($routes) {
+        $routes->get('manage', 'SuratKeluar::manage');
+        $routes->get('create', 'SuratKeluar::create');
+        $routes->post('store', 'SuratKeluar::store');
+        $routes->get('edit/(:num)', 'SuratKeluar::edit/$1');
+        $routes->post('update/(:num)', 'SuratKeluar::update/$1');
+        $routes->get('delete/(:num)', 'SuratKeluar::delete/$1');
+        $routes->post('create/getKode1', 'SuratKeluar::getKode1');
+        $routes->post('create/getKodeKlasifikasi', 'SuratKeluar::getKodeKlasifikasi');
+        $routes->post('create/getKodeArsip', 'SuratKeluar::getKodeArsip');
+        $routes->get('export_xlsx', 'SuratKeluar::exportExcel');
+    });
+    $routes->get('/dokumen/surat_masuk', [SuratMasuk::class, 'index']);
+    $routes->group('/surat_masuk', function ($routes) {
+        $routes->get('manage', 'SuratMasuk::manage');
+        $routes->get('create', 'SuratMasuk::create');
+        $routes->post('store', 'SuratMasuk::store');
+        $routes->get('edit/(:num)', 'SuratMasuk::edit/$1');
+        $routes->post('update/(:num)', 'SuratMasuk::update/$1');
+        $routes->get('delete/(:num)', 'SuratMasuk::delete/$1');
     });
 
     $routes->get('/dokumen/sk', [SK::class, 'index']);

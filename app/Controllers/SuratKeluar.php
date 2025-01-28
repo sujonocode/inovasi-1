@@ -2,10 +2,13 @@
 
 namespace App\Controllers;
 
-use App\Models\SuratModel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+use App\Models\SuratKeluarModel;
 use App\Models\KodeArsipModel;
 
-class Surat extends BaseController
+class SuratKeluar extends BaseController
 {
     protected $db;
 
@@ -14,31 +17,31 @@ class Surat extends BaseController
         $this->db = \Config\Database::connect();
     }
 
-    public function index(string $page = 'Manajemen Dokumen | Surat')
+    public function index(string $page = 'Manajemen Dokumen | Surat Keluar')
     {
-        $model = new SuratModel();
+        $model = new SuratKeluarModel();
 
         $data['title'] = ucfirst($page);
         $data['surats'] = $model->findAll();
 
         return view('templates/header', $data)
-            . view('surat/index', $data)
+            . view('surat_keluar/index', $data)
             . view('templates/footer');
     }
 
-    public function manage(string $page = 'Surat | Manage')
+    public function manage(string $page = 'Surat Keluar | Manage')
     {
-        $model = new SuratModel();
+        $model = new SuratKeluarModel();
 
         $data['title'] = ucfirst($page);
         $data['surats'] = $model->findAll();
 
         return view('templates/header', $data)
-            . view('surat/manage', $data)
+            . view('surat_keluar/manage', $data)
             . view('templates/footer');
     }
 
-    public function create(string $page = 'Surat | Create')
+    public function create(string $page = 'Surat Keluar | Create')
     {
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
@@ -57,7 +60,7 @@ class Surat extends BaseController
             ->getResultArray();
 
         return view('templates/header', $data)
-            . view('surat/create', $data)
+            . view('surat_keluar/create', $data)
             . view('templates/footer');
     }
 
@@ -152,7 +155,7 @@ class Surat extends BaseController
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
 
-        $model = new SuratModel();
+        $model = new SuratKeluarModel();
 
         $username = session()->get('username');
 
@@ -173,8 +176,8 @@ class Surat extends BaseController
         } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
             $tanggal = $this->request->getPost('tanggal');
 
-            // Query to get the desired value
-            $builder = $this->db->table('surat');
+            $builder = $this->db->table('surat_keluar');
+
             $query = $builder->select('id, nomor_urut, nomor_sisip')
                 ->where('tanggal', $tanggal)
                 ->orderBy('nomor_urut', 'DESC')
@@ -184,8 +187,20 @@ class Surat extends BaseController
 
             $result = $query->getRow();
 
+            if ($result) {
+                $nomor_urut = $result->nomor_urut;
+
+                $query2 = $builder->select('id, nomor_urut, nomor_sisip')
+                    ->where('nomor_urut', $nomor_urut)
+                    ->orderBy('nomor_sisip', 'DESC')
+                    ->limit(1)
+                    ->get();
+
+                $result2 = $query2->getRow();
+            }
+
             if (!$result) {
-                $builder = $this->db->table('surat');
+                $builder = $this->db->table('surat_keluar');
                 $query = $builder
                     ->select('id, nomor_urut, nomor_sisip')
                     ->where('tanggal <', $tanggal)
@@ -196,10 +211,22 @@ class Surat extends BaseController
                     ->get();
 
                 $result = $query->getRow();
+
+                if ($result) {
+                    $nomor_urut = $result->nomor_urut;
+
+                    $query2 = $builder->select('id, nomor_urut, nomor_sisip')
+                        ->where('nomor_urut', $nomor_urut)
+                        ->orderBy('nomor_sisip', 'DESC')
+                        ->limit(1)
+                        ->get();
+
+                    $result2 = $query2->getRow();
+                }
             }
 
-            $nomor_urut = $result->nomor_urut;
-            $nomor_sisip = $result->nomor_sisip + 1;
+            $nomor_urut = $result2->nomor_urut;
+            $nomor_sisip = $result2->nomor_sisip + 1;
 
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip_text = $this->numberToText2($nomor_sisip);
@@ -220,29 +247,25 @@ class Surat extends BaseController
             'kategori' => $this->request->getPost('kategori'),
             'catatan' => $this->request->getPost('catatan'),
             'url' => $this->request->getPost('url'),
-            'pert_dahulu' => $nomor,
-            'pert_berikut' => $this->request->getPost('pert_berikut'),
+            'nomor' => $nomor,
             'nomor_urut' => $nomor_urut,
             'nomor_sisip' => $nomor_sisip,
             'created_by' => $username,
         ];
 
-        $link = base_url('surat/manage');
-
         if ($model->save($data)) {
-            return redirect()->to(base_url('surat/manage'))->with('success', 'Data surat berhasil disimpan' . PHP_EOL . 'Nomor surat: ' . $nomor
-                . PHP_EOL . ' (<a href="' . $link . '">Lihat di sini</a>)');
+            return redirect()->to(base_url('surat_keluar/manage'))->with('success', 'Data surat berhasil disimpan' . PHP_EOL . 'Nomor surat: ' . $nomor);
         }
 
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data surat');
     }
 
-    public function edit($id, string $page = 'Surat | Edit')
+    public function edit($id, string $page = 'Surat Keluar | Edit')
     {
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
 
-        $model = new SuratModel();
+        $model = new SuratKeluarModel();
 
         // Fetch the kontrak data by id
         $surat = $model->find($id);
@@ -252,7 +275,7 @@ class Surat extends BaseController
         // If kontrak data is not found, show error and redirect
         if (!$surat) {
             session()->setFlashdata('error', 'Data surat tidak ditemukan.');
-            return redirect()->to(base_url('/surat/manage'));
+            return redirect()->to(base_url('surat_keluar/manage'));
         }
 
         // Get the current logged-in user's username
@@ -272,7 +295,7 @@ class Surat extends BaseController
 
             // Return the view with all the data
             return view('templates/header', $data)
-                . view('surat/edit', $data)
+                . view('surat_keluar/edit', $data)
                 . view('templates/footer');
         } else {
             if ($surat['created_by'] !== $currentUsername) {
@@ -293,7 +316,7 @@ class Surat extends BaseController
 
         // Return the view with all the data
         return view('templates/header', $data)
-            . view('surat/edit', $data)
+            . view('surat_keluar/edit', $data)
             . view('templates/footer');
     }
 
@@ -310,9 +333,9 @@ class Surat extends BaseController
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
 
-        $model = new SuratModel();
+        $model = new SuratKeluarModel();
 
-        $builder = $this->db->table('surat');
+        $builder = $this->db->table('surat_keluar');
         $query = $builder->select('id, tanggal, jenis_penomoran, nomor_urut, nomor_sisip')
             ->where('id', $id)
             ->orderBy('nomor_urut', 'DESC')
@@ -322,7 +345,7 @@ class Surat extends BaseController
 
         $result = $query->getRow();
         if (!$result) {
-            return redirect()->to(base_url('surat/manage'))->with('error', 'Surat not found.');
+            return redirect()->to(base_url('surat_keluar/manage'))->with('error', 'Surat not found.');
         }
 
         $tanggal = $result->tanggal;
@@ -354,21 +377,20 @@ class Surat extends BaseController
             'ringkasan' => $this->request->getPost('ringkasan'),
             'catatan' => $this->request->getPost('catatan'),
             'url' => $this->request->getPost('url'),
-            'pert_dahulu' => $nomor,
-            'pert_berikut' => $this->request->getPost('pert_berikut'),
+            'nomor' => $nomor,
         ]);
 
         // Check if update was successful and pass the appropriate message
         if ($updateSuccessful) {
-            return redirect()->to(base_url('surat/manage'))->with('success', 'Data surat berhasil diupdate' . PHP_EOL . 'Nomor surat: ' . $nomor);
+            return redirect()->to(base_url('surat_keluar/manage'))->with('success', 'Data surat berhasil diupdate' . PHP_EOL . 'Nomor surat: ' . $nomor);
         } else {
-            return redirect()->to(base_url('surat/manage'))->with('error', 'Gagal mengupdate data surat');
+            return redirect()->to(base_url('surat_keluar/manage'))->with('error', 'Gagal mengupdate data surat');
         }
     }
 
     public function delete($id)
     {
-        $model = new SuratModel();
+        $model = new SuratKeluarModel();
 
         $surat = $model->find($id);
 
@@ -378,12 +400,12 @@ class Surat extends BaseController
 
         if (session()->get('role') === 'admin') {
 
-            $nomor = $surat['pert_dahulu'];
+            $nomor = $surat['nomor'];
 
             // Call the delete logic directly here
             $model->delete($id);
 
-            return redirect()->to(base_url('surat/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+            return redirect()->to(base_url('surat_keluar/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
         } else {
             if (session()->get('username') !== $surat['created_by']) {
                 return redirect()->back()->with('limited', 'Data surat hanya bisa dihapus oleh orang yang membuatnya');
@@ -395,16 +417,56 @@ class Surat extends BaseController
         // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('surat/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+        return redirect()->to(base_url('surat_keluar/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+    }
+
+    public function exportExcel()
+    {
+        $db = \Config\Database::connect();
+        $query = $db->query("SELECT * FROM surat_keluar");
+        $data = $query->getResultArray();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Add column headers
+        $columns = array_keys($data[0]); // Get column names from the first row
+        $colIndex = 'A';
+        foreach ($columns as $column) {
+            $sheet->setCellValue($colIndex . '1', $column);
+            $colIndex++;
+        }
+
+        // Add rows
+        $rowNumber = 2;
+        foreach ($data as $row) {
+            $colIndex = 'A';
+            foreach ($row as $cell) {
+                $sheet->setCellValue($colIndex . $rowNumber, $cell);
+                $colIndex++;
+            }
+            $rowNumber++;
+        }
+
+        // Create Excel file
+        $writer = new Xlsx($spreadsheet);
+
+        // Set headers for download
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="surat_keluar.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+        exit;
     }
 
     public function getSurats()
     {
-        $model = new SuratModel();
+        $model = new SuratKeluarModel();
         $surats = $model->findAll();
 
         return view('templates/header')
-            . view('surat/index', ['surats' => $surats])
+            . view('surat_keluar/index', ['surats' => $surats])
             . view('templates/footer');
     }
 

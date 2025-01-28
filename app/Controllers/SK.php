@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\SKModel;
-use App\Models\KodeArsipModel;
+use App\Models\KodeArsipSKModel;
 
 class SK extends BaseController
 {
@@ -50,8 +50,8 @@ class SK extends BaseController
 
         // Fetch distinct 'jenis' options from the 'kode_arsip' table
         $db = \Config\Database::connect();
-        $data['jenisOptions'] = $db->table('kode_arsip')
-            ->select('jenis')
+        $data['kodeKlasifikasiOptions'] = $db->table('kode_arsip_sk')
+            ->select('kode_klasifikasi')
             ->distinct()
             ->get()
             ->getResultArray();
@@ -61,61 +61,20 @@ class SK extends BaseController
             . view('templates/footer');
     }
 
-    public function getKode1()
-    {
-        if ($this->request->isAJAX()) {
-            $jenis = $this->request->getPost('jenis');
-            $db = \Config\Database::connect();
-            $kode1Options = $db->table('kode_arsip')
-                ->select('kode_1')
-                ->distinct()
-                ->where('jenis', $jenis)
-                ->get()
-                ->getResultArray();
-
-            return $this->response
-                ->setHeader('X-CSRF-TOKEN', csrf_hash()) // Send new token
-                ->setJSON($kode1Options);
-        }
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-    }
-
-    public function getKodeKlasifikasi()
-    {
-        if ($this->request->isAJAX()) {
-            $kode1 = $this->request->getPost('kode_1');
-            $db = \Config\Database::connect();
-            $kodeKlasifikasiOptions = $db->table('kode_arsip')
-                ->select('kode_klasifikasi')
-                ->distinct()
-                ->where('kode_1', $kode1)
-                ->get()
-                ->getResultArray();
-
-            // Debug CSRF token
-            log_message('debug', 'New CSRF Token (getKodeKlasifikasi): ' . csrf_hash());
-
-            return $this->response
-                ->setHeader('X-CSRF-TOKEN', csrf_hash()) // Send new token
-                ->setJSON($kodeKlasifikasiOptions);
-        }
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-    }
-
     public function getKodeArsip()
     {
         // Get the selected 'kode_klasifikasi' from the request
         $kodeKlasifikasi = $this->request->getPost('kode_klasifikasi');
 
         // Assuming you have a model for the table, e.g., KodeArsipModel
-        $kodeArsipModel = new KodeArsipModel();
+        $kodeArsipSKModel = new KodeArsipSKModel();
 
         // Retrieve the 'kode_arsip' based on the selected 'kode_klasifikasi'
-        $result = $kodeArsipModel->where('kode_klasifikasi', $kodeKlasifikasi)->first();
+        $result = $kodeArsipSKModel->where('kode_klasifikasi', $kodeKlasifikasi)->first();
         $this->response->setHeader('X-CSRF-Token', csrf_hash());
         // Return the result as JSON
         if ($result) {
-            return $this->response->setJSON(['kode_arsip' => $result['kode']]);
+            return $this->response->setJSON(['kode' => $result['kode']]);
         } else {
             return $this->response->setJSON(null);
         }
@@ -168,13 +127,13 @@ class SK extends BaseController
             if ($this->request->getPost('kode_arsip' == "")) {
                 $nomor = $nomor_urut_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $nomor_urut_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
             $tanggal = $this->request->getPost('tanggal');
 
-            // Query to get the desired value
             $builder = $this->db->table('sk');
+
             $query = $builder->select('id, nomor_urut, nomor_sisip')
                 ->where('tanggal', $tanggal)
                 ->orderBy('nomor_urut', 'DESC')
@@ -183,6 +142,18 @@ class SK extends BaseController
                 ->get();
 
             $result = $query->getRow();
+
+            if ($result) {
+                $nomor_urut = $result->nomor_urut;
+
+                $query2 = $builder->select('id, nomor_urut, nomor_sisip')
+                    ->where('nomor_urut', $nomor_urut)
+                    ->orderBy('nomor_sisip', 'DESC')
+                    ->limit(1)
+                    ->get();
+
+                $result2 = $query2->getRow();
+            }
 
             if (!$result) {
                 $builder = $this->db->table('sk');
@@ -196,10 +167,22 @@ class SK extends BaseController
                     ->get();
 
                 $result = $query->getRow();
+
+                if ($result) {
+                    $nomor_urut = $result->nomor_urut;
+
+                    $query2 = $builder->select('id, nomor_urut, nomor_sisip')
+                        ->where('nomor_urut', $nomor_urut)
+                        ->orderBy('nomor_sisip', 'DESC')
+                        ->limit(1)
+                        ->get();
+
+                    $result2 = $query2->getRow();
+                }
             }
 
-            $nomor_urut = $result->nomor_urut;
-            $nomor_sisip = $result->nomor_sisip + 1;
+            $nomor_urut = $result2->nomor_urut;
+            $nomor_sisip = $result2->nomor_sisip + 1;
 
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip_text = $this->numberToText2($nomor_sisip);
@@ -207,7 +190,7 @@ class SK extends BaseController
             if ($this->request->getPost('kode_arsip' == "")) {
                 $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         }
 
@@ -227,8 +210,7 @@ class SK extends BaseController
         $link = base_url('sk/manage');
 
         if ($model->save($data)) {
-            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil disimpan' . PHP_EOL . 'Nomor SK: ' . $nomor
-                . PHP_EOL . ' (<a href="' . $link . '">Lihat di sini</a>)');
+            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil disimpan' . PHP_EOL . 'Nomor SK: ' . $nomor);
         }
 
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data SK');
@@ -332,7 +314,7 @@ class SK extends BaseController
             if ($this->request->getPost('kode_arsip' == "")) {
                 $nomor = $nomor_urut_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $nomor_urut_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         } elseif ($result->jenis_penomoran == 'sisip') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
@@ -340,7 +322,7 @@ class SK extends BaseController
             if ($this->request->getPost('kode_arsip' == "")) {
                 $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         }
 

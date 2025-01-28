@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1 class="text-center mb-4">Daftar Data Surat Keputusan (SK)</h1>
+                <h1 class="text-center mb-4">Data Surat Keputusan (SK)</h1>
                 <a href="<?= base_url("sk/create") ?>" class="btn btn-primary btn-sm" title="Tambah SK Baru">
                     <i class="fa-solid fa-plus"></i> Tambah
                 </a>
@@ -13,8 +13,8 @@
                 <table id="example" class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Tanggal</th>
                             <th>Nomor</th>
+                            <th>Tanggal</th>
                             <th>Perihal</th>
                             <th>Catatan</th>
                             <th>PIC</th>
@@ -25,8 +25,8 @@
                         <?php if (!empty($sks)): ?>
                             <?php foreach ($sks as $sk): ?>
                                 <tr>
-                                    <td><?= $sk['tanggal'] ?></td>
                                     <td><?= $sk['nomor'] ?></td>
+                                    <td><?= $sk['tanggal'] ?></td>
                                     <td><?= $sk['perihal'] ?></td>
                                     <td><?= $sk['catatan'] ?></td>
                                     <td><?= $sk['created_by'] ?></td>
