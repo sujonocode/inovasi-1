@@ -97,7 +97,7 @@ class GenerateSurat extends BaseController
 
         // If the record doesn't exist, redirect with an error message
         if (!$surat) {
-            return redirect()->to('surat/manage')->with('error', 'Surat not found.');
+            return redirect()->to('surat/manage')->with('error', 'Surat tidak ditemukan');
         }
 
         // Proceed with deletion

@@ -51,7 +51,7 @@
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="username" class="col-md-3 form-label">Username</label>
                             <div class="col-md-9">
-                                <input id="username" type="text" name="username" class="form-control" value="<?= $user['username'] ?>" required disabled>
+                                <input id="username" type="text" name="username" class="form-control" value="<?= $user['username'] ?>" required readonly>
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">

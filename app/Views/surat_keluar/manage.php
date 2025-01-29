@@ -1,53 +1,24 @@
 <div class="container my-5">
     <div class="card">
-        <!-- <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1 class="text-center mb-4">Data Surat Keluar</h1>
-                <a href=< ?= base_url("surat_keluar/create") ?> class="btn btn-primary btn-sm" title="Tambah Surat Baru">
-                    <i class="fa-solid fa-plus"></i> Tambah
-                </a>
-                <a href=< ?= base_url("surat_keluar/export_xlsx") ?> class="btn btn-success btn-sm" title="Download Data Surat">
-                    <i class="fa-solid fa-download"></i> Download
-                </a>
-            </div>
-        </div> -->
-        <!-- <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1 class="text-center mb-4">Data Surat Keluar</h1>
-                <div class="d-flex gap-2">
-                    <a href="< ?= base_url('surat_keluar/create') ?>" class="btn btn-primary btn-sm d-flex align-items-center" title="Tambah Surat Baru">
-                        <i class="fa-solid fa-plus me-1"></i> Tambah
-                    </a>
-                    <a href="< ?= base_url('surat_keluar/export_xlsx') ?>" class="btn btn-success btn-sm d-flex align-items-center" title="Download Data Surat">
-                        <i class="fa-solid fa-download me-1"></i> Download
-                    </a>
-                </div>
-            </div>
-        </div> -->
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center flex-wrap">
-                <!-- Title aligned to the left -->
                 <h1 class="mb-3 mb-md-0">Data Surat Keluar</h1>
-
-                <!-- Buttons aligned to the right -->
                 <div class="d-flex gap-2 flex-wrap">
                     <a href="<?= base_url('surat_keluar/create') ?>"
                         class="btn btn-primary btn-sm flex-fill text-center"
                         style="min-width: 120px;"
-                        title="Tambah Surat Baru">
+                        title="Tambah Surat Keluar Baru">
                         <i class="fa-solid fa-plus me-1"></i> Tambah
                     </a>
                     <a href="<?= base_url('surat_keluar/export_xlsx') ?>"
                         class="btn btn-success btn-sm flex-fill text-center"
                         style="min-width: 120px;"
-                        title="Download Data Surat">
+                        title="Download Data Surat Keluar">
                         <i class="fa-solid fa-download me-1"></i> Download
                     </a>
                 </div>
             </div>
         </div>
-
-
         <div class="card-body">
             <div class="table-responsive">
                 <table id="example" class="table table-striped table-hover">
@@ -73,6 +44,11 @@
                                     <td><?= $surat['catatan'] ?></td>
                                     <td><?= $surat['created_by'] ?></td>
                                     <td>
+                                        <?php if ($surat['kategori'] === 'Surat Keluar (Internal)'): ?>
+                                            <i class="fa-solid fa-flag" style="color: #28a745;" title="Surat Keluar (Internal)"></i>
+                                        <?php elseif ($surat['kategori'] === 'Surat Keluar (Eksternal)'): ?>
+                                            <i class="fa-solid fa-flag" style="color: #fd7e14;" title="Surat Keluar (Eksternal)"></i>
+                                        <?php endif; ?>
                                         <a href="#" onclick="handleLinkClick('<?= $surat['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a>
                                         <a href="/surat_keluar/edit/<?= $surat['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
                                         <a href="#" onclick="openDeleteModal(<?= $surat['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
@@ -81,7 +57,7 @@
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="5" style="text-align: center; font-weight: bold;">Belum ada data surat.</td>
+                                <td colspan="7" style="text-align: center; font-weight: bold;">Belum ada data surat keluar</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>

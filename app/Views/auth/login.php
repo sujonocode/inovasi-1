@@ -118,6 +118,12 @@
                     </div>
                 < ?php endif; ?> -->
 
+                <?php if (session()->getFlashdata('error')): ?>
+                    <div class="alert alert-danger mt-2">
+                        <?= session()->getFlashdata('error'); ?>
+                    </div>
+                <?php endif; ?>
+
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" class="form-control" id="username" name="username" required>
@@ -132,7 +138,7 @@
             </form>
 
             <div class="text-center mt-3">
-                <p>Buat akun baru? <a href="<?= base_url('/register') ?>">Daftar</a></p>
+                <p>Buat akun baru? <a href="<?= base_url('/register') ?>">Daftarkan</a></p>
             </div>
         </div>
     </div>

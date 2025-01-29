@@ -96,7 +96,7 @@
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="ket" class="col-md-3 form-label">Keterangan:</label>
+                            <label for="ket" class="col-md-3 form-label">Keterangan Kontrak:</label>
                             <div class="col-md-9">
                                 <input id="ket" type="text" name="ket" class="form-control" value="<?= $kontrak['ket'] ?>" required>
                             </div>

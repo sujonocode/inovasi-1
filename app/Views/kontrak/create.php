@@ -31,6 +31,12 @@
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">
+                        <label for="tanggal" class="col-md-3 form-label">Tanggal:</label>
+                        <div class="col-md-9">
+                            <input id="tanggal" type="date" name="tanggal" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row form-group align-items-center flex-column flex-md-row">
                         <label for="jenis" class="col-md-3 form-label">Arsip:</label>
                         <div class="col-md-9">
                             <select name="jenis" id="jenis" class="form-control">
@@ -65,21 +71,9 @@
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="ket" class="col-md-3 form-label">Keterangan:</label>
+                        <label for="ket" class="col-md-3 form-label">Keterangan Kontrak:</label>
                         <div class="col-md-9">
                             <input id="ket" type="text" name="ket" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="tanggal" class="col-md-3 form-label">Tanggal:</label>
-                        <div class="col-md-9">
-                            <input id="tanggal" type="date" name="tanggal" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="perihal" class="col-md-3 form-label">Kontrak:</label>
-                        <div class="col-md-9">
-                            <input id="perihal" type="text" name="perihal" class="form-control" required>
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">

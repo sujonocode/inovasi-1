@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\SKModel;
 use App\Models\KodeArsipSKModel;
 
@@ -124,10 +126,10 @@ class SK extends BaseController
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip = 0;
 
-            if ($this->request->getPost('kode_arsip' == "")) {
+            if ($this->request->getPost('kode_arsip') == "") {
                 $nomor = $nomor_urut_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $nomor_urut_text . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . ' ' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
             $tanggal = $this->request->getPost('tanggal');
@@ -187,10 +189,10 @@ class SK extends BaseController
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip_text = $this->numberToText2($nomor_sisip);
 
-            if ($this->request->getPost('kode_arsip' == "")) {
+            if ($this->request->getPost('kode_arsip') == "") {
                 $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . ' ' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         }
 
@@ -240,14 +242,11 @@ class SK extends BaseController
         if (session()->get('role') === 'admin') {
             // Fetch distinct 'jenis' options from the 'kode_arsip' table
             $db = \Config\Database::connect();
-            $data['jenisOptions'] = $db->table('kode_arsip')
-                ->select('jenis')
+            $data['kodeKlasifikasiOptions'] = $db->table('kode_arsip_sk')
+                ->select('kode_klasifikasi')
                 ->distinct()
                 ->get()
                 ->getResultArray();
-
-            // Add title to the data array
-            $data['title'] = ucfirst($page);
 
             // Return the view with all the data
             return view('templates/header', $data)
@@ -301,7 +300,7 @@ class SK extends BaseController
 
         $result = $query->getRow();
         if (!$result) {
-            return redirect()->to(base_url('sk/manage'))->with('error', 'SK not found.');
+            return redirect()->to(base_url('sk/manage'))->with('error', 'SK tidak ditemukan');
         }
 
         $tanggal = $result->tanggal;
@@ -311,18 +310,18 @@ class SK extends BaseController
         if ($result->jenis_penomoran == 'urut') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
 
-            if ($this->request->getPost('kode_arsip' == "")) {
+            if ($this->request->getPost('kode_arsip') == "") {
                 $nomor = $nomor_urut_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $nomor_urut_text . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . ' ' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         } elseif ($result->jenis_penomoran == 'sisip') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
             $nomor_sisip_text = $this->numberToText2($result->nomor_sisip);
-            if ($this->request->getPost('kode_arsip' == "")) {
+            if ($this->request->getPost('kode_arsip') == "") {
                 $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . ' ' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         }
 
@@ -358,7 +357,7 @@ class SK extends BaseController
             // Call the delete logic directly here
             $model->delete($id);
 
-            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus' . PHP_EOL . 'Nomor SK yang terhapus: ' . $nomor);
         } else {
             if (session()->get('username') !== $sk['created_by']) {
                 return redirect()->back()->with('limited', 'Data SK hanya bisa dihapus oleh orang yang membuatnya');
@@ -370,7 +369,47 @@ class SK extends BaseController
         // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+        return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus' . PHP_EOL . 'Nomor SK yang terhapus: ' . $nomor);
+    }
+
+    public function exportExcel()
+    {
+        $db = \Config\Database::connect();
+        $query = $db->query("SELECT * FROM sk");
+        $data = $query->getResultArray();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Add column headers
+        $columns = array_keys($data[0]); // Get column names from the first row
+        $colIndex = 'A';
+        foreach ($columns as $column) {
+            $sheet->setCellValue($colIndex . '1', $column);
+            $colIndex++;
+        }
+
+        // Add rows
+        $rowNumber = 2;
+        foreach ($data as $row) {
+            $colIndex = 'A';
+            foreach ($row as $cell) {
+                $sheet->setCellValue($colIndex . $rowNumber, $cell);
+                $colIndex++;
+            }
+            $rowNumber++;
+        }
+
+        // Create Excel file
+        $writer = new Xlsx($spreadsheet);
+
+        // Set headers for download
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="surat_keputusan.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+        exit;
     }
 
     public function getSKs()

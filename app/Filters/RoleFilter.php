@@ -13,7 +13,7 @@ class RoleFilter implements FilterInterface
         $session = session();
 
         if (!$session->get('isLoggedIn')) {
-            return redirect()->to(base_url('/login'))->with('error', 'Anda harus login terlebih dahulu.');
+            return redirect()->to(base_url('/login'))->with('error', 'Anda harus login terlebih dahulu sebagai admin');
         }
 
         if ($arguments && !in_array($session->get('role'), $arguments)) {

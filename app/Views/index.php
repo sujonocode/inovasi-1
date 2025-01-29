@@ -74,7 +74,7 @@
         <p class="text-center section-subtitle">
             Assista adalah aplikasi website yang dikembangkan oleh Tim TI BPS Kabupaten Tanggamus, Provinsi Lampung. Aplikasi ini
             menyediakan berbagai fitur inovatif yang mendukung kelancaran kegiatan administrasi serta meningkatkan efisiensi dalam
-            pengelolaan data dan informasi di lingkungan BPS Kabuaten Tanggamus.
+            pengelolaan data dan informasi di lingkungan BPS Kabupaten Tanggamus.
         </p>
     </div>
 </section>

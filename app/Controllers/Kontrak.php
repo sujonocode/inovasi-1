@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\KontrakModel;
 use App\Models\KodeArsipModel;
 
@@ -165,7 +167,7 @@ class Kontrak extends BaseController
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip = 0;
 
-            if ($this->request->getPost('kode_arsip' == "")) {
+            if ($this->request->getPost('kode_arsip') == "") {
                 $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $month . '/' . $year;
             } else {
                 $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
@@ -228,7 +230,7 @@ class Kontrak extends BaseController
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip_text = $this->numberToText2($nomor_sisip);
 
-            if ($this->request->getPost('kode_arsip' == "")) {
+            if ($this->request->getPost('kode_arsip') == "") {
                 $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $month . '/' . $year;
             } else {
                 $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
@@ -286,9 +288,6 @@ class Kontrak extends BaseController
                 ->get()
                 ->getResultArray();
 
-            // Add title to the data array
-            $data['title'] = ucfirst($page);
-
             // Return the view with all the data
             return view('templates/header', $data)
                 . view('kontrak/edit', $data)
@@ -342,7 +341,7 @@ class Kontrak extends BaseController
 
         $result = $query->getRow();
         if (!$result) {
-            return redirect()->to(base_url('kontrak/manage'))->with('error', 'Contract not found.');
+            return redirect()->to(base_url('kontrak/manage'))->with('error', 'Kontrak tidak ditemukan');
         }
 
         $tanggal = $result->tanggal;
@@ -351,7 +350,7 @@ class Kontrak extends BaseController
         $nomor = '';
         if ($result->jenis_penomoran == 'urut') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
-            if ($this->request->getPost('kode_arsip' == "")) {
+            if ($this->request->getPost('kode_arsip') == "") {
                 $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $month . '/' . $year;
             } else {
                 $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
@@ -359,7 +358,7 @@ class Kontrak extends BaseController
         } elseif ($result->jenis_penomoran == 'sisip') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
             $nomor_sisip_text = $this->numberToText2($result->nomor_sisip);
-            if ($this->request->getPost('kode_arsip' == "")) {
+            if ($this->request->getPost('kode_arsip') == "") {
                 $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $month . '/' . $year;
             } else {
                 $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
@@ -412,6 +411,46 @@ class Kontrak extends BaseController
         $model->delete($id);
 
         return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+    }
+
+    public function exportExcel()
+    {
+        $db = \Config\Database::connect();
+        $query = $db->query("SELECT * FROM kontrak");
+        $data = $query->getResultArray();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Add column headers
+        $columns = array_keys($data[0]); // Get column names from the first row
+        $colIndex = 'A';
+        foreach ($columns as $column) {
+            $sheet->setCellValue($colIndex . '1', $column);
+            $colIndex++;
+        }
+
+        // Add rows
+        $rowNumber = 2;
+        foreach ($data as $row) {
+            $colIndex = 'A';
+            foreach ($row as $cell) {
+                $sheet->setCellValue($colIndex . $rowNumber, $cell);
+                $colIndex++;
+            }
+            $rowNumber++;
+        }
+
+        // Create Excel file
+        $writer = new Xlsx($spreadsheet);
+
+        // Set headers for download
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="kontrak.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+        exit;
     }
 
     public function getKontraks()

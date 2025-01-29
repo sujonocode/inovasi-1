@@ -65,12 +65,11 @@ class Admin extends BaseController
         $model = new UserModel();
 
         $data = [
-            'tanggal' => $this->request->getPost('tanggal'),
-            'jenis_penomoran' => $this->request->getPost('jenis_penomoran'),
-            'kode_arsip' => $this->request->getPost('kode_arsip'),
-            'perihal' => $this->request->getPost('perihal'),
-            'catatan' => $this->request->getPost('catatan'),
-            'url' => $this->request->getPost('url'),
+            'username' => $this->request->getPost('username'),
+            'nama' => $this->request->getPost('nama'),
+            'email' => $this->request->getPost('email'),
+            'password' => password_hash($this->request->getPost('password'), PASSWORD_BCRYPT),
+            'role' => $this->request->getPost('role') ?? 'user',
         ];
 
         if ($model->save($data)) {
@@ -122,24 +121,22 @@ class Admin extends BaseController
 
         $model = new UserModel();
 
-        $builder = $this->db->table('user');
-        $query = $builder->select('id, tanggal, jenis_penomoran, nomor_urut, nomor_sisip')
+        $builder = $this->db->table('users');
+        $query = $builder->select('id')
             ->where('id', $id)
-            ->orderBy('nomor_urut', 'DESC')
-            ->orderBy('nomor_sisip', 'DESC')
             ->limit(1)
             ->get();
 
         $result = $query->getRow();
         if (!$result) {
-            return redirect()->to(base_url('admin_dashboard'))->with('error', 'User not found.');
+            return redirect()->to(base_url('admin_dashboard'))->with('error', 'User tidak ditemukan');
         }
 
         $updateSuccessful = $model->update($id, [
-            'kode_arsip' => $this->request->getPost('kode_arsip'),
-            'perihal' => $this->request->getPost('perihal'),
-            'catatan' => $this->request->getPost('catatan'),
-            'url' => $this->request->getPost('url'),
+            'username' => $this->request->getPost('username'),
+            'nama' => $this->request->getPost('nama'),
+            'email' => $this->request->getPost('email'),
+            'role' => $this->request->getPost('role') ?? 'user',
         ]);
 
         // Check if update was successful and pass the appropriate message
@@ -157,7 +154,7 @@ class Admin extends BaseController
         $user = $model->find($id);
 
         if (!$user) {
-            return redirect()->back()->with('error', ' Data user dengan nomor tersebut tidak ditemukan');
+            return redirect()->back()->with('error', ' Data user tidak ditemukan');
         }
 
         // Call the delete logic directly here

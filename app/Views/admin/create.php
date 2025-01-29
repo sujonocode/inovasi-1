@@ -28,6 +28,12 @@
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">
+                        <label for="password" class="col-md-3 form-label">Password:</label>
+                        <div class="col-md-9">
+                            <input id="password" type="text" name="password" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row form-group align-items-center flex-column flex-md-row">
                         <label for="role" class="col-md-3 form-label">Role:</label>
                         <div class="col-md-9">
                             <select name="role" id="role" class="form-control">

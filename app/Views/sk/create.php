@@ -31,6 +31,12 @@
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">
+                        <label for="tanggal" class="col-md-3 form-label">Tanggal:</label>
+                        <div class="col-md-9">
+                            <input id="tanggal" type="date" name="tanggal" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row form-group align-items-center flex-column flex-md-row">
                         <label for="kode_klasifikasi" class="col-md-3 form-label">Kode Klasifikasi:</label>
                         <div class="col-md-9">
                             <select name="kode_klasifikasi" id="kode_klasifikasi" class="form-control">
@@ -46,12 +52,6 @@
                         <div class="col-md-9">
                             <input id="kode_arsip" type="text" name="kode_arsip" class="form-control" required readonly
                                 style="background-color: #f0f0f0; color: #555555; border: 1px solid #ccc;">
-                        </div>
-                    </div>
-                    <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="tanggal" class="col-md-3 form-label">Tanggal:</label>
-                        <div class="col-md-9">
-                            <input id="tanggal" type="date" name="tanggal" class="form-control" required>
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">

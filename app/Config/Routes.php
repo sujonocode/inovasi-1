@@ -36,6 +36,7 @@ $routes->group('', ['filter' => 'role:admin'], function ($routes) {
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Home::index');
     $routes->get('/dokumen', [Dokumen::class, 'index']);
+
     $routes->get('/dokumen/surat_keluar', [SuratKeluar::class, 'index']);
     $routes->group('/surat_keluar', function ($routes) {
         $routes->get('manage', 'SuratKeluar::manage');
@@ -49,6 +50,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->post('create/getKodeArsip', 'SuratKeluar::getKodeArsip');
         $routes->get('export_xlsx', 'SuratKeluar::exportExcel');
     });
+
     $routes->get('/dokumen/surat_masuk', [SuratMasuk::class, 'index']);
     $routes->group('/surat_masuk', function ($routes) {
         $routes->get('manage', 'SuratMasuk::manage');
@@ -57,37 +59,46 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->get('edit/(:num)', 'SuratMasuk::edit/$1');
         $routes->post('update/(:num)', 'SuratMasuk::update/$1');
         $routes->get('delete/(:num)', 'SuratMasuk::delete/$1');
+        $routes->get('export_xlsx', 'SuratMasuk::exportExcel');
     });
 
     $routes->get('/dokumen/sk', [SK::class, 'index']);
-    $routes->get('/sk/manage', 'SK::manage');
-    $routes->get('/sk/create', 'SK::create');
-    $routes->post('/sk/store', 'SK::store');
-    $routes->get('/sk/edit/(:num)', 'SK::edit/$1');
-    $routes->post('/sk/update/(:num)', 'SK::update/$1');
-    $routes->get('/sk/delete/(:num)', 'SK::delete/$1');
-    $routes->post('/sk/create/getKode1', 'SK::getKode1');
-    $routes->post('/sk/create/getKodeKlasifikasi', 'SK::getKodeKlasifikasi');
-    $routes->post('sk/create/getKodeArsip', 'SK::getKodeArsip');
+    $routes->group('/sk', function ($routes) {
+        $routes->get('manage', 'SK::manage');
+        $routes->get('create', 'SK::create');
+        $routes->post('store', 'SK::store');
+        $routes->get('edit/(:num)', 'SK::edit/$1');
+        $routes->post('update/(:num)', 'SK::update/$1');
+        $routes->get('delete/(:num)', 'SK::delete/$1');
+        $routes->post('create/getKode1', 'SK::getKode1');
+        $routes->post('create/getKodeKlasifikasi', 'SK::getKodeKlasifikasi');
+        $routes->post('create/getKodeArsip', 'SK::getKodeArsip');
+        $routes->get('export_xlsx', 'SK::exportExcel');
+    });
 
     $routes->get('/dokumen/kontrak', [Kontrak::class, 'index']);
-    $routes->get('/kontrak/manage', 'Kontrak::manage');
-    $routes->get('/kontrak/create', 'Kontrak::create');
-    $routes->post('/kontrak/store', 'Kontrak::store');
-    $routes->get('/kontrak/edit/(:num)', 'Kontrak::edit/$1');
-    $routes->post('/kontrak/update/(:num)', 'Kontrak::update/$1');
-    $routes->get('/kontrak/delete/(:num)', 'Kontrak::delete/$1');
-    $routes->post('/kontrak/create/getKode1', 'Kontrak::getKode1');
-    $routes->post('/kontrak/create/getKodeKlasifikasi', 'Kontrak::getKodeKlasifikasi');
-    $routes->post('kontrak/create/getKodeArsip', 'Kontrak::getKodeArsip');
+    $routes->group('/kontrak', function ($routes) {
+        $routes->get('manage', 'Kontrak::manage');
+        $routes->get('create', 'Kontrak::create');
+        $routes->post('store', 'Kontrak::store');
+        $routes->get('edit/(:num)', 'Kontrak::edit/$1');
+        $routes->post('update/(:num)', 'Kontrak::update/$1');
+        $routes->get('delete/(:num)', 'Kontrak::delete/$1');
+        $routes->post('create/getKode1', 'Kontrak::getKode1');
+        $routes->post('create/getKodeKlasifikasi', 'Kontrak::getKodeKlasifikasi');
+        $routes->post('create/getKodeArsip', 'Kontrak::getKodeArsip');
+        $routes->get('export_xlsx', 'Kontrak::exportExcel');
+    });
 
-    $routes->get('/humas', [Humas::class, 'maintenance']);
-    $routes->get('/humas/manage', 'Humas::maintenance');
-    $routes->get('/humas/create', 'Humas::maintenance');
-    $routes->post('/humas/store', 'Humas::maintenance');
-    $routes->get('/humas/edit/(:num)', 'Humas::maintenance');
-    $routes->post('/humas/update/(:num)', 'Humas::maintenance');
-    $routes->get('/humas/delete/(:num)', 'Humas::maintenance');
+    $routes->group('/humas', function ($routes) {
+        $routes->get('', [Humas::class, 'maintenance']);
+        $routes->get('manage', 'Humas::maintenance');
+        $routes->get('create', 'Humas::maintenance');
+        $routes->post('store', 'Humas::maintenance');
+        $routes->get('edit/(:num)', 'Humas::maintenance');
+        $routes->post('update/(:num)', 'Humas::maintenance');
+        $routes->get('delete/(:num)', 'Humas::maintenance');
+    });
 
     $routes->get('/kendala', [Kendala::class, 'maintenance']);
     $routes->get('/kendala/manage', 'Kendala::maintenance');

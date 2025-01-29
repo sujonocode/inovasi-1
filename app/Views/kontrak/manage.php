@@ -1,11 +1,22 @@
 <div class="container my-5">
     <div class="card">
         <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1 class="text-center mb-4">Data Kontrak</h1>
-                <a href=<?= base_url("kontrak/create") ?> class="btn btn-primary btn-sm" title="Tambah Kontrak Baru">
-                    <i class="fa-solid fa-plus"></i> Tambah
-                </a>
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <h1 class="mb-3 mb-md-0">Data Kontrak</h1>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="<?= base_url('kontrak/create') ?>"
+                        class="btn btn-primary btn-sm flex-fill text-center"
+                        style="min-width: 120px;"
+                        title="Tambah Kontrak Baru">
+                        <i class="fa-solid fa-plus me-1"></i> Tambah
+                    </a>
+                    <a href="<?= base_url('kontrak/export_xlsx') ?>"
+                        class="btn btn-success btn-sm flex-fill text-center"
+                        style="min-width: 120px;"
+                        title="Download Data Kontrak">
+                        <i class="fa-solid fa-download me-1"></i> Download
+                    </a>
+                </div>
             </div>
         </div>
         <div class="card-body">
@@ -40,7 +51,7 @@
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="5" style="text-align: center; font-weight: bold;">Belum ada data kontrak.</td>
+                                <td colspan="6" style="text-align: center; font-weight: bold;">Belum ada data kontrak</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>

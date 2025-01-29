@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
 use App\Models\SuratKeluarModel;
 use App\Models\KodeArsipModel;
 
@@ -168,7 +167,7 @@ class SuratKeluar extends BaseController
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip = 0;
 
-            if ($this->request->getPost('kode_arsip' == "")) {
+            if ($this->request->getPost('kode_arsip') == "") {
                 $nomor = 'B-' . $nomor_urut_text . '/' . '18020' . '/' . $year;
             } else {
                 $nomor = 'B-' . $nomor_urut_text . '/' . '18020' . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
@@ -231,7 +230,7 @@ class SuratKeluar extends BaseController
             $nomor_urut_text = $this->numberToText3($nomor_urut);
             $nomor_sisip_text = $this->numberToText2($nomor_sisip);
 
-            if ($this->request->getPost('kode_arsip' == "")) {
+            if ($this->request->getPost('kode_arsip') == "") {
                 $nomor = 'B-' . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '18020' . '/' . $year;
             } else {
                 $nomor = 'B-' . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '18020' . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
@@ -267,12 +266,10 @@ class SuratKeluar extends BaseController
 
         $model = new SuratKeluarModel();
 
-        // Fetch the kontrak data by id
         $surat = $model->find($id);
         $data = ['surat' => $surat];
         $data['title'] = ucfirst($page);
 
-        // If kontrak data is not found, show error and redirect
         if (!$surat) {
             session()->setFlashdata('error', 'Data surat tidak ditemukan.');
             return redirect()->to(base_url('surat_keluar/manage'));
@@ -345,7 +342,7 @@ class SuratKeluar extends BaseController
 
         $result = $query->getRow();
         if (!$result) {
-            return redirect()->to(base_url('surat_keluar/manage'))->with('error', 'Surat not found.');
+            return redirect()->to(base_url('surat_keluar/manage'))->with('error', 'Surat tidak ditemukan');
         }
 
         $tanggal = $result->tanggal;
@@ -355,7 +352,7 @@ class SuratKeluar extends BaseController
         if ($result->jenis_penomoran == 'urut') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
 
-            if ($this->request->getPost('kode_arsip' == "")) {
+            if ($this->request->getPost('kode_arsip') == "") {
                 $nomor = 'B-' . $nomor_urut_text . '/' . '18020' . '/' . $year;
             } else {
                 $nomor = 'B-' . $nomor_urut_text . '/' . '18020' . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
@@ -364,7 +361,7 @@ class SuratKeluar extends BaseController
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
             $nomor_sisip_text = $this->numberToText2($result->nomor_sisip);
 
-            if ($this->request->getPost('kode_arsip' == "")) {
+            if ($this->request->getPost('kode_arsip') == "") {
                 $nomor = 'B-' . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '18020' . '/' . $year;
             } else {
                 $nomor = 'B-' . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '18020' . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
@@ -405,7 +402,7 @@ class SuratKeluar extends BaseController
             // Call the delete logic directly here
             $model->delete($id);
 
-            return redirect()->to(base_url('surat_keluar/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+            return redirect()->to(base_url('surat_keluar/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor surat yang terhapus: ' . $nomor);
         } else {
             if (session()->get('username') !== $surat['created_by']) {
                 return redirect()->back()->with('limited', 'Data surat hanya bisa dihapus oleh orang yang membuatnya');
@@ -417,7 +414,7 @@ class SuratKeluar extends BaseController
         // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('surat_keluar/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+        return redirect()->to(base_url('surat_keluar/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor surat yang terhapus: ' . $nomor);
     }
 
     public function exportExcel()

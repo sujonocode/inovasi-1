@@ -2,8 +2,9 @@
 
 namespace App\Controllers;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\SuratMasukModel;
-use App\Models\KodeArsipModel;
 
 class SuratMasuk extends BaseController
 {
@@ -68,8 +69,6 @@ class SuratMasuk extends BaseController
 
         $username = session()->get('username');
 
-        $tanggal = $this->request->getPost('tanggal');
-
         $data = [
             'tanggal' => $this->request->getPost('tanggal'),
             'nomor' => $this->request->getPost('nomor'),
@@ -112,9 +111,6 @@ class SuratMasuk extends BaseController
         $currentUsername = session()->get('username');
 
         if (session()->get('role') === 'admin') {
-            // Add title to the data array
-            $data['title'] = ucfirst($page);
-
             // Return the view with all the data
             return view('templates/header', $data)
                 . view('surat_masuk/edit', $data)
@@ -124,9 +120,6 @@ class SuratMasuk extends BaseController
                 return redirect()->back()->with('limited', 'Surat hanya bisa diubah oleh orang yang membuatnya.');
             }
         }
-
-        // Add title to the data array
-        $data['title'] = ucfirst($page);
 
         // Return the view with all the data
         return view('templates/header', $data)
@@ -150,17 +143,16 @@ class SuratMasuk extends BaseController
         $model = new SuratMasukModel();
 
         $builder = $this->db->table('surat_masuk');
-        $query = $builder->select('id, tanggal, jenis_penomoran, nomor_urut, nomor_sisip')
+        $query = $builder->select('id, tanggal')
             ->where('id', $id)
-            ->orderBy('nomor_urut', 'DESC')
-            ->orderBy('nomor_sisip', 'DESC')
+            ->orderBy('tanggal', 'DESC')
             ->limit(1)
             ->get();
 
         $result = $query->getRow();
 
         if (!$result) {
-            return redirect()->to(base_url('surat_masuk/manage'))->with('error', 'Surat not found.');
+            return redirect()->to(base_url('surat_masuk/manage'))->with('error', 'Surat tidak ditemukan');
         }
 
         $updateSuccessful = $model->update($id, [
@@ -200,7 +192,7 @@ class SuratMasuk extends BaseController
             // Call the delete logic directly here
             $model->delete($id);
 
-            return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+            return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor surat yang terhapus: ' . $nomor);
         } else {
             if (session()->get('username') !== $surat['created_by']) {
                 return redirect()->back()->with('limited', 'Data surat hanya bisa dihapus oleh orang yang membuatnya');
@@ -212,7 +204,47 @@ class SuratMasuk extends BaseController
         // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+        return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor surat yang terhapus: ' . $nomor);
+    }
+
+    public function exportExcel()
+    {
+        $db = \Config\Database::connect();
+        $query = $db->query("SELECT * FROM surat_masuk");
+        $data = $query->getResultArray();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Add column headers
+        $columns = array_keys($data[0]); // Get column names from the first row
+        $colIndex = 'A';
+        foreach ($columns as $column) {
+            $sheet->setCellValue($colIndex . '1', $column);
+            $colIndex++;
+        }
+
+        // Add rows
+        $rowNumber = 2;
+        foreach ($data as $row) {
+            $colIndex = 'A';
+            foreach ($row as $cell) {
+                $sheet->setCellValue($colIndex . $rowNumber, $cell);
+                $colIndex++;
+            }
+            $rowNumber++;
+        }
+
+        // Create Excel file
+        $writer = new Xlsx($spreadsheet);
+
+        // Set headers for download
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="surat_masuk.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+        exit;
     }
 
     public function getSurats()

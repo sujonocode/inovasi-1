@@ -176,7 +176,7 @@ class Humas extends BaseController
         if (!$data['jadwalKonten']) {
             // Pass an error message directly to the edit view
             return view('templates/header')
-                . view('humas/edit', ['error' => 'Schedule not found.'])
+                . view('humas/edit', ['error' => 'Jadwal tidak ditemukan'])
                 . view('templates/footer');
         }
 
@@ -223,7 +223,7 @@ class Humas extends BaseController
 
         // If the record doesn't exist, redirect with an error message
         if (!$jadwalKonten) {
-            return redirect()->to(base_url('humas/manage'))->with('error', 'Schedule not found.');
+            return redirect()->to(base_url('humas/manage'))->with('error', 'Jadwal tidak ditemukan');
         }
 
         // Proceed with deletion

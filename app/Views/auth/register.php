@@ -50,6 +50,12 @@
                     <label for="username" class="form-label">Username</label>
                     <input type="text" class="form-control" id="username" name="username" required>
                 </div>
+                <div class="row form-group align-items-center flex-column flex-md-row">
+                    <label for="nama" class="col-md-3 form-label">Nama:</label>
+                    <div class="col-md-9">
+                        <input id="nama" type="text" name="nama" class="form-control" required>
+                    </div>
+                </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" required>
