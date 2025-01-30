@@ -2,13 +2,13 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="form-section">
-                <h2 class="text-center mb-4">Responsive Form</h2>
+                <h2 class="text-center mb-4">Formulir Data Reminder</h2>
                 <form onsubmit="return validateCheckboxes()" action="/humas/store" method="post">
                     <?= csrf_field() ?>
 
                     <!-- Nama Konten -->
                     <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="nama" class="col-md-3 form-label">Nama Konten:</label>
+                        <label for="nama" class="col-md-3 form-label">Nama:</label>
                         <div class="col-md-9">
                             <input id="nama" type="text" name="nama" class="form-control"
                                 placeholder="Masukkan nama konten" required>
@@ -17,7 +17,7 @@
 
                     <!-- Tanggal Unggah -->
                     <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="tanggal" class="col-md-3 form-label">Tanggal Unggah:</label>
+                        <label for="tanggal" class="col-md-3 form-label">Tanggal Reminder:</label>
                         <div class="col-md-9">
                             <input id="tanggal" type="date" name="tanggal" class="form-control" required>
                         </div>
@@ -25,9 +25,9 @@
 
                     <!-- Waktu Unggah -->
                     <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="waktu" class="col-md-3 form-label">Waktu Unggah:</label>
+                        <label for="waktu" class="col-md-3 form-label">Waktu Reminder:</label>
                         <div class="col-md-9">
-                            <input id="waktu" type="time" name="waktu" class="form-control" step="1" required>
+                            <input id="waktu" type="time" name="waktu" class="form-control" step="1" value="08:00:00" required>
                         </div>
                     </div>
 
@@ -40,8 +40,7 @@
                                     <div class="form-check">
                                         <input type="radio" id="kegiatan_rutin" name="kategori"
                                             value="Kegiatan Rutin" class="form-check-input">
-                                        <label for="kegiatan_rutin" class="form-check-label">Kegiatan
-                                            Rutin</label>
+                                        <label for="kegiatan_rutin" class="form-check-label">Kegiatan Rutin</label>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-3">
@@ -78,37 +77,50 @@
                                     <div class="form-check">
                                         <input type="checkbox" id="pengingat1" name="pengingat[]" value="Hari H"
                                             class="form-check-input">
-                                        <label for="pengingat1" class="form-check-label">1. Hari H</label>
+                                        <label for="pengingat1" class="form-check-label">Hari H</label>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-check">
                                         <input type="checkbox" id="pengingat2" name="pengingat[]" value="H-3"
                                             class="form-check-input">
-                                        <label for="pengingat2" class="form-check-label">2. H-3</label>
+                                        <label for="pengingat2" class="form-check-label">H-3</label>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-check">
                                         <input type="checkbox" id="pengingat3" name="pengingat[]" value="H-7"
                                             class="form-check-input">
-                                        <label for="pengingat3" class="form-check-label">3. H-7</label>
+                                        <label for="pengingat3" class="form-check-label">H-7</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Kontak -->
-                    <div class="row form-group align-items-center flex-column flex-md-row">
+                    <!-- <div class="row form-group align-items-center flex-column flex-md-row">
                         <label for="kontak" class="col-md-3 form-label">Kontak:</label>
                         <div class="col-md-9">
-                            <input id="kontak" type="text" name="kontak" class="form-control"
-                                placeholder="Masukkan kontak" required>
+                            <select name="kontak[]" id="kontak" multiple required>
+                                < ?php foreach ($contacts as $contact): ?>
+                                    <option value="< ?= $contact['nomor'] ?>">< ?= htmlspecialchars($contact['nama']) ?></option>
+                                < ?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div> -->
+
+                    <div class="row mb-3 align-items-center">
+                        <label for="kontak" class="col-md-3 col-form-label fw-bold">Kontak:</label>
+                        <div class="col-md-9">
+                            <select name="kontak[]" id="kontak" class="form-select" multiple="multiple" required>
+                                <?php foreach ($contacts as $contact): ?>
+                                    <option value="<?= $contact['nomor'] ?>">
+                                        <?= htmlspecialchars($contact['nama']) ?> (<?= $contact['nomor'] ?>)
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                     </div>
 
-                    <!-- Catatan -->
                     <div class="row form-group align-items-center flex-column flex-md-row">
                         <label for="catatan" class="col-md-3 form-label">Catatan:</label>
                         <div class="col-md-9">
@@ -116,11 +128,10 @@
                                 placeholder="Tambahkan catatan" required></textarea>
                         </div>
                     </div>
-
-                    <!-- Buttons -->
                     <div class="d-flex justify-content-between mt-4">
-                        <button type="reset" class="btn btn-secondary">Reset</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <a href="<?= base_url('humas/manage') ?>" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                        <!-- <button type="reset" class="btn btn-secondary"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button> -->
                     </div>
                 </form>
             </div>
@@ -133,9 +144,18 @@
         const checkboxes = document.querySelectorAll('input[name="pengingat[]"]');
         const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
         if (!isChecked) {
-            alert('Silakan pilih minimal satu opsi pada "Pengingat".');
+            alert('Silakan pilih minimal satu opsi pada "reminder"');
             return false;
         }
         return true;
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#kontak').select2({
+            placeholder: 'Select contacts...',
+            allowClear: true
+        });
+    });
 </script>

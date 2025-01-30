@@ -2,13 +2,23 @@
 
 namespace App\Controllers;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\JadwalKontenModel;
+use App\Models\KontakModel;
 use DateTime;
 use DateTimeZone;
 
 class Humas extends BaseController
 {
-    public function index(string $page = 'Humas | Reminder Konten')
+    protected $db;
+
+    public function __construct()
+    {
+        $this->db = \Config\Database::connect();
+    }
+
+    public function index(string $page = 'Reminder | Konten Humas')
     {
         $model = new JadwalKontenModel();
 
@@ -20,7 +30,7 @@ class Humas extends BaseController
             . view('templates/footer');
     }
 
-    public function manage(string $page = 'Humas | Manage')
+    public function manage(string $page = 'Konten Humas | Manage')
     {
         $model = new JadwalKontenModel();
 
@@ -36,6 +46,10 @@ class Humas extends BaseController
     {
         $data['title'] = ucfirst($page);
 
+        $kontakModel = new KontakModel();
+
+        $data['contacts'] = $kontakModel->getContacts();
+
         return view('templates/header', $data)
             . view('humas/create', $data)
             . view('templates/footer');
@@ -45,38 +59,38 @@ class Humas extends BaseController
     {
         $model = new JadwalKontenModel();
 
-        // Retrieve the "Pengingat" checkboxes as an array
+        $username = session()->get('username');
+
         $pengingat = $this->request->getPost('pengingat[]');
 
-        // If no "Pengingat" is selected, set it as an empty array
         if (!$pengingat) {
             $pengingat = [];
         }
 
-        // Convert the array to a JSON string for storage
         $pengingatJson = json_encode($pengingat);
 
-        // Prepare the data to be saved
+        $kontak = $this->request->getPost('kontak[]');
+        $kontakString = implode(',', $kontak);
+
         $data = [
             'nama' => $this->request->getPost('nama'),
             'tanggal' => $this->request->getPost('tanggal'),
             'waktu' => $this->request->getPost('waktu'),
             'kategori' => $this->request->getPost('kategori'),
-            'kontak' => $this->request->getPost('kontak'),
-            'pengingat' => $pengingatJson,  // Store as a JSON string
+            'kontak' => $kontakString,
+            'pengingat' => $pengingatJson,
             'catatan' => $this->request->getPost('catatan'),
+            'created_by' => $username,
         ];
 
         if ($model->save($data)) {
-            // Schedule added successfully. Now send the notification.
+            // Send to Fonnte
             $this->sendNotification();
-
-            // Redirect with success message
-            return redirect()->to(base_url('/humas/manage'))->with('success', 'Schedule created and notification sent.');
+            return redirect()->to(base_url('/humas/manage'))->with('success', 'Reminder berhasil dibuat');
         }
 
         // Handle failure case
-        return redirect()->back()->withInput()->with('error', 'Failed to create the schedule.');
+        return redirect()->back()->withInput()->with('error', 'Gagal membuat pengingat');
     }
 
     // Convert Unix timestamp to human-readable date (GMT +7)
@@ -165,22 +179,44 @@ class Humas extends BaseController
         // }
     }
 
-    public function edit($id)
+    public function edit($id, string $page = 'Konten Humas | Edit')
     {
+        $kontakModel = new KontakModel();
+
+        $data['contacts'] = $kontakModel->getContacts();
+
         $model = new JadwalKontenModel();
 
-        $data['jadwalKonten'] = $model->find($id);
-        $data['title'] = ucfirst('Humas | Edit');
+        $jadwalKonten = $model->find($id);
+        $data = ['jadwalKonten' => $jadwalKonten];
+        $data['title'] = ucfirst($page);
 
-        // If the record doesn't exist, show an error message on the edit page
-        if (!$data['jadwalKonten']) {
-            // Pass an error message directly to the edit view
-            return view('templates/header')
-                . view('humas/edit', ['error' => 'Jadwal tidak ditemukan'])
-                . view('templates/footer');
+        if (!$jadwalKonten) {
+            session()->setFlashdata('error', 'Data reminder tidak ditemukan.');
+            return redirect()->to(base_url('humas/manage'));
         }
 
-        // If the record exists, load the edit form
+        // Get the current logged-in user's username
+        $currentUsername = session()->get('username');
+
+        if (session()->get('role') === 'admin') {
+            // Add title to the data array
+            $data['title'] = ucfirst($page);
+
+            // Return the view with all the data
+            return view('templates/header', $data)
+                . view('humas/edit', $data)
+                . view('templates/footer');
+        } else {
+            if ($jadwalKonten['created_by'] !== $currentUsername) {
+                return redirect()->back()->with('limited', 'Reminder hanya bisa diubah oleh orang yang membuatnya.');
+            }
+        }
+
+        // Add title to the data array
+        $data['title'] = ucfirst($page);
+
+        // Return the view with all the data
         return view('templates/header', $data)
             . view('humas/edit', $data)
             . view('templates/footer');
@@ -201,7 +237,7 @@ class Humas extends BaseController
         // Convert the array to a JSON string for storage
         $pengingatJson = json_encode($pengingat);
 
-        $model->update($id, [
+        $updateSuccessful = $model->update($id, [
             'nama' => $this->request->getPost('nama'),
             'tanggal' => $this->request->getPost('tanggal'),
             'waktu' => $this->request->getPost('waktu'),
@@ -211,7 +247,11 @@ class Humas extends BaseController
             'catatan' => $this->request->getPost('catatan'),
         ]);
 
-        return redirect()->to(base_url('humas/manage'));
+        if ($updateSuccessful) {
+            return redirect()->to(base_url('humas/manage'))->with('success', 'Data reminder berhasil diupdate');
+        } else {
+            return redirect()->to(base_url('humaskeluar/manage'))->with('error', 'Gagal mengupdate data reminder');
+        }
     }
 
     public function delete($id)
@@ -226,11 +266,61 @@ class Humas extends BaseController
             return redirect()->to(base_url('humas/manage'))->with('error', 'Jadwal tidak ditemukan');
         }
 
-        // Proceed with deletion
+        if (session()->get('role') === 'admin') {
+            // Call the delete logic directly here
+            $model->delete($id);
+
+            return redirect()->to(base_url('humas/manage'))->with('success', 'Data reminder berhasil dihapus');
+        } else {
+            if (session()->get('username') !== $jadwalKonten['created_by']) {
+                return redirect()->back()->with('limited', 'Data reminder hanya bisa dihapus oleh orang yang membuatnya atau admin');
+            }
+        }
+
+        // Call the delete logic directly here
         $model->delete($id);
 
-        // Redirect with a success message after deletion
-        return redirect()->to(base_url('humas/manage'))->with('success', 'Schedule deleted successfully.');
+        return redirect()->to(base_url('humas/manage'))->with('success', 'Data reminder berhasil dihapus');
+    }
+
+    public function exportExcel()
+    {
+        $db = \Config\Database::connect();
+        $query = $db->query("SELECT * FROM jadwal_konten");
+        $data = $query->getResultArray();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Add column headers
+        $columns = array_keys($data[0]); // Get column names from the first row
+        $colIndex = 'A';
+        foreach ($columns as $column) {
+            $sheet->setCellValue($colIndex . '1', $column);
+            $colIndex++;
+        }
+
+        // Add rows
+        $rowNumber = 2;
+        foreach ($data as $row) {
+            $colIndex = 'A';
+            foreach ($row as $cell) {
+                $sheet->setCellValue($colIndex . $rowNumber, $cell);
+                $colIndex++;
+            }
+            $rowNumber++;
+        }
+
+        // Create Excel file
+        $writer = new Xlsx($spreadsheet);
+
+        // Set headers for download
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="jadwal_konten.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+        exit;
     }
 
     public function getEvents()

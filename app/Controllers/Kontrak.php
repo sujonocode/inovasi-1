@@ -401,7 +401,7 @@ class Kontrak extends BaseController
             return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
         } else {
             if (session()->get('username') !== $kontrak['created_by']) {
-                return redirect()->back()->with('limited', 'Data kontrak hanya bisa dihapus oleh orang yang membuatnya');
+                return redirect()->back()->with('limited', 'Data kontrak hanya bisa dihapus oleh orang yang membuatnya atau admin');
             }
         }
 

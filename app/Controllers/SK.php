@@ -360,7 +360,7 @@ class SK extends BaseController
             return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus' . PHP_EOL . 'Nomor SK yang terhapus: ' . $nomor);
         } else {
             if (session()->get('username') !== $sk['created_by']) {
-                return redirect()->back()->with('limited', 'Data SK hanya bisa dihapus oleh orang yang membuatnya');
+                return redirect()->back()->with('limited', 'Data SK hanya bisa dihapus oleh orang yang membuatnya atau admin');
             }
         }
 

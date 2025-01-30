@@ -195,7 +195,7 @@ class SuratMasuk extends BaseController
             return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor surat yang terhapus: ' . $nomor);
         } else {
             if (session()->get('username') !== $surat['created_by']) {
-                return redirect()->back()->with('limited', 'Data surat hanya bisa dihapus oleh orang yang membuatnya');
+                return redirect()->back()->with('limited', 'Data surat hanya bisa dihapus oleh orang yang membuatnya atau admin');
             }
         }
 

@@ -19,29 +19,50 @@
     </div>
 <?php endif; ?>
 
+<!-- Display success pop-up if a success message is passed -->
+<?php if (isset($success)): ?>
+    <!-- Success Pop-up Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Success</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?= $success; ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="form-section">
-                <h2 class="text-center mb-4">Formulir Edit Jadwal Reminder Humas</h2>
+                <h2 class="text-center mb-4">Formulir Edit Reminder Konten Humas</h2>
                 <?php if (isset($jadwalKonten)): ?>
                     <form onsubmit="return validateCheckboxes()" action="<?= base_url('humas/update/' . $jadwalKonten['id']) ?>" method="POST">
                         <?= csrf_field() ?>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="nama" class="col-md-3 form-label">Nama Konten:</label>
+                            <label for="nama" class="col-md-3 form-label">Nama:</label>
                             <div class="col-md-9">
                                 <input id="nama" type="text" name="nama" class="form-control"
                                     value="<?= $jadwalKonten['nama'] ?>" required>
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="tanggal" class="col-md-3 form-label">Tanggal Unggah:</label>
+                            <label for="tanggal" class="col-md-3 form-label">Tanggal Reminer:</label>
                             <div class="col-md-9">
                                 <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $jadwalKonten['tanggal'] ?>" required>
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="waktu" class="col-md-3 form-label">Waktu Unggah:</label>
+                            <label for="waktu" class="col-md-3 form-label">Waktu Reminder:</label>
                             <div class="col-md-9">
                                 <input id="waktu" type="time" name="waktu" class="form-control" step="1" value="<?= $jadwalKonten['waktu'] ?>" required>
                             </div>
@@ -125,8 +146,9 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-4">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                            <button type="reset" class="btn btn-secondary">Reset</button>
+                            <a href="<?= base_url('humas/manage') ?>" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
+                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                            <!-- <button type="reset" class="btn btn-secondary"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button> -->
                         </div>
                     </form>
                 <?php endif; ?>
@@ -189,6 +211,10 @@
         <?php if (isset($error)): ?>
             var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
             errorModal.show();
+        <?php endif; ?>
+        <?php if (isset($success)): ?>
+            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
         <?php endif; ?>
     }
 </script>

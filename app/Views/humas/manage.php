@@ -1,6 +1,86 @@
-<!-- Display success or error messages in a pop-up -->
+<div class="container my-5">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <h1 class="mb-3 mb-md-0">Daftar Reminder Humas</h1>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="<?= base_url('humas/create') ?>"
+                        class="btn btn-primary btn-sm flex-fill text-center"
+                        style="min-width: 120px;"
+                        title="Tambah Reminder Baru">
+                        <i class="fa-solid fa-plus me-1"></i> Tambah
+                    </a>
+                    <a href="<?= base_url('humas/export_xlsx') ?>"
+                        class="btn btn-success btn-sm flex-fill text-center"
+                        style="min-width: 120px;"
+                        title="Download Data Reminder">
+                        <i class="fa-solid fa-download me-1"></i> Download
+                    </a>
+                    <a href="<?= base_url('humas') ?>"
+                        class="btn btn-secondary btn-sm flex-fill text-center"
+                        style="min-width: 120px;"
+                        title="Kalender Data Reminder">
+                        <i class="fa-solid fa-calendar-days"></i> Kalender
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="example" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nama Reminder</th>
+                            <th>Tanggal/Waktu</th>
+                            <th>Kontak</th>
+                            <th>Pengingat</th>
+                            <th>Kategori</th>
+                            <th>Catatan</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($jadwalKontens)): ?>
+                            <?php foreach ($jadwalKontens as $jadwalKonten): ?>
+                                <tr>
+                                    <td><?= $jadwalKonten['nama'] ?></td>
+                                    <td><?= $jadwalKonten['tanggal'] . " " . $jadwalKonten['waktu'] ?></td>
+                                    <td><?= $jadwalKonten['kontak'] ?></td>
+                                    <!-- Decode the "Pengingat" JSON string into an array -->
+                                    <td>
+                                        <?php
+                                        // Decode the "pengingat" JSON string into an array
+                                        $pengingat = json_decode($jadwalKonten['pengingat'], true);
+
+                                        // If there are any values, display them
+                                        if ($pengingat) {
+                                            echo implode(", ", $pengingat);
+                                        } else {
+                                            echo "No Pengingat selected";
+                                        }
+                                        ?>
+                                    </td>
+                                    <td><?= $jadwalKonten['kategori'] ?></td>
+                                    <td><?= $jadwalKonten['catatan'] ?></td>
+                                    <td>
+                                        <a href="/humas/edit/<?= $jadwalKonten['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
+                                        <a href="#" onclick="openDeleteModal(<?= $jadwalKonten['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="7" style="text-align: center; font-weight: bold;">Reminder belum tersedia</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php if (session()->getFlashdata('error')): ?>
-    <!-- Error Pop-up Modal -->
     <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -12,7 +92,7 @@
                     <?= session()->getFlashdata('error'); ?>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
@@ -20,7 +100,6 @@
 <?php endif; ?>
 
 <?php if (session()->getFlashdata('success')): ?>
-    <!-- Success Pop-up Modal -->
     <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -32,6 +111,43 @@
                     <?= session()->getFlashdata('success'); ?>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus reminder ini?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <a id="confirmDeleteBtn" class="btn btn-danger" href="#">Hapus</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php if (session()->getFlashdata('limited')): ?>
+    <div class="modal fade" id="limitedModal" tabindex="-1" aria-labelledby="limitedModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="limitedModalLabel">Limited</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?= session()->getFlashdata('limited'); ?>
+                </div>
+                <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -39,95 +155,93 @@
     </div>
 <?php endif; ?>
 
-<a href=<?= base_url("humas/create") ?>>Tambah</a>
-
-<div class="container my-5">
-    <h1 class="text-center mb-4">Daftar Reminder Humas</h1>
-    <div class="table-responsive">
-        <table id="example" class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Actions</th>
-                    <th>Title</th>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($jadwalKontens)): ?>
-                    <?php foreach ($jadwalKontens as $jadwalKonten): ?>
-                        <tr>
-                            <td><?= $jadwalKonten['id'] ?></td>
-                            <td><?= $jadwalKonten['nama'] ?></td>
-                            <td><?= $jadwalKonten['tanggal'] ?></td>
-                            <td><?= $jadwalKonten['waktu'] ?></td>
-                            <td><?= $jadwalKonten['kategori'] ?></td>
-                            <td><?= $jadwalKonten['kontak'] ?></td>
-                            <!-- Decode the "Pengingat" JSON string into an array -->
-                            <td>
-                                <?php
-                                // Decode the "pengingat" JSON string into an array
-                                $pengingat = json_decode($jadwalKonten['pengingat'], true);
-
-                                // If there are any values, display them
-                                if ($pengingat) {
-                                    echo implode(", ", $pengingat);
-                                } else {
-                                    echo "No Pengingat selected";
-                                }
-                                ?>
-                            </td>
-                            <td><?= $jadwalKonten['catatan'] ?></td>
-                            <td>
-                                <a href="/humas/edit/<?= $jadwalKonten['id'] ?>">Edit</a> |
-                                <a href="/humas/delete/<?= $jadwalKonten['id'] ?>" onclick="return confirm('Are you sure you want to delete this jadwalKonten?');">Delete</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="5" style="text-align: center; font-weight: bold;">No jadwalKontens available.</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+<div class="modal fade" id="seeModal" tabindex="-1" aria-labelledby="seeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="seeModalLabel">Notification</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-message"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+    // Function to handle the "eye" icon click event
+    function handleLinkClick(url) {
+        const modalMessage = document.getElementById('modal-message');
+        const seeModal = new bootstrap.Modal(document.getElementById('seeModal'));
+
+        if (!url || url.trim() === '') {
+            // If URL is empty, show modal with "link empty" message
+            modalMessage.innerText = 'Link masih kosong';
+            seeModal.show();
+        } else {
+            // If URL is not empty, open it in a new tab
+            window.open(url, '_blank');
+        }
+    }
+</script>
 
 <script>
-    $(document).ready(function() {
-        // Initialize DataTable with scrollable fixed header
-        $('#example').DataTable({
-            scrollX: '1500px', // Set vertical scroll height
-            scrollY: '400px', // Set vertical scroll height
-            scrollCollapse: true, // Enable collapsing for short tables
-            paging: true, // Enable pagination
-            fixedHeader: true, // Enable fixed header
-            pageLength: 5, // Default rows per page
-            lengthMenu: [5, 10, 15, 20], // Rows per page options
-            // columnDefs: [{
-            //     orderable: true,
-            //     targets: '_all'
-            // }]
-            // columnDefs: [
-            //     { orderable: true, targets: [0, 1, 2] },
-            //     { orderable: false, targets: [3, 4] }
-            // ]
-        });
+    // Open the modal and set the delete URL dynamically
+    function openDeleteModal(skId) {
+        // Set the delete ID in a custom attribute, or store it globally
+        const deleteUrl = "<?= base_url() ?>" + "humas/delete/" + skId;
+
+        // Store the URL in the delete button as a data attribute
+        document.getElementById('confirmDeleteBtn').setAttribute('data-delete-url', deleteUrl);
+
+        // Show the modal
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show();
+    }
+
+    // Handle the delete button click
+    document.getElementById('confirmDeleteBtn').addEventListener('click', function(event) {
+        // Prevent the default behavior
+        event.preventDefault();
+
+        // Get the URL to be deleted from the data attribute
+        const deleteUrl = this.getAttribute('data-delete-url');
+
+        // Redirect to the delete URL (or you can use AJAX to delete data without a page reload)
+        window.location.href = deleteUrl;
     });
 </script>
 
 <script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            scrollY: '400px',
+            scrollX: true,
+            autoWidth: false,
+            scrollCollapse: true,
+            paging: true,
+            fixedHeader: true,
+            pageLength: 10,
+            lengthMenu: [5, 10, 15, 20],
+            columnDefs: [{
+                    orderable: true,
+                    targets: [0, 1, 2, 3, 4, 5]
+                },
+                {
+                    orderable: false,
+                    targets: [6]
+                }
+            ],
+            order: [
+                [1, 'desc']
+            ],
+        });
+    });
+
     // Automatically show the modal when the page loads if a flash message exists
     window.onload = function() {
         <?php if (session()->getFlashdata('error')): ?>
@@ -138,6 +252,10 @@
         <?php if (session()->getFlashdata('success')): ?>
             var successModal = new bootstrap.Modal(document.getElementById('successModal'));
             successModal.show();
+        <?php endif; ?>
+        <?php if (session()->getFlashdata('limited')): ?>
+            var limitedModal = new bootstrap.Modal(document.getElementById('limitedModal'));
+            limitedModal.show();
         <?php endif; ?>
     }
 </script>

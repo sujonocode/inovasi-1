@@ -91,13 +91,14 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     });
 
     $routes->group('/humas', function ($routes) {
-        $routes->get('', [Humas::class, 'maintenance']);
-        $routes->get('manage', 'Humas::maintenance');
-        $routes->get('create', 'Humas::maintenance');
-        $routes->post('store', 'Humas::maintenance');
-        $routes->get('edit/(:num)', 'Humas::maintenance');
-        $routes->post('update/(:num)', 'Humas::maintenance');
-        $routes->get('delete/(:num)', 'Humas::maintenance');
+        $routes->get('', [Humas::class, 'index']);
+        $routes->get('manage', 'Humas::manage');
+        $routes->get('create', 'Humas::create');
+        $routes->post('store', 'Humas::store');
+        $routes->get('edit/(:num)', 'Humas::edit/$1');
+        $routes->post('update/(:num)', 'Humas::update/$1');
+        $routes->get('delete/(:num)', 'Humas::delete/$1');
+        $routes->get('export_xlsx', 'Humas::exportExcel');
     });
 
     $routes->get('/kendala', [Kendala::class, 'maintenance']);

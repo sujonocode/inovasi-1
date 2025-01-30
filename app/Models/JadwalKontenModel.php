@@ -8,5 +8,5 @@ class JadwalKontenModel extends Model
 {
     protected $table = 'jadwal_konten';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['nama', 'tanggal', 'waktu', 'kategori', 'kontak', 'pengingat', 'catatan'];
+    protected $allowedFields = ['nama', 'tanggal', 'waktu', 'kategori', 'kontak', 'pengingat', 'catatan', 'created_by'];
 }
