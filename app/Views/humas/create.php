@@ -47,7 +47,7 @@
                                     <div class="form-check">
                                         <input type="radio" id="dokumetasi_lapangan" name="kategori"
                                             value="Dokumentasi Lapangan" class="form-check-input">
-                                        <label for="dokumetasi_lapangan" class="form-check-label">Dokumentasi</label>
+                                        <label for="dokumetasi_lapangan" class="form-check-label">Dokumentasi Lapangan</label>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-3">
@@ -97,21 +97,10 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="kontak" class="col-md-3 form-label">Kontak:</label>
-                        <div class="col-md-9">
-                            <select name="kontak[]" id="kontak" multiple required>
-                                < ?php foreach ($contacts as $contact): ?>
-                                    <option value="< ?= $contact['nomor'] ?>">< ?= htmlspecialchars($contact['nama']) ?></option>
-                                < ?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div> -->
-
                     <div class="row mb-3 align-items-center">
                         <label for="kontak" class="col-md-3 col-form-label fw-bold">Kontak:</label>
                         <div class="col-md-9">
-                            <select name="kontak[]" id="kontak" class="form-select" multiple="multiple" required>
+                            <select name="kontak[]" id="kontak" class="form-select" multiple required>
                                 <?php foreach ($contacts as $contact): ?>
                                     <option value="<?= $contact['nomor'] ?>">
                                         <?= htmlspecialchars($contact['nama']) ?> (<?= $contact['nomor'] ?>)
@@ -120,7 +109,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="row form-group align-items-center flex-column flex-md-row">
                         <label for="catatan" class="col-md-3 form-label">Catatan:</label>
                         <div class="col-md-9">
@@ -153,9 +141,13 @@
 
 <script>
     $(document).ready(function() {
-        $('#kontak').select2({
-            placeholder: 'Select contacts...',
-            allowClear: true
-        });
+        if ($.fn.select2) { // Check if Select2 is available
+            $('#kontak').select2({
+                placeholder: "Pilih kontak...",
+                allowClear: true
+            });
+        } else {
+            console.error("Select2 is not loaded.");
+        }
     });
 </script>

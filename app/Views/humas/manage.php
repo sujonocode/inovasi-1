@@ -36,6 +36,7 @@
                             <th>Pengingat</th>
                             <th>Kategori</th>
                             <th>Catatan</th>
+                            <th>PIC</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -62,6 +63,7 @@
                                     </td>
                                     <td><?= $jadwalKonten['kategori'] ?></td>
                                     <td><?= $jadwalKonten['catatan'] ?></td>
+                                    <td><?= $jadwalKonten['created_by'] ?></td>
                                     <td>
                                         <a href="/humas/edit/<?= $jadwalKonten['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
                                         <a href="#" onclick="openDeleteModal(<?= $jadwalKonten['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
@@ -85,7 +87,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <h5 class="modal-title" id="errorModalLabel">Notifikasi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -104,7 +106,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="successModalLabel">Success</h5>
+                    <h5 class="modal-title" id="successModalLabel">Notifikasi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -122,7 +124,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Notifikasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -141,14 +143,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="limitedModalLabel">Limited</h5>
+                    <h5 class="modal-title" id="limitedModalLabel">Notifikasi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <?= session()->getFlashdata('limited'); ?>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
@@ -159,14 +161,14 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="seeModalLabel">Notification</h5>
+                <h5 class="modal-title" id="seeModalLabel">Notifikasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p id="modal-message"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
