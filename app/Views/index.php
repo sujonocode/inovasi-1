@@ -2,7 +2,7 @@
 <section class="hero">
     <div class="container">
         <h1>BPS Kabupaten Tanggamus</h1>
-        <p>Apa misi kita? Data akurat untuk rakyat!</p>
+        <p>Lembaga independen, terpercaya, dan berperan aktif dalam mendukung perumusan kebijakan berbasis data</p>
         <a href="#features" class="btn btn-primary btn-lg">Jelajahi Fitur</a>
     </div>
 </section>
