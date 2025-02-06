@@ -67,7 +67,7 @@
                                 <input id="waktu" type="time" name="waktu" class="form-control" step="1" value="<?= $jadwalKonten['waktu'] ?>" required>
                             </div>
                         </div>
-                        <div class="row form-group align-items-center flex-column flex-md-row">
+                        <!-- <div class="row form-group align-items-center flex-column flex-md-row">
                             <label class="col-md-3 form-label">Kategori:</label>
                             <div class="col-md-9">
                                 <div class="row">
@@ -101,7 +101,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <?php $pengingatArray = explode(',', $jadwalKonten['pengingat']); ?>
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label class="col-md-3 form-label">Pengingat:</label>
@@ -131,13 +131,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="kontak" class="col-md-3 form-label">Kontak:</label>
+                        <div class="row mb-3 align-items-center">
+                            <label for="kontak" class="col-md-3 col-form-label fw-bold">Kontak:</label>
                             <div class="col-md-9">
-                                <input id="kontak" type="text" name="kontak" class="form-control"
-                                    value="<?= $jadwalKonten['kontak'] ?>" required>
+                                <select name="kontak[]" id="kontak" class="form-select" multiple required>
+                                    <?php foreach ($contacts as $contact): ?>
+                                        <option value="<?= $contact['nomor'] ?>"
+                                            <?php if (in_array($contact['nomor'], $jadwalKonten['kontak'])) echo 'selected'; ?>>
+                                            <?= htmlspecialchars($contact['nama']) ?> (<?= $contact['nomor'] ?>)
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
+
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="catatan" class="col-md-3 form-label">Catatan:</label>
                             <div class="col-md-9">
@@ -170,14 +177,14 @@
 </script>
 
 <script>
-    // Retrieve "Kategori" value from PHP
-    const kategori = "<?= $jadwalKonten['kategori'] ?>";
+    // // Retrieve "Kategori" value from PHP
+    // const kategori = "< ?= $jadwalKonten['kategori'] ?>";
 
-    // Example: Set "Kategori" radio button
-    const kategoriRadio = document.querySelector(`input[name="kategori"][value="${kategori}"]`);
-    if (kategoriRadio) {
-        kategoriRadio.checked = true;
-    }
+    // // Example: Set "Kategori" radio button
+    // const kategoriRadio = document.querySelector(`input[name="kategori"][value="${kategori}"]`);
+    // if (kategoriRadio) {
+    //     kategoriRadio.checked = true;
+    // }
 
     // Retrieve the "Pengingat" string from PHP
     let pengingatString = '<?= json_encode($jadwalKonten['pengingat']) ?>';
@@ -217,4 +224,26 @@
             successModal.show();
         <?php endif; ?>
     }
+</script>
+
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- jQuery (Required for Select2) -->
+<!-- <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script> -->
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Initialize Select2
+        $('#kontak').select2();
+
+        // If you need to set the selected values programmatically, you can do so like this:
+        var selectedKontak = <?= json_encode($jadwalKonten['kontak']); ?>; // Get the selected contacts as a JavaScript array
+
+        // Set the selected values dynamically using Select2
+        $('#kontak').val(selectedKontak).trigger('change');
+    });
 </script>

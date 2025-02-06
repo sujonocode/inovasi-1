@@ -76,10 +76,10 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reminder</a>
                         <ul class="dropdown-menu" aria-labelledby="humasDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('humas') ?>">Humas</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('humas/manage') ?>">Reminder Humas</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('qg') ?>">Quality Gates</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('qg/manage') ?>">Reminder Quality Gates</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas/manage') ?>">Humas</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('qg/manage') ?>">Quality Gates</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('rencana_terbit/manage') ?>">BRS dan Publikasi</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('reminder_lainnya/manage') ?>">Lainnya</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

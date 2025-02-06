@@ -37,6 +37,16 @@ class Humas extends BaseController
         $data['title'] = ucfirst($page);
         $data['jadwalKontens'] = $model->findAll();
 
+        $contactModel = new KontakModel();
+        $contactList = $contactModel->findAll();
+
+        $contacts = [];
+        foreach ($contactList as $contact) {
+            $contacts[(string) $contact['nomor']] = $contact['nama'];
+        }
+
+        $data['contacts'] = $contacts;
+
         return view('templates/header', $data)
             . view('humas/manage', $data)
             . view('templates/footer');
@@ -76,7 +86,7 @@ class Humas extends BaseController
             'nama' => $this->request->getPost('nama'),
             'tanggal' => $this->request->getPost('tanggal'),
             'waktu' => $this->request->getPost('waktu'),
-            'kategori' => $this->request->getPost('kategori'),
+            // 'kategori' => $this->request->getPost('kategori'),
             'kontak' => $kontakString,
             'pengingat' => $pengingatJson,
             'catatan' => $this->request->getPost('catatan'),
@@ -128,7 +138,7 @@ class Humas extends BaseController
             'nama' => $this->request->getPost('nama'),
             'tanggal' => $this->request->getPost('tanggal'),
             'waktu' => $this->request->getPost('waktu'),
-            'kategori' => $this->request->getPost('kategori'),
+            // 'kategori' => $this->request->getPost('kategori'),
             'kontak' => $this->request->getPost('kontak'),
             'pengingat' => $pengingatJson,
             'catatan' => $this->request->getPost('catatan'),
@@ -241,7 +251,7 @@ class Humas extends BaseController
             'nama' => $this->request->getPost('nama'),
             'tanggal' => $this->request->getPost('tanggal'),
             'waktu' => $this->request->getPost('waktu'),
-            'kategori' => $this->request->getPost('kategori'),
+            // 'kategori' => $this->request->getPost('kategori'),
             'kontak' => $this->request->getPost('kontak'),
             'pengingat' => $pengingatJson,
             'catatan' => $this->request->getPost('catatan'),

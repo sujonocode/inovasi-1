@@ -78,7 +78,7 @@
                             <label for="jenis" class="col-md-3 form-label">Arsip:</label>
                             <div class="col-md-9">
                                 <select name="jenis" id="jenis" class="form-control">
-                                    <option value="">Select Jenis</option>
+                                    <option value="">Pilih Jenis</option>
                                     <?php foreach ($jenisOptions as $option): ?>
                                         <option value="<?= $option['jenis'] ?>"><?= $option['jenis'] ?></option>
                                     <?php endforeach; ?>
@@ -89,7 +89,7 @@
                             <label for="kode_1" class="col-md-3 form-label">Kode:</label>
                             <div class="col-md-9">
                                 <select name="kode_1" id="kode_1" class="form-control">
-                                    <option value="">Select Kode 1</option>
+                                    <option value="">Pilih Kode</option>
                                 </select>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                             <label for="kode_klasifikasi" class="col-md-3 form-label">Klasifikasi:</label>
                             <div class="col-md-9">
                                 <select name="kode_klasifikasi" id="kode_klasifikasi" class="form-control">
-                                    <option value="">Select Kode Klasifikasi</option>
+                                    <option value="">Pilih Kode Klasifikasi</option>
                                 </select>
                             </div>
                         </div>
@@ -110,21 +110,21 @@
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label class="col-md-3 form-label">Kategori:</label>
+                            <label class="col-md-3 form-label">Kategori surat:</label>
                             <div class="col-md-9">
                                 <div class="row">
                                     <div class="col-6 col-md-3">
                                         <div class="form-check">
                                             <input type="radio" id="keluar_int" name="kategori" value="Surat Keluar (Internal)"
                                                 class="form-check-input">
-                                            <label for="keluar_int" class="form-check-label">Surat Keluar (Internal)</label>
+                                            <label for="keluar_int" class="form-check-label">Internal</label>
                                         </div>
                                     </div>
                                     <div class="col-6 col-md-3">
                                         <div class="form-check">
                                             <input type="radio" id="keluar_eks" name="kategori" value="Surat Keluar (Eksternal)"
                                                 class="form-check-input">
-                                            <label for="keluar_eks" class="form-check-label">Surat Keluar (Eksternal)</label>
+                                            <label for="keluar_eks" class="form-check-label">Eksternal</label>
                                         </div>
                                     </div>
                                 </div>

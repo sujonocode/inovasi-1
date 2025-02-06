@@ -82,14 +82,14 @@
                                         <div class="form-check">
                                             <input type="radio" id="masuk_int" name="kategori" value="Surat Masuk (Internal)"
                                                 class="form-check-input">
-                                            <label for="masuk_int" class="form-check-label">Surat Masuk (Internal)</label>
+                                            <label for="masuk_int" class="form-check-label">Internal</label>
                                         </div>
                                     </div>
                                     <div class="col-6 col-md-3">
                                         <div class="form-check">
                                             <input type="radio" id="masuk_eks" name="kategori" value="Surat Masuk (Eksternal)"
                                                 class="form-check-input">
-                                            <label for="masuk_eks" class="form-check-label">Surat Masuk (Eksternal)</label>
+                                            <label for="masuk_eks" class="form-check-label">Eksternal</label>
                                         </div>
                                     </div>
                                 </div>

@@ -2,16 +2,16 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="form-section">
-                <h2 class="text-center mb-4">Formulir Data Reminder</h2>
+                <h2 class="text-center mb-4">Formulir Data Reminder Humas</h2>
                 <form onsubmit="return validateCheckboxes()" action="/humas/store" method="post">
                     <?= csrf_field() ?>
 
                     <!-- Nama Konten -->
                     <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="nama" class="col-md-3 form-label">Nama:</label>
+                        <label for="nama" class="col-md-3 form-label">Judul:</label>
                         <div class="col-md-9">
                             <input id="nama" type="text" name="nama" class="form-control"
-                                placeholder="Masukkan nama konten" required>
+                                placeholder="Masukkan judul reminder" required>
                         </div>
                     </div>
 
@@ -32,7 +32,7 @@
                     </div>
 
                     <!-- Kategori -->
-                    <div class="row form-group align-items-center flex-column flex-md-row">
+                    <!-- <div class="row form-group align-items-center flex-column flex-md-row">
                         <label class="col-md-3 form-label">Kategori:</label>
                         <div class="col-md-9">
                             <div class="row">
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Pengingat -->
                     <div class="row form-group align-items-center flex-column flex-md-row">
@@ -138,6 +138,15 @@
         return true;
     }
 </script>
+
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- jQuery (Required for Select2) -->
+<!-- <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script> -->
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
 <script>
     $(document).ready(function() {

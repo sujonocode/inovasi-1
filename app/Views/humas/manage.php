@@ -30,11 +30,11 @@
                 <table id="example" class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Nama Reminder</th>
+                            <th>Judul Reminder</th>
                             <th>Tanggal/Waktu</th>
                             <th>Kontak</th>
                             <th>Pengingat</th>
-                            <th>Kategori</th>
+                            <!-- <th>Kategori</th> -->
                             <th>Catatan</th>
                             <th>PIC</th>
                             <th>Actions</th>
@@ -46,7 +46,17 @@
                                 <tr>
                                     <td><?= $jadwalKonten['nama'] ?></td>
                                     <td><?= $jadwalKonten['tanggal'] . " " . $jadwalKonten['waktu'] ?></td>
-                                    <td><?= $jadwalKonten['kontak'] ?></td>
+                                    <!-- <td>< ?= $jadwalKonten['kontak'] ?></td> -->
+                                    <!-- <td>< ?= str_replace(',', ' | ', $jadwalKonten['kontak']) ?></td> -->
+                                    <?php
+                                    $kontakArray = explode(',', $jadwalKonten['kontak']); // Split numbers into an array
+                                    $kontakNames = array_map(function ($number) use ($contacts) {
+                                        return $contacts[$number] ?? $number; // Replace with name if found, otherwise keep the number
+                                    }, $kontakArray);
+                                    ?>
+
+                                    <td><?= implode(' | ', $kontakNames) ?></td>
+
                                     <!-- Decode the "Pengingat" JSON string into an array -->
                                     <td>
                                         <?php
@@ -61,7 +71,7 @@
                                         }
                                         ?>
                                     </td>
-                                    <td><?= $jadwalKonten['kategori'] ?></td>
+                                    <!-- <td>< ?= $jadwalKonten['kategori'] ?></td> -->
                                     <td><?= $jadwalKonten['catatan'] ?></td>
                                     <td><?= $jadwalKonten['created_by'] ?></td>
                                     <td>
