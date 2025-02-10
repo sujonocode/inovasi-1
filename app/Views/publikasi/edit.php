@@ -44,9 +44,9 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="form-section">
-                <h2 class="text-center mb-4">Formulir Edit Reminder Konten Humas</h2>
+                <h2 class="text-center mb-4">Formulir Edit Reminder BRS dan Publikasi</h2>
                 <?php if (isset($jadwalKonten)): ?>
-                    <form onsubmit="return validateCheckboxes()" action="<?= base_url('humas/update/' . $jadwalKonten['id']) ?>" method="POST">
+                    <form onsubmit="return validateCheckboxes()" action="<?= base_url('publikasi/update/' . $jadwalKonten['id']) ?>" method="POST">
                         <?= csrf_field() ?>
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="nama" class="col-md-3 form-label">Nama:</label>
@@ -154,7 +154,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-4">
-                            <a href="<?= base_url('humas/manage') ?>" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
+                            <a href="<?= base_url('publikasi/manage') ?>" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
                             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                             <!-- <button type="reset" class="btn btn-secondary"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button> -->
                         </div>

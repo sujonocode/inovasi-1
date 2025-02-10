@@ -245,7 +245,7 @@ class SuratKeluar extends BaseController
             'kode_arsip' => $this->request->getPost('kode_arsip'),
             'kategori' => $this->request->getPost('kategori'),
             'catatan' => $this->request->getPost('catatan'),
-            'url' => $this->request->getPost('url'),
+            // 'url' => $this->request->getPost('url'),
             'nomor' => $nomor,
             'nomor_urut' => $nomor_urut,
             'nomor_sisip' => $nomor_sisip,

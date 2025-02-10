@@ -1,7 +1,7 @@
 <div class="container my-5">
     <div class="row mb-4">
         <div class="col text-center">
-            <h2 class="fw-bold">Reminder Konten Humas</h2>
+            <h2 class="fw-bold">Reminder BRS dan Publikasi</h2>
         </div>
     </div>
     <div class="row justify-content-center">
@@ -26,6 +26,7 @@
                 <h5 id="modalEventTitle" class="fw-bold"></h5>
                 <p>Tanggal &nbsp;&nbsp;: <span id="modalEventDate"></span></p>
                 <p>Waktu &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span id="modalEventTime"></span></p>
+                <!-- <p>Kategori&nbsp;&nbsp;: <span id="modalEventCategory"></span></p> -->
                 <p>Kontak &nbsp;&nbsp;&nbsp;: <span id="modalEventContact"></span></p>
                 <p>Reminder: <span id="modalEventReminder"></span></p>
                 <p>Catatan &nbsp;&nbsp;: <span id="modalEventNotes"></span></p>

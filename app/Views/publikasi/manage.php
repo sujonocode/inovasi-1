@@ -2,21 +2,21 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center flex-wrap">
-                <h1 class="mb-3 mb-md-0">Daftar Reminder Humas</h1>
+                <h1 class="mb-3 mb-md-0">Daftar Reminder BRS dan Publikasi</h1>
                 <div class="d-flex gap-2 flex-wrap">
-                    <a href="<?= base_url('humas/create') ?>"
+                    <a href="<?= base_url('publikasi/create') ?>"
                         class="btn btn-primary btn-sm flex-fill text-center"
                         style="min-width: 120px;"
                         title="Tambah Reminder Baru">
                         <i class="fa-solid fa-plus me-1"></i> Tambah
                     </a>
-                    <a href="<?= base_url('humas/export_xlsx') ?>"
+                    <a href="<?= base_url('publikasi/export_xlsx') ?>"
                         class="btn btn-success btn-sm flex-fill text-center"
                         style="min-width: 120px;"
                         title="Download Data Reminder">
                         <i class="fa-solid fa-download me-1"></i> Download
                     </a>
-                    <a href="<?= base_url('humas') ?>"
+                    <a href="<?= base_url('publikasi') ?>"
                         class="btn btn-secondary btn-sm flex-fill text-center"
                         style="min-width: 120px;"
                         title="Kalender Data Reminder">
@@ -34,7 +34,6 @@
                             <th>Tanggal/Waktu</th>
                             <th>Kontak</th>
                             <th>Pengingat</th>
-                            <!-- <th>Kategori</th> -->
                             <th>Catatan</th>
                             <th>PIC</th>
                             <th>Actions</th>
@@ -46,10 +45,12 @@
                                 <tr>
                                     <td><?= $jadwalKonten['nama'] ?></td>
                                     <td><?= $jadwalKonten['tanggal'] . " " . $jadwalKonten['waktu'] ?></td>
+                                    <!-- <td>< ?= $jadwalKonten['kontak'] ?></td> -->
+                                    <!-- <td>< ?= str_replace(',', ' | ', $jadwalKonten['kontak']) ?></td> -->
                                     <?php
-                                    $kontakArray = explode(',', $jadwalKonten['kontak']);
+                                    $kontakArray = explode(',', $jadwalKonten['kontak']); // Split numbers into an array
                                     $kontakNames = array_map(function ($number) use ($contacts) {
-                                        return $contacts[$number] ?? $number;
+                                        return $contacts[$number] ?? $number; // Replace with name if found, otherwise keep the number
                                     }, $kontakArray);
                                     ?>
 
@@ -73,7 +74,7 @@
                                     <td><?= $jadwalKonten['catatan'] ?></td>
                                     <td><?= $jadwalKonten['created_by'] ?></td>
                                     <td>
-                                        <a href="/humas/edit/<?= $jadwalKonten['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
+                                        <a href="/publikasi/edit/<?= $jadwalKonten['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
                                         <a href="#" onclick="openDeleteModal(<?= $jadwalKonten['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
                                     </td>
                                 </tr>
@@ -203,7 +204,7 @@
     // Open the modal and set the delete URL dynamically
     function openDeleteModal(skId) {
         // Set the delete ID in a custom attribute, or store it globally
-        const deleteUrl = "<?= base_url() ?>" + "humas/delete/" + skId;
+        const deleteUrl = "<?= base_url() ?>" + "publikasi/delete/" + skId;
 
         // Store the URL in the delete button as a data attribute
         document.getElementById('confirmDeleteBtn').setAttribute('data-delete-url', deleteUrl);

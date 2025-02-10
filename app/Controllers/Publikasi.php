@@ -11,7 +11,7 @@ use DateTimeZone;
 use IntlDateFormatter;
 
 
-class Humas extends BaseController
+class Publikasi extends BaseController
 {
     protected $db;
 
@@ -20,7 +20,7 @@ class Humas extends BaseController
         $this->db = \Config\Database::connect();
     }
 
-    public function index(string $page = 'Reminder | Konten Humas')
+    public function index(string $page = 'Reminder | Publikasi')
     {
         $model = new JadwalKontenModel();
 
@@ -38,11 +38,11 @@ class Humas extends BaseController
         $data['contacts'] = $contacts;
 
         return view('templates/header', $data)
-            . view('humas/index', $data)
+            . view('publikasi/index', $data)
             . view('templates/footer');
     }
 
-    public function manage(string $page = 'Konten Humas | Manage')
+    public function manage(string $page = 'Publikasi | Manage')
     {
         $model = new JadwalKontenModel();
 
@@ -60,11 +60,11 @@ class Humas extends BaseController
         $data['contacts'] = $contacts;
 
         return view('templates/header', $data)
-            . view('humas/manage', $data)
+            . view('publikasi/manage', $data)
             . view('templates/footer');
     }
 
-    public function create(string $page = 'Humas | Create')
+    public function create(string $page = 'Publikasi | Create')
     {
         $data['title'] = ucfirst($page);
 
@@ -73,7 +73,7 @@ class Humas extends BaseController
         $data['contacts'] = $kontakModel->getContacts();
 
         return view('templates/header', $data)
-            . view('humas/create', $data)
+            . view('publikasi/create', $data)
             . view('templates/footer');
     }
 
@@ -107,7 +107,7 @@ class Humas extends BaseController
         if ($model->save($data)) {
             // Send to Fonnte
             $this->sendNotification();
-            return redirect()->to(base_url('/humas/manage'))->with('success', 'Reminder berhasil dibuat');
+            return redirect()->to(base_url('/publikasi/manage'))->with('success', 'Reminder berhasil dibuat');
         }
 
         // Handle failure case
@@ -818,9 +818,9 @@ class Humas extends BaseController
 
         if ($updateSuccessful) {
             $this->sendEditNotification($oldData);
-            return redirect()->to(base_url('humas/manage'))->with('success', 'Data reminder berhasil diupdate');
+            return redirect()->to(base_url('publikasi/manage'))->with('success', 'Data reminder berhasil diupdate');
         } else {
-            return redirect()->to(base_url('humas/manage'))->with('error', 'Gagal mengupdate data reminder');
+            return redirect()->to(base_url('publikasi/manage'))->with('error', 'Gagal mengupdate data reminder');
         }
     }
 
@@ -832,14 +832,14 @@ class Humas extends BaseController
         return $result ? $result->nama : $nomor;
     }
 
-    public function edit($id, string $page = 'Konten Humas | Edit')
+    public function edit($id, string $page = 'Publikasi | Edit')
     {
         $model = new JadwalKontenModel();
         $jadwalKonten = $model->find($id);
 
         if (!$jadwalKonten) {
             session()->setFlashdata('error', 'Data reminder tidak ditemukan.');
-            return redirect()->to(base_url('humas/manage'));
+            return redirect()->to(base_url('publikasi/manage'));
         }
 
         // Convert kontak string to array if not empty
@@ -861,7 +861,7 @@ class Humas extends BaseController
             $data['contacts'] = $kontakModel->getContacts();
 
             return view('templates/header', $data)
-                . view('humas/edit', $data)
+                . view('publikasi/edit', $data)
                 . view('templates/footer');
         } else {
             if ($jadwalKonten['created_by'] !== $currentUsername) {
@@ -873,7 +873,7 @@ class Humas extends BaseController
         $data['contacts'] = $kontakModel->getContacts();
 
         return view('templates/header', $data)
-            . view('humas/edit', $data)
+            . view('publikasi/edit', $data)
             . view('templates/footer');
     }
 
@@ -886,14 +886,14 @@ class Humas extends BaseController
 
         // If the record doesn't exist, redirect with an error message
         if (!$jadwalKonten) {
-            return redirect()->to(base_url('humas/manage'))->with('error', 'Jadwal tidak ditemukan');
+            return redirect()->to(base_url('publikasi/manage'))->with('error', 'Jadwal tidak ditemukan');
         }
 
         if (session()->get('role') === 'admin') {
             // Call the delete logic directly here
             $model->delete($id);
 
-            return redirect()->to(base_url('humas/manage'))->with('success', 'Data reminder berhasil dihapus');
+            return redirect()->to(base_url('publikasi/manage'))->with('success', 'Data reminder berhasil dihapus');
         } else {
             if (session()->get('username') !== $jadwalKonten['created_by']) {
                 return redirect()->back()->with('limited', 'Data reminder hanya bisa dihapus oleh orang yang membuatnya atau admin');
@@ -904,9 +904,9 @@ class Humas extends BaseController
 
         if ($deleteSuccessful) {
             $this->sendDeleteNotification($jadwalKonten);
-            return redirect()->to(base_url('humas/manage'))->with('success', 'Data reminder berhasil dihapus');
+            return redirect()->to(base_url('publikasi/manage'))->with('success', 'Data reminder berhasil dihapus');
         } else {
-            return redirect()->to(base_url('humas/manage'))->with('error', 'Gagal menghapus data reminder');
+            return redirect()->to(base_url('publikasi/manage'))->with('error', 'Gagal menghapus data reminder');
         }
     }
 
@@ -957,11 +957,11 @@ class Humas extends BaseController
         $jadwalKontens = $model->findAll();
 
         return view('templates/header')
-            . view('humas/index', ['jadwalKontens' => $jadwalKontens])
+            . view('publikasi/index', ['jadwalKontens' => $jadwalKontens])
             . view('templates/footer');
     }
 
-    public function maintenance(string $page = 'Humas | Maintenance')
+    public function maintenance(string $page = 'Publikasi | Maintenance')
     {
         $data['title'] = ucfirst($page);
 

@@ -202,14 +202,12 @@ class SK extends BaseController
             'kode_arsip' => $this->request->getPost('kode_arsip'),
             'perihal' => $this->request->getPost('perihal'),
             'catatan' => $this->request->getPost('catatan'),
-            'url' => $this->request->getPost('url'),
+            // 'url' => $this->request->getPost('url'),
             'nomor' => $nomor,
             'nomor_urut' => $nomor_urut,
             'nomor_sisip' => $nomor_sisip,
             'created_by' => $username,
         ];
-
-        $link = base_url('sk/manage');
 
         if ($model->save($data)) {
             return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil disimpan' . PHP_EOL . 'Nomor SK: ' . $nomor);

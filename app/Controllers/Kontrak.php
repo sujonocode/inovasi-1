@@ -244,7 +244,7 @@ class Kontrak extends BaseController
             'ket' => $this->request->getPost('ket'),
             'uraian' => $this->request->getPost('uraian'),
             'catatan' => $this->request->getPost('catatan'),
-            'url' => $this->request->getPost('url'),
+            // 'url' => $this->request->getPost('url'),
             'nomor' => $nomor,
             'nomor_urut' => $nomor_urut,
             'nomor_sisip' => $nomor_sisip,

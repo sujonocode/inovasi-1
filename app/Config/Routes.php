@@ -13,6 +13,9 @@ use App\Controllers\SuratMasuk;
 use App\Controllers\SK;
 use App\Controllers\Kontrak;
 use App\Controllers\Humas;
+use App\Controllers\QualityGates;
+use App\Controllers\Publikasi;
+use App\Controllers\Lainnya;
 use App\Controllers\GenerateSurat;
 use App\Controllers\Kendala;
 use App\Controllers\Sbml;
@@ -99,6 +102,39 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->post('update/(:num)', 'Humas::update/$1');
         $routes->get('delete/(:num)', 'Humas::delete/$1');
         $routes->get('export_xlsx', 'Humas::exportExcel');
+    });
+
+    $routes->group('/quality_gates', function ($routes) {
+        $routes->get('', [QualityGates::class, 'index']);
+        $routes->get('manage', 'QualityGates::manage');
+        $routes->get('create', 'QualityGates::create');
+        $routes->post('store', 'QualityGates::store');
+        $routes->get('edit/(:num)', 'QualityGates::edit/$1');
+        $routes->post('update/(:num)', 'QualityGates::update/$1');
+        $routes->get('delete/(:num)', 'QualityGates::delete/$1');
+        $routes->get('export_xlsx', 'QualityGates::exportExcel');
+    });
+
+    $routes->group('/publikasi', function ($routes) {
+        $routes->get('', [Publikasi::class, 'index']);
+        $routes->get('manage', 'Publikasi::manage');
+        $routes->get('create', 'Publikasi::create');
+        $routes->post('store', 'Publikasi::store');
+        $routes->get('edit/(:num)', 'Publikasi::edit/$1');
+        $routes->post('update/(:num)', 'Publikasi::update/$1');
+        $routes->get('delete/(:num)', 'Publikasi::delete/$1');
+        $routes->get('export_xlsx', 'Publikasi::exportExcel');
+    });
+
+    $routes->group('/lainnya', function ($routes) {
+        $routes->get('', [Lainnya::class, 'index']);
+        $routes->get('manage', 'Lainnya::manage');
+        $routes->get('create', 'Lainnya::create');
+        $routes->post('store', 'Lainnya::store');
+        $routes->get('edit/(:num)', 'Lainnya::edit/$1');
+        $routes->post('update/(:num)', 'Lainnya::update/$1');
+        $routes->get('delete/(:num)', 'Lainnya::delete/$1');
+        $routes->get('export_xlsx', 'Lainnya::exportExcel');
     });
 
     $routes->get('/kendala', [Kendala::class, 'maintenance']);

@@ -18,7 +18,7 @@
     <script src="https://kit.fontawesome.com/33529d3488.js" crossorigin="anonymous"></script>
 
     <!-- Favicon -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href=<?= base_url("assista.ico"); ?> type="image/x-icon">
 
     <!-- FullCalendar CSS -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
@@ -77,9 +77,9 @@
                         <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reminder</a>
                         <ul class="dropdown-menu" aria-labelledby="humasDropdown">
                             <li><a class="dropdown-item" href="<?= base_url('humas/manage') ?>">Humas</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('qg/manage') ?>">Quality Gates</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('rencana_terbit/manage') ?>">BRS dan Publikasi</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('reminder_lainnya/manage') ?>">Lainnya</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('quality_gates/manage') ?>">Quality Gates</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('publikasi/manage') ?>">BRS dan Publikasi</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('lainnya/manage') ?>">Lainnya</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
