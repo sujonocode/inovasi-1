@@ -210,7 +210,7 @@ class SK extends BaseController
         ];
 
         if ($model->save($data)) {
-            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil disimpan' . PHP_EOL . 'Nomor SK: ' . $nomor);
+            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil disimpan.' . '<br>' . 'Nomor SK: ' . $nomor);
         }
 
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data SK');
@@ -333,7 +333,7 @@ class SK extends BaseController
 
         // Check if update was successful and pass the appropriate message
         if ($updateSuccessful) {
-            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil diupdate' . PHP_EOL . 'Nomor SK: ' . $nomor);
+            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil diupdate.' . '<br>' . 'Nomor SK: ' . $nomor);
         } else {
             return redirect()->to(base_url('sk/manage'))->with('error', 'Gagal mengupdate data SK');
         }
@@ -355,7 +355,7 @@ class SK extends BaseController
             // Call the delete logic directly here
             $model->delete($id);
 
-            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus' . PHP_EOL . 'Nomor SK yang terhapus: ' . $nomor);
+            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus.' . '<br>' . 'Nomor SK yang terhapus: ' . $nomor);
         } else {
             if (session()->get('username') !== $sk['created_by']) {
                 return redirect()->back()->with('limited', 'Data SK hanya bisa dihapus oleh orang yang membuatnya atau admin');
@@ -367,7 +367,7 @@ class SK extends BaseController
         // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus' . PHP_EOL . 'Nomor SK yang terhapus: ' . $nomor);
+        return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus.' . '<br>' . 'Nomor SK yang terhapus: ' . $nomor);
     }
 
     public function exportExcel()

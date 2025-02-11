@@ -252,7 +252,7 @@ class Kontrak extends BaseController
         ];
 
         if ($model->save($data)) {
-            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil disimpan' . PHP_EOL . 'Nomor kontrak: ' . $nomor);
+            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil disimpan.' . '<br>' . 'Nomor kontrak: ' . $nomor);
         }
 
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data kontrak');
@@ -376,7 +376,7 @@ class Kontrak extends BaseController
 
         // Check if update was successful and pass the appropriate message
         if ($updateSuccessful) {
-            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil diupdate' . PHP_EOL . 'Nomor kontrak: ' . $nomor);
+            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil diupdate.' . '<br>' . 'Nomor kontrak: ' . $nomor);
         } else {
             return redirect()->to(base_url('kontrak/manage'))->with('error', 'Gagal mengupdate data kontrak');
         }
@@ -398,7 +398,7 @@ class Kontrak extends BaseController
             // Call the delete logic directly here
             $model->delete($id);
 
-            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+            return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil dihapus.' . '<br>' . 'Nomor kontrak yang terhapus: ' . $nomor);
         } else {
             if (session()->get('username') !== $kontrak['created_by']) {
                 return redirect()->back()->with('limited', 'Data kontrak hanya bisa dihapus oleh orang yang membuatnya atau admin');
@@ -410,7 +410,7 @@ class Kontrak extends BaseController
         // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil dihapus' . PHP_EOL . 'Nomor kontrak yang terhapus: ' . $nomor);
+        return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil dihapus.' . '<br>' . 'Nomor kontrak yang terhapus: ' . $nomor);
     }
 
     public function exportExcel()

@@ -11,7 +11,8 @@ class Dokumen extends BaseController
 {
     public function index(string $page = 'Manajemen Dokumen')
     {
-        $modelSurat = new SuratKeluarModel();
+        $modelSuratKeluar = new SuratKeluarModel();
+        $modelSuratMasuk = new SuratMasukModel();
         $modelSK = new SKModel();
         $modelKontrak = new KontrakModel();
 
@@ -20,11 +21,12 @@ class Dokumen extends BaseController
 
         // Assign all counts and groupings into the $data array
         $data['title'] = ucfirst($page);
-        $data['totalSurat'] = $modelSurat->countAll();
+        $data['totalSuratKeluar'] = $modelSuratKeluar->countAll();
+        $data['totalSuratMasuk'] = $modelSuratMasuk->countAll();
         $data['totalSk'] = $modelSK->countAll();
         $data['totalKontrak'] = $modelKontrak->countAll();
 
-        $data['totalSuratByKodeArsip'] = $modelSurat
+        $data['totalSuratKeluarByKodeArsip'] = $modelSuratKeluar
             ->select('kode_arsip, COUNT(*) as count')
             ->groupBy('kode_arsip')
             ->findAll();
@@ -39,7 +41,7 @@ class Dokumen extends BaseController
             ->groupBy('kode_arsip')
             ->findAll();
 
-        $data['totalSuratByCreatedBy'] = $modelSurat
+        $data['totalSuratKeluarByCreatedBy'] = $modelSuratKeluar
             ->select('created_by, COUNT(*) as count')
             ->groupBy('created_by')
             ->findAll();

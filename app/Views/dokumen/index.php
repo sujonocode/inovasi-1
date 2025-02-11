@@ -29,7 +29,7 @@
                     <i class="fas fa-file-lines"></i> Total Surat Masuk
                 </div>
                 <div class="card-body text-center">
-                    <h5 id="card-5" class="card-title display-6 fw-bold">-</h5>
+                    <h5 id="card-5" class="card-title display-6 fw-bold"></h5>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
                     <i class="fas fa-file-contract"></i> Total Kontrak
                 </div>
                 <div class="card-body text-center">
-                    <h5 id="card-4" class="card-title display-6 fw-bold">150</h5>
+                    <h5 id="card-4" class="card-title display-6 fw-bold"></h5>
                 </div>
             </div>
         </div>
@@ -70,7 +70,7 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
-                    Surat Berdasarkan Kode Arsip
+                    Surat Keluar Berdasarkan Kode Arsip
                 </div>
                 <div class="card-body">
                     <canvas id="pieChart2"></canvas>
@@ -80,7 +80,7 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
-                    Surat Berdasarkan PIC
+                    Surat Keluar Berdasarkan PIC
                 </div>
                 <div class="card-body">
                     <canvas id="pieChart3"></canvas>
@@ -116,15 +116,16 @@
         border7: "rgba(211, 211, 211, 0.7)" // #D3D3D3
     };
 
-    const totalSurat = <?php echo json_encode($totalSurat); ?>;
+    const totalSuratKeluar = <?php echo json_encode($totalSuratKeluar); ?>;
+    const totalSuratMasuk = <?php echo json_encode($totalSuratMasuk); ?>;
     const totalSk = <?php echo json_encode($totalSk); ?>;
     const totalKontrak = <?php echo json_encode($totalKontrak); ?>;
-    const totalSum = totalSurat + totalSk + totalKontrak;
+    const totalSum = totalSuratKeluar + totalSuratMasuk + totalSk + totalKontrak;
 
-    const totalSuratByKodeArsip = <?php echo json_encode($totalSuratByKodeArsip); ?>;
+    const totalSuratKeluarByKodeArsip = <?php echo json_encode($totalSuratKeluarByKodeArsip); ?>;
     const totalSkByKodeArsip = <?php echo json_encode($totalSkByKodeArsip); ?>;
     const totalKontrakByKodeArsip = <?php echo json_encode($totalKontrakByKodeArsip); ?>;
-    const totalSuratByCreatedBy = <?php echo json_encode($totalSuratByCreatedBy); ?>;
+    const totalSuratKeluarByCreatedBy = <?php echo json_encode($totalSuratKeluarByCreatedBy); ?>;
     const totalSkByCreatedBy = <?php echo json_encode($totalSkByCreatedBy); ?>;
     const totalKontrakByCreatedBy = <?php echo json_encode($totalKontrakByCreatedBy); ?>;
 
@@ -138,19 +139,19 @@
             return acc;
         }, {});
 
-        const suratKodeArsip = Object.keys(countByCategory);
-        const suratKodeArsipCount = Object.values(countByCategory);
+        const suratKeluarKodeArsip = Object.keys(countByCategory);
+        const suratKeluarKodeArsipCount = Object.values(countByCategory);
 
         return {
-            suratKodeArsip,
-            suratKodeArsipCount
+            suratKeluarKodeArsip,
+            suratKeluarKodeArsipCount
         };
     }
 
     const {
-        suratKodeArsip,
-        suratKodeArsipCount
-    } = getKodeArsipAndCount(totalSuratByKodeArsip);
+        suratKeluarKodeArsip,
+        suratKeluarKodeArsipCount
+    } = getKodeArsipAndCount(totalSuratKeluarByKodeArsip);
 
     function getCreatedByAndCount(data) {
         const countByCategory = data.reduce((acc, item) => {
@@ -162,27 +163,28 @@
             return acc;
         }, {});
 
-        const suratCreatedBy = Object.keys(countByCategory);
-        const suratCreatedByCount = Object.values(countByCategory);
+        const suratKeluarCreatedBy = Object.keys(countByCategory);
+        const suratKeluarCreatedByCount = Object.values(countByCategory);
 
         return {
-            suratCreatedBy,
-            suratCreatedByCount
+            suratKeluarCreatedBy,
+            suratKeluarCreatedByCount
         };
     }
 
     const {
-        suratCreatedBy,
-        suratCreatedByCount
-    } = getCreatedByAndCount(totalSuratByCreatedBy);
+        suratKeluarCreatedBy,
+        suratKeluarCreatedByCount
+    } = getCreatedByAndCount(totalSuratKeluarByCreatedBy);
 </script>
 
 <!-- Card Chart -->
 <script>
     document.getElementById('card-1').innerText = `${totalSum}`;
-    document.getElementById('card-2').innerText = `${totalSurat}`;
+    document.getElementById('card-2').innerText = `${totalSuratKeluar}`;
     document.getElementById('card-3').innerText = `${totalSk}`;
     document.getElementById('card-4').innerText = `${totalKontrak}`;
+    document.getElementById('card-5').innerText = `${totalSuratMasuk}`;
 </script>
 
 <!-- Chart -->
@@ -191,10 +193,10 @@
     const employeeChart_p1 = new Chart(ctx_p1, {
         type: 'pie',
         data: {
-            labels: ['Surat', 'SK', 'Kontrak'],
+            labels: ['Surat Keluar', 'Surat Masuk', 'SK', 'Kontrak'],
             datasets: [{
                 label: 'Total: ',
-                data: [totalSurat, totalSk, totalKontrak],
+                data: [totalSuratKeluar, totalSuratMasuk, totalSk, totalKontrak],
                 backgroundColor: [chartColors.blue, chartColors.orange, chartColors.green, chartColors.red, chartColors.purple, chartColors.brown, chartColors.pink, chartColors.gray],
                 borderColor: chartColors.border,
                 borderWidth: 1,
@@ -214,10 +216,10 @@
     const employeeChart_p2 = new Chart(ctx_p2, {
         type: 'pie',
         data: {
-            labels: suratKodeArsip,
+            labels: suratKeluarKodeArsip,
             datasets: [{
                 label: 'Jumlah',
-                data: suratKodeArsipCount,
+                data: suratKeluarKodeArsipCount,
                 backgroundColor: [chartColors.blue, chartColors.orange, chartColors.green, chartColors.red, chartColors.purple, chartColors.brown, chartColors.pink, chartColors.gray],
                 borderColor: chartColors.border,
                 borderWidth: 1
@@ -237,10 +239,10 @@
     const employeeChart_p3 = new Chart(ctx_p3, {
         type: 'pie',
         data: {
-            labels: suratCreatedBy,
+            labels: suratKeluarCreatedBy,
             datasets: [{
                 label: 'Jumlah',
-                data: suratCreatedByCount,
+                data: suratKeluarCreatedByCount,
                 backgroundColor: [chartColors.blue, chartColors.orange, chartColors.green, chartColors.red, chartColors.purple, chartColors.brown, chartColors.pink, chartColors.gray],
                 borderColor: chartColors.border,
                 borderWidth: 1

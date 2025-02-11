@@ -6,7 +6,6 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-// use App\Controllers\News; // Add this line
 use App\Controllers\Dokumen;
 use App\Controllers\SuratKeluar;
 use App\Controllers\SuratMasuk;
@@ -16,10 +15,10 @@ use App\Controllers\Humas;
 use App\Controllers\QualityGates;
 use App\Controllers\Publikasi;
 use App\Controllers\Lainnya;
-use App\Controllers\GenerateSurat;
 use App\Controllers\Kendala;
 use App\Controllers\Sbml;
-use App\Controllers\Tracking;
+// use App\Controllers\GenerateSurat;
+// use App\Controllers\Tracking;
 
 $routes->group('', ['filter' => 'role:admin,user'], function ($routes) {
     $routes->get('/dashboard', 'DashboardController::index');
@@ -169,14 +168,11 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     // $routes->post('/generate_surat/update/(:num)', 'GenerateSurat::maintenance');
     // $routes->get('/generate_surat/delete/(:num)', 'GenerateSurat::maintenance');
 
-    $routes->get('/calendar', 'CalendarController::index');
-    $routes->get('/fetch-events', 'CalendarController::fetchEvents');
-
-    // Features
-    $routes->get('/generate-report', 'ReportController::generateReport');
-
-    $routes->get('/calendar', 'CalendarController::index');
-    $routes->get('/calendar/events', 'CalendarController::events');
+    // $routes->get('/calendar', 'CalendarController::index');
+    // $routes->get('/fetch-events', 'CalendarController::fetchEvents');
+    // $routes->get('/generate-report', 'ReportController::generateReport');
+    // $routes->get('/calendar', 'CalendarController::index');
+    // $routes->get('/calendar/events', 'CalendarController::events');
 });
 
 $routes->get('/profile', 'Profile::index', ['filter' => 'auth']);

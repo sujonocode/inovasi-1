@@ -83,7 +83,7 @@ class SuratMasuk extends BaseController
         $nomor = $this->request->getPost('nomor');
 
         if ($model->save($data)) {
-            return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil disimpan' . PHP_EOL . 'Nomor surat: ' . $nomor);
+            return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil disimpan.' . '<br>' . 'Nomor surat: ' . $nomor);
         }
 
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data surat');
@@ -169,7 +169,7 @@ class SuratMasuk extends BaseController
 
         // Check if update was successful and pass the appropriate message
         if ($updateSuccessful) {
-            return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil diupdate' . PHP_EOL . 'Nomor surat: ' . $nomor);
+            return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil diupdate.' . '<br>' . 'Nomor surat: ' . $nomor);
         } else {
             return redirect()->to(base_url('surat_masuk/manage'))->with('error', 'Gagal mengupdate data surat');
         }
@@ -192,7 +192,7 @@ class SuratMasuk extends BaseController
             // Call the delete logic directly here
             $model->delete($id);
 
-            return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor surat yang terhapus: ' . $nomor);
+            return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil dihapus.' . '<br>' . 'Nomor surat yang terhapus: ' . $nomor);
         } else {
             if (session()->get('username') !== $surat['created_by']) {
                 return redirect()->back()->with('limited', 'Data surat hanya bisa dihapus oleh orang yang membuatnya atau admin');
@@ -204,7 +204,7 @@ class SuratMasuk extends BaseController
         // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil dihapus' . PHP_EOL . 'Nomor surat yang terhapus: ' . $nomor);
+        return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil dihapus.' . '<br>' . 'Nomor surat yang terhapus: ' . $nomor);
     }
 
     public function exportExcel()
