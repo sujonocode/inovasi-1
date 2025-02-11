@@ -82,20 +82,20 @@
                             <li><a class="dropdown-item" href="<?= base_url('lainnya/manage') ?>">Lainnya</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="<?= base_url('kendala') ?>" id="kendalaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kendala Lapangan</a>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="< ?= base_url('kendala') ?>" id="kendalaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kendala Lapangan</a>
                         <ul class="dropdown-menu" aria-labelledby="kendalaDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('kendala') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('kendala/manage') ?>">Manage</a></li>
+                            <li><a class="dropdown-item" href="< ?= base_url('kendala') ?>">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="< ?= base_url('kendala/manage') ?>">Manage</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="<?= base_url('sbml') ?>" id="sbmlDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SBML</a>
+                        <a class="nav-link dropdown-toggle" href="< ?= base_url('sbml') ?>" id="sbmlDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SBML</a>
                         <ul class="dropdown-menu" aria-labelledby="sbmlDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('sbml') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('sbml/manage') ?>">Manage</a></li>
+                            <li><a class="dropdown-item" href="< ?= base_url('sbml') ?>">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="< ?= base_url('sbml/manage') ?>">Manage</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                     <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="< ?= base_url('tracking') ?>" id="trackingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tracking</a>
                         <ul class="dropdown-menu" aria-labelledby="trackingDropdown">
