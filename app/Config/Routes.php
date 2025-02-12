@@ -136,21 +136,21 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->get('export_xlsx', 'Lainnya::exportExcel');
     });
 
-    $routes->get('/kendala', [Kendala::class, 'maintenance']);
-    $routes->get('/kendala/manage', 'Kendala::maintenance');
-    $routes->get('/kendala/create', 'Kendala::maintenance');
-    $routes->post('/kendala/store', 'Kendala::maintenance');
-    $routes->get('/kendala/edit/(:num)', 'Kendala::maintenance');
-    $routes->post('/kendala/update/(:num)', 'Kendala::maintenance');
-    $routes->get('/kendala/delete/(:num)', 'Kendala::maintenance');
+    // $routes->get('/kendala', [Kendala::class, 'maintenance']);
+    // $routes->get('/kendala/manage', 'Kendala::maintenance');
+    // $routes->get('/kendala/create', 'Kendala::maintenance');
+    // $routes->post('/kendala/store', 'Kendala::maintenance');
+    // $routes->get('/kendala/edit/(:num)', 'Kendala::maintenance');
+    // $routes->post('/kendala/update/(:num)', 'Kendala::maintenance');
+    // $routes->get('/kendala/delete/(:num)', 'Kendala::maintenance');
 
-    $routes->get('/sbml', [Sbml::class, 'maintenance']);
-    $routes->get('/sbml/manage', 'Sbml::maintenance');
-    $routes->get('/sbml/create', 'Sbml::maintenance');
-    $routes->post('/sbml/store', 'Sbml::maintenance');
-    $routes->get('/sbml/edit/(:num)', 'Sbml::maintenance');
-    $routes->post('/sbml/update/(:num)', 'Sbml::maintenance');
-    $routes->get('/sbml/delete/(:num)', 'Sbml::maintenance');
+    // $routes->get('/sbml', [Sbml::class, 'maintenance']);
+    // $routes->get('/sbml/manage', 'Sbml::maintenance');
+    // $routes->get('/sbml/create', 'Sbml::maintenance');
+    // $routes->post('/sbml/store', 'Sbml::maintenance');
+    // $routes->get('/sbml/edit/(:num)', 'Sbml::maintenance');
+    // $routes->post('/sbml/update/(:num)', 'Sbml::maintenance');
+    // $routes->get('/sbml/delete/(:num)', 'Sbml::maintenance');
 
     // $routes->get('tracking', [Tracking::class, 'maintenance']);
     // $routes->get('/tracking/manage', 'Tracking::maintenance');
@@ -167,12 +167,6 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     // $routes->get('/generate_surat/edit/(:num)', 'GenerateSurat::maintenance');
     // $routes->post('/generate_surat/update/(:num)', 'GenerateSurat::maintenance');
     // $routes->get('/generate_surat/delete/(:num)', 'GenerateSurat::maintenance');
-
-    // $routes->get('/calendar', 'CalendarController::index');
-    // $routes->get('/fetch-events', 'CalendarController::fetchEvents');
-    // $routes->get('/generate-report', 'ReportController::generateReport');
-    // $routes->get('/calendar', 'CalendarController::index');
-    // $routes->get('/calendar/events', 'CalendarController::events');
 });
 
 $routes->get('/profile', 'Profile::index', ['filter' => 'auth']);
