@@ -11,7 +11,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%; /* Full height of the screen */
-    background-color: #e5e7eb; /* Light gray for contrast */
+    background-color: #eef0f2; /* Light gray for contrast */
 }
 
 /* Main content section should take remaining space */
@@ -105,7 +105,7 @@ body {
 
 /* Footer */
 footer {
-    background-color: #343a40;
+    background-color: #002b6a;
     color: white;
     padding: 20px 0;
     text-align: center;
@@ -125,7 +125,7 @@ footer a:hover {
 .section-title {
     font-size: 2rem;
     font-weight: bold;
-    color: #343a40;
+    color: #002b6a;
 }
 
 .section-subtitle {
@@ -219,4 +219,63 @@ footer a:hover {
     background-color: #ffffff;
     border-radius: 6px;
     padding: 20px;
+}
+
+:root {
+    --bs-dark-rgb: 0, 43, 106;
+}
+
+.bg-dark { 
+    background-color: rgba(var(--bs-dark-rgb), 1) !important;
+}
+
+/* Ensure Select2 matches Bootstrap input styles */
+.select2-container {
+    width: 100% !important; /* Match Bootstrap input width */
+}
+
+/* Match Bootstrap's input height, padding, and borders */
+.select2-container .select2-selection--single {
+    height: calc(1.5em + .75rem + 2px) !important; /* Standard Bootstrap input height */
+    padding: .375rem .75rem !important; /* Standard Bootstrap padding */
+    border: 1px solid #ced4da !important; /* Bootstrap border color */
+    border-radius: .375rem !important; /* Bootstrap rounded corners */
+    background-color: #fff !important; /* Ensure consistent background */
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Ensure text is properly aligned */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: calc(1.5em + .75rem) !important;
+    padding-left: 0 !important; /* Remove extra left padding */
+}
+
+/* Ensure responsiveness */
+@media (max-width: 768px) {
+    .select2-container {
+        width: 100% !important; /* Ensures it scales correctly on smaller screens */
+    }
+}
+
+/* Set max height and enable scrolling for dropdown */
+.select2-dropdown {
+    max-height: 300px !important; /* Adjust height as needed */
+    overflow-y: auto !important; /* Enable scrollbar */
+}
+
+/* Ensure the X (clear button) is properly aligned */
+.select2-container--bootstrap-5 .select2-selection__clear {
+    position: absolute;
+    right: 8px; /* Adjust as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem; /* Adjust size to match other text */
+    color: #6c757d; /* Match Bootstrap's muted text color */
+    cursor: pointer;
+}
+
+/* Improve spacing inside the input box */
+.select2-container--bootstrap-5 .select2-selection {
+    padding-right: 30px !important; /* Space for clear button */
 }

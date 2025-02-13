@@ -1,6 +1,6 @@
 <section class="features py-5">
     <div class="container">
-        <h2 class="mb-4"><?= $title ?></h2>
+        <h2 class="section-title text-center mb-4"><?= $title ?></h2>
         <div class="card mb-4">
             <div class="card-header">Profil</div>
             <div class="card-body">

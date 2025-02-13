@@ -202,18 +202,18 @@
         });
     });
 
-    // Active nav
-    document.addEventListener("DOMContentLoaded", function() {
-        const navLinks = document.querySelectorAll(".nav-link");
+    // // Active nav
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     const navLinks = document.querySelectorAll(".nav-link");
 
-        // Get the current URL
-        const currentURL = window.location.href;
+    //     // Get the current URL
+    //     const currentURL = window.location.href;
 
-        navLinks.forEach(link => {
-            // Check if the href of the link matches the current URL
-            if (link.href === currentURL) {
-                link.classList.add("active");
-            }
-        });
-    });
+    //     navLinks.forEach(link => {
+    //         // Check if the href of the link matches the current URL
+    //         if (link.href === currentURL) {
+    //             link.classList.add("active");
+    //         }
+    //     });
+    // });
 </script>

@@ -5,7 +5,7 @@ namespace App\Controllers;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\KontrakModel;
-use App\Models\KodeArsipModel;
+use App\Models\KodeArsipKontrakModel;
 
 class Kontrak extends BaseController
 {
@@ -52,7 +52,7 @@ class Kontrak extends BaseController
 
         // Fetch distinct 'jenis' options from the 'kode_arsip' table
         $db = \Config\Database::connect();
-        $data['jenisOptions'] = $db->table('kode_arsip')
+        $data['jenisOptions'] = $db->table('kode_arsip_kontrak')
             ->select('jenis')
             ->distinct()
             ->get()
@@ -68,7 +68,7 @@ class Kontrak extends BaseController
         if ($this->request->isAJAX()) {
             $jenis = $this->request->getPost('jenis');
             $db = \Config\Database::connect();
-            $kode1Options = $db->table('kode_arsip')
+            $kode1Options = $db->table('kode_arsip_kontrak')
                 ->select('kode_1')
                 ->distinct()
                 ->where('jenis', $jenis)
@@ -87,7 +87,7 @@ class Kontrak extends BaseController
         if ($this->request->isAJAX()) {
             $kode1 = $this->request->getPost('kode_1');
             $db = \Config\Database::connect();
-            $kodeKlasifikasiOptions = $db->table('kode_arsip')
+            $kodeKlasifikasiOptions = $db->table('kode_arsip_kontrak')
                 ->select('kode_klasifikasi')
                 ->distinct()
                 ->where('kode_1', $kode1)
@@ -109,11 +109,11 @@ class Kontrak extends BaseController
         // Get the selected 'kode_klasifikasi' from the request
         $kodeKlasifikasi = $this->request->getPost('kode_klasifikasi');
 
-        // Assuming you have a model for the table, e.g., KodeArsipModel
-        $kodeArsipModel = new KodeArsipModel();
+        // Assuming you have a model for the table, e.g., KodeArsipKontrakModel
+        $kodeArsipKontrakModel = new KodeArsipKontrakModel();
 
         // Retrieve the 'kode_arsip' based on the selected 'kode_klasifikasi'
-        $result = $kodeArsipModel->where('kode_klasifikasi', $kodeKlasifikasi)->first();
+        $result = $kodeArsipKontrakModel->where('kode_klasifikasi', $kodeKlasifikasi)->first();
         $this->response->setHeader('X-CSRF-Token', csrf_hash());
         // Return the result as JSON
         if ($result) {
@@ -161,49 +161,28 @@ class Kontrak extends BaseController
         $tanggal = $this->request->getPost('tanggal');
         list($year, $month, $day) = explode('-', $tanggal);
 
-        if ($this->request->getPost('jenis_penomoran') == 'urut') {
-            $nomor_urut_akhir = $model->selectMax('nomor_urut')->get()->getRowArray()['nomor_urut'];
-            $nomor_urut = $nomor_urut_akhir + 1;
-            $nomor_urut_text = $this->numberToText3($nomor_urut);
-            $nomor_sisip = 0;
+        $increment = (int) $this->request->getPost('increment');
+        $execute = 0;
 
-            if ($this->request->getPost('kode_arsip') == "") {
-                $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $month . '/' . $year;
-            } else {
-                $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
-            }
-        } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
-            $tanggal = $this->request->getPost('tanggal');
+        for ($i = 0; $i < $increment; $i++) {
+            if ($this->request->getPost('jenis_penomoran') == 'urut') {
+                $nomor_urut_akhir = $model->selectMax('nomor_urut')->get()->getRowArray()['nomor_urut'];
+                $nomor_urut = $nomor_urut_akhir + 1;
+                $nomor_urut_text = $this->numberToText3($nomor_urut);
+                $nomor_sisip = 0;
 
-            $builder = $this->db->table('kontrak');
+                if ($this->request->getPost('kode_arsip') == "") {
+                    $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $month . '/' . $year;
+                } else {
+                    $nomor = $nomor_urut_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+                }
+            } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
+                $tanggal = $this->request->getPost('tanggal');
 
-            $query = $builder->select('id, nomor_urut, nomor_sisip')
-                ->where('tanggal', $tanggal)
-                ->orderBy('nomor_urut', 'DESC')
-                ->orderBy('nomor_sisip', 'DESC')
-                ->limit(1)
-                ->get();
-
-            $result = $query->getRow();
-
-            if ($result) {
-                $nomor_urut = $result->nomor_urut;
-
-                $query2 = $builder->select('id, nomor_urut, nomor_sisip')
-                    ->where('nomor_urut', $nomor_urut)
-                    ->orderBy('nomor_sisip', 'DESC')
-                    ->limit(1)
-                    ->get();
-
-                $result2 = $query2->getRow();
-            }
-
-            if (!$result) {
                 $builder = $this->db->table('kontrak');
-                $query = $builder
-                    ->select('id, nomor_urut, nomor_sisip, tanggal')
-                    ->where('tanggal <', $tanggal)
-                    ->orderBy('tanggal', 'DESC')
+
+                $query = $builder->select('id, nomor_urut, nomor_sisip')
+                    ->where('tanggal', $tanggal)
                     ->orderBy('nomor_urut', 'DESC')
                     ->orderBy('nomor_sisip', 'DESC')
                     ->limit(1)
@@ -222,36 +201,66 @@ class Kontrak extends BaseController
 
                     $result2 = $query2->getRow();
                 }
+
+                if (!$result) {
+                    $builder = $this->db->table('kontrak');
+                    $query = $builder
+                        ->select('id, nomor_urut, nomor_sisip, tanggal')
+                        ->where('tanggal <', $tanggal)
+                        ->orderBy('tanggal', 'DESC')
+                        ->orderBy('nomor_urut', 'DESC')
+                        ->orderBy('nomor_sisip', 'DESC')
+                        ->limit(1)
+                        ->get();
+
+                    $result = $query->getRow();
+
+                    if ($result) {
+                        $nomor_urut = $result->nomor_urut;
+
+                        $query2 = $builder->select('id, nomor_urut, nomor_sisip')
+                            ->where('nomor_urut', $nomor_urut)
+                            ->orderBy('nomor_sisip', 'DESC')
+                            ->limit(1)
+                            ->get();
+
+                        $result2 = $query2->getRow();
+                    }
+                }
+
+                $nomor_urut = $result2->nomor_urut;
+                $nomor_sisip = $result2->nomor_sisip + 1;
+
+                $nomor_urut_text = $this->numberToText3($nomor_urut);
+                $nomor_sisip_text = $this->numberToText2($nomor_sisip);
+
+                if ($this->request->getPost('kode_arsip') == "") {
+                    $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $month . '/' . $year;
+                } else {
+                    $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+                }
             }
 
-            $nomor_urut = $result2->nomor_urut;
-            $nomor_sisip = $result2->nomor_sisip + 1;
+            $data = [
+                'jenis_penomoran' => $this->request->getPost('jenis_penomoran'),
+                'tanggal' => $this->request->getPost('tanggal'),
+                'kode_arsip' => $this->request->getPost('kode_arsip'),
+                'ket' => $this->request->getPost('ket'),
+                'uraian' => $this->request->getPost('uraian'),
+                'catatan' => $this->request->getPost('catatan'),
+                // 'url' => $this->request->getPost('url'),
+                'nomor' => $nomor,
+                'nomor_urut' => $nomor_urut,
+                'nomor_sisip' => $nomor_sisip,
+                'created_by' => $username,
+            ];
 
-            $nomor_urut_text = $this->numberToText3($nomor_urut);
-            $nomor_sisip_text = $this->numberToText2($nomor_sisip);
-
-            if ($this->request->getPost('kode_arsip') == "") {
-                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $month . '/' . $year;
-            } else {
-                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '1802' . '/' . $this->request->getPost('ket') . '/' . $this->request->getPost('kode_arsip') . '/' . $month . '/' . $year;
+            if ($model->save($data)) {
+                $execute = $execute + 1;
             }
         }
 
-        $data = [
-            'jenis_penomoran' => $this->request->getPost('jenis_penomoran'),
-            'tanggal' => $this->request->getPost('tanggal'),
-            'kode_arsip' => $this->request->getPost('kode_arsip'),
-            'ket' => $this->request->getPost('ket'),
-            'uraian' => $this->request->getPost('uraian'),
-            'catatan' => $this->request->getPost('catatan'),
-            // 'url' => $this->request->getPost('url'),
-            'nomor' => $nomor,
-            'nomor_urut' => $nomor_urut,
-            'nomor_sisip' => $nomor_sisip,
-            'created_by' => $username,
-        ];
-
-        if ($model->save($data)) {
+        if ($execute == $increment) {
             return redirect()->to(base_url('kontrak/manage'))->with('success', 'Data kontrak berhasil disimpan.' . '<br>' . 'Nomor kontrak: ' . $nomor);
         }
 
@@ -282,7 +291,7 @@ class Kontrak extends BaseController
         if (session()->get('role') === 'admin') {
             // Fetch distinct 'jenis' options from the 'kode_arsip' table
             $db = \Config\Database::connect();
-            $data['jenisOptions'] = $db->table('kode_arsip')
+            $data['jenisOptions'] = $db->table('kode_arsip_kontrak')
                 ->select('jenis')
                 ->distinct()
                 ->get()
@@ -300,7 +309,7 @@ class Kontrak extends BaseController
 
         // Fetch distinct 'jenis' options from the 'kode_arsip' table
         $db = \Config\Database::connect();
-        $data['jenisOptions'] = $db->table('kode_arsip')
+        $data['jenisOptions'] = $db->table('kode_arsip_kontrak')
             ->select('jenis')
             ->distinct()
             ->get()

@@ -8,9 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
     <style>
         body {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            color: #333;
-            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            font-family: 'Poppins', sans-serif;
+            /* color: #333; */
+            /* font-family: Arial, sans-serif; */
             min-height: 100vh;
             margin: 0;
             display: flex;
@@ -18,6 +19,15 @@
             justify-content: center;
         }
 
+        /* body {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        } */
         .card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 12px;
@@ -112,12 +122,6 @@
             <form method="POST" action="<?= base_url('/login') ?>">
                 <?= csrf_field() ?>
 
-                <!-- < ?php if (session()->getFlashdata('error')): ?>
-                    <div class="alert alert-danger mt-2">
-                        Login untuk mengakses website ini
-                    </div>
-                < ?php endif; ?> -->
-
                 <?php if (session()->getFlashdata('error')): ?>
                     <div class="alert alert-danger mt-2">
                         <?= session()->getFlashdata('error'); ?>
@@ -137,9 +141,9 @@
                 <button type="submit" class="btn btn-primary w-100">Masuk</button>
             </form>
 
-            <div class="text-center mt-3">
+            <!-- <div class="text-center mt-3">
                 <p>Buat akun baru? <a href="<?= base_url('/register') ?>">Daftarkan</a></p>
-            </div>
+            </div> -->
         </div>
     </div>
 

@@ -50,16 +50,16 @@
                     <div class="row form-group align-items-center flex-column flex-md-row">
                         <label for="kode_1" class="col-md-3 form-label">Kode:</label>
                         <div class="col-md-9">
-                            <select name="kode_1" id="kode_1" class="form-control">
-                                <option value="">Select Kode 1</option>
+                            <select name="kode_1" id="kode_1" class="form-control select2">
+                                <option value="">Pilih Kode</option>
                             </select>
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">
                         <label for="kode_klasifikasi" class="col-md-3 form-label">Klasifikasi:</label>
                         <div class="col-md-9">
-                            <select name="kode_klasifikasi" id="kode_klasifikasi" class="form-control">
-                                <option value="">Select Kode Klasifikasi</option>
+                            <select name="kode_klasifikasi" id="kode_klasifikasi" class="form-control select2">
+                                <option value="">Pilih Kode Klasifikasi</option>
                             </select>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="ket" class="col-md-3 form-label">Keterangan Kontrak:</label>
+                        <label for="ket" class="col-md-3 form-label">Keterangan kontrak:</label>
                         <div class="col-md-9">
                             <input id="ket" type="text" name="ket" class="form-control" required>
                         </div>
@@ -87,6 +87,12 @@
                         <div class="col-md-9">
                             <textarea id="catatan" name="catatan" class="form-control" rows="3"
                                 placeholder="Tambahkan catatan" required></textarea>
+                        </div>
+                    </div>
+                    <div class="row form-group align-items-center flex-column flex-md-row">
+                        <label for="increment" class="col-md-3 form-label">Jumlah (increment):</label>
+                        <div class="col-md-9">
+                            <input id="increment" type="number" name="increment" class="form-control" value="1" min="1" step="1" required>
                         </div>
                     </div>
                     <!-- <div class="row form-group align-items-center flex-column flex-md-row">
@@ -107,56 +113,74 @@
     </div>
 </div>
 
-<script>
-    // // Function to validate URL
-    // function validateCheckboxes() {
-    //     return true;
-    // }
+<!-- <script>
+    // Function to validate URL
+    function validateCheckboxes() {
+        return true;
+    }
 
-    // // Function to validate URL
-    // function isValidUrl(url) {
-    //     try {
-    //         const parsedUrl = new URL(url); // Check if it's a valid URL format
-    //         return true;
-    //     } catch (e) {
-    //         return false;
-    //     }
-    // }
+    // Function to validate URL
+    function isValidUrl(url) {
+        try {
+            const parsedUrl = new URL(url); // Check if it's a valid URL format
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
 
-    // // Function to check if it's a valid Google Drive link (optional, customize as needed)
-    // function isGoogleDriveLink(url) {
-    //     return url.includes("drive.google.com");
-    // }
+    // Function to check if it's a valid Google Drive link (optional, customize as needed)
+    function isGoogleDriveLink(url) {
+        return url.includes("drive.google.com");
+    }
 
-    // // Function to check if it's a valid BPS Drive link (optional, customize as needed)
-    // function isBpsDriveLink(url) {
-    //     return url.includes("drive.bps.go.id");
-    // }
+    // Function to check if it's a valid BPS Drive link (optional, customize as needed)
+    function isBpsDriveLink(url) {
+        return url.includes("drive.bps.go.id");
+    }
 
-    // function isEmpty(url) {
-    //     return url == '';
-    // }
+    function isEmpty(url) {
+        return url == '';
+    }
 
-    // document.getElementById("createForm").addEventListener("submit", function(e) {
-    //     const urlInput = document.getElementById("url").value.trim();
-    //     const errorMessage = document.getElementById("error-message");
+    document.getElementById("createForm").addEventListener("submit", function(e) {
+        const urlInput = document.getElementById("url").value.trim();
+        const errorMessage = document.getElementById("error-message");
 
-    //     // Check if at least one of the conditions is true (submit the form if one is true)
-    //     if (isValidUrl(urlInput) || isGoogleDriveLink(urlInput) || isBpsDriveLink(urlInput) || isEmpty(urlInput)) {
-    //         // Proceed with form submission
-    //         errorMessage.style.display = "none";
-    //         return true;
-    //     } else {
-    //         // Prevent form submission if none of the conditions is true
-    //         e.preventDefault();
-    //         errorMessage.style.display = "block";
-    //         return false;
-    //     }
-    // });
-</script>
+        // Check if at least one of the conditions is true (submit the form if one is true)
+        if (isValidUrl(urlInput) || isGoogleDriveLink(urlInput) || isBpsDriveLink(urlInput) || isEmpty(urlInput)) {
+            // Proceed with form submission
+            errorMessage.style.display = "none";
+            return true;
+        } else {
+            // Prevent form submission if none of the conditions is true
+            e.preventDefault();
+            errorMessage.style.display = "block";
+            return false;
+        }
+    });
+</script> -->
 
 <script>
     $(document).ready(function() {
+        $('#kode_klasifikasi').select2({
+            theme: 'bootstrap-5',
+            width: '100%', // Ensures it matches other Bootstrap inputs
+            placeholder: "Pilih Kode Klasifikasi",
+            allowClear: true,
+            dropdownAutoWidth: false, // Prevents it from becoming too wide
+            scrollAfterSelect: true
+        });
+
+        $('#kode_1').select2({
+            theme: 'bootstrap-5',
+            width: '100%', // Ensures it matches other Bootstrap inputs
+            placeholder: "Pilih Kode",
+            allowClear: true,
+            dropdownAutoWidth: false, // Prevents it from becoming too wide
+            scrollAfterSelect: true
+        });
+
         // Update CSRF token dynamically after form submission
         function updateCSRFToken(xhr) {
             const newToken = xhr.getResponseHeader('X-CSRF-TOKEN');

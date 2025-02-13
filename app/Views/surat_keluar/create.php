@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="form-section">
-                <h2 class="text-center mb-4">Formulir Data Surat</h2>
+                <h2 class="text-center mb-4">Formulir Data Surat Keluar</h2>
                 <form id="createForm" action="/surat_keluar/store" method="post">
                     <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
                     <div class="row form-group align-items-center flex-column flex-md-row">
@@ -50,7 +50,7 @@
                     <div class="row form-group align-items-center flex-column flex-md-row">
                         <label for="kode_1" class="col-md-3 form-label">Kode:</label>
                         <div class="col-md-9">
-                            <select name="kode_1" id="kode_1" class="form-control">
+                            <select name="kode_1" id="kode_1" class="form-control select2">
                                 <option value="">Pilih Kode</option>
                             </select>
                         </div>
@@ -58,7 +58,7 @@
                     <div class="row form-group align-items-center flex-column flex-md-row">
                         <label for="kode_klasifikasi" class="col-md-3 form-label">Klasifikasi:</label>
                         <div class="col-md-9">
-                            <select name="kode_klasifikasi" id="kode_klasifikasi" class="form-control">
+                            <select name="kode_klasifikasi" id="kode_klasifikasi" class="form-control select2">
                                 <option value="">Pilih Kode Klasifikasi</option>
                             </select>
                         </div>
@@ -128,56 +128,74 @@
     </div>
 </div>
 
-<script>
+<!-- <script>
     // Function to validate URL
-    // function validateCheckboxes() {
-    //     return true;
-    // }
+    function validateCheckboxes() {
+        return true;
+    }
 
     // Function to validate URL
-    // function isValidUrl(url) {
-    //     try {
-    //         const parsedUrl = new URL(url); // Check if it's a valid URL format
-    //         return true;
-    //     } catch (e) {
-    //         return false;
-    //     }
-    // }
+    function isValidUrl(url) {
+        try {
+            const parsedUrl = new URL(url); // Check if it's a valid URL format
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
 
     // Function to check if it's a valid Google Drive link (optional, customize as needed)
-    // function isGoogleDriveLink(url) {
-    //     return url.includes("drive.google.com");
-    // }
+    function isGoogleDriveLink(url) {
+        return url.includes("drive.google.com");
+    }
 
     // Function to check if it's a valid BPS Drive link (optional, customize as needed)
-    // function isBpsDriveLink(url) {
-    //     return url.includes("drive.bps.go.id");
-    // }
+    function isBpsDriveLink(url) {
+        return url.includes("drive.bps.go.id");
+    }
 
-    // function isEmpty(url) {
-    //     return url == '';
-    // }
+    function isEmpty(url) {
+        return url == '';
+    }
 
-    // document.getElementById("createForm").addEventListener("submit", function(e) {
-    //     const urlInput = document.getElementById("url").value.trim();
-    //     const errorMessage = document.getElementById("error-message");
+    document.getElementById("createForm").addEventListener("submit", function(e) {
+        const urlInput = document.getElementById("url").value.trim();
+        const errorMessage = document.getElementById("error-message");
 
-    //     // Check if at least one of the conditions is true (submit the form if one is true)
-    //     if (isValidUrl(urlInput) || isGoogleDriveLink(urlInput) || isBpsDriveLink(urlInput) || isEmpty(urlInput)) {
-    //         // Proceed with form submission
-    //         errorMessage.style.display = "none";
-    //         return true;
-    //     } else {
-    //         // Prevent form submission if none of the conditions is true
-    //         e.preventDefault();
-    //         errorMessage.style.display = "block";
-    //         return false;
-    //     }
-    // });
-</script>
+        // Check if at least one of the conditions is true (submit the form if one is true)
+        if (isValidUrl(urlInput) || isGoogleDriveLink(urlInput) || isBpsDriveLink(urlInput) || isEmpty(urlInput)) {
+            // Proceed with form submission
+            errorMessage.style.display = "none";
+            return true;
+        } else {
+            // Prevent form submission if none of the conditions is true
+            e.preventDefault();
+            errorMessage.style.display = "block";
+            return false;
+        }
+    });
+</script> -->
 
 <script>
     $(document).ready(function() {
+        $('#kode_klasifikasi').select2({
+            theme: 'bootstrap-5',
+            width: '100%', // Ensures it matches other Bootstrap inputs
+            placeholder: "Pilih Kode Klasifikasi",
+            allowClear: true,
+            dropdownAutoWidth: false, // Prevents it from becoming too wide
+            scrollAfterSelect: true
+        });
+
+        $('#kode_1').select2({
+            theme: 'bootstrap-5',
+            width: '100%', // Ensures it matches other Bootstrap inputs
+            placeholder: "Pilih Kode",
+            allowClear: true,
+            dropdownAutoWidth: false, // Prevents it from becoming too wide
+            scrollAfterSelect: true
+        });
+
         // Update CSRF token dynamically after form submission
         function updateCSRFToken(xhr) {
             const newToken = xhr.getResponseHeader('X-CSRF-TOKEN');

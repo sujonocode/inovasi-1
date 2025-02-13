@@ -40,6 +40,23 @@
     </div>
 <?php endif; ?>
 
+<div class="modal fade" id="seeModal" tabindex="-1" aria-labelledby="seeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="seeModalLabel">Notifikasi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-message"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -85,7 +102,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="row form-group align-items-center flex-column flex-md-row">
+                        <!-- <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="kode_1" class="col-md-3 form-label">Kode:</label>
                             <div class="col-md-9">
                                 <select name="kode_1" id="kode_1" class="form-control">
@@ -97,6 +114,22 @@
                             <label for="kode_klasifikasi" class="col-md-3 form-label">Klasifikasi:</label>
                             <div class="col-md-9">
                                 <select name="kode_klasifikasi" id="kode_klasifikasi" class="form-control">
+                                    <option value="">Pilih Kode Klasifikasi</option>
+                                </select>
+                            </div>
+                        </div> -->
+                        <div class="row form-group align-items-center flex-column flex-md-row">
+                            <label for="kode_1" class="col-md-3 form-label">Kode:</label>
+                            <div class="col-md-9">
+                                <select name="kode_1" id="kode_1" class="form-control select2">
+                                    <option value="">Pilih Kode</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
+                            <label for="kode_klasifikasi" class="col-md-3 form-label">Klasifikasi:</label>
+                            <div class="col-md-9">
+                                <select name="kode_klasifikasi" id="kode_klasifikasi" class="form-control select2">
                                     <option value="">Pilih Kode Klasifikasi</option>
                                 </select>
                             </div>
@@ -138,7 +171,7 @@
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="url" class="col-md-3 form-label">Link: <a target="_blank" href="<?= $surat['url'] ?>" title="Lihat"><i class="fa-solid fa-eye"></i></a></label>
+                            <label for="url" class="col-md-3 form-label">Link: <a href="#" onclick="handleLinkClick('<?= $surat['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a>></label>
                             <div class="col-md-9">
                                 <p id="error-message" style="color: red; display: none;">Link tidak valid. Pastikan link valid atau kosongkan saja!</p>
                                 <input id="url" type="text" name="url" class="form-control"
@@ -156,6 +189,23 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Function to handle the "eye" icon click event
+    function handleLinkClick(url) {
+        const modalMessage = document.getElementById('modal-message');
+        const seeModal = new bootstrap.Modal(document.getElementById('seeModal'));
+
+        if (!url || url.trim() === '') {
+            // If URL is empty, show modal with "link empty" message
+            modalMessage.innerText = 'Link masih kosong';
+            seeModal.show();
+        } else {
+            // If URL is not empty, open it in a new tab
+            window.open(url, '_blank');
+        }
+    }
+</script>
 
 <script>
     // Function to validate URL
@@ -207,6 +257,24 @@
 
 <script>
     $(document).ready(function() {
+        $('#kode_klasifikasi').select2({
+            theme: 'bootstrap-5',
+            width: '100%', // Ensures it matches other Bootstrap inputs
+            placeholder: "Pilih Kode Klasifikasi",
+            allowClear: true,
+            dropdownAutoWidth: false, // Prevents it from becoming too wide
+            scrollAfterSelect: true
+        });
+
+        $('#kode_1').select2({
+            theme: 'bootstrap-5',
+            width: '100%', // Ensures it matches other Bootstrap inputs
+            placeholder: "Pilih Kode",
+            allowClear: true,
+            dropdownAutoWidth: false, // Prevents it from becoming too wide
+            scrollAfterSelect: true
+        });
+
         // Update CSRF token dynamically after form submission
         function updateCSRFToken(xhr) {
             const newToken = xhr.getResponseHeader('X-CSRF-TOKEN');

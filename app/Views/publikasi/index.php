@@ -1,7 +1,7 @@
 <div class="container my-5">
     <div class="row mb-4">
         <div class="col text-center">
-            <h2 class="fw-bold">Reminder BRS dan Publikasi</h2>
+            <h2 class="fw-bold section-title">Reminder BRS dan Publikasi</h2>
         </div>
     </div>
     <div class="row justify-content-center">
@@ -42,12 +42,12 @@
             initialView: 'dayGridMonth',
             firstDay: 1,
             locale: 'id',
-            aspectRatio: 1.5,
+            aspectRatio: window.innerWidth < 768 ? 1 : 1.5, // Adjust aspect ratio for mobile
             contentHeight: 'auto',
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                right: window.innerWidth < 768 ? 'dayGridMonth' : 'dayGridMonth,timeGridWeek,timeGridDay'
             },
             events: <?= json_encode(array_map(function ($jadwalKonten) {
                         return [

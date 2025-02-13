@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class KodeArsipModel extends Model
+class KodeArsipKontrakModel extends Model
 {
-    protected $table = 'kode_arsip';
+    protected $table = 'kode_arsip_kontrak';
 
     protected $primaryKey = 'id';
     protected $allowedFields = ['jenis', 'kode_1', 'kode_klasifikasi', 'kode'];

@@ -5,7 +5,7 @@ namespace App\Controllers;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\SuratKeluarModel;
-use App\Models\KodeArsipModel;
+use App\Models\KodeArsipSuratKeluarModel;
 
 class SuratKeluar extends BaseController
 {
@@ -50,9 +50,9 @@ class SuratKeluar extends BaseController
             'title' => ucfirst($page),
         ];
 
-        // Fetch distinct 'jenis' options from the 'kode_arsip' table
+        // Fetch distinct 'jenis' options from the 'kode_arsip_surat_keluar' table
         $db = \Config\Database::connect();
-        $data['jenisOptions'] = $db->table('kode_arsip')
+        $data['jenisOptions'] = $db->table('kode_arsip_surat_keluar')
             ->select('jenis')
             ->distinct()
             ->get()
@@ -68,7 +68,7 @@ class SuratKeluar extends BaseController
         if ($this->request->isAJAX()) {
             $jenis = $this->request->getPost('jenis');
             $db = \Config\Database::connect();
-            $kode1Options = $db->table('kode_arsip')
+            $kode1Options = $db->table('kode_arsip_surat_keluar')
                 ->select('kode_1')
                 ->distinct()
                 ->where('jenis', $jenis)
@@ -87,7 +87,7 @@ class SuratKeluar extends BaseController
         if ($this->request->isAJAX()) {
             $kode1 = $this->request->getPost('kode_1');
             $db = \Config\Database::connect();
-            $kodeKlasifikasiOptions = $db->table('kode_arsip')
+            $kodeKlasifikasiOptions = $db->table('kode_arsip_surat_keluar')
                 ->select('kode_klasifikasi')
                 ->distinct()
                 ->where('kode_1', $kode1)
@@ -109,11 +109,11 @@ class SuratKeluar extends BaseController
         // Get the selected 'kode_klasifikasi' from the request
         $kodeKlasifikasi = $this->request->getPost('kode_klasifikasi');
 
-        // Assuming you have a model for the table, e.g., KodeArsipModel
-        $kodeArsipModel = new KodeArsipModel();
+        // Assuming you have a model for the table, e.g., KodeArsipSuratKeluarModel
+        $kodeArsipSuratKeluarModel = new KodeArsipSuratKeluarModel();
 
         // Retrieve the 'kode_arsip' based on the selected 'kode_klasifikasi'
-        $result = $kodeArsipModel->where('kode_klasifikasi', $kodeKlasifikasi)->first();
+        $result = $kodeArsipSuratKeluarModel->where('kode_klasifikasi', $kodeKlasifikasi)->first();
         $this->response->setHeader('X-CSRF-Token', csrf_hash());
         // Return the result as JSON
         if ($result) {
@@ -281,7 +281,7 @@ class SuratKeluar extends BaseController
         if (session()->get('role') === 'admin') {
             // Fetch distinct 'jenis' options from the 'kode_arsip' table
             $db = \Config\Database::connect();
-            $data['jenisOptions'] = $db->table('kode_arsip')
+            $data['jenisOptions'] = $db->table('kode_arsip_surat_keluar')
                 ->select('jenis')
                 ->distinct()
                 ->get()
@@ -302,7 +302,7 @@ class SuratKeluar extends BaseController
 
         // Fetch distinct 'jenis' options from the 'kode_arsip' table
         $db = \Config\Database::connect();
-        $data['jenisOptions'] = $db->table('kode_arsip')
+        $data['jenisOptions'] = $db->table('kode_arsip_surat_keluar')
             ->select('jenis')
             ->distinct()
             ->get()
