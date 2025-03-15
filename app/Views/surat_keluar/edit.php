@@ -171,7 +171,7 @@
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="url" class="col-md-3 form-label">Link: <a href="#" onclick="handleLinkClick('<?= $surat['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a>></label>
+                            <label for="url" class="col-md-3 form-label">Link: <a href="#" onclick="handleLinkClick('<?= $surat['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a></label>
                             <div class="col-md-9">
                                 <p id="error-message" style="color: red; display: none;">Link tidak valid. Pastikan link valid atau kosongkan saja!</p>
                                 <input id="url" type="text" name="url" class="form-control"

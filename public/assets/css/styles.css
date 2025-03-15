@@ -279,3 +279,46 @@ footer a:hover {
 .select2-container--bootstrap-5 .select2-selection {
     padding-right: 30px !important; /* Space for clear button */
 }
+
+.chart-card .card-header {
+    background-color: rgba(78, 121, 167, 1);
+    color: white;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    min-height: 60px;
+    /* Ensure uniform height */
+    display: flex;
+    /* Flexbox for centering */
+    align-items: center;
+    /* Vertically center text */
+    justify-content: center;
+    /* Horizontally center text */
+    padding: 0 10px;
+    /* Prevent text from touching edges */
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chart-card .card-body {
+    padding: 1rem;
+    /* Add padding for spacing */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    /* Ensure charts have a uniform height */
+}
+
+/* Responsive Design for Small Screens */
+@media (max-width: 768px) {
+    .chart-card .card-header {
+        font-size: 1rem;
+        /* Reduce font size for smaller screens */
+        min-height: 50px;
+        /* Adjust height */
+        padding: 5px 10px;
+        /* Reduce padding */
+    }
+}

@@ -37,7 +37,9 @@
                             <!-- <th>Kategori</th> -->
                             <th>Catatan</th>
                             <th>PIC</th>
-                            <th>Actions</th>
+                            <?php if (session()->get('role') === 'admin'): ?>
+                                <th>Actions</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,10 +76,12 @@
                                     <!-- <td>< ?= $jadwalKonten['kategori'] ?></td> -->
                                     <td><?= $jadwalKonten['catatan'] ?></td>
                                     <td><?= $jadwalKonten['created_by'] ?></td>
-                                    <td>
-                                        <a href="/quality_gates/edit/<?= $jadwalKonten['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
-                                        <a href="#" onclick="openDeleteModal(<?= $jadwalKonten['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
-                                    </td>
+                                    <?php if (session()->get('role') === 'admin'): ?>
+                                        <td>
+                                            <a href="/quality_gates/edit/<?= $jadwalKonten['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
+                                            <a href="#" onclick="openDeleteModal(<?= $jadwalKonten['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
+                                        </td>
+                                    <?php endif; ?>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
@@ -230,6 +234,18 @@
 
 <script>
     $(document).ready(function() {
+        var columnDefs = [{
+            orderable: true,
+            targets: [0, 1, 2, 3, 4, 5]
+        }];
+
+        <?php if (session()->get('role') === 'admin'): ?>
+            columnDefs.push({
+                orderable: false,
+                targets: [6]
+            });
+        <?php endif; ?>
+
         $('#example').DataTable({
             scrollY: '400px',
             scrollX: true,
@@ -239,18 +255,10 @@
             fixedHeader: true,
             pageLength: 10,
             lengthMenu: [5, 10, 15, 20],
-            columnDefs: [{
-                    orderable: true,
-                    targets: [0, 1, 2, 3, 4, 5]
-                },
-                {
-                    orderable: false,
-                    targets: [6]
-                }
-            ],
+            columnDefs: columnDefs,
             order: [
                 [1, 'desc']
-            ],
+            ]
         });
     });
 

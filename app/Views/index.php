@@ -13,27 +13,27 @@
         <h2 class="section-title text-center mb-5">Fitur Kami</h2>
         <div class="row g-4 justify-content-center">
             <!-- Feature Item -->
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-6 col-md-6">
                 <a href="/dokumen" class="text-decoration-none text-dark">
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
                         <i class="fas fa-file-contract"></i>
                         <h4 class="mt-3">Manajemen Dokumen</h4>
-                        <p>Manajemen dokumen, seperti surat, SK, dan kontrak</p>
+                        <p>Manajemen dokumen, seperti surat keluar, surat masuk, surat keputusan (SK), dan kontrak</p>
                     </div>
                 </a>
             </div>
             <!-- Feature Item -->
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-6 col-md-6">
                 <a href="/humas" class="text-decoration-none text-dark">
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
                         <i class="fas fa-calendar-days"></i>
-                        <h4 class="mt-3">Humas</h4>
-                        <p>Pengingat Tim Humas untuk membuat dan mengunggah konten</p>
+                        <h4 class="mt-3">Reminder</h4>
+                        <p>Pengingat tugas terkait humas, quality gates, BRS dan publikasi, serta lainnya</p>
                     </div>
                 </a>
             </div>
             <!-- Feature Item -->
-            <div class="col-lg-3 col-md-6">
+            <!-- <div class="col-lg-3 col-md-6">
                 <a href="/kendala" class="text-decoration-none text-dark">
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
                         <i class="fas fa-list-check"></i>
@@ -41,9 +41,9 @@
                         <p>Pengumpulan kendala saat melaksanakan tugas lapangan</p>
                     </div>
                 </a>
-            </div>
+            </div> -->
             <!-- Feature Item -->
-            <div class="col-lg-3 col-md-6">
+            <!-- <div class="col-lg-3 col-md-6">
                 <a href="/sbml" class="text-decoration-none text-dark">
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
                         <i class="fas fa-filter-circle-dollar"></i>
@@ -51,7 +51,7 @@
                         <p>Proses pengelolaan anggaran mitra lebih terstruktur</p>
                     </div>
                 </a>
-            </div>
+            </div> -->
             <!-- Feature Item -->
             <!-- <div class="col-lg-3 col-md-6">
                 <a href="/tracking" class="text-decoration-none text-dark">

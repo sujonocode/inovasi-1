@@ -31,6 +31,11 @@ class Dokumen extends BaseController
             ->groupBy('kode_arsip')
             ->findAll();
 
+        $data['totalSuratMasukByAsal'] = $modelSuratMasuk
+            ->select('asal, COUNT(*) as count')
+            ->groupBy('asal')
+            ->findAll();
+
         $data['totalSkByKodeArsip'] = $modelSK
             ->select('kode_arsip, COUNT(*) as count')
             ->groupBy('kode_arsip')
@@ -42,6 +47,11 @@ class Dokumen extends BaseController
             ->findAll();
 
         $data['totalSuratKeluarByCreatedBy'] = $modelSuratKeluar
+            ->select('created_by, COUNT(*) as count')
+            ->groupBy('created_by')
+            ->findAll();
+
+        $data['totalSuratMasukByCreatedBy'] = $modelSuratMasuk
             ->select('created_by, COUNT(*) as count')
             ->groupBy('created_by')
             ->findAll();

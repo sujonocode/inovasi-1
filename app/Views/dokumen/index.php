@@ -57,37 +57,80 @@
 
     <!-- Charts Section -->
     <div class="row g-4 mb-4">
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
-                    Distribusi Dokumen
-                </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card chart-card">
+                <div class="card-header">Distribusi Dokumen</div>
                 <div class="card-body">
                     <canvas id="pieChart1"></canvas>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
-                    Surat Keluar Berdasarkan Kode Arsip
-                </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card chart-card">
+                <div class="card-header">Surat Keluar Berdasarkan Kode Arsip</div>
                 <div class="card-body">
                     <canvas id="pieChart2"></canvas>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-header text-white text-center" style="background-color: rgba(78, 121, 167, 1);">
-                    Surat Keluar Berdasarkan PIC
-                </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card chart-card">
+                <div class="card-header">Surat Keluar Berdasarkan PIC</div>
                 <div class="card-body">
                     <canvas id="pieChart3"></canvas>
                 </div>
             </div>
         </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card chart-card">
+                <div class="card-header">Surat Masuk Berdasarkan Asal</div>
+                <div class="card-body">
+                    <canvas id="pieChart4"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card chart-card">
+                <div class="card-header">Surat Masuk Berdasarkan PIC</div>
+                <div class="card-body">
+                    <canvas id="pieChart5"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card chart-card">
+                <div class="card-header">SK Berdasarkan Kode Arsip</div>
+                <div class="card-body">
+                    <canvas id="pieChart6"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card chart-card">
+                <div class="card-header">SK Berdasarkan PIC</div>
+                <div class="card-body">
+                    <canvas id="pieChart7"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card chart-card">
+                <div class="card-header">Kontrak Berdasarkan Kode Arsip</div>
+                <div class="card-body">
+                    <canvas id="pieChart8"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card chart-card">
+                <div class="card-header">Kontrak Berdasarkan PIC</div>
+                <div class="card-body">
+                    <canvas id="pieChart9"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
 
 <!-- ChartJS -->
@@ -123,59 +166,85 @@
     const totalSum = totalSuratKeluar + totalSuratMasuk + totalSk + totalKontrak;
 
     const totalSuratKeluarByKodeArsip = <?php echo json_encode($totalSuratKeluarByKodeArsip); ?>;
+    const totalSuratMasukByAsal = <?php echo json_encode($totalSuratMasukByAsal); ?>;
     const totalSkByKodeArsip = <?php echo json_encode($totalSkByKodeArsip); ?>;
     const totalKontrakByKodeArsip = <?php echo json_encode($totalKontrakByKodeArsip); ?>;
     const totalSuratKeluarByCreatedBy = <?php echo json_encode($totalSuratKeluarByCreatedBy); ?>;
+    const totalSuratMasukByCreatedBy = <?php echo json_encode($totalSuratMasukByCreatedBy); ?>;
     const totalSkByCreatedBy = <?php echo json_encode($totalSkByCreatedBy); ?>;
     const totalKontrakByCreatedBy = <?php echo json_encode($totalKontrakByCreatedBy); ?>;
 
-    function getKodeArsipAndCount(data) {
+    function groupAndCount(data, key) {
         const countByCategory = data.reduce((acc, item) => {
-            if (acc[item.kode_arsip]) {
-                acc[item.kode_arsip] += parseInt(item.count);
-            } else {
-                acc[item.kode_arsip] = parseInt(item.count);
-            }
+            acc[item[key]] = (acc[item[key]] ?? 0) + parseInt(item.count);
             return acc;
         }, {});
 
-        const suratKeluarKodeArsip = Object.keys(countByCategory);
-        const suratKeluarKodeArsipCount = Object.values(countByCategory);
-
         return {
-            suratKeluarKodeArsip,
-            suratKeluarKodeArsipCount
+            categories: Object.keys(countByCategory),
+            counts: Object.values(countByCategory),
         };
     }
 
     const {
-        suratKeluarKodeArsip,
-        suratKeluarKodeArsipCount
-    } = getKodeArsipAndCount(totalSuratKeluarByKodeArsip);
+        categories: suratKeluarKodeArsip,
+        counts: suratKeluarKodeArsipCount
+    } =
+    groupAndCount(totalSuratKeluarByKodeArsip, 'kode_arsip');
 
-    function getCreatedByAndCount(data) {
+    const {
+        categories: suratMasukAsal,
+        counts: suratMasukAsalCount
+    } =
+    groupAndCount(totalSuratMasukByAsal, 'asal');
+
+    const {
+        categories: skKodeArsip,
+        counts: skKodeArsipCount
+    } =
+    groupAndCount(totalSkByKodeArsip, 'kode_arsip');
+
+    const {
+        categories: kontrakKodeArsip,
+        counts: kontrakKodeArsipCount
+    } =
+    groupAndCount(totalKontrakByKodeArsip, 'kode_arsip');
+
+    function groupAndCount(data, key) {
         const countByCategory = data.reduce((acc, item) => {
-            if (acc[item.created_by]) {
-                acc[item.created_by] += parseInt(item.count);
-            } else {
-                acc[item.created_by] = parseInt(item.count);
-            }
+            acc[item[key]] = (acc[item[key]] ?? 0) + parseInt(item.count);
             return acc;
         }, {});
 
-        const suratKeluarCreatedBy = Object.keys(countByCategory);
-        const suratKeluarCreatedByCount = Object.values(countByCategory);
-
         return {
-            suratKeluarCreatedBy,
-            suratKeluarCreatedByCount
+            categories: Object.keys(countByCategory),
+            counts: Object.values(countByCategory),
         };
     }
 
     const {
-        suratKeluarCreatedBy,
-        suratKeluarCreatedByCount
-    } = getCreatedByAndCount(totalSuratKeluarByCreatedBy);
+        categories: suratKeluarCreatedBy,
+        counts: suratKeluarCreatedByCount
+    } =
+    groupAndCount(totalSuratKeluarByCreatedBy, 'created_by');
+
+    const {
+        categories: suratMasukCreatedBy,
+        counts: suratMasukCreatedByCount
+    } =
+    groupAndCount(totalSuratMasukByCreatedBy, 'created_by');
+
+    const {
+        categories: skCreatedBy,
+        counts: skCreatedByCount
+    } =
+    groupAndCount(totalSkByCreatedBy, 'created_by');
+
+    const {
+        categories: kontrakCreatedBy,
+        counts: kontrakCreatedByCount
+    } =
+    groupAndCount(totalKontrakByCreatedBy, 'created_by');
 </script>
 
 <!-- Card Chart -->
@@ -256,6 +325,231 @@
                 }
             }
         }
+    });
+
+    const ctx_p4 = document.getElementById('pieChart4').getContext('2d');
+    const employeeChart_p4 = new Chart(ctx_p4, {
+        type: 'pie',
+        data: {
+            labels: suratMasukAsal,
+            datasets: [{
+                label: 'Jumlah',
+                data: suratMasukAsalCount,
+                backgroundColor: [chartColors.blue, chartColors.orange, chartColors.green, chartColors.red, chartColors.purple, chartColors.brown, chartColors.pink, chartColors.gray],
+                borderColor: chartColors.border,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
+
+    const ctx_p5 = document.getElementById('pieChart5').getContext('2d');
+    const employeeChart_p5 = new Chart(ctx_p5, {
+        type: 'pie',
+        data: {
+            labels: suratMasukCreatedBy,
+            datasets: [{
+                label: 'Jumlah',
+                data: suratMasukCreatedByCount,
+                backgroundColor: [chartColors.blue, chartColors.orange, chartColors.green, chartColors.red, chartColors.purple, chartColors.brown, chartColors.pink, chartColors.gray],
+                borderColor: chartColors.border,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
+
+    const ctx_p6 = document.getElementById('pieChart6').getContext('2d');
+    const employeeChart_p6 = new Chart(ctx_p6, {
+        type: 'pie',
+        data: {
+            labels: skKodeArsip,
+            datasets: [{
+                label: 'Jumlah',
+                data: skKodeArsipCount,
+                backgroundColor: [chartColors.blue, chartColors.orange, chartColors.green, chartColors.red, chartColors.purple, chartColors.brown, chartColors.pink, chartColors.gray],
+                borderColor: chartColors.border,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
+
+    const ctx_p7 = document.getElementById('pieChart7').getContext('2d');
+    const employeeChart_p7 = new Chart(ctx_p7, {
+        type: 'pie',
+        data: {
+            labels: skCreatedBy,
+            datasets: [{
+                label: 'Jumlah',
+                data: skCreatedByCount,
+                backgroundColor: [chartColors.blue, chartColors.orange, chartColors.green, chartColors.red, chartColors.purple, chartColors.brown, chartColors.pink, chartColors.gray],
+                borderColor: chartColors.border,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
+
+    const ctx_p8 = document.getElementById('pieChart8').getContext('2d');
+    const employeeChart_p8 = new Chart(ctx_p8, {
+        type: 'pie',
+        data: {
+            labels: kontrakKodeArsip,
+            datasets: [{
+                label: 'Jumlah',
+                data: kontrakKodeArsipCount,
+                backgroundColor: [chartColors.blue, chartColors.orange, chartColors.green, chartColors.red, chartColors.purple, chartColors.brown, chartColors.pink, chartColors.gray],
+                borderColor: chartColors.border,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
+
+    const ctx_p9 = document.getElementById('pieChart9').getContext('2d');
+    const employeeChart_p9 = new Chart(ctx_p9, {
+        type: 'pie',
+        data: {
+            labels: kontrakCreatedBy,
+            datasets: [{
+                label: 'Jumlah',
+                data: kontrakCreatedByCount,
+                backgroundColor: [chartColors.blue, chartColors.orange, chartColors.green, chartColors.red, chartColors.purple, chartColors.brown, chartColors.pink, chartColors.gray],
+                borderColor: chartColors.border,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
+
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    font: {
+                        size: 14
+                    }
+                }
+            }
+        }
+    };
+
+    new Chart(document.getElementById("pieChart1"), {
+        type: 'pie',
+        data: {
+            /* Your data here */
+        },
+        options: chartOptions
+    });
+
+    new Chart(document.getElementById("pieChart2"), {
+        type: 'pie',
+        data: {
+            /* Your data here */
+        },
+        options: chartOptions
+    });
+
+    new Chart(document.getElementById("pieChart3"), {
+        type: 'pie',
+        data: {
+            /* Your data here */
+        },
+        options: chartOptions
+    });
+
+    new Chart(document.getElementById("pieChart4"), {
+        type: 'pie',
+        data: {
+            /* Your data here */
+        },
+        options: chartOptions
+    });
+
+    new Chart(document.getElementById("pieChart5"), {
+        type: 'pie',
+        data: {
+            /* Your data here */
+        },
+        options: chartOptions
+    });
+
+    new Chart(document.getElementById("pieChart6"), {
+        type: 'pie',
+        data: {
+            /* Your data here */
+        },
+        options: chartOptions
+    });
+
+    new Chart(document.getElementById("pieChart7"), {
+        type: 'pie',
+        data: {
+            /* Your data here */
+        },
+        options: chartOptions
+    });
+
+    new Chart(document.getElementById("pieChart8"), {
+        type: 'pie',
+        data: {
+            /* Your data here */
+        },
+        options: chartOptions
+    });
+
+    new Chart(document.getElementById("pieChart9"), {
+        type: 'pie',
+        data: {
+            /* Your data here */
+        },
+        options: chartOptions
     });
 
     // const ctx_b1 = document.getElementById('barChart1').getContext('2d');

@@ -40,6 +40,23 @@
     </div>
 <?php endif; ?>
 
+<div class="modal fade" id="seeModal" tabindex="-1" aria-labelledby="seeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="seeModalLabel">Notifikasi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-message"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -100,7 +117,7 @@
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="url" class="col-md-3 form-label">Link: <a target="_blank" href="<?= $sk['url'] ?>" title="Lihat"><i class="fa-solid fa-eye"></i></a></label>
+                            <label for="url" class="col-md-3 form-label">Link: <a href="#" onclick="handleLinkClick('<?= $sk['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a></label>
                             <div class="col-md-9">
                                 <p id="error-message" style="color: red; display: none;">Link tidak valid. Pastikan link valid atau kosongkan saja!</p>
                                 <input id="url" type="text" name="url" class="form-control"
@@ -118,6 +135,23 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Function to handle the "eye" icon click event
+    function handleLinkClick(url) {
+        const modalMessage = document.getElementById('modal-message');
+        const seeModal = new bootstrap.Modal(document.getElementById('seeModal'));
+
+        if (!url || url.trim() === '') {
+            // If URL is empty, show modal with "link empty" message
+            modalMessage.innerText = 'Link masih kosong';
+            seeModal.show();
+        } else {
+            // If URL is not empty, open it in a new tab
+            window.open(url, '_blank');
+        }
+    }
+</script>
 
 <script>
     // Function to validate URL
