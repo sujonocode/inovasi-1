@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use App\Models\JadwalKontenModel;
+use App\Models\JadwalLainnyaModel;
 use App\Models\KontakModel;
 use DateTime;
 use DateTimeZone;
@@ -22,10 +22,10 @@ class Lainnya extends BaseController
 
     public function index(string $page = 'Reminder | Lainnya')
     {
-        $model = new JadwalKontenModel();
+        $model = new JadwalLainnyaModel();
 
         $data['title'] = ucfirst($page);
-        $data['jadwalKontens'] = $model->findAll();
+        $data['jadwalLainnyas'] = $model->findAll();
 
         $contactModel = new KontakModel();
         $contactList = $contactModel->findAll();
@@ -44,10 +44,10 @@ class Lainnya extends BaseController
 
     public function manage(string $page = 'Lainnya | Manage')
     {
-        $model = new JadwalKontenModel();
+        $model = new JadwalLainnyaModel();
 
         $data['title'] = ucfirst($page);
-        $data['jadwalKontens'] = $model->findAll();
+        $data['jadwalLainnyas'] = $model->findAll();
 
         $contactModel = new KontakModel();
         $contactList = $contactModel->findAll();
@@ -79,7 +79,7 @@ class Lainnya extends BaseController
 
     public function store()
     {
-        $model = new JadwalKontenModel();
+        $model = new JadwalLainnyaModel();
 
         $username = session()->get('username');
 
@@ -214,7 +214,7 @@ class Lainnya extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -250,7 +250,7 @@ class Lainnya extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -286,7 +286,7 @@ class Lainnya extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -322,7 +322,7 @@ class Lainnya extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -358,7 +358,7 @@ class Lainnya extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -394,7 +394,7 @@ class Lainnya extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -430,7 +430,7 @@ class Lainnya extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -466,7 +466,7 @@ class Lainnya extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -502,7 +502,7 @@ class Lainnya extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -538,7 +538,7 @@ class Lainnya extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -574,7 +574,7 @@ class Lainnya extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -610,7 +610,7 @@ class Lainnya extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -648,7 +648,7 @@ class Lainnya extends BaseController
         //         'countryCode' => '62',
         //     ],
         //     CURLOPT_HTTPHEADER => [
-        //         'Authorization: CczZN35pLJ6yvpDA9GFH',
+        //         'Authorization: VT2WkzUQRkBAREK385TA',
         //     ],
         // ]);
 
@@ -735,7 +735,7 @@ class Lainnya extends BaseController
                 'schedule' => $dateUnix,
                 'countryCode' => '62',
             ],
-            CURLOPT_HTTPHEADER => ['Authorization: CczZN35pLJ6yvpDA9GFH'],
+            CURLOPT_HTTPHEADER => ['Authorization: VT2WkzUQRkBAREK385TA'],
         ]);
 
         curl_exec($curl);
@@ -789,7 +789,7 @@ class Lainnya extends BaseController
                 'schedule' => $dateUnix,
                 'countryCode' => '62',
             ],
-            CURLOPT_HTTPHEADER => ['Authorization: CczZN35pLJ6yvpDA9GFH'],
+            CURLOPT_HTTPHEADER => ['Authorization: VT2WkzUQRkBAREK385TA'],
         ]);
 
         curl_exec($curl);
@@ -798,7 +798,7 @@ class Lainnya extends BaseController
 
     public function update($id)
     {
-        $model = new JadwalKontenModel();
+        $model = new JadwalLainnyaModel();
         $oldData = $model->find($id);
 
         $pengingat = $this->request->getPost('pengingat[]') ?? [];
@@ -834,7 +834,7 @@ class Lainnya extends BaseController
 
     public function edit($id, string $page = 'Lainnya | Edit')
     {
-        $model = new JadwalKontenModel();
+        $model = new JadwalLainnyaModel();
         $jadwalKonten = $model->find($id);
 
         if (!$jadwalKonten) {
@@ -879,7 +879,7 @@ class Lainnya extends BaseController
 
     public function delete($id)
     {
-        $model = new JadwalKontenModel();
+        $model = new JadwalLainnyaModel();
 
         // Fetch the schedule data by ID
         $jadwalKonten = $model->find($id);
@@ -952,12 +952,12 @@ class Lainnya extends BaseController
 
     public function getEvents()
     {
-        $model = new JadwalKontenModel();
+        $model = new JadwalLainnyaModel();
 
-        $jadwalKontens = $model->findAll();
+        $jadwalLainnyas = $model->findAll();
 
         return view('templates/header')
-            . view('lainnya/index', ['jadwalKontens' => $jadwalKontens])
+            . view('lainnya/index', ['jadwalLainnyas' => $jadwalLainnyas])
             . view('templates/footer');
     }
 

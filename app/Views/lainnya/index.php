@@ -49,19 +49,19 @@
                 center: 'title',
                 right: window.innerWidth < 768 ? 'dayGridMonth' : 'dayGridMonth,timeGridWeek,timeGridDay'
             },
-            events: <?= json_encode(array_map(function ($jadwalKonten) {
+            events: <?= json_encode(array_map(function ($jadwalLainnya) {
                         return [
-                            'id' => $jadwalKonten['id'],
-                            'title' => $jadwalKonten['nama'],
-                            'start' => $jadwalKonten['tanggal'],
+                            'id' => $jadwalLainnya['id'],
+                            'title' => $jadwalLainnya['nama'],
+                            'start' => $jadwalLainnya['tanggal'],
                             'extendedProps' => [
-                                'waktu' => $jadwalKonten['waktu'],
-                                'kontak' => $jadwalKonten['kontak'],
-                                'pengingat' => $jadwalKonten['pengingat'],
-                                'catatan' => $jadwalKonten['catatan'],
+                                'waktu' => $jadwalLainnya['waktu'],
+                                'kontak' => $jadwalLainnya['kontak'],
+                                'pengingat' => $jadwalLainnya['pengingat'],
+                                'catatan' => $jadwalLainnya['catatan'],
                             ]
                         ];
-                    }, $jadwalKontens)) ?>,
+                    }, $jadwalLainnyas)) ?>,
             buttonText: {
                 today: 'Hari Ini',
                 month: 'Bulan',

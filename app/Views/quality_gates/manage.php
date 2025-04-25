@@ -43,15 +43,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (!empty($jadwalKontens)): ?>
-                            <?php foreach ($jadwalKontens as $jadwalKonten): ?>
+                        <?php if (!empty($jadwalQualityGatess)): ?>
+                            <?php foreach ($jadwalQualityGatess as $jadwalQualityGates): ?>
                                 <tr>
-                                    <td><?= $jadwalKonten['nama'] ?></td>
-                                    <td><?= $jadwalKonten['tanggal'] . " " . $jadwalKonten['waktu'] ?></td>
-                                    <!-- <td>< ?= $jadwalKonten['kontak'] ?></td> -->
-                                    <!-- <td>< ?= str_replace(',', ' | ', $jadwalKonten['kontak']) ?></td> -->
+                                    <td><?= $jadwalQualityGates['nama'] ?></td>
+                                    <td><?= $jadwalQualityGates['tanggal'] . " " . $jadwalQualityGates['waktu'] ?></td>
+                                    <!-- <td>< ?= $jadwalQualityGates['kontak'] ?></td> -->
+                                    <!-- <td>< ?= str_replace(',', ' | ', $jadwalQualityGates['kontak']) ?></td> -->
                                     <?php
-                                    $kontakArray = explode(',', $jadwalKonten['kontak']); // Split numbers into an array
+                                    $kontakArray = explode(',', $jadwalQualityGates['kontak']); // Split numbers into an array
                                     $kontakNames = array_map(function ($number) use ($contacts) {
                                         return $contacts[$number] ?? $number; // Replace with name if found, otherwise keep the number
                                     }, $kontakArray);
@@ -63,7 +63,7 @@
                                     <td>
                                         <?php
                                         // Decode the "pengingat" JSON string into an array
-                                        $pengingat = json_decode($jadwalKonten['pengingat'], true);
+                                        $pengingat = json_decode($jadwalQualityGates['pengingat'], true);
 
                                         // If there are any values, display them
                                         if ($pengingat) {
@@ -73,13 +73,13 @@
                                         }
                                         ?>
                                     </td>
-                                    <!-- <td>< ?= $jadwalKonten['kategori'] ?></td> -->
-                                    <td><?= $jadwalKonten['catatan'] ?></td>
-                                    <td><?= $jadwalKonten['created_by'] ?></td>
+                                    <!-- <td>< ?= $jadwalQualityGates['kategori'] ?></td> -->
+                                    <td><?= $jadwalQualityGates['catatan'] ?></td>
+                                    <td><?= $jadwalQualityGates['created_by'] ?></td>
                                     <?php if (session()->get('role') === 'admin'): ?>
                                         <td>
-                                            <a href="/quality_gates/edit/<?= $jadwalKonten['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
-                                            <a href="#" onclick="openDeleteModal(<?= $jadwalKonten['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
+                                            <a href="/quality_gates/edit/<?= $jadwalQualityGates['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
+                                            <a href="#" onclick="openDeleteModal(<?= $jadwalQualityGates['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
                                         </td>
                                     <?php endif; ?>
                                 </tr>

@@ -45,26 +45,26 @@
         <div class="col-lg-8">
             <div class="form-section">
                 <h2 class="text-center mb-4">Formulir Edit Reminder Konten Quality Gates</h2>
-                <?php if (isset($jadwalKonten)): ?>
-                    <form onsubmit="return validateCheckboxes()" action="<?= base_url('quality_gates/update/' . $jadwalKonten['id']) ?>" method="POST">
+                <?php if (isset($jadwalQualityGates)): ?>
+                    <form onsubmit="return validateCheckboxes()" action="<?= base_url('quality_gates/update/' . $jadwalQualityGates['id']) ?>" method="POST">
                         <?= csrf_field() ?>
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="nama" class="col-md-3 form-label">Nama:</label>
                             <div class="col-md-9">
                                 <input id="nama" type="text" name="nama" class="form-control"
-                                    value="<?= $jadwalKonten['nama'] ?>" required>
+                                    value="<?= $jadwalQualityGates['nama'] ?>" required>
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="tanggal" class="col-md-3 form-label">Tanggal Reminder:</label>
                             <div class="col-md-9">
-                                <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $jadwalKonten['tanggal'] ?>" required>
+                                <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $jadwalQualityGates['tanggal'] ?>" required>
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="waktu" class="col-md-3 form-label">Waktu Reminder:</label>
                             <div class="col-md-9">
-                                <input id="waktu" type="time" name="waktu" class="form-control" step="1" value="<?= $jadwalKonten['waktu'] ?>" required>
+                                <input id="waktu" type="time" name="waktu" class="form-control" step="1" value="<?= $jadwalQualityGates['waktu'] ?>" required>
                             </div>
                         </div>
                         <!-- <div class="row form-group align-items-center flex-column flex-md-row">
@@ -102,7 +102,7 @@
                                 </div>
                             </div>
                         </div> -->
-                        <?php $pengingatArray = explode(',', $jadwalKonten['pengingat']); ?>
+                        <?php $pengingatArray = explode(',', $jadwalQualityGates['pengingat']); ?>
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label class="col-md-3 form-label">Pengingat:</label>
                             <div class="col-md-9">
@@ -134,11 +134,11 @@
                         <div class="row mb-3 align-items-center">
                             <label for="kontak" class="col-md-3 col-form-label fw-bold">Kontak:</label>
                             <div class="col-md-9">
-                                <!-- <pre>< ?php print_r($jadwalKonten['kontak']); ?></pre> -->
+                                <!-- <pre>< ?php print_r($jadwalQualityGates['kontak']); ?></pre> -->
                                 <select name="kontak[]" id="kontak" class="form-select" multiple required>
                                     <?php foreach ($contacts as $contact): ?>
                                         <option value="<?= $contact['nomor'] ?>"
-                                            <?php if (in_array($contact['nomor'], $jadwalKonten['kontak'])) echo 'selected'; ?>>
+                                            <?php if (in_array($contact['nomor'], $jadwalQualityGates['kontak'])) echo 'selected'; ?>>
                                             <?= htmlspecialchars($contact['nama']) ?> (<?= $contact['nomor'] ?>)
                                         </option>
                                     <?php endforeach; ?>
@@ -150,7 +150,7 @@
                             <label for="catatan" class="col-md-3 form-label">Catatan:</label>
                             <div class="col-md-9">
                                 <textarea id="catatan" name="catatan" class="form-control" rows="3"
-                                    required> <?= $jadwalKonten['catatan'] ?></textarea>
+                                    required> <?= $jadwalQualityGates['catatan'] ?></textarea>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-4">
@@ -179,7 +179,7 @@
 
 <script>
     // // Retrieve "Kategori" value from PHP
-    // const kategori = "< ?= $jadwalKonten['kategori'] ?>";
+    // const kategori = "< ?= $jadwalQualityGates['kategori'] ?>";
 
     // // Example: Set "Kategori" radio button
     // const kategoriRadio = document.querySelector(`input[name="kategori"][value="${kategori}"]`);
@@ -188,7 +188,7 @@
     // }
 
     // Retrieve the "Pengingat" string from PHP
-    let pengingatString = '<?= json_encode($jadwalKonten['pengingat']) ?>';
+    let pengingatString = '<?= json_encode($jadwalQualityGates['pengingat']) ?>';
 
     // If the string has extra quotes, remove them
     if (pengingatString.startsWith('"') && pengingatString.endsWith('"')) {
@@ -242,7 +242,7 @@
         $('#kontak').select2();
 
         // If you need to set the selected values programmatically, you can do so like this:
-        var selectedKontak = <?= json_encode($jadwalKonten['kontak']); ?>; // Get the selected contacts as a JavaScript array
+        var selectedKontak = <?= json_encode($jadwalQualityGates['kontak']); ?>; // Get the selected contacts as a JavaScript array
 
         // Set the selected values dynamically using Select2
         $('#kontak').val(selectedKontak).trigger('change');

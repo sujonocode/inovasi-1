@@ -42,15 +42,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (!empty($jadwalKontens)): ?>
-                            <?php foreach ($jadwalKontens as $jadwalKonten): ?>
+                        <?php if (!empty($jadwalPublikasis)): ?>
+                            <?php foreach ($jadwalPublikasis as $jadwalPublikasi): ?>
                                 <tr>
-                                    <td><?= $jadwalKonten['nama'] ?></td>
-                                    <td><?= $jadwalKonten['tanggal'] . " " . $jadwalKonten['waktu'] ?></td>
-                                    <!-- <td>< ?= $jadwalKonten['kontak'] ?></td> -->
-                                    <!-- <td>< ?= str_replace(',', ' | ', $jadwalKonten['kontak']) ?></td> -->
+                                    <td><?= $jadwalPublikasi['nama'] ?></td>
+                                    <td><?= $jadwalPublikasi['tanggal'] . " " . $jadwalPublikasi['waktu'] ?></td>
+                                    <!-- <td>< ?= $jadwalPublikasi['kontak'] ?></td> -->
+                                    <!-- <td>< ?= str_replace(',', ' | ', $jadwalPublikasi['kontak']) ?></td> -->
                                     <?php
-                                    $kontakArray = explode(',', $jadwalKonten['kontak']); // Split numbers into an array
+                                    $kontakArray = explode(',', $jadwalPublikasi['kontak']); // Split numbers into an array
                                     $kontakNames = array_map(function ($number) use ($contacts) {
                                         return $contacts[$number] ?? $number; // Replace with name if found, otherwise keep the number
                                     }, $kontakArray);
@@ -62,7 +62,7 @@
                                     <td>
                                         <?php
                                         // Decode the "pengingat" JSON string into an array
-                                        $pengingat = json_decode($jadwalKonten['pengingat'], true);
+                                        $pengingat = json_decode($jadwalPublikasi['pengingat'], true);
 
                                         // If there are any values, display them
                                         if ($pengingat) {
@@ -72,13 +72,13 @@
                                         }
                                         ?>
                                     </td>
-                                    <!-- <td>< ?= $jadwalKonten['kategori'] ?></td> -->
-                                    <td><?= $jadwalKonten['catatan'] ?></td>
-                                    <td><?= $jadwalKonten['created_by'] ?></td>
+                                    <!-- <td>< ?= $jadwalPublikasi['kategori'] ?></td> -->
+                                    <td><?= $jadwalPublikasi['catatan'] ?></td>
+                                    <td><?= $jadwalPublikasi['created_by'] ?></td>
                                     <?php if (session()->get('role') === 'admin'): ?>
                                         <td>
-                                            <a href="/publikasi/edit/<?= $jadwalKonten['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
-                                            <a href="#" onclick="openDeleteModal(<?= $jadwalKonten['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
+                                            <a href="/publikasi/edit/<?= $jadwalPublikasi['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
+                                            <a href="#" onclick="openDeleteModal(<?= $jadwalPublikasi['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
                                         </td>
                                     <?php endif; ?>
                                 </tr>

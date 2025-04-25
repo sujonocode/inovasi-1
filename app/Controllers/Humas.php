@@ -214,7 +214,7 @@ class Humas extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -250,7 +250,7 @@ class Humas extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -286,7 +286,7 @@ class Humas extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -322,7 +322,7 @@ class Humas extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -358,7 +358,7 @@ class Humas extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -394,7 +394,7 @@ class Humas extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -430,7 +430,7 @@ class Humas extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -466,7 +466,7 @@ class Humas extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -502,7 +502,7 @@ class Humas extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -538,7 +538,7 @@ class Humas extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -574,7 +574,7 @@ class Humas extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -610,7 +610,7 @@ class Humas extends BaseController
                     'countryCode' => '62',
                 ],
                 CURLOPT_HTTPHEADER => [
-                    'Authorization: CczZN35pLJ6yvpDA9GFH',
+                    'Authorization: VT2WkzUQRkBAREK385TA',
                 ],
             ]);
 
@@ -648,7 +648,7 @@ class Humas extends BaseController
         //         'countryCode' => '62',
         //     ],
         //     CURLOPT_HTTPHEADER => [
-        //         'Authorization: CczZN35pLJ6yvpDA9GFH',
+        //         'Authorization: VT2WkzUQRkBAREK385TA',
         //     ],
         // ]);
 
@@ -735,7 +735,7 @@ class Humas extends BaseController
                 'schedule' => $dateUnix,
                 'countryCode' => '62',
             ],
-            CURLOPT_HTTPHEADER => ['Authorization: CczZN35pLJ6yvpDA9GFH'],
+            CURLOPT_HTTPHEADER => ['Authorization: VT2WkzUQRkBAREK385TA'],
         ]);
 
         curl_exec($curl);
@@ -789,7 +789,7 @@ class Humas extends BaseController
                 'schedule' => $dateUnix,
                 'countryCode' => '62',
             ],
-            CURLOPT_HTTPHEADER => ['Authorization: CczZN35pLJ6yvpDA9GFH'],
+            CURLOPT_HTTPHEADER => ['Authorization: VT2WkzUQRkBAREK385TA'],
         ]);
 
         curl_exec($curl);
