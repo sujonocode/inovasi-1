@@ -13,4 +13,9 @@ class KontakModel extends Model
     {
         return $this->findAll();
     }
+
+    public function getContactsHumas()
+    {
+        return $this->where('humas_flag', '1')->findAll();
+    }
 }

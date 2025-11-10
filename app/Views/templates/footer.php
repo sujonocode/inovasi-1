@@ -45,88 +45,6 @@
     });
 </script>
 
-<!-- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const currentPath = window.location.pathname.replace(/\/$/, ""); // Remove trailing slash
-        const navLinks = document.querySelectorAll(".nav-link, .dropdown-item");
-
-        // Route mappings for dropdowns
-        const routeMappings = {
-            "/humas": "humasDropdown",
-            "/humas/create": "humasDropdown",
-            "/quality_gates": "humasDropdown",
-            "/quality_gates/create": "humasDropdown",
-            "/publikasi": "humasDropdown",
-            "/publikasi/create": "humasDropdown",
-            "/lainnya": "humasDropdown",
-            "/lainnya/create": "humasDropdown",
-            "/surat_keluar/create": "dokumenDropdown",
-            "/surat_keluar/edit": "dokumenDropdown",
-            "/surat_keluar/manage": "dokumenDropdown",
-            "/surat_masuk/create": "dokumenDropdown",
-            "/surat_masuk/edit": "dokumenDropdown",
-            "/surat_masuk/manage": "dokumenDropdown",
-            "/sk/create": "dokumenDropdown",
-            "/sk/edit": "dokumenDropdown",
-            "/sk/manage": "dokumenDropdown",
-            "/kontrak/create": "dokumenDropdown",
-            "/kontrak/edit": "dokumenDropdown",
-            "/kontrak/manage": "dokumenDropdown"
-        };
-
-        navLinks.forEach(link => {
-            const linkPath = new URL(link.href).pathname.replace(/\/$/, "");
-
-            // Direct match for main links
-            if (currentPath === linkPath) {
-                link.classList.add("active");
-            }
-
-            // Dropdown handling (highlight parent)
-            Object.keys(routeMappings).forEach(route => {
-                if (currentPath.startsWith(route)) {
-                    const dropdownId = routeMappings[route];
-                    const dropdownToggle = document.getElementById(dropdownId);
-                    if (dropdownToggle) {
-                        dropdownToggle.classList.add("active");
-                    }
-                }
-            });
-
-            // Ensure correct submenu is marked active
-            if (
-                (currentPath === "/surat_keluar/manage" && link.href.includes("surat_keluar/manage")) ||
-                (currentPath === "/surat_masuk/manage" && link.href.includes("surat_masuk/manage")) ||
-                (currentPath === "/sk/manage" && link.href.includes("sk/manage")) ||
-                (currentPath === "/kontrak/manage" && link.href.includes("kontrak/manage"))
-            ) {
-                link.classList.add("active");
-
-                // Activate parent dropdown (Manajemen Dokumen)
-                document.getElementById("dokumenDropdown").classList.add("active");
-            }
-        });
-
-        // Special handling for Profile & Admin Dashboard in User Dropdown
-        if (currentPath === "/profile" || currentPath === "/admin_dashboard") {
-            const userDropdown = document.getElementById("userDropdown");
-            if (userDropdown) {
-                userDropdown.classList.add("active"); // Activate username nav
-            }
-
-            // Activate correct child link
-            document.querySelectorAll(".dropdown-item").forEach(item => {
-                if (item.href.includes("profile") && currentPath === "/profile") {
-                    item.classList.add("active");
-                }
-                if (item.href.includes("admin_dashboard") && currentPath === "/admin_dashboard") {
-                    item.classList.add("active");
-                }
-            });
-        }
-    });
-</script> -->
-
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const currentPath = window.location.pathname.replace(/\/$/, ""); // Remove trailing slash
@@ -165,6 +83,42 @@
             "/lainnya": {
                 dropdown: "humasDropdown",
                 submenu: "lainnya/manage"
+            },
+            "/maintenance1": {
+                dropdown: "dokumenDropdown",
+                submenu: "humas/maintenance1"
+            },
+            "/maintenance2": {
+                dropdown: "dokumenDropdown",
+                submenu: "humas/maintenance2"
+            },
+            "/maintenance3": {
+                dropdown: "humasDropdown",
+                submenu: "humas/maintenance3"
+            },
+            "/maintenance4": {
+                dropdown: "humasDropdown",
+                submenu: "humas/maintenance4"
+            },
+            "/maintenance5": {
+                dropdown: "humasDropdown",
+                submenu: "humas/maintenance5"
+            },
+            "/maintenance6": {
+                dropdown: "humasDropdown",
+                submenu: "humas/maintenance6"
+            },
+            "/maintenance7": {
+                dropdown: "humasDropdown",
+                submenu: "humas/maintenance7"
+            },
+            "/maintenance8": {
+                dropdown: "humasDropdown",
+                submenu: "humas/maintenance8"
+            },
+            "/maintenance9": {
+                dropdown: "humasDropdown",
+                submenu: "humas/maintenance9"
             }
         };
 

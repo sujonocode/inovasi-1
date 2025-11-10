@@ -95,7 +95,7 @@
                         <a class="nav-link <?= (uri_string() == '' || uri_string() == '/') ? 'active' : '' ?>" href="<?= base_url('') ?>">Beranda</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="<?= base_url('dokumen') ?>" id="dokumenDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Manajemen Dokumen</a>
+                        <a class="nav-link dropdown-toggle" href="<?= base_url('dokumen') ?>" id="dokumenDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SIPASTI</a>
                         <ul class="dropdown-menu" aria-labelledby="dokumenDropdown">
                             <li><a class="dropdown-item" href="<?= base_url('dokumen') ?>">Dashboard</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('surat_keluar/manage') ?>">Surat Keluar</a></li>
@@ -105,7 +105,18 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reminder</a>
+                        <a class="nav-link dropdown-toggle" href="<?= base_url('dokumen_26') ?>" id="dokumenDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SIPASTI 2026</a>
+                        <ul class="dropdown-menu" aria-labelledby="dokumenDropdown">
+                            <li><a class="dropdown-item" href="<?= base_url('dokumen26') ?>">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('surat_keluar26/manage') ?>">Surat Keluar</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('surat_masuk26/manage') ?>">Surat Masuk</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('sk/manage26') ?>">SK</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('kontrak/manage26') ?>">Kontrak</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('kontrak/arsip') ?>">Arsip</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">RINGTAS</a>
                         <ul class="dropdown-menu" aria-labelledby="humasDropdown">
                             <li><a class="dropdown-item" href="<?= base_url('humas/manage') ?>">Humas</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('quality_gates/manage') ?>">Quality Gates</a></li>
@@ -113,27 +124,30 @@
                             <li><a class="dropdown-item" href="<?= base_url('lainnya/manage') ?>">Lainnya</a></li>
                         </ul>
                     </li>
-                    <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="< ?= base_url('kendala') ?>" id="kendalaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kendala Lapangan</a>
-                        <ul class="dropdown-menu" aria-labelledby="kendalaDropdown">
-                            <li><a class="dropdown-item" href="< ?= base_url('kendala') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="< ?= base_url('kendala/manage') ?>">Manage</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">PANTAU</a>
+                        <ul class="dropdown-menu" aria-labelledby="humasDropdown">
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance1') ?>">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance2') ?>">Update Progres</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance3') ?>">Master</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="< ?= base_url('sbml') ?>" id="sbmlDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SBML</a>
-                        <ul class="dropdown-menu" aria-labelledby="sbmlDropdown">
-                            <li><a class="dropdown-item" href="< ?= base_url('sbml') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="< ?= base_url('sbml/manage') ?>">Manage</a></li>
+                        <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">MANDALA</a>
+                        <ul class="dropdown-menu" aria-labelledby="humasDropdown">
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance4') ?>">Umum</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance5') ?>">TI dan Pengolahan</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance6') ?>">Teknis</a></li>
                         </ul>
-                    </li> -->
-                    <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="< ?= base_url('tracking') ?>" id="trackingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tracking</a>
-                        <ul class="dropdown-menu" aria-labelledby="trackingDropdown">
-                            <li><a class="dropdown-item" href="< ?= base_url('tracking') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="< ?= base_url('tracking/manage') ?>">Manage</a></li>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">LANTAS</a>
+                        <ul class="dropdown-menu" aria-labelledby="humasDropdown">
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance7') ?>">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance8') ?>">Update Laporan</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance9') ?>">Master</a></li>
                         </ul>
-                    </li> -->
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('profile') ?>" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-circle-user"></i> <?= session()->get('nama') ?>

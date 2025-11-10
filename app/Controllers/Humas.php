@@ -70,7 +70,7 @@ class Humas extends BaseController
 
         $kontakModel = new KontakModel();
 
-        $data['contacts'] = $kontakModel->getContacts();
+        $data['contacts'] = $kontakModel->getContactsHumas();
 
         return view('templates/header', $data)
             . view('humas/create', $data)
@@ -858,7 +858,7 @@ class Humas extends BaseController
 
         if (session()->get('role') === 'admin') {
             $kontakModel = new KontakModel();
-            $data['contacts'] = $kontakModel->getContacts();
+            $data['contacts'] = $kontakModel->getContactsHumas();
 
             return view('templates/header', $data)
                 . view('humas/edit', $data)
@@ -870,7 +870,7 @@ class Humas extends BaseController
         }
 
         $kontakModel = new KontakModel();
-        $data['contacts'] = $kontakModel->getContacts();
+        $data['contacts'] = $kontakModel->getContactsHumas();
 
         return view('templates/header', $data)
             . view('humas/edit', $data)
@@ -962,6 +962,87 @@ class Humas extends BaseController
     }
 
     public function maintenance(string $page = 'Humas | Maintenance')
+    {
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('pages/maintenance', $data)
+            . view('templates/footer');
+    }
+
+    public function maintenance1(string $page = 'Humas | Maintenance')
+    {
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('pages/maintenance', $data)
+            . view('templates/footer');
+    }
+
+    public function maintenance2(string $page = 'Humas | Maintenance')
+    {
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('pages/maintenance', $data)
+            . view('templates/footer');
+    }
+
+    public function maintenance3(string $page = 'Humas | Maintenance')
+    {
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('pages/maintenance', $data)
+            . view('templates/footer');
+    }
+
+    public function maintenance4(string $page = 'Humas | Maintenance')
+    {
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('pages/maintenance', $data)
+            . view('templates/footer');
+    }
+
+    public function maintenance5(string $page = 'Humas | Maintenance')
+    {
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('pages/maintenance', $data)
+            . view('templates/footer');
+    }
+
+    public function maintenance6(string $page = 'Humas | Maintenance')
+    {
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('pages/maintenance', $data)
+            . view('templates/footer');
+    }
+
+    public function maintenance7(string $page = 'Humas | Maintenance')
+    {
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('pages/maintenance', $data)
+            . view('templates/footer');
+    }
+
+    public function maintenance8(string $page = 'Humas | Maintenance')
+    {
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('pages/maintenance', $data)
+            . view('templates/footer');
+    }
+
+    public function maintenance9(string $page = 'Humas | Maintenance')
     {
         $data['title'] = ucfirst($page);
 

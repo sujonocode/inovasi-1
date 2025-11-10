@@ -17,8 +17,8 @@
                 <a href="/dokumen" class="text-decoration-none text-dark">
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
                         <i class="fas fa-file-contract"></i>
-                        <h4 class="mt-3">Manajemen Dokumen</h4>
-                        <p>Manajemen dokumen, seperti surat keluar, surat masuk, surat keputusan (SK), dan kontrak</p>
+                        <h4 class="mt-3">SIPASTI</h4>
+                        <p>Sistem Informasi Penomoran dan Pengarsipan Surat Terintegrasi</p>
                     </div>
                 </a>
             </div>
@@ -26,46 +26,45 @@
             <div class="col-lg-6 col-md-6">
                 <a href="/humas" class="text-decoration-none text-dark">
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
-                        <i class="fas fa-calendar-days"></i>
-                        <h4 class="mt-3">Reminder</h4>
-                        <p>Pengingat tugas terkait humas, quality gates, BRS dan publikasi, serta lainnya</p>
+                        <i class="fa-solid fa-bell"></i>
+                        <h4 class="mt-3">RINGTAS</h4>
+                        <p>Reminder Integrasi Tugas dan Agenda Satuan Kerja</p>
                     </div>
                 </a>
             </div>
             <!-- Feature Item -->
-            <!-- <div class="col-lg-3 col-md-6">
-                <a href="/kendala" class="text-decoration-none text-dark">
+            <div class="col-lg-6 col-md-6">
+                <a href="/humas" class="text-decoration-none text-dark">
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
-                        <i class="fas fa-list-check"></i>
-                        <h4 class="mt-3">Kendala Lapangan</h4>
-                        <p>Pengumpulan kendala saat melaksanakan tugas lapangan</p>
+                        <i class="fas fa-binoculars"></i>
+                        <h4 class="mt-3">PANTAU</h4>
+                        <p>Panel Analitik Aktivitas Unit Kerja</p>
                     </div>
                 </a>
-            </div> -->
+            </div>
             <!-- Feature Item -->
-            <!-- <div class="col-lg-3 col-md-6">
-                <a href="/sbml" class="text-decoration-none text-dark">
+            <div class="col-lg-6 col-md-6">
+                <a href="/humas" class="text-decoration-none text-dark">
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
-                        <i class="fas fa-filter-circle-dollar"></i>
-                        <h4 class="mt-3">SBML</h4>
-                        <p>Proses pengelolaan anggaran mitra lebih terstruktur</p>
+                        <i class="fa-solid fa-link"></i>
+                        <h4 class="mt-3">MANDALA</h4>
+                        <p>Manajemen Digital Link, Arsip, dan Akun Satuan Kerja</p>
                     </div>
                 </a>
-            </div> -->
+            </div>
             <!-- Feature Item -->
-            <!-- <div class="col-lg-3 col-md-6">
-                <a href="/tracking" class="text-decoration-none text-dark">
+            <div class="col-lg-6 col-md-6">
+                <a href="/humas" class="text-decoration-none text-dark">
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
-                        <i class="fas fa-map-location-dot"></i>
-                        <h4 class="mt-3">Tracking</h4>
-                        <p>Pantau progres tugas secara real-time.</p>
+                        <i class="fa-solid fa-handshake"></i>
+                        <h4 class="mt-3">LANTAS</h4>
+                        <p>Laporan Kendala Tugas Lapangan dan Solusi</p>
                     </div>
                 </a>
-            </div> -->
+            </div>
         </div>
     </div>
 </section>
-
 
 <!-- About Section -->
 <section id="about" class="py-5 bg-light">
@@ -201,19 +200,4 @@
             document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.remove('show'));
         });
     });
-
-    // // Active nav
-    // document.addEventListener("DOMContentLoaded", function() {
-    //     const navLinks = document.querySelectorAll(".nav-link");
-
-    //     // Get the current URL
-    //     const currentURL = window.location.href;
-
-    //     navLinks.forEach(link => {
-    //         // Check if the href of the link matches the current URL
-    //         if (link.href === currentURL) {
-    //             link.classList.add("active");
-    //         }
-    //     });
-    // });
 </script>

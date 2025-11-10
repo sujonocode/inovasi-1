@@ -11,14 +11,15 @@ use App\Controllers\SuratKeluar;
 use App\Controllers\SuratMasuk;
 use App\Controllers\SK;
 use App\Controllers\Kontrak;
+use App\Controllers\Dokumen26;
+use App\Controllers\SuratKeluar26;
+use App\Controllers\SuratMasuk26;
+use App\Controllers\SK26;
+use App\Controllers\Kontrak26;
 use App\Controllers\Humas;
 use App\Controllers\QualityGates;
 use App\Controllers\Publikasi;
 use App\Controllers\Lainnya;
-use App\Controllers\Kendala;
-use App\Controllers\Sbml;
-// use App\Controllers\GenerateSurat;
-// use App\Controllers\Tracking;
 
 $routes->group('', ['filter' => 'role:admin,user'], function ($routes) {
     $routes->get('/dashboard', 'DashboardController::index');
@@ -38,7 +39,9 @@ $routes->group('', ['filter' => 'role:admin'], function ($routes) {
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Home::index');
     $routes->get('/dokumen', [Dokumen::class, 'index']);
+    $routes->get('/dokumen26', [Dokumen26::class, 'index']);
 
+    // document 2025
     $routes->get('/dokumen/surat_keluar', [SuratKeluar::class, 'index']);
     $routes->group('/surat_keluar', function ($routes) {
         $routes->get('manage', 'SuratKeluar::manage');
@@ -92,6 +95,60 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->get('export_xlsx', 'Kontrak::exportExcel');
     });
 
+    // document 2026
+    $routes->get('/dokumen26/surat_keluar', [SuratKeluar26::class, 'index']);
+    $routes->group('/surat_keluar26', function ($routes) {
+        $routes->get('manage', 'SuratKeluar26::manage');
+        $routes->get('create', 'SuratKeluar26::create');
+        $routes->post('store', 'SuratKeluar26::store');
+        $routes->get('edit/(:num)', 'SuratKeluar26::edit/$1');
+        $routes->post('update/(:num)', 'SuratKeluar26::update/$1');
+        $routes->get('delete/(:num)', 'SuratKeluar26::delete/$1');
+        $routes->post('create/getKode1', 'SuratKeluar26::getKode1');
+        $routes->post('create/getKodeKlasifikasi', 'SuratKeluar26::getKodeKlasifikasi');
+        $routes->post('create/getKodeArsip', 'SuratKeluar26::getKodeArsip');
+        $routes->get('export_xlsx', 'SuratKeluar26::exportExcel');
+    });
+
+    $routes->get('/dokumen26/surat_masuk', [SuratMasuk26::class, 'index']);
+    $routes->group('/surat_masuk26', function ($routes) {
+        $routes->get('manage', 'SuratMasuk26::manage');
+        $routes->get('create', 'SuratMasuk26::create');
+        $routes->post('store', 'SuratMasuk26::store');
+        $routes->get('edit/(:num)', 'SuratMasuk26::edit/$1');
+        $routes->post('update/(:num)', 'SuratMasuk26::update/$1');
+        $routes->get('delete/(:num)', 'SuratMasuk26::delete/$1');
+        $routes->get('export_xlsx', 'SuratMasuk26::exportExcel');
+    });
+
+    $routes->get('/dokumen26/sk', [SK26::class, 'index']);
+    $routes->group('/sk26', function ($routes) {
+        $routes->get('manage', 'SK26::manage');
+        $routes->get('create', 'SK26::create');
+        $routes->post('store', 'SK26::store');
+        $routes->get('edit/(:num)', 'SK26::edit/$1');
+        $routes->post('update/(:num)', 'SK26::update/$1');
+        $routes->get('delete/(:num)', 'SK26::delete/$1');
+        $routes->post('create/getKode1', 'SK26::getKode1');
+        $routes->post('create/getKodeKlasifikasi', 'SK26::getKodeKlasifikasi');
+        $routes->post('create/getKodeArsip', 'SK26::getKodeArsip');
+        $routes->get('export_xlsx', 'SK26::exportExcel');
+    });
+
+    $routes->get('/dokumen26/kontrak', [Kontrak26::class, 'index']);
+    $routes->group('/kontrak26', function ($routes) {
+        $routes->get('manage', 'Kontrak26::manage');
+        $routes->get('create', 'Kontrak26::create');
+        $routes->post('store', 'Kontrak26::store');
+        $routes->get('edit/(:num)', 'Kontrak26::edit/$1');
+        $routes->post('update/(:num)', 'Kontrak26::update/$1');
+        $routes->get('delete/(:num)', 'Kontrak26::delete/$1');
+        $routes->post('create/getKode1', 'Kontrak26::getKode1');
+        $routes->post('create/getKodeKlasifikasi', 'Kontrak26::getKodeKlasifikasi');
+        $routes->post('create/getKodeArsip', 'Kontrak26::getKodeArsip');
+        $routes->get('export_xlsx', 'Kontrak26::exportExcel');
+    });
+
     $routes->group('/humas', function ($routes) {
         $routes->get('', [Humas::class, 'index']);
         $routes->get('manage', 'Humas::manage');
@@ -101,6 +158,16 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->post('update/(:num)', 'Humas::update/$1');
         $routes->get('delete/(:num)', 'Humas::delete/$1');
         $routes->get('export_xlsx', 'Humas::exportExcel');
+
+        $routes->get('maintenance1', 'Humas::maintenance1');
+        $routes->get('maintenance2', 'Humas::maintenance2');
+        $routes->get('maintenance3', 'Humas::maintenance3');
+        $routes->get('maintenance4', 'Humas::maintenance4');
+        $routes->get('maintenance5', 'Humas::maintenance5');
+        $routes->get('maintenance6', 'Humas::maintenance6');
+        $routes->get('maintenance7', 'Humas::maintenance7');
+        $routes->get('maintenance8', 'Humas::maintenance8');
+        $routes->get('maintenance9', 'Humas::maintenance9');
     });
 
     $routes->group('/quality_gates', function ($routes) {
@@ -135,38 +202,6 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->get('delete/(:num)', 'Lainnya::delete/$1');
         $routes->get('export_xlsx', 'Lainnya::exportExcel');
     });
-
-    // $routes->get('/kendala', [Kendala::class, 'maintenance']);
-    // $routes->get('/kendala/manage', 'Kendala::maintenance');
-    // $routes->get('/kendala/create', 'Kendala::maintenance');
-    // $routes->post('/kendala/store', 'Kendala::maintenance');
-    // $routes->get('/kendala/edit/(:num)', 'Kendala::maintenance');
-    // $routes->post('/kendala/update/(:num)', 'Kendala::maintenance');
-    // $routes->get('/kendala/delete/(:num)', 'Kendala::maintenance');
-
-    // $routes->get('/sbml', [Sbml::class, 'maintenance']);
-    // $routes->get('/sbml/manage', 'Sbml::maintenance');
-    // $routes->get('/sbml/create', 'Sbml::maintenance');
-    // $routes->post('/sbml/store', 'Sbml::maintenance');
-    // $routes->get('/sbml/edit/(:num)', 'Sbml::maintenance');
-    // $routes->post('/sbml/update/(:num)', 'Sbml::maintenance');
-    // $routes->get('/sbml/delete/(:num)', 'Sbml::maintenance');
-
-    // $routes->get('tracking', [Tracking::class, 'maintenance']);
-    // $routes->get('/tracking/manage', 'Tracking::maintenance');
-    // $routes->get('/tracking/create', 'Tracking::maintenance');
-    // $routes->post('/tracking/store', 'Tracking::maintenance');
-    // $routes->get('/tracking/edit/(:num)', 'Tracking::maintenance');
-    // $routes->post('/tracking/update/(:num)', 'Tracking::maintenance');
-    // $routes->get('/tracking/delete/(:num)', 'Tracking::maintenance');
-
-    // $routes->get('/generate_surat', [GenerateSurat::class, 'index']);
-    // $routes->get('/generate_surat/manage', 'GenerateSurat::maintenance');
-    // $routes->get('/generate_surat/create', 'GenerateSurat::maintenance');
-    // $routes->post('/generate_surat/store', 'GenerateSurat::maintenance');
-    // $routes->get('/generate_surat/edit/(:num)', 'GenerateSurat::maintenance');
-    // $routes->post('/generate_surat/update/(:num)', 'GenerateSurat::maintenance');
-    // $routes->get('/generate_surat/delete/(:num)', 'GenerateSurat::maintenance');
 });
 
 $routes->get('/profile', 'Profile::index', ['filter' => 'auth']);
