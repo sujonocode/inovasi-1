@@ -127,9 +127,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">PANTAU</a>
                         <ul class="dropdown-menu" aria-labelledby="humasDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance1') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance2') ?>">Update Progres</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance3') ?>">Master</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('/pantau') ?>">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('/pantau/master') ?>">Master Kegiatan</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('/upload') ?>">Upload Beban Kerja</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

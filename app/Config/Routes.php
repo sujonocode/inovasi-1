@@ -214,3 +214,16 @@ $routes->get('/logout', 'AuthController::logout');
 $routes->get('/unauthorized', function () {
     return view('errors/unauthorized');
 });
+
+// pantau
+$routes->get('/pantau', 'Pantau::index');
+$routes->get('/pantau/master', 'Pantau::master');
+$routes->post('/pantau/tambah-kegiatan', 'Pantau::tambahKegiatan');
+
+$routes->get('/upload', 'Upload::index');
+$routes->post('/upload/save', 'Upload::save');
+
+$routes->get('/beban-kerja', 'Pantau::bebanKerja'); // daftar beban kerja
+$routes->post('/beban-kerja/update-realisasi', 'Pantau::updateRealisasi');
+
+$routes->get('/pantau/detail/(:num)', 'Pantau::detail/$1');
