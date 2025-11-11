@@ -202,6 +202,21 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->get('delete/(:num)', 'Lainnya::delete/$1');
         $routes->get('export_xlsx', 'Lainnya::exportExcel');
     });
+
+    // pantau
+    $routes->get('/pantau', 'Pantau::index');
+    $routes->get('/pantau/master', 'Pantau::master');
+    $routes->post('/pantau/tambah-kegiatan', 'Pantau::tambahKegiatan');
+
+    $routes->get('/upload', 'Upload::index');
+    $routes->post('/upload/save', 'Upload::save');
+
+    $routes->get('/beban-kerja', 'Pantau::bebanKerja');
+    $routes->post('/beban-kerja/update-realisasi', 'Pantau::updateRealisasi');
+
+    $routes->get('/pantau/detail/(:num)', 'Pantau::detail/$1');
+    $routes->get('/pantau/progres', 'Pantau::bebanKerja');
+    $routes->get('/pantau/work_calendar', 'Pantau::workCalendar');
 });
 
 $routes->get('/profile', 'Profile::index', ['filter' => 'auth']);
@@ -214,16 +229,3 @@ $routes->get('/logout', 'AuthController::logout');
 $routes->get('/unauthorized', function () {
     return view('errors/unauthorized');
 });
-
-// pantau
-$routes->get('/pantau', 'Pantau::index');
-$routes->get('/pantau/master', 'Pantau::master');
-$routes->post('/pantau/tambah-kegiatan', 'Pantau::tambahKegiatan');
-
-$routes->get('/upload', 'Upload::index');
-$routes->post('/upload/save', 'Upload::save');
-
-$routes->get('/beban-kerja', 'Pantau::bebanKerja'); // daftar beban kerja
-$routes->post('/beban-kerja/update-realisasi', 'Pantau::updateRealisasi');
-
-$routes->get('/pantau/detail/(:num)', 'Pantau::detail/$1');

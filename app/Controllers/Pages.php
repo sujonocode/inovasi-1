@@ -32,8 +32,8 @@ class Pages extends BaseController
             'title' => 'Surat'
         ];
 
-        echo view('layout/header', $data);
+        echo view('templates/header', $data);
         echo view('pages/letter');
-        echo view('layout/footer');
+        echo view('templates/footer');
     }
 }

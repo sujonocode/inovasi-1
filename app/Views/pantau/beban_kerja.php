@@ -1,4 +1,4 @@
-<?= $this->include('layout/header'); ?>
+<?= $this->include('templates/header'); ?>
 <div class="container my-4">
     <h4>Daftar Beban Kerja</h4>
     <table class="table table-bordered table-sm">
@@ -12,6 +12,7 @@
                 <th>Satuan</th>
                 <th>Realisasi</th>
                 <th>%</th>
+                <th>Tanggal Ditambahkan</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -23,17 +24,18 @@
                     <td><?= esc($b['nama_pegawai']) ?></td>
                     <td><?= esc($b['nama_kegiatan']) ?></td>
                     <td><?= esc($b['peran']) ?></td>
-                    <td><?= esc($b['target']) . ' ' . $b['satuan'] ?></td>
                     <td><?= esc($b['satuan']) ?></td>
+                    <td><?= esc($b['target']) ?></td>
                     <td><?= esc($b['realisasi']) ?></td>
                     <td>
                         <div class="progress" style="height:18px;">
                             <div class="progress-bar" role="progressbar" style="width:<?= esc($b['progress_persen']) ?>%"><?= esc($b['progress_persen']) ?>%</div>
                         </div>
                     </td>
+                    <td><?= esc($b['created_at']) ?></td>
                     <td>
                         <!-- tombol edit realisasi; akses dibatasi di controller, tapi bisa dikontrol juga di view -->
-                        <?php if (session()->get('user')['role'] !== 'kepala' || true): ?>
+                        <?php if (session()->get('role') !== 'kepala' || true): ?>
                             <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalRealisasi" data-id="<?= $b['id'] ?>" data-nama="<?= esc($b['nama_pegawai']) ?>" data-realisasi="<?= esc($b['realisasi']) ?>">Update</button>
                         <?php endif; ?>
                     </td>
@@ -71,4 +73,4 @@
     });
 </script>
 
-<?= $this->include('layout/footer'); ?>
+<?= $this->include('templates/footer'); ?>

@@ -27,9 +27,9 @@ class BebanKerjaModel extends Model
             ->join('users', 'users.id = beban_kerja.id_pegawai')
             ->join('master_kegiatan', 'master_kegiatan.id = beban_kerja.id_kegiatan');
 
-        if ($user['role'] === 'ketua_tim') {
+        if ($user === 'ketua_tim') {
             $builder->where('master_kegiatan.created_by', $user['id']);
-        } elseif ($user['role'] === 'anggota') {
+        } elseif ($user === 'anggota') {
             $builder->where('beban_kerja.id_pegawai', $user['id']);
         }
         $builder->orderBy('beban_kerja.created_at', 'DESC');

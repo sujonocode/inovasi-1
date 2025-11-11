@@ -68,6 +68,7 @@ class AuthController extends Controller
                 'username' => $user['username'],
                 'nama' => $user['nama'],
                 'role' => $user['role'],
+                'role2' => $user['role2'],
                 'isLoggedIn' => true,
             ]);
 

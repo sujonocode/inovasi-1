@@ -1,4 +1,4 @@
-<?= $this->include('layout/header'); ?>
+<?= $this->include('templates/header'); ?>
 <div class="container my-4">
     <h3>Pantau - Dashboard</h3>
     <?php if (session()->getFlashdata('success')): ?>
@@ -10,7 +10,10 @@
 
     <div class="mb-3">
         <a href="<?= base_url('/pantau/master') ?>" class="btn btn-outline-primary">Master Kegiatan</a>
-        <?php if (session()->get('user')['role'] !== 'anggota'): ?>
+        <?php
+        // dd($role2);
+        ?>
+        <?php if ($role2 !== 'anggota'): ?>
             <a href="<?= base_url('/upload') ?>" class="btn btn-outline-secondary">Upload Beban Kerja</a>
         <?php endif; ?>
         <a href="<?= base_url('/beban-kerja') ?>" class="btn btn-outline-success">Daftar Beban Kerja</a>
@@ -48,4 +51,4 @@
         </div>
     </div>
 </div>
-<?= $this->include('layout/footer'); ?>
+<?= $this->include('templates/footer'); ?>

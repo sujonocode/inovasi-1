@@ -1,4 +1,4 @@
-<?= $this->include('layout/header'); ?>
+<?= $this->include('templates/header'); ?>
 <div class="container my-4">
     <h4>Detail: <?= esc($kegiatan['nama_kegiatan']) ?></h4>
     <p><?= esc($kegiatan['keterangan']) ?></p>
@@ -29,4 +29,4 @@
         </tbody>
     </table>
 </div>
-<?= $this->include('layout/footer'); ?>
+<?= $this->include('templates/footer'); ?>

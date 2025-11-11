@@ -19,14 +19,24 @@ class Upload extends BaseController
 
     public function index()
     {
-        $user = session()->get('user');
-        $data['kegiatan'] = $this->kegiatanModel->getKegiatanByRole($user);
+        $user = session('username');
+        $role2 = session('role2');
+        $name = session('nama');
+        $id = session('user_id');
+        $data['title'] = ucfirst('Pantau | Dashboard');
+        // dd($user, $name, $id);
+
+        $data['kegiatan'] = $this->kegiatanModel->getKegiatanByRoleAndId($user, $role2, $name, $id);
+        // dd($data['kegiatan']);
         return view('pantau/upload', $data);
     }
 
     public function save()
     {
-        $user = session()->get('user');
+        $user = session('username');
+        $role2 = session('role2');
+        $name = session('nama');
+        $id = session('user_id');
         $file = $this->request->getFile('file_excel');
         $id_kegiatan = $this->request->getPost('id_kegiatan');
 
@@ -35,27 +45,29 @@ class Upload extends BaseController
         // cek apakah ketua_tim mengupload untuk kegiatan miliknya
         $keg = $this->kegiatanModel->find($id_kegiatan);
         if (!$keg) return redirect()->back()->with('error', 'Kegiatan tidak ditemukan.');
-        if ($user['role'] === 'ketua_tim' && $keg['created_by'] != $user['id']) {
+        if ($role2 === 'ketua_tim' && $keg['created_by'] != $id) {
             return redirect()->back()->with('error', 'Tidak berhak upload untuk kegiatan ini.');
         }
 
         if ($file && $file->isValid()) {
             $spreadsheet = IOFactory::load($file->getTempName());
             $sheet = $spreadsheet->getActiveSheet()->toArray();
-
+            // dd($sheet);
             // asumsikan baris pertama header:
             foreach (array_slice($sheet, 1) as $row) {
-                $namaPegawai = trim($row[0]);
-                $peran = trim($row[1] ?? '');
-                $target = (float)($row[2] ?? 0);
-                $satuan = trim($row[3] ?? '');
+                $namaPegawai = trim($row[1]);
+                $peran = trim($row[2] ?? '');
+                $target = (float)($row[3] ?? 0);
+                $satuan = trim($row[4] ?? '');
+                // dd($namaPegawai);
 
                 $pegawai = $this->bebanModel->getPegawaiByNama($namaPegawai);
+                // dd($pegawai);
                 if (!$pegawai) {
                     // jika pegawai tidak ada, bisa skip atau buat log. Di sini kita skip.
                     continue;
                 }
-
+                // dd($namaPegawai);
                 // insert beban_kerja
                 $this->bebanModel->insert([
                     'id_kegiatan' => $id_kegiatan,

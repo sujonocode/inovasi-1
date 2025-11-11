@@ -27,22 +27,33 @@ class Pantau extends BaseController
 
     public function index()
     {
-        $user = session()->get('user');
-        $data['kegiatan'] = $this->kegiatanModel->getKegiatanByRole($user);
+        $user = session('role2');
+        $name = session('name');
+        $id = session('id');
+        $data['role2'] = $user;
+        $data['title'] = ucfirst('Pantau | Dashboard');
+        $data['kegiatan'] = $this->kegiatanModel->getKegiatanByRole($user, $name, $id);
         $data['beban'] = $this->bebanModel->getDataByRole($user);
         return view('pantau/index', $data);
     }
 
     public function master()
     {
-        $user = session()->get('user');
-        $data['kegiatan'] = $this->kegiatanModel->getKegiatanByRole($user);
+        $user = session('role2');
+        $data['role2'] = $user;
+        $name = session('name');
+        $id = session('id');
+        $data['title'] = ucfirst('Pantau | Dashboard');
+        $data['kegiatan'] = $this->kegiatanModel->getKegiatanByRole($user, $name, $id);
         return view('pantau/master', $data);
     }
 
     public function tambahKegiatan()
     {
-        $user = session()->get('user');
+        $user = session('role2');
+        $userId = session('user_id');
+        $data['role2'] = $user;
+        $data['title'] = ucfirst('Pantau | Dashboard');
         // validasi sederhana
         $rules = [
             'nama_kegiatan' => 'required',
@@ -56,31 +67,44 @@ class Pantau extends BaseController
             'awal_pengerjaan' => $this->request->getPost('awal_pengerjaan'),
             'deadline' => $this->request->getPost('deadline'),
             'keterangan' => $this->request->getPost('keterangan'),
-            'created_by' => $user['id']
+            'created_by' => $userId
         ]);
         return redirect()->back()->with('success', 'Kegiatan ditambahkan.');
     }
 
     public function bebanKerja()
     {
-        $user = session()->get('user');
+        $user = session('role2');
+        $data['role2'] = $user;
+        $data['title'] = ucfirst('Pantau | Dashboard');
         $data['beban'] = $this->bebanModel->getDataByRole($user);
         return view('pantau/beban_kerja', $data);
     }
 
+    public function workCalendar()
+    {
+        // $user = session('role2');
+        // $data['role2'] = $user;
+        $data['title'] = ucfirst('Pantau | Kalender Kerja');
+        // $data['beban'] = $this->bebanModel->getDataByRole($user);
+        return view('pantau/work_calendar', $data);
+    }
+
     public function detail($id)
     {
-        $user = session()->get('user');
+        $user = session('role2');
+        $data['role2'] = $user;
+        $data['title'] = ucfirst('Pantau | Dashboard');
         // ambil kegiatan & cek akses
         $keg = $this->kegiatanModel->find($id);
         if (!$keg) return redirect()->to('/pantau')->with('error', 'Kegiatan tidak ditemukan.');
 
         // akses control: jika ketua_tim, pastikan created_by == user.id
-        if ($user['role'] === 'ketua_tim' && $keg['created_by'] != $user['id']) {
+        if ($user['role2'] === 'ketua_tim' && $keg['created_by'] != $user['id']) {
             return redirect()->to('/pantau')->with('error', 'Anda tidak berhak melihat kegiatan ini.');
         }
         // anggota hanya jika dia terlibat
-        if ($user['role'] === 'anggota') {
+        if ($user['role2'] === 'anggota') {
             $db = \Config\Database::connect();
             $has = $db->table('beban_kerja')->where('id_kegiatan', $id)->where('id_pegawai', $user['id'])->get()->getRowArray();
             if (!$has) return redirect()->to('/pantau')->with('error', 'Anda tidak terlibat pada kegiatan ini.');
@@ -94,7 +118,7 @@ class Pantau extends BaseController
 
         // jika ketua_tim: hanya kegiatan yang dibuatnya — sudah dicek di atas
         // jika anggota: hanya baris dirinya
-        if ($user['role'] === 'anggota') {
+        if ($user['role2'] === 'anggota') {
             $builder->where('id_pegawai', $user['id']);
         }
         $data['kegiatan'] = $keg;
@@ -104,7 +128,9 @@ class Pantau extends BaseController
 
     public function updateRealisasi()
     {
-        $user = session()->get('user');
+        $user = session('role2');
+        $data['role2'] = $user;
+        $data['title'] = ucfirst('Pantau | Dashboard');
         $id = $this->request->getPost('id');
         $realisasi = (float)$this->request->getPost('realisasi');
 
@@ -114,10 +140,10 @@ class Pantau extends BaseController
 
         // hak akses: ketua_tim hanya bisa untuk kegiatan yang dia buat; anggota hanya bisa update realisasi untuk dirinya?
         $keg = (new \App\Models\MasterKegiatanModel())->find($row['id_kegiatan']);
-        if ($user['role'] === 'ketua_tim' && $keg['created_by'] != $user['id']) {
+        if ($user['role2'] === 'ketua_tim' && $keg['created_by'] != $user['id']) {
             return redirect()->back()->with('error', 'Tidak berhak mengubah data ini.');
         }
-        if ($user['role'] === 'anggota' && $row['id_pegawai'] != $user['id']) {
+        if ($user['role2'] === 'anggota' && $row['id_pegawai'] != $user['id']) {
             return redirect()->back()->with('error', 'Tidak berhak mengubah data ini.');
         }
 

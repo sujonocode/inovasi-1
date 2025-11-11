@@ -1,4 +1,4 @@
-<?= $this->include('layout/header'); ?>
+<?= $this->include('templates/header'); ?>
 <div class="container my-4">
     <h4>Upload Beban Kerja</h4>
     <?php if (session()->getFlashdata('error')): ?>
@@ -27,4 +27,4 @@
         <p class="mt-2 small text-muted">Template: kolom header di baris 1 - <strong>Nama Pegawai | Peran | Target | Satuan</strong></p>
     </div>
 </div>
-<?= $this->include('layout/footer'); ?>
+<?= $this->include('templates/footer'); ?>

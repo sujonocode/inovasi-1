@@ -1,4 +1,4 @@
-<?= $this->include('layout/header'); ?>
+<?= $this->include('templates/header'); ?>
 <div class="container my-4">
     <h4>Master Kegiatan</h4>
     <form action="<?= base_url('/pantau/tambah-kegiatan') ?>" method="post" class="mb-3">
@@ -33,10 +33,10 @@
                     <td><?= esc($k['tahun']) ?></td>
                     <td><?= esc($k['awal_pengerjaan']) ?></td>
                     <td><?= esc($k['deadline']) ?></td>
-                    <td><?= esc($k['created_by']) ?></td>
+                    <td><?= esc($k['created_by_name']) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
-<?= $this->include('layout/footer'); ?>
+<?= $this->include('templates/footer'); ?>
