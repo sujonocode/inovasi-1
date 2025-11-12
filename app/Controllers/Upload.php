@@ -19,24 +19,20 @@ class Upload extends BaseController
 
     public function index()
     {
-        $user = session('username');
         $role2 = session('role2');
-        $name = session('nama');
         $id = session('user_id');
-        $data['title'] = ucfirst('Pantau | Dashboard');
-        // dd($user, $name, $id);
 
-        $data['kegiatan'] = $this->kegiatanModel->getKegiatanByRoleAndId($user, $role2, $name, $id);
-        // dd($data['kegiatan']);
+        $data['title'] = ucfirst('Pantau | Unggah Beban Kerja');
+        $data['kegiatan'] = $this->kegiatanModel->getKegiatanByRole2AndId($role2, $id);
+
         return view('pantau/upload', $data);
     }
 
     public function save()
     {
-        $user = session('username');
         $role2 = session('role2');
-        $name = session('nama');
         $id = session('user_id');
+
         $file = $this->request->getFile('file_excel');
         $id_kegiatan = $this->request->getPost('id_kegiatan');
 
@@ -52,7 +48,7 @@ class Upload extends BaseController
         if ($file && $file->isValid()) {
             $spreadsheet = IOFactory::load($file->getTempName());
             $sheet = $spreadsheet->getActiveSheet()->toArray();
-            // dd($sheet);
+
             // asumsikan baris pertama header:
             foreach (array_slice($sheet, 1) as $row) {
                 $namaPegawai = trim($row[1]);

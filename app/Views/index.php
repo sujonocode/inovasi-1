@@ -1,11 +1,39 @@
 <!-- Hero Section -->
-<section class="hero">
+<!-- <section class="hero">
     <div class="container">
         <h1>BPS Kabupaten Tanggamus</h1>
         <p>Lembaga independen, terpercaya, dan berperan aktif dalam mendukung perumusan kebijakan berbasis data</p>
+        <p>ASSISTA</p>
+        <p>Aplikasi Satu Sistem Internal, SuperApp Terpadu dan Adaptif</p>
+        <p>A Single-System Internal SuperApp for Integrated and Adaptive Services</p>
+        <p>“Satu Sistem, Semua Terhubung”</p>
         <a href="#features" class="btn btn-primary btn-lg">Jelajahi Fitur</a>
     </div>
+</section> -->
+
+<section class="hero text-center d-flex align-items-center justify-content-center"
+    style="min-height:100vh; background: linear-gradient(135deg, #007bff, #6610f2); color: white;">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-3 animate__animated animate__fadeInDown">
+            BPS Kabupaten Tanggamus
+        </h1>
+        <p class="lead mb-4 animate__animated animate__fadeInUp">
+            Lembaga independen, terpercaya, dan berperan aktif dalam mendukung perumusan kebijakan berbasis data
+        </p>
+        <div class="my-4">
+            <h2 class="fw-bold text-warning mb-1 animate__animated animate__fadeInUp">ASSISTA</h2>
+            <p class="mb-1">Aplikasi Satu Sistem Internal, SuperApp Terpadu dan Adaptif</p>
+            <p class="fst-italic">A Single-System Internal SuperApp for Integrated and Adaptive Services</p>
+            <p class="fw-semibold mt-3">“Satu Sistem, Semua Terhubung”</p>
+        </div>
+        <a href="#features" class="btn btn-light btn-lg rounded-pill shadow px-5 py-3">
+            Jelajahi Fitur
+        </a>
+    </div>
 </section>
+
+<!-- Tambahkan animasi optional -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 <!-- Features Section -->
 <section id="features" class="features py-5">
