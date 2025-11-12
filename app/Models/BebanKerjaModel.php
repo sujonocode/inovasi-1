@@ -19,7 +19,7 @@ class BebanKerjaModel extends Model
     ];
 
     // ambil data beban kerja sesuai role user (dipakai di controller)
-    public function getDataByRole($user)
+    public function getDataByRoleAndId($role2, $id)
     {
         $db = \Config\Database::connect();
         $builder = $db->table('beban_kerja')
@@ -27,10 +27,10 @@ class BebanKerjaModel extends Model
             ->join('users', 'users.id = beban_kerja.id_pegawai')
             ->join('master_kegiatan', 'master_kegiatan.id = beban_kerja.id_kegiatan');
 
-        if ($user === 'ketua_tim') {
-            $builder->where('master_kegiatan.created_by', $user['id']);
-        } elseif ($user === 'anggota') {
-            $builder->where('beban_kerja.id_pegawai', $user['id']);
+        if ($role2 === 'ketua_tim') {
+            $builder->where('master_kegiatan.created_by', $id);
+        } elseif ($role2 === 'anggota') {
+            $builder->where('beban_kerja.id_pegawai', $id);
         }
         $builder->orderBy('beban_kerja.created_at', 'DESC');
         return $builder->get()->getResultArray();

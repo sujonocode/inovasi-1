@@ -17,24 +17,6 @@ class MasterKegiatanModel extends Model
         'created_at'
     ];
 
-    // public function getKegiatanByRole($user, $name, $id)
-    // {
-    //     if ($user === 'kepala') {
-    //         return $this->orderBy('created_at', 'DESC')->findAll();
-    //     } elseif ($user === 'ketua_tim') {
-    //         return $this->where('created_by', $name)->orderBy('created_at', 'DESC')->findAll();
-    //     } else {
-    //         // anggota: join ke beban_kerja untuk mendapatkan kegiatan tempat dia terlibat
-    //         $db = \Config\Database::connect();
-    //         $builder = $db->table('master_kegiatan')
-    //             ->select('master_kegiatan.*')
-    //             ->join('beban_kerja', 'beban_kerja.id_kegiatan = master_kegiatan.id')
-    //             ->where('beban_kerja.id_pegawai', $id)
-    //             ->groupBy('master_kegiatan.id')
-    //             ->orderBy('master_kegiatan.created_at', 'DESC');
-    //         return $builder->get()->getResultArray();
-    //     }
-    // }
     public function getKegiatanByRole($user, $name, $id)
     {
         $db = \Config\Database::connect();

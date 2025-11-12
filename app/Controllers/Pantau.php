@@ -29,11 +29,11 @@ class Pantau extends BaseController
     {
         $user = session('role2');
         $name = session('name');
-        $id = session('id');
+        $id = session('user_id');
         $data['role2'] = $user;
         $data['title'] = ucfirst('Pantau | Dashboard');
         $data['kegiatan'] = $this->kegiatanModel->getKegiatanByRole($user, $name, $id);
-        $data['beban'] = $this->bebanModel->getDataByRole($user);
+        $data['beban'] = $this->bebanModel->getDataByRoleAndId($user, $id);
         return view('pantau/index', $data);
     }
 
@@ -76,8 +76,9 @@ class Pantau extends BaseController
     {
         $user = session('role2');
         $data['role2'] = $user;
+        $id = session('user_id');
         $data['title'] = ucfirst('Pantau | Dashboard');
-        $data['beban'] = $this->bebanModel->getDataByRole($user);
+        $data['beban'] = $this->bebanModel->getDataByRoleAndId($user, $id);
         return view('pantau/beban_kerja', $data);
     }
 
@@ -86,7 +87,7 @@ class Pantau extends BaseController
         // $user = session('role2');
         // $data['role2'] = $user;
         $data['title'] = ucfirst('Pantau | Kalender Kerja');
-        // $data['beban'] = $this->bebanModel->getDataByRole($user);
+        // $data['beban'] = $this->getDataByRoleAndId($user, $id);
         return view('pantau/work_calendar', $data);
     }
 
