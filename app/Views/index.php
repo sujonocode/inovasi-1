@@ -1,16 +1,4 @@
 <!-- Hero Section -->
-<!-- <section class="hero">
-    <div class="container">
-        <h1>BPS Kabupaten Tanggamus</h1>
-        <p>Lembaga independen, terpercaya, dan berperan aktif dalam mendukung perumusan kebijakan berbasis data</p>
-        <p>ASSISTA</p>
-        <p>Aplikasi Satu Sistem Internal, SuperApp Terpadu dan Adaptif</p>
-        <p>A Single-System Internal SuperApp for Integrated and Adaptive Services</p>
-        <p>“Satu Sistem, Semua Terhubung”</p>
-        <a href="#features" class="btn btn-primary btn-lg">Jelajahi Fitur</a>
-    </div>
-</section> -->
-
 <section class="hero text-center d-flex align-items-center justify-content-center"
     style="min-height:100vh; background: linear-gradient(135deg, #007bff, #6610f2); color: white;">
     <div class="container">
@@ -24,7 +12,7 @@
             <h2 class="fw-bold text-warning mb-1 animate__animated animate__fadeInUp">ASSISTA</h2>
             <p class="mb-1">Aplikasi Satu Sistem Internal, SuperApp Terpadu dan Adaptif</p>
             <p class="fst-italic">A Single-System Internal SuperApp for Integrated and Adaptive Services</p>
-            <p class="fw-semibold mt-3">“Satu Sistem, Semua Terhubung”</p>
+            <p class="fw-semibold mt-3">“Satu Aplikasi, Semua Terhubung”</p>
         </div>
         <a href="#features" class="btn btn-light btn-lg rounded-pill shadow px-5 py-3">
             Jelajahi Fitur
@@ -62,7 +50,7 @@
             </div>
             <!-- Feature Item -->
             <div class="col-lg-6 col-md-6">
-                <a href="/humas" class="text-decoration-none text-dark">
+                <a href="/pantau" class="text-decoration-none text-dark">
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
                         <i class="fas fa-binoculars"></i>
                         <h4 class="mt-3">PANTAU</h4>

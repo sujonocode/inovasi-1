@@ -67,6 +67,7 @@ class Pantau extends BaseController
         $this->kegiatanModel->save([
             'nama_kegiatan' => $this->request->getPost('nama_kegiatan'),
             'tahun' => $this->request->getPost('tahun'),
+            'bulan' => $this->request->getPost('bulan'),
             'awal_pengerjaan' => $this->request->getPost('awal_pengerjaan'),
             'deadline' => $this->request->getPost('deadline'),
             'keterangan' => $this->request->getPost('keterangan'),

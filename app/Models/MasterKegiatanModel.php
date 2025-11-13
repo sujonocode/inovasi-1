@@ -10,6 +10,7 @@ class MasterKegiatanModel extends Model
     protected $allowedFields = [
         'nama_kegiatan',
         'tahun',
+        'bulan',
         'keterangan',
         'awal_pengerjaan',
         'deadline',
