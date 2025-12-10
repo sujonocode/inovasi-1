@@ -35,6 +35,7 @@ class Upload extends BaseController
 
         $file = $this->request->getFile('file_excel');
         $id_kegiatan = $this->request->getPost('id_kegiatan');
+        $satuan = $this->request->getPost('satuan');
 
         if (!$id_kegiatan) return redirect()->back()->with('error', 'Pilih kegiatan terlebih dahulu.');
 
@@ -54,7 +55,7 @@ class Upload extends BaseController
                 $namaPegawai = trim($row[1]);
                 $peran = trim($row[2] ?? '');
                 $target = (float)($row[3] ?? 0);
-                $satuan = trim($row[4] ?? '');
+                // $satuan = trim($row[4] ?? '');
                 // dd($namaPegawai);
 
                 $pegawai = $this->bebanModel->getPegawaiByNama($namaPegawai);

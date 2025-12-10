@@ -58,14 +58,32 @@ class Pantau extends BaseController
         $data['role2'] = $role2;
         $data['title'] = ucfirst('Pantau | Tambah Kegiatan');
 
+        $satuan = $this->request->getPost('satuan');
+        $satuan_lain = $this->request->getPost('satuan_lain');
+
+        // Jika yang dipilih "lainnya", maka pakai isian user
+        if ($satuan === 'lainnya' && !empty($satuan_lain)) {
+            $finalSatuan = $satuan_lain;
+        } else {
+            $finalSatuan = $satuan;
+        }
+
         $rules = [
             'nama_kegiatan' => 'required',
+            'tim' => 'required',
+            'satuan' => 'required',
+            'tahun' => 'required',
+            'bulan' => 'required',
+            'awal_pengerjaan' => 'required',
+            'deadline' => 'required'
         ];
         if (! $this->validate($rules)) {
             return redirect()->back()->withInput()->with('error', 'Nama kegiatan wajib diisi.');
         }
         $this->kegiatanModel->save([
             'nama_kegiatan' => $this->request->getPost('nama_kegiatan'),
+            'tim' => $this->request->getPost('tim'),
+            'satuan' => $finalSatuan,
             'tahun' => $this->request->getPost('tahun'),
             'bulan' => $this->request->getPost('bulan'),
             'awal_pengerjaan' => $this->request->getPost('awal_pengerjaan'),
@@ -135,6 +153,64 @@ class Pantau extends BaseController
         $data['items'] = $builder->get()->getResultArray();
 
         return view('pantau/detail', $data);
+    }
+
+    public function edit($idKegiatan)
+    {
+        $role2 = session('role2');
+        $id = session('user_id');
+
+        $data['role2'] = $role2;
+        $data['title'] = ucfirst('Pantau | Edit');
+
+        // ambil kegiatan & cek akses
+        $keg = $this->kegiatanModel->find($idKegiatan);
+        if (!$keg) return redirect()->to('/pantau')->with('error', 'Kegiatan tidak ditemukan.');
+
+        // akses control: jika ketua_tim, pastikan created_by == user.id
+        if ($role2 === 'ketua_tim' && $keg['created_by'] != $id) {
+            return redirect()->to('/pantau/master')->with('error', 'Anda tidak berhak mengedit kegiatan ini.');
+        }
+        // anggota hanya jika dia terlibat
+        if ($role2 === 'anggota') {
+            $db = \Config\Database::connect();
+            $has = $db->table('master_kegiatan')->where('id_kegiatan', $idKegiatan)->where('id_pegawai', $id)->get()->getRowArray();
+
+            if (!$has) return redirect()->to('/pantau/master')->with('error', 'Anda tidak terlibat pada kegiatan ini.');
+        }
+
+
+        $data['kegiatan'] = $this->kegiatanModel->find($id);
+        return view('pantau/edit', $data);
+    }
+
+    public function update($id)
+    {
+        $satuan = $this->request->getPost('satuan');
+
+        // Jika user mengisi "lainnya", ambil dari input teks
+        if ($satuan === 'lainnya') {
+            $satuan = $this->request->getPost('satuan_lain');
+        }
+
+        $this->kegiatanModel->update($id, [
+            'nama_kegiatan'     => $this->request->getPost('nama_kegiatan'),
+            'tim'               => $this->request->getPost('tim'),
+            'satuan'            => $satuan,
+            'tahun'             => $this->request->getPost('tahun'),
+            'bulan'             => $this->request->getPost('bulan'),
+            'awal_pengerjaan'   => $this->request->getPost('awal_pengerjaan'),
+            'deadline'          => $this->request->getPost('deadline'),
+            'keterangan'        => $this->request->getPost('keterangan'),
+        ]);
+
+        return redirect()->to('/pantau/master')->with('success', 'Kegiatan berhasil diperbarui.');
+    }
+
+    public function delete($id)
+    {
+        $this->kegiatanModel->delete($id);
+        return redirect()->to('/pantau/master')->with('success', 'Kegiatan berhasil dihapus.');
     }
 
     public function updateRealisasi()

@@ -1,9 +1,5 @@
 <?= $this->include('templates/header'); ?>
 
-<!-- DataTables & Bootstrap CSS -->
-<!-- <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-
 <div class="container my-4">
     <h3 class="mb-3">📊 Pantau - Dashboard</h3>
 
@@ -47,6 +43,24 @@
                             <?php endforeach; ?>
                         </select>
 
+                        <select id="filterTim" class="form-select form-select-sm" style="width: 140px;">
+                            <option value="">Semua Tim</option>
+                            <?php
+                            $timList = [
+                                "Distribusi",
+                                "Humas",
+                                "IPDS",
+                                "Neraca",
+                                "Produksi",
+                                "Sektoral",
+                                "Sosial",
+                                "Umum"
+                            ];
+                            foreach ($timList as $t): ?>
+                                <option value="<?= $t ?>"><?= $t ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
                         <select id="filterBulan" class="form-select form-select-sm" style="width: 140px;">
                             <option value="">Semua Bulan</option>
                             <?php
@@ -76,13 +90,13 @@
 
                 <!-- Tabel -->
                 <div class="table-responsive" style="max-height: 70vh;">
-                    <!-- <table id="tabelKegiatan" class="table table-striped table-bordered align-middle w-100"> -->
                     <table id="tabelKegiatan"
                         class="table table-striped table-hover table-bordered align-middle w-100">
                         <thead class="table-light text-center sticky-top">
                             <tr>
                                 <th style="width: 40px;">#</th>
                                 <th>Kegiatan</th>
+                                <th>Tim</th>
                                 <th style="width: 90px;">Tahun</th>
                                 <th style="width: 120px;">Bulan</th>
                                 <th style="width: 100px;">Aksi</th>
@@ -94,6 +108,7 @@
                                 <tr>
                                     <td><?= $i++ ?></td>
                                     <td><?= esc($k['nama_kegiatan']) ?></td>
+                                    <td><?= esc($k['tim']) ?></td>
                                     <td><?= esc($k['tahun']) ?></td>
                                     <td><?= esc($k['bulan']) ?></td>
                                     <td class="text-center">
@@ -198,21 +213,27 @@
             },
             dom: '<"top"i>rt<"bottom"lp><"clear">',
             order: [
-                [2, 'desc'],
-                [3, 'asc']
+                [3, 'desc'],
+                [4, 'asc']
             ]
         });
 
         // Filter berdasarkan tahun
         $('#filterTahun').on('change', function() {
             const val = $(this).val();
-            table.column(2).search(val ? '^' + val + '$' : '', true, false).draw();
+            table.column(3).search(val ? '^' + val + '$' : '', true, false).draw();
         });
 
         // Filter berdasarkan bulan
         $('#filterBulan').on('change', function() {
             const val = $(this).val();
-            table.column(3).search(val ? '^' + val + '$' : '', true, false).draw();
+            table.column(4).search(val ? '^' + val + '$' : '', true, false).draw();
+        });
+
+        // Filter berdasarkan bulan
+        $('#filterTim').on('change', function() {
+            const val = $(this).val();
+            table.column(2).search(val ? '^' + val + '$' : '', true, false).draw();
         });
 
         // Pencarian berdasarkan nama kegiatan

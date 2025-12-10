@@ -34,6 +34,50 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold text-secondary">Filter Pegawai</label>
+                    <select id="filterPegawai" class="form-select form-select-sm">
+                        <option value="">Semua Pegawai</option>
+                        <?php
+                        $pegawaiList = array_unique(array_column($beban, 'nama_pegawai'));
+                        foreach ($pegawaiList as $p): ?>
+                            <option value="<?= esc($p) ?>"><?= esc($p) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold text-secondary">Filter Kegiatan</label>
+                    <select id="filterKegiatan" class="form-select form-select-sm">
+                        <option value="">Semua Kegiatan</option>
+                        <?php
+                        $kegiatanList = array_unique(array_column($beban, 'nama_kegiatan'));
+                        foreach ($kegiatanList as $k): ?>
+                            <option value="<?= esc($k) ?>"><?= esc($k) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold text-secondary">Filter Pegawai</label>
+                    <select id="filterPegawai" class="form-select form-select-sm">
+                        <option value="">Semua Pegawai</option>
+                        <?php
+                        $pegawaiList = array_unique(array_column($beban, 'nama_pegawai'));
+                        foreach ($pegawaiList as $p): ?>
+                            <option value="<?= esc($p) ?>"><?= esc($p) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold text-secondary">Filter Kegiatan</label>
+                    <select id="filterKegiatan" class="form-select form-select-sm">
+                        <option value="">Semua Kegiatan</option>
+                        <?php
+                        $kegiatanList = array_unique(array_column($beban, 'nama_kegiatan'));
+                        foreach ($kegiatanList as $k): ?>
+                            <option value="<?= esc($k) ?>"><?= esc($k) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -88,6 +132,7 @@
                                             data-bs-target="#modalRealisasi"
                                             data-id="<?= $b['id'] ?>"
                                             data-nama="<?= esc($b['nama_pegawai']) ?>"
+                                            data-target="<?= esc($b['target']) ?>"
                                             data-realisasi="<?= esc($b['realisasi']) ?>">
                                             <i class="bi bi-pencil-square"></i> Update
                                         </button>
@@ -118,8 +163,12 @@
                     <input id="modal_nama" class="form-control" readonly>
                 </div>
                 <div class="mb-3">
+                    <label class="form-label fw-semibold">Target</label>
+                    <input id="modal_target" class="form-control" readonly>
+                </div>
+                <div class="mb-3">
                     <label class="form-label fw-semibold">Realisasi</label>
-                    <input type="number" step="0.01" name="realisasi" id="modal_realisasi" class="form-control" required>
+                    <input type="number" step="1" name="realisasi" id="modal_realisasi" class="form-control" required>
                 </div>
             </div>
             <div class="modal-footer">
@@ -178,6 +227,7 @@
         var button = event.relatedTarget;
         document.getElementById('modal_id').value = button.getAttribute('data-id');
         document.getElementById('modal_nama').value = button.getAttribute('data-nama');
+        document.getElementById('modal_target').value = button.getAttribute('data-target');
         document.getElementById('modal_realisasi').value = button.getAttribute('data-realisasi');
     });
 </script>

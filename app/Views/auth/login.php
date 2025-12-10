@@ -20,15 +20,6 @@
             justify-content: center;
         }
 
-        /* body {
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-        } */
         .card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 12px;

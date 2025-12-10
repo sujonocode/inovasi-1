@@ -9,6 +9,8 @@ class MasterKegiatanModel extends Model
     protected $table = 'master_kegiatan';
     protected $allowedFields = [
         'nama_kegiatan',
+        'tim',
+        'satuan',
         'tahun',
         'bulan',
         'keterangan',

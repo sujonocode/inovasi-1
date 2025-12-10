@@ -40,7 +40,7 @@ class Upload extends BaseController
                         'id_pegawai' => $pegawai['id'],
                         'peran' => $row[1],
                         'target' => $row[2],
-                        'satuan' => $row[3],
+                        // 'satuan' => $row[3],
                         'realisasi' => 0,
                         'progress_persen' => 0
                     ]);

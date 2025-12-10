@@ -6,7 +6,7 @@
             BPS Kabupaten Tanggamus
         </h1>
         <p class="lead mb-4 animate__animated animate__fadeInUp">
-            Lembaga independen, terpercaya, dan berperan aktif dalam mendukung perumusan kebijakan berbasis data
+            Statistik Berdampak untuk Indonesia Maju
         </p>
         <div class="my-4">
             <h2 class="fw-bold text-warning mb-1 animate__animated animate__fadeInUp">ASSISTA</h2>

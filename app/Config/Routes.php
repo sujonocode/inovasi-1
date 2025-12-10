@@ -215,6 +215,10 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/beban-kerja/update-realisasi', 'Pantau::updateRealisasi');
 
     $routes->get('/pantau/detail/(:num)', 'Pantau::detail/$1');
+    $routes->get('/pantau/edit/(:num)', 'Pantau::edit/$1');
+    $routes->post('/pantau/update/(:num)', 'Pantau::update/$1');
+    $routes->get('/pantau/delete/(:num)', 'Pantau::delete/$1');
+
     $routes->get('/pantau/progres', 'Pantau::bebanKerja');
     $routes->get('/pantau/work_calendar', 'Pantau::workCalendar');
 });
