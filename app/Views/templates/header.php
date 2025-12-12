@@ -117,15 +117,26 @@
                             <li><a class="dropdown-item" href="<?= base_url('kontrak/manage') ?>">Kontrak</a></li>
                         </ul>
                     </li>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="< ?= base_url('dokumen_26') ?>" id="dokumenDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SIPASTI 2026</a>
+                        <ul class="dropdown-menu" aria-labelledby="dokumenDropdown">
+                            <li><a class="dropdown-item" href="< ?= base_url('dokumen26') ?>">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="< ?= base_url('surat_keluar26/manage') ?>">Surat Keluar</a></li>
+                            <li><a class="dropdown-item" href="< ?= base_url('surat_masuk26/manage') ?>">Surat Masuk</a></li>
+                            <li><a class="dropdown-item" href="< ?= base_url('sk/manage26') ?>">SK</a></li>
+                            <li><a class="dropdown-item" href="< ?= base_url('kontrak/manage26') ?>">Kontrak</a></li>
+                            <li><a class="dropdown-item" href="< ?= base_url('kontrak/arsip') ?>">Arsip</a></li>
+                        </ul>
+                    </li> -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('dokumen_26') ?>" id="dokumenDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SIPASTI 2026</a>
                         <ul class="dropdown-menu" aria-labelledby="dokumenDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('dokumen26') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('surat_keluar26/manage') ?>">Surat Keluar</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('surat_masuk26/manage') ?>">Surat Masuk</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('sk/manage26') ?>">SK</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('kontrak/manage26') ?>">Kontrak</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('kontrak/arsip') ?>">Arsip</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance10') ?>">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance11') ?>">Surat Keluar</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance12') ?>">Surat Masuk</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance13') ?>">SK</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance14') ?>">Kontrak</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance15') ?>">Arsip SIPASTI 2025</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -137,16 +148,39 @@
                             <li><a class="dropdown-item" href="<?= base_url('lainnya/manage') ?>">Lainnya</a></li>
                         </ul>
                     </li>
+
+                    <?php
+                    $role2 = session()->get('role2');
+                    ?>
+
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="<?= base_url('/pantau') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">PANTAU</a>
+                        <a class="nav-link dropdown-toggle" href="<?= base_url('/pantau') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            PANTAU
+                        </a>
+
                         <ul class="dropdown-menu" aria-labelledby="humasDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('/pantau') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('/pantau/master') ?>">Master Kegiatan</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('/pantau/upload') ?>">Upload Beban Kerja</a></li>
+
+                            <?php if ($role2 === 'kepala' || $role2 === 'ketua_tim'): ?>
+                                <li><a class="dropdown-item" href="<?= base_url('/pantau') ?>">Dashboard</a></li>
+                            <?php endif; ?>
+
+                            <?php if ($role2 === 'kepala' || $role2 === 'ketua_tim'): ?>
+                                <li><a class="dropdown-item" href="<?= base_url('/pantau/master') ?>">Master Kegiatan</a></li>
+                            <?php endif; ?>
+
+                            <?php if ($role2 === 'kepala' || $role2 === 'ketua_tim'): ?>
+                                <li><a class="dropdown-item" href="<?= base_url('/pantau/upload') ?>">Upload Beban Kerja</a></li>
+                            <?php endif; ?>
+
+                            <!-- Semua role bisa melihat Progres -->
                             <li><a class="dropdown-item" href="<?= base_url('/pantau/progres') ?>">Progres</a></li>
+
+                            <!-- Semua role bisa melihat Google Calendar -->
                             <li><a class="dropdown-item" href="<?= base_url('/pantau/work_calendar') ?>">Google Calendar</a></li>
+
                         </ul>
                     </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">MANDALA</a>
                         <ul class="dropdown-menu" aria-labelledby="humasDropdown">
@@ -170,12 +204,12 @@
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" href="<?= base_url('profile') ?>"><i class="fa-solid fa-user"></i> Profil Saya</a></li>
                             <?php if (session()->get('role') == 'admin'): ?>
-                                <li><a class="dropdown-item" href="<?= base_url('admin_dashboard') ?>"><i class="fa-solid fa-users-gear"></i> Admin Dashboard</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('admin_dashboard') ?>"><i class="fa-solid fa-users-gear"></i>Admin Dashboard</a></li>
                             <?php endif; ?>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="<?= base_url('logout') ?>"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('logout') ?>"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a></li>
                         </ul>
                     </li>
                 </ul>

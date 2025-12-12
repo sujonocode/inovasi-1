@@ -168,6 +168,12 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->get('maintenance7', 'Humas::maintenance7');
         $routes->get('maintenance8', 'Humas::maintenance8');
         $routes->get('maintenance9', 'Humas::maintenance9');
+        $routes->get('maintenance10', 'Humas::maintenance10');
+        $routes->get('maintenance11', 'Humas::maintenance11');
+        $routes->get('maintenance12', 'Humas::maintenance12');
+        $routes->get('maintenance13', 'Humas::maintenance13');
+        $routes->get('maintenance14', 'Humas::maintenance14');
+        $routes->get('maintenance15', 'Humas::maintenance15');
     });
 
     $routes->group('/quality_gates', function ($routes) {

@@ -20,9 +20,9 @@
                 <i class="bi bi-upload"></i> Upload Beban Kerja
             </a>
         <?php endif; ?>
-        <a href="<?= base_url('/pantau/beban-kerja') ?>" class="btn btn-outline-success">
+        <!-- <a href="< ?= base_url('/pantau/beban-kerja') ?>" class="btn btn-outline-success">
             <i class="bi bi-list-task"></i> Daftar Beban Kerja
-        </a>
+        </a> -->
     </div>
 
     <?php if ($role2 !== 'anggota'): ?>
