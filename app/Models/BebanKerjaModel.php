@@ -22,8 +22,18 @@ class BebanKerjaModel extends Model
     public function getBebanByRole2AndId($role2, $id)
     {
         $db = \Config\Database::connect();
+        // $builder = $db->table('beban_kerja')
+        //     ->select('beban_kerja.*, users.nama as nama_pegawai, master_kegiatan.nama_kegiatan, master_kegiatan.created_by')
+        //     ->join('users', 'users.id = beban_kerja.id_pegawai')
+        //     ->join('master_kegiatan', 'master_kegiatan.id = beban_kerja.id_kegiatan');
         $builder = $db->table('beban_kerja')
-            ->select('beban_kerja.*, users.nama as nama_pegawai, master_kegiatan.nama_kegiatan, master_kegiatan.created_by')
+            ->select('
+                beban_kerja.*, 
+                users.nama AS nama_pegawai, 
+                master_kegiatan.nama_kegiatan, 
+                master_kegiatan.created_by,
+                master_kegiatan.tahun,
+                master_kegiatan.bulan')
             ->join('users', 'users.id = beban_kerja.id_pegawai')
             ->join('master_kegiatan', 'master_kegiatan.id = beban_kerja.id_kegiatan');
 

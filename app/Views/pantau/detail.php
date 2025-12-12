@@ -1,8 +1,130 @@
 <?= $this->include('templates/header'); ?>
+
+<style>
+    .table thead th {
+        background-color: #e3f2fd;
+        color: #0d47a1;
+        font-weight: 600;
+        border-bottom: 2px solid #90caf9;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f5f9ff;
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        margin-top: 1rem !important;
+        display: flex;
+        justify-content: center;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .page-item .page-link {
+        border-radius: 8px;
+        color: #0d47a1;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .page-item.active .page-link {
+        background-color: #0d47a1;
+        border-color: #0d47a1;
+        color: #fff;
+    }
+
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        margin-bottom: 0.5rem;
+    }
+
+    .auto-fill-section {
+        background: #e8f2ff;
+        border: 1px solid #bcd7ff;
+        border-radius: 12px;
+    }
+
+    .auto-fill-section select[readonly],
+    .auto-fill-section input[readonly] {
+        background-color: #f1f5ff;
+        cursor: not-allowed;
+    }
+
+    table.dataTable thead th {
+        text-align: center !important;
+    }
+</style>
+
+<style>
+    .page-title {
+        font-weight: 600;
+        color: #0d47a1;
+        margin-bottom: 1rem;
+        /* border-left: 4px solid #0d47a1; */
+        /* padding-left: 10px; */
+    }
+
+    .detail-title {
+        /* font-weight: 600; */
+        color: #0d47a1;
+        margin-bottom: 1rem;
+        border-left: 4px solid #0d47a1;
+        padding-left: 10px;
+    }
+
+    /* wrapper umum untuk chart */
+    .chart-section {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        padding: 1.5rem 2rem;
+        margin-bottom: 2rem;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .chart-section:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .chart-wrap {
+        max-width: 960px;
+        margin: 0 auto;
+    }
+
+    canvas {
+        width: 100% !important;
+        height: 60vh !important;
+    }
+
+    /* heading section */
+    .chart-title {
+        font-weight: 600;
+        color: #0d47a1;
+        text-align: center;
+        margin-bottom: 1rem;
+        letter-spacing: 0.3px;
+    }
+
+    .subtext {
+        text-align: center;
+        color: #6c757d;
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+
+    /* responsive tweak */
+    @media (max-width: 768px) {
+        canvas {
+            height: 50vh !important;
+        }
+
+        .chart-section {
+            padding: 1rem 1.25rem;
+        }
+    }
+</style>
+
 <div class="container my-4">
-    <h4 class="fw-semibold text-primary mb-2">
-        Detail: <?= esc($kegiatan['nama_kegiatan']) ?>
-    </h4>
+    <h4 class="page-title">🏆 Pantau - Progres</h4>
+    <h5 class="detail-title">
+        <?= esc($kegiatan['nama_kegiatan']) ?>
+    </h5>
     <p class="text-muted mb-4"><?= esc($kegiatan['keterangan']) ?></p>
 
     <div class="card shadow-sm border-0">
@@ -16,14 +138,19 @@
                             <th>Peran</th>
                             <th>Target</th>
                             <th>Realisasi</th>
-                            <th>%</th>
+                            <th>Progres</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $i = 1;
                         foreach ($items as $it): ?>
                             <tr>
-                                <td><?= $i++ ?></td>
+                                <?php
+                                $rand = (strlen($i) == 1)
+                                    ? rand(10, 99)       // 2 digit random
+                                    : rand(0, 9);        // 1 digit random
+                                ?>
+                                <td><?= 'emp' . $i++ . $rand ?></td>
                                 <td><?= esc($it['nama_pegawai']) ?></td>
                                 <td><?= esc($it['peran']) ?></td>
                                 <td><?= esc($it['target']) . ' ' . $it['satuan'] ?></td>
@@ -89,60 +216,6 @@
 $json_items = json_encode($items, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
 ?>
 
-<style>
-    /* wrapper umum untuk chart */
-    .chart-section {
-        background: #ffffff;
-        border-radius: 16px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-        padding: 1.5rem 2rem;
-        margin-bottom: 2rem;
-        transition: box-shadow 0.3s ease;
-    }
-
-    .chart-section:hover {
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-    }
-
-    .chart-wrap {
-        max-width: 960px;
-        margin: 0 auto;
-    }
-
-    canvas {
-        width: 100% !important;
-        height: 60vh !important;
-    }
-
-    /* heading section */
-    .chart-title {
-        font-weight: 600;
-        color: #0d47a1;
-        text-align: center;
-        margin-bottom: 1rem;
-        letter-spacing: 0.3px;
-    }
-
-    .subtext {
-        text-align: center;
-        color: #6c757d;
-        font-size: 0.95rem;
-        margin-bottom: 1rem;
-    }
-
-    /* responsive tweak */
-    @media (max-width: 768px) {
-        canvas {
-            height: 50vh !important;
-        }
-
-        .chart-section {
-            padding: 1rem 1.25rem;
-        }
-    }
-</style>
-
-
 <div class="container py-4">
 
     <!-- Target & Realisasi -->
@@ -167,64 +240,6 @@ $json_items = json_encode($items, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
 
 <script>
     const rawItems = <?php echo $json_items; ?>;
-
-    // const items = rawItems
-    //     .map(it => ({
-    //         ...it,
-    //         // konversi angka (digit-by-digit)
-    //         realisasiN: (function(s) {
-    //             const cleaned = (typeof s === 'string') ? s.replace(/[^0-9\.\-]/g, '') : (s || 0);
-    //             const v = parseFloat(cleaned);
-    //             return Number.isFinite(v) ? v : 0;
-    //         })(it.realisasi),
-    //         targetN: (function(s) {
-    //             const cleaned = (typeof s === 'string') ? s.replace(/[^0-9\.\-]/g, '') : (s || 0);
-    //             const v = parseFloat(cleaned);
-    //             return Number.isFinite(v) ? v : 0;
-    //         })(it.target),
-    //         progressN: parseFloat(it.progress_persen || 0)
-    //     }))
-    //     .sort((a, b) => {
-    //         const diff = b.progressN - a.progressN;
-    //         if (diff !== 0) return diff; // urut menurun berdasar persentase
-    //         return (a.nama_pegawai || '').localeCompare(b.nama_pegawai || '');
-    //     });
-
-    // const items = rawItems
-    //     .map(it => ({
-    //         ...it,
-    //         // konversi angka dengan pembersihan karakter non-digit
-    //         realisasiN: (function(s) {
-    //             const cleaned = (typeof s === 'string') ? s.replace(/[^0-9\.\-]/g, '') : (s || 0);
-    //             const v = parseFloat(cleaned);
-    //             return Number.isFinite(v) ? v : 0;
-    //         })(it.realisasi),
-    //         targetN: (function(s) {
-    //             const cleaned = (typeof s === 'string') ? s.replace(/[^0-9\.\-]/g, '') : (s || 0);
-    //             const v = parseFloat(cleaned);
-    //             return Number.isFinite(v) ? v : 0;
-    //         })(it.target),
-    //         progressN: parseFloat(it.progress_persen || 0)
-    //     }));
-
-    // // --- cek apakah semua realisasi masih 0 ---
-    // const allZero = items.every(it => it.realisasiN === 0);
-
-    // // --- urutkan ---
-    // items.sort((a, b) => {
-    //     if (allZero) {
-    //         // Jika semua realisasi = 0, urutkan berdasarkan target terbanyak
-    //         const diffTarget = b.targetN - a.targetN;
-    //         if (diffTarget !== 0) return diffTarget;
-    //     } else {
-    //         // Jika sudah ada realisasi, urutkan berdasarkan progress persen menurun
-    //         const diffProgress = b.progressN - a.progressN;
-    //         if (diffProgress !== 0) return diffProgress;
-    //     }
-
-    //     // Jika nilai sama, urutkan berdasarkan nama (A-Z)
-    //     return (a.nama_pegawai || '').localeCompare(b.nama_pegawai || '');
-    // });
 
     const items = rawItems
         .map(it => ({

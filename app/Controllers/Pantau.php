@@ -174,13 +174,12 @@ class Pantau extends BaseController
         // anggota hanya jika dia terlibat
         if ($role2 === 'anggota') {
             $db = \Config\Database::connect();
-            $has = $db->table('master_kegiatan')->where('id_kegiatan', $idKegiatan)->where('id_pegawai', $id)->get()->getRowArray();
+            $has = $db->table('master_kegiatan')->where('id', $idKegiatan)->where('id_pegawai', $id)->get()->getRowArray();
 
             if (!$has) return redirect()->to('/pantau/master')->with('error', 'Anda tidak terlibat pada kegiatan ini.');
         }
 
-
-        $data['kegiatan'] = $this->kegiatanModel->find($id);
+        $data['kegiatan'] = $this->kegiatanModel->find($idKegiatan);
         return view('pantau/edit', $data);
     }
 
@@ -207,9 +206,31 @@ class Pantau extends BaseController
         return redirect()->to('/pantau/master')->with('success', 'Kegiatan berhasil diperbarui.');
     }
 
-    public function delete($id)
+    public function delete($idKegiatan)
     {
-        $this->kegiatanModel->delete($id);
+        $role2 = session('role2');
+        $id = session('user_id');
+
+        $data['role2'] = $role2;
+        $data['title'] = ucfirst('Pantau | Edit');
+
+        // ambil kegiatan & cek akses
+        $keg = $this->kegiatanModel->find($idKegiatan);
+        if (!$keg) return redirect()->to('/pantau')->with('error', 'Kegiatan tidak ditemukan.');
+
+        // akses control: jika ketua_tim, pastikan created_by == user.id
+        if ($role2 === 'ketua_tim' && $keg['created_by'] != $id) {
+            return redirect()->to('/pantau/master')->with('error', 'Anda tidak berhak mengedit kegiatan ini.');
+        }
+        // anggota hanya jika dia terlibat
+        if ($role2 === 'anggota') {
+            $db = \Config\Database::connect();
+            $has = $db->table('master_kegiatan')->where('id', $idKegiatan)->where('id_pegawai', $id)->get()->getRowArray();
+
+            if (!$has) return redirect()->to('/pantau/master')->with('error', 'Anda tidak terlibat pada kegiatan ini.');
+        }
+
+        $this->kegiatanModel->delete($idKegiatan);
         return redirect()->to('/pantau/master')->with('success', 'Kegiatan berhasil dihapus.');
     }
 

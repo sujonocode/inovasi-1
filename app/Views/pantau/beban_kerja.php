@@ -1,29 +1,41 @@
 <?= $this->include('templates/header'); ?>
 
-<div class="container my-5">
+<div class="container my-4">
+    <h4 class="page-title">📌 Pantau - Daftar Beban Kerja</h4>
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="fw-bold text-primary mb-0">
-            <i class="bi bi-table me-2"></i> Daftar Beban Kerja
-        </h4>
-    </div>
 
     <!-- Filter Section -->
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
             <div class="row g-3 align-items-end">
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold text-secondary">Filter Pegawai</label>
-                    <select id="filterPegawai" class="form-select form-select-sm">
-                        <option value="">Semua Pegawai</option>
+                <!-- Filter Tahun -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Filter Tahun</label>
+                    <select id="filterTahun" class="form-select form-select-sm">
+                        <option value="">Semua Tahun</option>
                         <?php
-                        $pegawaiList = array_unique(array_column($beban, 'nama_pegawai'));
-                        foreach ($pegawaiList as $p): ?>
+                        $tahunList = array_unique(array_column($beban, 'tahun'));
+                        foreach ($tahunList as $p): ?>
                             <option value="<?= esc($p) ?>"><?= esc($p) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-4">
+
+                <!-- Filter Bulan -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Filter Bulan</label>
+                    <select id="filterBulan" class="form-select form-select-sm">
+                        <option value="">Semua Bulan</option>
+                        <?php
+                        $bulanList = array_unique(array_column($beban, 'bulan'));
+                        foreach ($bulanList as $k): ?>
+                            <option value="<?= esc($k) ?>"><?= esc($k) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <!-- Filter Kegiatan -->
+                <div class="col-md-6">
                     <label class="form-label fw-semibold text-secondary">Filter Kegiatan</label>
                     <select id="filterKegiatan" class="form-select form-select-sm">
                         <option value="">Semua Kegiatan</option>
@@ -34,7 +46,9 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-4">
+
+                <!-- Filter Pegawai -->
+                <div class="col-md-6">
                     <label class="form-label fw-semibold text-secondary">Filter Pegawai</label>
                     <select id="filterPegawai" class="form-select form-select-sm">
                         <option value="">Semua Pegawai</option>
@@ -42,39 +56,6 @@
                         $pegawaiList = array_unique(array_column($beban, 'nama_pegawai'));
                         foreach ($pegawaiList as $p): ?>
                             <option value="<?= esc($p) ?>"><?= esc($p) ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold text-secondary">Filter Kegiatan</label>
-                    <select id="filterKegiatan" class="form-select form-select-sm">
-                        <option value="">Semua Kegiatan</option>
-                        <?php
-                        $kegiatanList = array_unique(array_column($beban, 'nama_kegiatan'));
-                        foreach ($kegiatanList as $k): ?>
-                            <option value="<?= esc($k) ?>"><?= esc($k) ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold text-secondary">Filter Pegawai</label>
-                    <select id="filterPegawai" class="form-select form-select-sm">
-                        <option value="">Semua Pegawai</option>
-                        <?php
-                        $pegawaiList = array_unique(array_column($beban, 'nama_pegawai'));
-                        foreach ($pegawaiList as $p): ?>
-                            <option value="<?= esc($p) ?>"><?= esc($p) ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold text-secondary">Filter Kegiatan</label>
-                    <select id="filterKegiatan" class="form-select form-select-sm">
-                        <option value="">Semua Kegiatan</option>
-                        <?php
-                        $kegiatanList = array_unique(array_column($beban, 'nama_kegiatan'));
-                        foreach ($kegiatanList as $k): ?>
-                            <option value="<?= esc($k) ?>"><?= esc($k) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -98,17 +79,24 @@
                             <th>Satuan</th>
                             <th>Realisasi</th>
                             <th>%</th>
-                            <th>Tanggal Ditambahkan</th>
+                            <!-- <th>Tanggal Ditambahkan</th> -->
                             <?php if (session()->get('role2') !== 'anggota'): ?>
                                 <th>Aksi</th>
                             <?php endif; ?>
+                            <th>Tahun</th>
+                            <th>Bulan</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $i = 1;
                         foreach ($beban as $b): ?>
                             <tr>
-                                <td class="text-center"><?= $i++ ?></td>
+                                <?php
+                                $rand = (strlen($i) == 1)
+                                    ? rand(10, 99) // 2 digit random
+                                    : rand(0, 9); // 1 digit random
+                                ?>
+                                <td><?= 'wld' . $i++ . $rand ?></td>
                                 <td><?= esc($b['nama_pegawai']) ?></td>
                                 <td><?= esc($b['nama_kegiatan']) ?></td>
                                 <td><?= esc($b['peran']) ?></td>
@@ -123,7 +111,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center"><?= esc($b['created_at']) ?></td>
+                                <!-- <td class="text-center">< ?= esc($b['created_at']) ?></td> -->
 
                                 <?php if (session()->get('role2') !== 'anggota'): ?>
                                     <td class="text-center">
@@ -138,6 +126,8 @@
                                         </button>
                                     </td>
                                 <?php endif; ?>
+                                <td><?= esc($b['tahun']) ?></td>
+                                <td><?= esc($b['bulan']) ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -150,7 +140,7 @@
 <!-- Modal Update Realisasi -->
 <div class="modal fade" id="modalRealisasi" tabindex="-1">
     <div class="modal-dialog">
-        <form action="<?= base_url('/beban-kerja/update-realisasi') ?>" method="post" class="modal-content">
+        <form action="<?= base_url('/pantau/beban-kerja/update-realisasi') ?>" method="post" class="modal-content">
             <?= csrf_field() ?>
             <input type="hidden" name="id" id="modal_id">
             <div class="modal-header bg-primary text-white">
@@ -187,7 +177,7 @@
     $(document).ready(function() {
         var table = $('#tabelBeban').DataTable({
             order: [
-                [8, 'desc']
+                [7, 'desc']
             ],
             pageLength: 10,
             scrollX: true,
@@ -195,7 +185,7 @@
             scrollCollapse: true,
             fixedHeader: true, // 👈 aktifkan sticky header bawaan DataTables
             language: {
-                search: "🔍 Cari:",
+                search: "Cari:",
                 lengthMenu: "Tampilkan _MENU_ data per halaman",
                 info: "Menampilkan _START_–_END_ dari _TOTAL_ data",
                 infoEmpty: "Tidak ada data",
@@ -207,6 +197,18 @@
                     previous: "Sebelumnya"
                 }
             }
+        });
+
+        // Filter Tahun
+        $('#filterTahun').on('change', function() {
+            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+            table.column(9).search(val ? '^' + val + '$' : '', true, false).draw();
+        });
+
+        // Filter Bulan
+        $('#filterBulan').on('change', function() {
+            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+            table.column(10).search(val ? '^' + val + '$' : '', true, false).draw();
         });
 
         // Filter Pegawai
@@ -233,6 +235,14 @@
 </script>
 
 <style>
+    .page-title {
+        font-weight: 600;
+        color: #0d47a1;
+        margin-bottom: 1rem;
+        /* border-left: 4px solid #0d47a1; */
+        /* padding-left: 10px; */
+    }
+
     /* Scrollable container + sticky header */
     .table-responsive {
         overflow-x: auto;
@@ -265,6 +275,10 @@
     table.dataTable thead th,
     table.dataTable thead td {
         white-space: nowrap;
+    }
+
+    table.dataTable thead th {
+        text-align: center !important;
     }
 </style>
 

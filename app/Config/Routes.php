@@ -208,11 +208,11 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/pantau/master', 'Pantau::master');
     $routes->post('/pantau/tambah-kegiatan', 'Pantau::tambahKegiatan');
 
-    $routes->get('/upload', 'Upload::index');
-    $routes->post('/upload/save', 'Upload::save');
+    $routes->get('/pantau/upload', 'Upload::index');
+    $routes->post('pantau/upload/save', 'Upload::save');
 
-    $routes->get('/beban-kerja', 'Pantau::bebanKerja');
-    $routes->post('/beban-kerja/update-realisasi', 'Pantau::updateRealisasi');
+    $routes->get('/pantau/beban-kerja', 'Pantau::bebanKerja');
+    $routes->post('/pantau/beban-kerja/update-realisasi', 'Pantau::updateRealisasi');
 
     $routes->get('/pantau/detail/(:num)', 'Pantau::detail/$1');
     $routes->get('/pantau/edit/(:num)', 'Pantau::edit/$1');

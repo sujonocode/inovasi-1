@@ -1,11 +1,12 @@
 <?= $this->include('templates/header'); ?>
+
 <style>
     .page-title {
         font-weight: 600;
         color: #0d47a1;
         margin-bottom: 1rem;
-        border-left: 4px solid #0d47a1;
-        padding-left: 10px;
+        /* border-left: 4px solid #0d47a1;
+        padding-left: 10px; */
     }
 
     .form-section {
@@ -59,10 +60,91 @@
     .dataTables_wrapper .dataTables_filter {
         margin-bottom: 0.5rem;
     }
+
+    .auto-fill-section {
+        background: #e8f2ff;
+        border: 1px solid #bcd7ff;
+        border-radius: 12px;
+    }
+
+    .auto-fill-section select[readonly],
+    .auto-fill-section input[readonly] {
+        background-color: #f1f5ff;
+        cursor: not-allowed;
+    }
+
+    table.dataTable thead th {
+        text-align: center !important;
+    }
+</style>
+
+<style>
+    .form-section {
+        border-radius: 10px;
+        background-color: #f8fbff;
+    }
+
+    .form-label {
+        font-size: 0.875rem;
+        color: #0d6efd;
+    }
+
+    button[type="submit"] {
+        font-weight: 500;
+        letter-spacing: 0.3px;
+    }
+
+    .form-section {
+        border-radius: 10px;
+        background-color: #f8fbff;
+    }
+
+    .form-label {
+        font-size: 0.875rem;
+        color: #0d6efd;
+    }
+</style>
+
+<style>
+    .btn-group .btn {
+        padding: 4px 8px !important;
+        border-width: 1.6px !important;
+    }
+
+    .btn-group .btn i {
+        font-size: 14px;
+    }
+</style>
+
+<style>
+    .aksi-btn-group .btn {
+        padding: 4px 10px !important;
+        border-width: 1.6px !important;
+        border-radius: 6px !important;
+        margin: 0 2px !important;
+        /* beri jarak antar tombol */
+    }
+
+    .aksi-btn-group .btn i {
+        font-size: 14px;
+    }
+
+    /* hover lebih halus */
+    .aksi-btn-group .btn:hover {
+        opacity: .85;
+    }
+
+    #modalDelete .modal-content {
+        border-radius: 12px;
+    }
+
+    #modalDelete .modal-header {
+        border-radius: 12px 12px 0 0;
+    }
 </style>
 
 <div class="container my-4">
-    <h4 class="page-title">Master Kegiatan</h4>
+    <h4 class="page-title">🗂️ Master Kegiatan</h4>
 
     <div class="form-section card shadow-sm p-3 mb-4">
         <h5 class="mb-3 text-primary">
@@ -71,8 +153,7 @@
 
         <form action="<?= base_url('/pantau/tambah-kegiatan') ?>" method="post" class="row g-3">
             <?= csrf_field() ?>
-
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label class="form-label fw-semibold">Nama Kegiatan</label>
                 <input name="nama_kegiatan" class="form-control" placeholder="Contoh (Nama + Periode + Tahun): Sakernas Agustus Tahun 2025" required>
             </div>
@@ -89,43 +170,6 @@
                     <option value="Sektoral">Sektoral</option>
                     <option value="Sosial">Sosial</option>
                     <option value="Umum">Umum</option>
-                </select>
-            </div>
-
-            <div class="col-md-2">
-                <label class="form-label fw-semibold">Mulai Pengerjaan</label>
-                <input id="awalPengerjaan" name="awal_pengerjaan" type="date" class="form-control">
-            </div>
-
-            <div class="col-md-2">
-                <label class="form-label fw-semibold">Tahun</label>
-                <select id="tahunSelect" name="tahun" class="form-select" required>
-                    <option value="">Pilih Tahun</option>
-                    <option value="2025">2025</option>
-                    <option value="2026">2026</option>
-                    <option value="2027">2027</option>
-                    <option value="2028">2028</option>
-                    <option value="2029">2029</option>
-                    <option value="2030">2030</option>
-                </select>
-            </div>
-
-            <div class="col-md-2">
-                <label class="form-label fw-semibold">Bulan Pelaksanaan (Awal)</label>
-                <select id="bulanSelect" name="bulan" class="form-select" required>
-                    <option value="">Pilih Bulan</option>
-                    <option value="Januari">Januari</option>
-                    <option value="Februari">Februari</option>
-                    <option value="Maret">Maret</option>
-                    <option value="April">April</option>
-                    <option value="Mei">Mei</option>
-                    <option value="Juni">Juni</option>
-                    <option value="Juli">Juli</option>
-                    <option value="Agustus">Agustus</option>
-                    <option value="September">September</option>
-                    <option value="Oktober">Oktober</option>
-                    <option value="November">November</option>
-                    <option value="Desember">Desember</option>
                 </select>
             </div>
 
@@ -148,12 +192,56 @@
                 <input type="text" name="satuan_lain" id="satuanLainInput" class="form-control" placeholder="Tulis satuan lain">
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-12">
+                <div class="auto-fill-section p-3 rounded mb-3">
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Mulai Pengerjaan</label>
+                            <input id="awalPengerjaan" name="awal_pengerjaan" type="date" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Tahun Pelaksanaan (Awal)</label>
+                            <select id="tahunSelect" name="tahun" class="form-select" readonly>
+                                <option value="">— Otomatis dari tanggal —</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                                <option value="2028">2028</option>
+                                <option value="2029">2029</option>
+                                <option value="2030">2030</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Bulan Pelaksanaan (Awal)</label>
+                            <select id="bulanSelect" name="bulan" class="form-select" readonly>
+                                <option value="">— Otomatis dari tanggal —</option>
+                                <option value="Januari">Januari</option>
+                                <option value="Februari">Februari</option>
+                                <option value="Maret">Maret</option>
+                                <option value="April">April</option>
+                                <option value="Mei">Mei</option>
+                                <option value="Juni">Juni</option>
+                                <option value="Juli">Juli</option>
+                                <option value="Agustus">Agustus</option>
+                                <option value="September">September</option>
+                                <option value="Oktober">Oktober</option>
+                                <option value="November">November</option>
+                                <option value="Desember">Desember</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
                 <label class="form-label fw-semibold">Deadline</label>
                 <input name="deadline" type="date" class="form-control">
             </div>
 
-            <div class="col-12">
+            <div class="col-8">
                 <label class="form-label fw-semibold">Keterangan</label>
                 <input name="keterangan" class="form-control" placeholder="Keterangan (opsional)">
             </div>
@@ -165,61 +253,6 @@
             </div>
         </form>
     </div>
-
-    <style>
-        .form-section {
-            border-radius: 10px;
-            background-color: #f8fbff;
-        }
-
-        .form-label {
-            font-size: 0.875rem;
-            color: #0d6efd;
-        }
-
-        button[type="submit"] {
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-
-        .form-section {
-            border-radius: 10px;
-            background-color: #f8fbff;
-        }
-
-        .form-label {
-            font-size: 0.875rem;
-            color: #0d6efd;
-        }
-    </style>
-    <style>
-        .btn-group .btn {
-            padding: 4px 8px !important;
-            border-width: 1.6px !important;
-        }
-
-        .btn-group .btn i {
-            font-size: 14px;
-        }
-    </style>
-    <style>
-        .aksi-btn-group .btn {
-            padding: 4px 10px !important;
-            border-width: 1.6px !important;
-            border-radius: 6px !important;
-            margin: 0 2px !important;
-            /* beri jarak antar tombol */
-        }
-
-        .aksi-btn-group .btn i {
-            font-size: 14px;
-        }
-
-        /* hover lebih halus */
-        .aksi-btn-group .btn:hover {
-            opacity: .85;
-        }
-    </style>
 
     <div class="form-section card shadow-sm p-3 mb-4">
         <h5 class="mb-3 text-primary">
@@ -246,7 +279,12 @@
                             <?php $i = 1;
                             foreach ($kegiatan as $k): ?>
                                 <tr>
-                                    <td><?= $i++ ?></td>
+                                    <?php
+                                    $rand = (strlen($i) == 1)
+                                        ? rand(10, 99)       // 2 digit random
+                                        : rand(0, 9);        // 1 digit random
+                                    ?>
+                                    <td><?= 'wrk' . $i++ . $rand ?></td>
                                     <td><?= esc($k['nama_kegiatan']) ?></td>
                                     <td><?= esc($k['tim']) ?></td>
                                     <td><?= esc($k['tahun']) ?></td>
@@ -269,7 +307,7 @@
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
 
-                                            <a href="#"
+                                            <a href="<?= base_url('/pantau/delete/' . $k['id']) ?>"
                                                 class="btn btn-sm btn-outline-danger"
                                                 data-bs-toggle="modal"
                                                 data-id="<?= $k['id'] ?>"
@@ -289,6 +327,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="modalDelete" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow">
@@ -311,22 +350,31 @@
                     <i class="fa-solid fa-xmark me-1"></i> Batal
                 </button>
 
-                <a id="btnDeleteKonfirmasi" class="btn btn-danger">
+                <a href="#" id="btnDeleteKonfirmasi" class="btn btn-danger">
                     <i class="fa-solid fa-trash me-1"></i> Hapus Permanen
                 </a>
             </div>
         </div>
     </div>
 </div>
-<style>
-    #modalDelete .modal-content {
-        border-radius: 12px;
-    }
 
-    #modalDelete .modal-header {
-        border-radius: 12px 12px 0 0;
-    }
-</style>
+<script>
+    document.addEventListener("click", function(e) {
+        if (e.target.closest("[data-bs-target='#modalDelete']")) {
+
+            let btn = e.target.closest("[data-bs-target='#modalDelete']");
+            let id = btn.getAttribute("data-id");
+            let nama = btn.getAttribute("data-nama");
+
+            // isi teks nama kegiatan
+            document.getElementById("deleteNama").textContent = nama;
+
+            // set URL delete yang benar
+            document.getElementById("btnDeleteKonfirmasi").href =
+                "/pantau/delete/" + id;
+        }
+    });
+</script>
 
 <script>
     document.getElementById('satuanSelectEdit').addEventListener('change', function() {
@@ -354,8 +402,6 @@
     });
 </script>
 
-
-
 <script>
     document.getElementById('satuanSelect').addEventListener('change', function() {
         const lainnya = document.getElementById('satuanLainContainer');
@@ -377,7 +423,7 @@
             order: [
                 [0, 'asc']
             ],
-            pageLength: 5,
+            pageLength: 10,
             lengthMenu: [5, 10, 25, 50],
             language: {
                 search: "Cari:",
@@ -393,16 +439,12 @@
                 }
             },
             columnDefs: [{
-                    targets: 0,
-                    className: 'text-center fw-semibold text-muted'
-                },
-                {
+                    //     targets: 0,
+                    //     className: 'text-center fw-semibold text-muted'
+                    // },
+                    // {
                     targets: [2, 3, 4, 5, 6],
                     className: 'text-center'
-                },
-                {
-                    targets: 7,
-                    className: 'text-center text-primary fw-semibold'
                 },
                 {
                     targets: 8,
@@ -423,7 +465,6 @@
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
 </script>
-
 
 <script>
     document.getElementById('awalPengerjaan').addEventListener('change', function() {
@@ -446,12 +487,6 @@
         // Set Bulan
         document.getElementById('bulanSelect').value = namaBulan[bulanIndex];
     });
-</script>
-<script>
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    tooltipTriggerList.map(function(tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
 </script>
 
 <?= $this->include('templates/footer'); ?>

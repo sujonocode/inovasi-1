@@ -56,6 +56,11 @@
     <!-- <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script> -->
 
     <style>
+        .bg-dark {
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            backdrop-filter: blur(10px);
+        }
+
         @media (max-width: 768px) {
             .fc-toolbar {
                 flex-direction: column;
@@ -85,12 +90,12 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-blue bg-dark fixed-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/">
                 <img src="<?= base_url('assets/image/assista.png') ?>" alt="Logo Assista"
                     style="width: 30px; height: 30px; margin-right: 10px;">
-                <span>Assista</span>
+                <span>ASSISTA</span>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,7 +142,7 @@
                         <ul class="dropdown-menu" aria-labelledby="humasDropdown">
                             <li><a class="dropdown-item" href="<?= base_url('/pantau') ?>">Dashboard</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('/pantau/master') ?>">Master Kegiatan</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('/upload') ?>">Upload Beban Kerja</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('/pantau/upload') ?>">Upload Beban Kerja</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('/pantau/progres') ?>">Progres</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('/pantau/work_calendar') ?>">Google Calendar</a></li>
                         </ul>

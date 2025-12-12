@@ -6,13 +6,13 @@
             BPS Kabupaten Tanggamus
         </h1>
         <p class="lead mb-4 animate__animated animate__fadeInUp">
-            Statistik Berdampak untuk Indonesia Maju
+            “Statistik Berdampak untuk Indonesia Maju”
         </p>
         <div class="my-4">
             <h2 class="fw-bold text-warning mb-1 animate__animated animate__fadeInUp">ASSISTA</h2>
             <p class="mb-1">Aplikasi Satu Sistem Internal, SuperApp Terpadu dan Adaptif</p>
             <p class="fst-italic">A Single-System Internal SuperApp for Integrated and Adaptive Services</p>
-            <p class="fw-semibold mt-3">“Satu Aplikasi, Semua Terhubung”</p>
+            <p class="fw-semibold mt-3">— Satu Aplikasi, Semua Terhubung —</p>
         </div>
         <a href="#features" class="btn btn-light btn-lg rounded-pill shadow px-5 py-3">
             Jelajahi Fitur

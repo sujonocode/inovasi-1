@@ -1,8 +1,7 @@
 <?= $this->include('templates/header'); ?>
 
 <div class="container my-4">
-    <h3 class="mb-3">📊 Pantau - Dashboard</h3>
-
+    <h4 class="page-title">📊 Pantau - Dashboard</h4>
     <!-- Flash messages -->
     <?php if (session()->getFlashdata('success')): ?>
         <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
@@ -17,11 +16,11 @@
             <a href="<?= base_url('/pantau/master') ?>" class="btn btn-outline-primary">
                 <i class="bi bi-folder2-open"></i> Master Kegiatan
             </a>
-            <a href="<?= base_url('/upload') ?>" class="btn btn-outline-secondary">
+            <a href="<?= base_url('/pantau/upload') ?>" class="btn btn-outline-secondary">
                 <i class="bi bi-upload"></i> Upload Beban Kerja
             </a>
         <?php endif; ?>
-        <a href="<?= base_url('/beban-kerja') ?>" class="btn btn-outline-success">
+        <a href="<?= base_url('/pantau/beban-kerja') ?>" class="btn btn-outline-success">
             <i class="bi bi-list-task"></i> Daftar Beban Kerja
         </a>
     </div>
@@ -30,7 +29,7 @@
         <div class="card shadow-sm border-0">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-                    <h5 class="mb-0">Ringkasan Kegiatan</h5>
+                    <h5 class="mb-2">Ringkasan Kegiatan</h5>
                     <!-- Filter controls -->
                     <div class="d-flex flex-wrap gap-2">
                         <select id="filterTahun" class="form-select form-select-sm" style="width: 120px;">
@@ -40,24 +39,6 @@
                             sort($tahunList);
                             foreach ($tahunList as $t): ?>
                                 <option value="<?= esc($t) ?>"><?= esc($t) ?></option>
-                            <?php endforeach; ?>
-                        </select>
-
-                        <select id="filterTim" class="form-select form-select-sm" style="width: 140px;">
-                            <option value="">Semua Tim</option>
-                            <?php
-                            $timList = [
-                                "Distribusi",
-                                "Humas",
-                                "IPDS",
-                                "Neraca",
-                                "Produksi",
-                                "Sektoral",
-                                "Sosial",
-                                "Umum"
-                            ];
-                            foreach ($timList as $t): ?>
-                                <option value="<?= $t ?>"><?= $t ?></option>
                             <?php endforeach; ?>
                         </select>
 
@@ -80,6 +61,24 @@
                             ];
                             foreach ($bulanList as $b): ?>
                                 <option value="<?= $b ?>"><?= $b ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
+                        <select id="filterTim" class="form-select form-select-sm" style="width: 140px;">
+                            <option value="">Semua Tim</option>
+                            <?php
+                            $timList = [
+                                "Distribusi",
+                                "Humas",
+                                "IPDS",
+                                "Neraca",
+                                "Produksi",
+                                "Sektoral",
+                                "Sosial",
+                                "Umum"
+                            ];
+                            foreach ($timList as $t): ?>
+                                <option value="<?= $t ?>"><?= $t ?></option>
                             <?php endforeach; ?>
                         </select>
 
@@ -106,7 +105,12 @@
                             <?php $i = 1;
                             foreach ($kegiatan as $k): ?>
                                 <tr>
-                                    <td><?= $i++ ?></td>
+                                    <?php
+                                    $rand = (strlen($i) == 1)
+                                        ? rand(10, 99) // 2 digit random
+                                        : rand(0, 9); // 1 digit random
+                                    ?>
+                                    <td><?= 'wrk' . $i++ . $rand ?></td>
                                     <td><?= esc($k['nama_kegiatan']) ?></td>
                                     <td><?= esc($k['tim']) ?></td>
                                     <td><?= esc($k['tahun']) ?></td>
@@ -189,6 +193,31 @@
     .btn {
         border-radius: 6px;
     }
+
+    .page-title {
+        font-weight: 600;
+        color: #0d47a1;
+        margin-bottom: 1rem;
+        /* border-left: 4px solid #0d47a1; */
+        /* padding-left: 10px; */
+    }
+
+    table.dataTable thead th {
+        text-align: center !important;
+    }
+
+    .dataTables_length {
+        margin-top: 15px !important;
+    }
+
+    .dataTables_filter {
+        margin-top: 15px !important;
+    }
+
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        margin-bottom: 0.5rem;
+    }
 </style>
 
 <!-- Scripts -->
@@ -211,7 +240,7 @@
                     previous: "‹"
                 }
             },
-            dom: '<"top"i>rt<"bottom"lp><"clear">',
+            // dom: '<"top"i>rt<"bottom"lp><"clear">',
             order: [
                 [3, 'desc'],
                 [4, 'asc']

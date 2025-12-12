@@ -1,6 +1,6 @@
 <?= $this->include('templates/header'); ?>
 <div class="container my-4">
-    <h4 class="page-title">Beban Kerja</h4>
+    <h4 class="page-title">🎯 Beban Kerja</h4>
 
     <div class="form-section card shadow-sm p-3 mb-4">
         <h5 class="mb-3 text-primary">
@@ -40,7 +40,7 @@
             <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
         <?php endif; ?>
 
-        <form action="<?= base_url('/upload/save') ?>" method="post" enctype="multipart/form-data">
+        <form action="<?= base_url('/pantau/upload/save') ?>" method="post" enctype="multipart/form-data">
             <?= csrf_field() ?>
 
             <?php
@@ -80,8 +80,8 @@
         font-weight: 600;
         color: #0d47a1;
         margin-bottom: 1rem;
-        border-left: 4px solid #0d47a1;
-        padding-left: 10px;
+        /* border-left: 4px solid #0d47a1;
+        padding-left: 10px; */
     }
 
     .form-section {
