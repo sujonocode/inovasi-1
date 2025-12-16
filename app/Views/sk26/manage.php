@@ -1,16 +1,16 @@
-<div class="container mt-5">
+<div class="container my-5">
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center flex-wrap">
                 <h1 class="mb-3 mb-md-0">Data Surat Keputusan (SK)</h1>
                 <div class="d-flex gap-2 flex-wrap">
-                    <a href="<?= base_url('sk/create') ?>"
+                    <a href="<?= base_url('sk26/create') ?>"
                         class="btn btn-primary btn-sm flex-fill text-center"
                         style="min-width: 120px;"
                         title="Tambah SK Baru">
                         <i class="fa-solid fa-plus me-1"></i> Tambah
                     </a>
-                    <a href="<?= base_url('sk/export_xlsx') ?>"
+                    <a href="<?= base_url('sk26/export_xlsx') ?>"
                         class="btn btn-success btn-sm flex-fill text-center"
                         style="min-width: 120px;"
                         title="Download Data SK">
@@ -43,18 +43,14 @@
                                     <td><?= $sk['created_by'] ?></td>
                                     <td>
                                         <a href="#" onclick="handleLinkClick('<?= $sk['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a>
-                                        <a href="/sk/edit/<?= $sk['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
+                                        <a href="/sk26/edit/<?= $sk['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
                                         <a href="#" onclick="openDeleteModal(<?= $sk['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <!-- <tr>
-                                <td colspan="6" style="text-align: center; font-weight: bold;">Belum ada data SK</td>
-                            </tr> -->
                             <?php for ($i = 0; $i < 10; $i++): ?>
                                 <tr>
-                                    <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -186,7 +182,7 @@
     // Open the modal and set the delete URL dynamically
     function openDeleteModal(skId) {
         // Set the delete ID in a custom attribute, or store it globally
-        const deleteUrl = "<?= base_url() ?>" + "sk/delete/" + skId;
+        const deleteUrl = "<?= base_url() ?>" + "sk26/delete/" + skId;
 
         // Store the URL in the delete button as a data attribute
         document.getElementById('confirmDeleteBtn').setAttribute('data-delete-url', deleteUrl);

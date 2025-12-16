@@ -179,7 +179,7 @@ class Kontrak26 extends BaseController
             } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
                 $tanggal = $this->request->getPost('tanggal');
 
-                $builder = $this->db->table('kontrak');
+                $builder = $this->db->table('kontrak_26');
 
                 $query = $builder->select('id, nomor_urut, nomor_sisip')
                     ->where('tanggal', $tanggal)
@@ -203,7 +203,7 @@ class Kontrak26 extends BaseController
                 }
 
                 if (!$result) {
-                    $builder = $this->db->table('kontrak');
+                    $builder = $this->db->table('kontrak_26');
                     $query = $builder
                         ->select('id, nomor_urut, nomor_sisip, tanggal')
                         ->where('tanggal <', $tanggal)
@@ -340,7 +340,7 @@ class Kontrak26 extends BaseController
         // Initialize model and get the data to be updated
         $model = new Kontrak26Model();
 
-        $builder = $this->db->table('kontrak');
+        $builder = $this->db->table('kontrak_26');
         $query = $builder->select('id, tanggal, jenis_penomoran, nomor_urut, nomor_sisip')
             ->where('id', $id)
             ->orderBy('nomor_urut', 'DESC')

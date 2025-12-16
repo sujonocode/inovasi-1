@@ -117,26 +117,15 @@
                             <li><a class="dropdown-item" href="<?= base_url('kontrak/manage') ?>">Kontrak</a></li>
                         </ul>
                     </li>
-                    <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="< ?= base_url('dokumen_26') ?>" id="dokumenDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SIPASTI 2026</a>
-                        <ul class="dropdown-menu" aria-labelledby="dokumenDropdown">
-                            <li><a class="dropdown-item" href="< ?= base_url('dokumen26') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="< ?= base_url('surat_keluar26/manage') ?>">Surat Keluar</a></li>
-                            <li><a class="dropdown-item" href="< ?= base_url('surat_masuk26/manage') ?>">Surat Masuk</a></li>
-                            <li><a class="dropdown-item" href="< ?= base_url('sk/manage26') ?>">SK</a></li>
-                            <li><a class="dropdown-item" href="< ?= base_url('kontrak/manage26') ?>">Kontrak</a></li>
-                            <li><a class="dropdown-item" href="< ?= base_url('kontrak/arsip') ?>">Arsip</a></li>
-                        </ul>
-                    </li> -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('dokumen_26') ?>" id="dokumenDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SIPASTI 2026</a>
                         <ul class="dropdown-menu" aria-labelledby="dokumenDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance10') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance11') ?>">Surat Keluar</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance12') ?>">Surat Masuk</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance13') ?>">SK</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance14') ?>">Kontrak</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance15') ?>">Arsip SIPASTI 2025</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('dokumen26') ?>">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('surat_keluar26/manage') ?>">Surat Keluar</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('surat_masuk26/manage') ?>">Surat Masuk</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('sk26/manage') ?>">SK</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('kontrak26/manage') ?>">Kontrak</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('#') ?>">Arsip</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

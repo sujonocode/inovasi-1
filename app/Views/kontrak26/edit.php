@@ -63,7 +63,7 @@
             <div class="form-section">
                 <h2 class="text-center mb-4">Formulir Edit Data Kontrak</h2>
                 <?php if (isset($kontrak)): ?>
-                    <form id="editForm" onsubmit="return validateCheckboxes()" action="<?= base_url('kontrak/update/' . $kontrak['id']) ?>" method="post">
+                    <form id="editForm" onsubmit="return validateCheckboxes()" action="<?= base_url('kontrak26/update/' . $kontrak['id']) ?>" method="post">
                         <?= csrf_field() ?>
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="nomor" class="col-md-3 form-label">Nomor</label>
@@ -157,7 +157,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-4">
-                            <a href="<?= base_url('kontrak/manage') ?>" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
+                            <a href="<?= base_url('kontrak26/manage') ?>" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
                             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                             <!-- <button type="reset" class="btn btn-secondary"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button> -->
                         </div>
@@ -268,7 +268,7 @@
             $('#kode_klasifikasi').html('<option value="">Select Kode Klasifikasi</option>');
 
             $.ajax({
-                url: '<?= base_url('/kontrak/create/getKode1') ?>',
+                url: '<?= base_url('/kontrak26/create/getKode1') ?>',
                 method: 'POST',
                 data: {
                     jenis: jenis,
@@ -294,7 +294,7 @@
             $('#kode_klasifikasi').html('<option value="">Loading...</option>');
 
             $.ajax({
-                url: '<?= base_url('/kontrak/create/getKodeKlasifikasi') ?>',
+                url: '<?= base_url('/kontrak26/create/getKodeKlasifikasi') ?>',
                 method: 'POST',
                 data: {
                     kode_1: kode1,
@@ -319,7 +319,7 @@
             const kodeKlasifikasi = $(this).val();
             if (kodeKlasifikasi) {
                 $.ajax({
-                    url: '<?= base_url('/kontrak/create/getKodeArsip') ?>',
+                    url: '<?= base_url('/kontrak26/create/getKodeArsip') ?>',
                     method: 'POST',
                     data: {
                         kode_klasifikasi: kodeKlasifikasi,

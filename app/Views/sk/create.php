@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="form-section">
                 <h2 class="text-center mb-4">Formulir Data SK</h2>
-                <form id="createForm" action="/sk/store" method="post">
+                <form id="createForm" action="/sk26/store" method="post">
                     <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
                     <div class="row form-group align-items-center flex-column flex-md-row">
                         <label class="col-md-3 form-label">Jenis penomoran:</label>
@@ -75,7 +75,7 @@
                         </div>
                     </div> -->
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="<?= base_url('sk/manage') ?>" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
+                        <a href="<?= base_url('sk26/manage') ?>" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
                         <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                         <!-- <button type="reset" class="btn btn-secondary"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button> -->
                     </div>
@@ -148,7 +148,7 @@
             const kodeKlasifikasi = $(this).val();
             if (kodeKlasifikasi) {
                 $.ajax({
-                    url: '<?= base_url('/sk/create/getKodeArsip') ?>',
+                    url: '<?= base_url('/sk26/create/getKodeArsip') ?>',
                     method: 'POST',
                     data: {
                         kode_klasifikasi: kodeKlasifikasi,

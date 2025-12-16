@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use App\Models\SuratMasukModel;
+use App\Models\SuratMasuk26Model;
 
 class SuratMasuk26 extends BaseController
 {
@@ -17,25 +17,25 @@ class SuratMasuk26 extends BaseController
 
     public function index(string $page = 'Manajemen Dokumen | Surat Masuk')
     {
-        $model = new SuratMasukModel();
+        $model = new SuratMasuk26Model();
 
         $data['title'] = ucfirst($page);
         $data['surats'] = $model->findAll();
 
         return view('templates/header', $data)
-            . view('surat_masuk/index', $data)
+            . view('surat_masuk26/index', $data)
             . view('templates/footer');
     }
 
     public function manage(string $page = 'Surat Masuk | Manage')
     {
-        $model = new SuratMasukModel();
+        $model = new SuratMasuk26Model();
 
         $data['title'] = ucfirst($page);
         $data['surats'] = $model->findAll();
 
         return view('templates/header', $data)
-            . view('surat_masuk/manage', $data)
+            . view('surat_masuk26/manage', $data)
             . view('templates/footer');
     }
 
@@ -50,7 +50,7 @@ class SuratMasuk26 extends BaseController
         ];
 
         return view('templates/header', $data)
-            . view('surat_masuk/create', $data)
+            . view('surat_masuk26/create', $data)
             . view('templates/footer');
     }
 
@@ -65,7 +65,7 @@ class SuratMasuk26 extends BaseController
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
 
-        $model = new SuratMasukModel();
+        $model = new SuratMasuk26Model();
 
         $username = session()->get('username');
 
@@ -83,7 +83,7 @@ class SuratMasuk26 extends BaseController
         $nomor = $this->request->getPost('nomor');
 
         if ($model->save($data)) {
-            return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil disimpan.' . '<br>' . 'Nomor surat: ' . $nomor);
+            return redirect()->to(base_url('surat_masuk26/manage'))->with('success', 'Data surat berhasil disimpan.' . '<br>' . 'Nomor surat: ' . $nomor);
         }
 
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data surat');
@@ -94,7 +94,7 @@ class SuratMasuk26 extends BaseController
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
 
-        $model = new SuratMasukModel();
+        $model = new SuratMasuk26Model();
 
         // Fetch the kontrak data by id
         $surat = $model->find($id);
@@ -104,7 +104,7 @@ class SuratMasuk26 extends BaseController
         // If kontrak data is not found, show error and redirect
         if (!$surat) {
             session()->setFlashdata('error', 'Data surat tidak ditemukan.');
-            return redirect()->to(base_url('surat_masuk/manage'));
+            return redirect()->to(base_url('surat_masuk26/manage'));
         }
 
         // Get the current logged-in user's username
@@ -113,7 +113,7 @@ class SuratMasuk26 extends BaseController
         if (session()->get('role') === 'admin') {
             // Return the view with all the data
             return view('templates/header', $data)
-                . view('surat_masuk/edit', $data)
+                . view('surat_masuk26/edit', $data)
                 . view('templates/footer');
         } else {
             if ($surat['created_by'] !== $currentUsername) {
@@ -123,7 +123,7 @@ class SuratMasuk26 extends BaseController
 
         // Return the view with all the data
         return view('templates/header', $data)
-            . view('surat_masuk/edit', $data)
+            . view('surat_masuk26/edit', $data)
             . view('templates/footer');
     }
 
@@ -140,9 +140,9 @@ class SuratMasuk26 extends BaseController
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
 
-        $model = new SuratMasukModel();
+        $model = new SuratMasuk26Model();
 
-        $builder = $this->db->table('surat_masuk');
+        $builder = $this->db->table('surat_masuk_26');
         $query = $builder->select('id, tanggal')
             ->where('id', $id)
             ->orderBy('tanggal', 'DESC')
@@ -152,7 +152,7 @@ class SuratMasuk26 extends BaseController
         $result = $query->getRow();
 
         if (!$result) {
-            return redirect()->to(base_url('surat_masuk/manage'))->with('error', 'Surat tidak ditemukan');
+            return redirect()->to(base_url('surat_masuk26/manage'))->with('error', 'Surat tidak ditemukan');
         }
 
         $updateSuccessful = $model->update($id, [
@@ -169,15 +169,15 @@ class SuratMasuk26 extends BaseController
 
         // Check if update was successful and pass the appropriate message
         if ($updateSuccessful) {
-            return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil diupdate.' . '<br>' . 'Nomor surat: ' . $nomor);
+            return redirect()->to(base_url('surat_masuk26/manage'))->with('success', 'Data surat berhasil diupdate.' . '<br>' . 'Nomor surat: ' . $nomor);
         } else {
-            return redirect()->to(base_url('surat_masuk/manage'))->with('error', 'Gagal mengupdate data surat');
+            return redirect()->to(base_url('surat_masuk26/manage'))->with('error', 'Gagal mengupdate data surat');
         }
     }
 
     public function delete($id)
     {
-        $model = new SuratMasukModel();
+        $model = new SuratMasuk26Model();
 
         $surat = $model->find($id);
 
@@ -192,7 +192,7 @@ class SuratMasuk26 extends BaseController
             // Call the delete logic directly here
             $model->delete($id);
 
-            return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil dihapus.' . '<br>' . 'Nomor surat yang terhapus: ' . $nomor);
+            return redirect()->to(base_url('surat_masuk26/manage'))->with('success', 'Data surat berhasil dihapus.' . '<br>' . 'Nomor surat yang terhapus: ' . $nomor);
         } else {
             if (session()->get('username') !== $surat['created_by']) {
                 return redirect()->back()->with('limited', 'Data surat hanya bisa dihapus oleh orang yang membuatnya atau admin');
@@ -204,13 +204,13 @@ class SuratMasuk26 extends BaseController
         // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('surat_masuk/manage'))->with('success', 'Data surat berhasil dihapus.' . '<br>' . 'Nomor surat yang terhapus: ' . $nomor);
+        return redirect()->to(base_url('surat_masuk26/manage'))->with('success', 'Data surat berhasil dihapus.' . '<br>' . 'Nomor surat yang terhapus: ' . $nomor);
     }
 
     public function exportExcel()
     {
         $db = \Config\Database::connect();
-        $query = $db->query("SELECT * FROM surat_masuk");
+        $query = $db->query("SELECT * FROM surat_masuk_26");
         $data = $query->getResultArray();
 
         $spreadsheet = new Spreadsheet();
@@ -249,11 +249,11 @@ class SuratMasuk26 extends BaseController
 
     public function getSurats()
     {
-        $model = new SuratMasukModel();
+        $model = new SuratMasuk26Model();
         $surats = $model->findAll();
 
         return view('templates/header')
-            . view('surat_masuk/index', ['surats' => $surats])
+            . view('surat_masuk26/index', ['surats' => $surats])
             . view('templates/footer');
     }
 

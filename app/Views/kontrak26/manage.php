@@ -4,13 +4,13 @@
             <div class="d-flex justify-content-between align-items-center flex-wrap">
                 <h1 class="mb-3 mb-md-0">Data Kontrak</h1>
                 <div class="d-flex gap-2 flex-wrap">
-                    <a href="<?= base_url('kontrak/create') ?>"
+                    <a href="<?= base_url('kontrak26/create') ?>"
                         class="btn btn-primary btn-sm flex-fill text-center"
                         style="min-width: 120px;"
                         title="Tambah Kontrak Baru">
                         <i class="fa-solid fa-plus me-1"></i> Tambah
                     </a>
-                    <a href="<?= base_url('kontrak/export_xlsx') ?>"
+                    <a href="<?= base_url('kontrak26/export_xlsx') ?>"
                         class="btn btn-success btn-sm flex-fill text-center"
                         style="min-width: 120px;"
                         title="Download Data Kontrak">
@@ -43,19 +43,14 @@
                                     <td><?= $kontrak['created_by'] ?></td>
                                     <td>
                                         <a href="#" onclick="handleLinkClick('<?= $kontrak['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a>
-                                        <a href="/kontrak/edit/<?= $kontrak['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
-                                        <!-- <a href="/kontrak/delete/< ?= $kontrak['id'] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data kontrak ini?');"><i class="fa-solid fa-trash" title="Hapus"></i></a> -->
+                                        <a href="/kontrak26/edit/<?= $kontrak['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
                                         <a href="#" onclick="openDeleteModal(<?= $kontrak['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <!-- <tr>
-                                <td colspan="6" style="text-align: center; font-weight: bold;">Belum ada data kontrak</td>
-                            </tr> -->
                             <?php for ($i = 0; $i < 10; $i++): ?>
                                 <tr>
-                                    <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -185,7 +180,7 @@
     // Open the modal and set the delete URL dynamically
     function openDeleteModal(skId) {
         // Set the delete ID in a custom attribute, or store it globally
-        const deleteUrl = "<?= base_url() ?>" + "kontrak/delete/" + skId;
+        const deleteUrl = "<?= base_url() ?>" + "kontrak26/delete/" + skId;
 
         // Store the URL in the delete button as a data attribute
         document.getElementById('confirmDeleteBtn').setAttribute('data-delete-url', deleteUrl);

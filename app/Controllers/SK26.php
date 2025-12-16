@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use App\Models\SKModel;
+use App\Models\SK26Model;
 use App\Models\KodeArsipSKModel;
 
 class SK26 extends BaseController
@@ -18,25 +18,25 @@ class SK26 extends BaseController
 
     public function index(string $page = 'Manajemen Dokumen | SK')
     {
-        $model = new SKModel();
+        $model = new SK26Model();
 
         $data['title'] = ucfirst($page);
         $data['sks'] = $model->findAll();
 
         return view('templates/header', $data)
-            . view('sk/index', $data)
+            . view('sk26/index', $data)
             . view('templates/footer');
     }
 
     public function manage(string $page = 'SK | Manage')
     {
-        $model = new SKModel();
+        $model = new SK26Model();
 
         $data['title'] = ucfirst($page);
         $data['sks'] = $model->findAll();
 
         return view('templates/header', $data)
-            . view('sk/manage', $data)
+            . view('sk26/manage', $data)
             . view('templates/footer');
     }
 
@@ -59,7 +59,7 @@ class SK26 extends BaseController
             ->getResultArray();
 
         return view('templates/header', $data)
-            . view('sk/create', $data)
+            . view('sk26/create', $data)
             . view('templates/footer');
     }
 
@@ -113,7 +113,7 @@ class SK26 extends BaseController
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
 
-        $model = new SKModel();
+        $model = new SK26Model();
 
         $username = session()->get('username');
 
@@ -134,7 +134,7 @@ class SK26 extends BaseController
         } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
             $tanggal = $this->request->getPost('tanggal');
 
-            $builder = $this->db->table('sk');
+            $builder = $this->db->table('sk_26');
 
             $query = $builder->select('id, nomor_urut, nomor_sisip')
                 ->where('tanggal', $tanggal)
@@ -158,7 +158,7 @@ class SK26 extends BaseController
             }
 
             if (!$result) {
-                $builder = $this->db->table('sk');
+                $builder = $this->db->table('sk_26');
                 $query = $builder
                     ->select('id, nomor_urut, nomor_sisip')
                     ->where('tanggal <', $tanggal)
@@ -210,7 +210,7 @@ class SK26 extends BaseController
         ];
 
         if ($model->save($data)) {
-            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil disimpan.' . '<br>' . 'Nomor SK: ' . $nomor);
+            return redirect()->to(base_url('sk26/manage'))->with('success', 'Data SK berhasil disimpan.' . '<br>' . 'Nomor SK: ' . $nomor);
         }
 
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data SK');
@@ -221,7 +221,7 @@ class SK26 extends BaseController
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
 
-        $model = new SKModel();
+        $model = new SK26Model();
 
         // Fetch the sk data by id
         $sk = $model->find($id);
@@ -231,7 +231,7 @@ class SK26 extends BaseController
         // If sk data is not found, show error and redirect
         if (!$sk) {
             session()->setFlashdata('error', 'Data sk tidak ditemukan.');
-            return redirect()->to(base_url('/sk/manage'));
+            return redirect()->to(base_url('/sk26/manage'));
         }
 
         // Get the current logged-in user's username
@@ -248,7 +248,7 @@ class SK26 extends BaseController
 
             // Return the view with all the data
             return view('templates/header', $data)
-                . view('sk/edit', $data)
+                . view('sk26/edit', $data)
                 . view('templates/footer');
         } else {
             if ($sk['created_by'] !== $currentUsername) {
@@ -269,7 +269,7 @@ class SK26 extends BaseController
 
         // Return the view with all the data
         return view('templates/header', $data)
-            . view('sk/edit', $data)
+            . view('sk26/edit', $data)
             . view('templates/footer');
     }
 
@@ -286,9 +286,9 @@ class SK26 extends BaseController
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
 
-        $model = new SKModel();
+        $model = new SK26Model();
 
-        $builder = $this->db->table('sk');
+        $builder = $this->db->table('sk_26');
         $query = $builder->select('id, tanggal, jenis_penomoran, nomor_urut, nomor_sisip')
             ->where('id', $id)
             ->orderBy('nomor_urut', 'DESC')
@@ -298,7 +298,7 @@ class SK26 extends BaseController
 
         $result = $query->getRow();
         if (!$result) {
-            return redirect()->to(base_url('sk/manage'))->with('error', 'SK tidak ditemukan');
+            return redirect()->to(base_url('sk26/manage'))->with('error', 'SK tidak ditemukan');
         }
 
         $tanggal = $result->tanggal;
@@ -333,15 +333,15 @@ class SK26 extends BaseController
 
         // Check if update was successful and pass the appropriate message
         if ($updateSuccessful) {
-            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil diupdate.' . '<br>' . 'Nomor SK: ' . $nomor);
+            return redirect()->to(base_url('sk26/manage'))->with('success', 'Data SK berhasil diupdate.' . '<br>' . 'Nomor SK: ' . $nomor);
         } else {
-            return redirect()->to(base_url('sk/manage'))->with('error', 'Gagal mengupdate data SK');
+            return redirect()->to(base_url('sk26/manage'))->with('error', 'Gagal mengupdate data SK');
         }
     }
 
     public function delete($id)
     {
-        $model = new SKModel();
+        $model = new SK26Model();
 
         $sk = $model->find($id);
 
@@ -355,7 +355,7 @@ class SK26 extends BaseController
             // Call the delete logic directly here
             $model->delete($id);
 
-            return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus.' . '<br>' . 'Nomor SK yang terhapus: ' . $nomor);
+            return redirect()->to(base_url('sk26/manage'))->with('success', 'Data SK berhasil dihapus.' . '<br>' . 'Nomor SK yang terhapus: ' . $nomor);
         } else {
             if (session()->get('username') !== $sk['created_by']) {
                 return redirect()->back()->with('limited', 'Data SK hanya bisa dihapus oleh orang yang membuatnya atau admin');
@@ -367,7 +367,7 @@ class SK26 extends BaseController
         // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('sk/manage'))->with('success', 'Data SK berhasil dihapus.' . '<br>' . 'Nomor SK yang terhapus: ' . $nomor);
+        return redirect()->to(base_url('sk26/manage'))->with('success', 'Data SK berhasil dihapus.' . '<br>' . 'Nomor SK yang terhapus: ' . $nomor);
     }
 
     public function exportExcel()
@@ -412,11 +412,11 @@ class SK26 extends BaseController
 
     public function getSKs()
     {
-        $model = new SKModel();
+        $model = new SK26Model();
         $sks = $model->findAll();
 
         return view('templates/header')
-            . view('sk/index', ['sks' => $sks])
+            . view('sk26/index', ['sks' => $sks])
             . view('templates/footer');
     }
 
