@@ -40,6 +40,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Home::index');
     $routes->get('/dokumen', [Dokumen::class, 'index']);
     $routes->get('/dokumen26', [Dokumen26::class, 'index']);
+    $routes->get('/dokumen26/arsip', [Dokumen26::class, 'arsip2025']);
 
     // document 2025
     $routes->get('/dokumen/surat_keluar', [SuratKeluar::class, 'index']);
