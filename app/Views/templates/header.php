@@ -171,19 +171,19 @@
                     </li>
 
                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">LANTAS</a>
+                        <ul class="dropdown-menu" aria-labelledby="humasDropdown">
+                            <li><a class="dropdown-item" href="<?= base_url('lantas') ?>">Dashboard Kendala</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('lantas/manage') ?>">Manage Kendala</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">MANDALA</a>
                         <ul class="dropdown-menu" aria-labelledby="humasDropdown">
                             <li><a class="dropdown-item" href="<?= base_url('humas/maintenance4') ?>">Umum</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('humas/maintenance5') ?>">TI dan Pengolahan</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('humas/maintenance6') ?>">Teknis</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="<?= base_url('humas') ?>" id="humasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">LANTAS</a>
-                        <ul class="dropdown-menu" aria-labelledby="humasDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance7') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance8') ?>">Update Laporan</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('humas/maintenance9') ?>">Master</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

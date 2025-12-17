@@ -227,6 +227,13 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
 
     $routes->get('/pantau/progres', 'Pantau::bebanKerja');
     $routes->get('/pantau/work_calendar', 'Pantau::workCalendar');
+
+    // lantas
+    $routes->get('/lantas', 'Lantas::index');
+    $routes->get('/lantas/manage', 'Lantas::manage');
+    $routes->get('/lantas/edit/(:num)', 'Lantas::edit/$1');
+    $routes->post('/lantas/update/(:num)', 'Lantas::update/$1');
+    $routes->get('/lantas/delete/(:num)', 'Lantas::delete/$1');
 });
 
 $routes->get('/profile', 'Profile::index', ['filter' => 'auth']);
