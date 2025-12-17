@@ -70,4 +70,13 @@ class Dokumen26 extends BaseController
             . view('dokumen26/index', $data)
             . view('templates/footer', $data);
     }
+
+    public function arsip2025(string $page = 'Dokumen | Arsip')
+    {
+        $data['title'] = ucfirst($page);
+
+        return view('templates/header', $data)
+            . view('dokumen26/arsip', $data)
+            . view('templates/footer');
+    }
 }
