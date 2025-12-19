@@ -373,7 +373,7 @@ class SK26 extends BaseController
     public function exportExcel()
     {
         $db = \Config\Database::connect();
-        $query = $db->query("SELECT * FROM sk");
+        $query = $db->query("SELECT * FROM sk_26");
         $data = $query->getResultArray();
 
         $spreadsheet = new Spreadsheet();

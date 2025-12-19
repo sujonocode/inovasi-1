@@ -12,6 +12,7 @@ use App\Controllers\SuratMasuk;
 use App\Controllers\SK;
 use App\Controllers\Kontrak;
 use App\Controllers\Dokumen26;
+use App\Controllers\FP26;
 use App\Controllers\SuratKeluar26;
 use App\Controllers\SuratMasuk26;
 use App\Controllers\SK26;
@@ -109,6 +110,20 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->post('create/getKodeKlasifikasi', 'SuratKeluar26::getKodeKlasifikasi');
         $routes->post('create/getKodeArsip', 'SuratKeluar26::getKodeArsip');
         $routes->get('export_xlsx', 'SuratKeluar26::exportExcel');
+    });
+
+    $routes->get('/dokumen26/fp', [FP26::class, 'index']);
+    $routes->group('/fp26', function ($routes) {
+        $routes->get('manage', 'FP26::manage');
+        $routes->get('create', 'FP26::create');
+        $routes->post('store', 'FP26::store');
+        $routes->get('edit/(:num)', 'FP26::edit/$1');
+        $routes->post('update/(:num)', 'FP26::update/$1');
+        $routes->get('delete/(:num)', 'FP26::delete/$1');
+        $routes->post('create/getKode1', 'FP26::getKode1');
+        $routes->post('create/getKodeKlasifikasi', 'FP26::getKodeKlasifikasi');
+        $routes->post('create/getKodeArsip', 'FP26::getKodeArsip');
+        $routes->get('export_xlsx', 'FP26::exportExcel');
     });
 
     $routes->get('/dokumen26/surat_masuk', [SuratMasuk26::class, 'index']);

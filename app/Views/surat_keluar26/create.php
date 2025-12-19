@@ -10,6 +10,20 @@
                 <form id="createForm" action="/surat_keluar26/store" method="post">
                     <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
                     <div class="row form-group align-items-center flex-column flex-md-row">
+                        <label for="sifat" class="col-md-3 form-label fw-semibold">
+                            Sifat Surat
+                        </label>
+                        <div class="col-md-9">
+                            <select name="sifat" id="sifat" class="form-select select2" required>
+                                <option value="">-- Pilih Sifat Surat --</option>
+                                <option value="B">B - Biasa</option>
+                                <option value="S">S - Segera</option>
+                                <option value="P">P - Penting</option>
+                                <option value="R">R - Rahasia</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group align-items-center flex-column flex-md-row">
                         <label class="col-md-3 form-label">Jenis penomoran:</label>
                         <div class="col-md-9">
                             <div class="row">
@@ -110,71 +124,15 @@
                                 placeholder="Tambahkan catatan" required></textarea>
                         </div>
                     </div>
-                    <!-- <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="url" class="col-md-3 form-label">Link:</label>
-                        <div class="col-md-9">
-                            <p id="error-message" style="color: red; display: none;">Link tidak valid. Pastikan link valid atau kosongkan saja!</p>
-                            <input id="url" type="text" name="url" class="form-control">
-                        </div>
-                    </div> -->
                     <div class="d-flex justify-content-between mt-4">
                         <a href="<?= base_url('surat_keluar26/manage') ?>" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
                         <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
-                        <!-- <button type="reset" class="btn btn-secondary"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button> -->
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-<!-- <script>
-    // Function to validate URL
-    function validateCheckboxes() {
-        return true;
-    }
-
-    // Function to validate URL
-    function isValidUrl(url) {
-        try {
-            const parsedUrl = new URL(url); // Check if it's a valid URL format
-            return true;
-        } catch (e) {
-            return false;
-        }
-    }
-
-    // Function to check if it's a valid Google Drive link (optional, customize as needed)
-    function isGoogleDriveLink(url) {
-        return url.includes("drive.google.com");
-    }
-
-    // Function to check if it's a valid BPS Drive link (optional, customize as needed)
-    function isBpsDriveLink(url) {
-        return url.includes("drive.bps.go.id");
-    }
-
-    function isEmpty(url) {
-        return url == '';
-    }
-
-    document.getElementById("createForm").addEventListener("submit", function(e) {
-        const urlInput = document.getElementById("url").value.trim();
-        const errorMessage = document.getElementById("error-message");
-
-        // Check if at least one of the conditions is true (submit the form if one is true)
-        if (isValidUrl(urlInput) || isGoogleDriveLink(urlInput) || isBpsDriveLink(urlInput) || isEmpty(urlInput)) {
-            // Proceed with form submission
-            errorMessage.style.display = "none";
-            return true;
-        } else {
-            // Prevent form submission if none of the conditions is true
-            e.preventDefault();
-            errorMessage.style.display = "block";
-            return false;
-        }
-    });
-</script> -->
 
 <script>
     $(document).ready(function() {

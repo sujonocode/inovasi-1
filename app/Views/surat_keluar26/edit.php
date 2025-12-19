@@ -72,6 +72,21 @@
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
+                            <label for="sifat" class="col-md-3 form-label fw-semibold">
+                                Sifat Surat
+                            </label>
+                            <div class="col-md-9">
+                                <select name="sifat" id="sifat" class="form-select select2" required>
+                                    <option value="">-- Pilih Sifat Surat --</option>
+                                    <option value="B" <?= set_select('sifat', 'B', $data['sifat'] == 'B') ?>>B - Biasa</option>
+                                    <option value="S" <?= set_select('sifat', 'S', $data['sifat'] == 'S') ?>>S - Segera</option>
+                                    <option value="P" <?= set_select('sifat', 'P', $data['sifat'] == 'P') ?>>P - Penting</option>
+                                    <option value="R" <?= set_select('sifat', 'R', $data['sifat'] == 'R') ?>>R - Rahasia</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="tanggal" class="col-md-3 form-label">Tanggal</label>
                             <div class="col-md-9">
                                 <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $surat['tanggal'] ?>" required disabled>
@@ -102,22 +117,6 @@
                                 </select>
                             </div>
                         </div>
-                        <!-- <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="kode_1" class="col-md-3 form-label">Kode:</label>
-                            <div class="col-md-9">
-                                <select name="kode_1" id="kode_1" class="form-control">
-                                    <option value="">Pilih Kode</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="kode_klasifikasi" class="col-md-3 form-label">Klasifikasi:</label>
-                            <div class="col-md-9">
-                                <select name="kode_klasifikasi" id="kode_klasifikasi" class="form-control">
-                                    <option value="">Pilih Kode Klasifikasi</option>
-                                </select>
-                            </div>
-                        </div> -->
                         <div class="row form-group align-items-center flex-column flex-md-row">
                             <label for="kode_1" class="col-md-3 form-label">Kode:</label>
                             <div class="col-md-9">
@@ -205,6 +204,14 @@
             window.open(url, '_blank');
         }
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#sifat').select2({
+            width: '100%'
+        });
+    });
 </script>
 
 <script>

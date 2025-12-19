@@ -123,8 +123,9 @@
                             <li><a class="dropdown-item" href="<?= base_url('dokumen26') ?>">Dashboard</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('surat_keluar26/manage') ?>">Surat Keluar</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('surat_masuk26/manage') ?>">Surat Masuk</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('fp26/manage') ?>">FP</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('sk26/manage') ?>">SK</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('kontrak26/manage') ?>">Kontrak</a></li>
+                            <!-- <li><a class="dropdown-item" href="< ?= base_url('kontrak26/manage') ?>">Kontrak</a></li> -->
                             <li><a class="dropdown-item" href="<?= base_url('dokumen26/arsip') ?>">Arsip</a></li>
                         </ul>
                     </li>

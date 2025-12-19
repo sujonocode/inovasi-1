@@ -4,10 +4,10 @@ namespace App\Controllers;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use App\Models\SuratKeluar26Model;
-use App\Models\KodeArsipSuratKeluarModel;
+use App\Models\FP26Model;
+use App\Models\KodeArsipFPModel;
 
-class SuratKeluar26 extends BaseController
+class FP26 extends BaseController
 {
     protected $db;
 
@@ -16,31 +16,31 @@ class SuratKeluar26 extends BaseController
         $this->db = \Config\Database::connect();
     }
 
-    public function index(string $page = 'Manajemen Dokumen | Surat Keluar')
+    public function index(string $page = 'Manajemen Dokumen | FP')
     {
-        $model = new SuratKeluar26Model();
+        $model = new FP26Model();
 
         $data['title'] = ucfirst($page);
-        $data['surats'] = $model->findAll();
+        $data['fps'] = $model->findAll();
 
         return view('templates/header', $data)
-            . view('surat_keluar26/index', $data)
+            . view('fp26/index', $data)
             . view('templates/footer');
     }
 
-    public function manage(string $page = 'Surat Keluar | Manage')
+    public function manage(string $page = 'FP | Manage')
     {
-        $model = new SuratKeluar26Model();
+        $model = new FP26Model();
 
         $data['title'] = ucfirst($page);
-        $data['surats'] = $model->findAll();
+        $data['fps'] = $model->findAll();
 
         return view('templates/header', $data)
-            . view('surat_keluar26/manage', $data)
+            . view('fp26/manage', $data)
             . view('templates/footer');
     }
 
-    public function create(string $page = 'Surat Keluar | Create')
+    public function create(string $page = 'FP | Tambah')
     {
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
@@ -50,58 +50,17 @@ class SuratKeluar26 extends BaseController
             'title' => ucfirst($page),
         ];
 
-        // Fetch distinct 'jenis' options from the 'kode_arsip_surat_keluar' table
+        // Fetch distinct 'jenis' options from the 'kode_arsip' table
         $db = \Config\Database::connect();
-        $data['jenisOptions'] = $db->table('kode_arsip_surat_keluar')
-            ->select('jenis')
+        $data['kodeKlasifikasiOptions'] = $db->table('kode_arsip_fp')
+            ->select('kode_klasifikasi')
             ->distinct()
             ->get()
             ->getResultArray();
 
         return view('templates/header', $data)
-            . view('surat_keluar26/create', $data)
+            . view('fp26/create', $data)
             . view('templates/footer');
-    }
-
-    public function getKode1()
-    {
-        if ($this->request->isAJAX()) {
-            $jenis = $this->request->getPost('jenis');
-            $db = \Config\Database::connect();
-            $kode1Options = $db->table('kode_arsip_surat_keluar')
-                ->select('kode_1')
-                ->distinct()
-                ->where('jenis', $jenis)
-                ->get()
-                ->getResultArray();
-
-            return $this->response
-                ->setHeader('X-CSRF-TOKEN', csrf_hash()) // Send new token
-                ->setJSON($kode1Options);
-        }
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-    }
-
-    public function getKodeKlasifikasi()
-    {
-        if ($this->request->isAJAX()) {
-            $kode1 = $this->request->getPost('kode_1');
-            $db = \Config\Database::connect();
-            $kodeKlasifikasiOptions = $db->table('kode_arsip_surat_keluar')
-                ->select('kode_klasifikasi')
-                ->distinct()
-                ->where('kode_1', $kode1)
-                ->get()
-                ->getResultArray();
-
-            // Debug CSRF token
-            log_message('debug', 'New CSRF Token (getKodeKlasifikasi): ' . csrf_hash());
-
-            return $this->response
-                ->setHeader('X-CSRF-TOKEN', csrf_hash()) // Send new token
-                ->setJSON($kodeKlasifikasiOptions);
-        }
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
     }
 
     public function getKodeArsip()
@@ -109,15 +68,15 @@ class SuratKeluar26 extends BaseController
         // Get the selected 'kode_klasifikasi' from the request
         $kodeKlasifikasi = $this->request->getPost('kode_klasifikasi');
 
-        // Assuming you have a model for the table, e.g., KodeArsipSuratKeluarModel
-        $kodeArsipSuratKeluarModel = new KodeArsipSuratKeluarModel();
+        // Assuming you have a model for the table, e.g., KodeArsipModel
+        $kodeArsipFPModel = new KodeArsipFPModel();
 
         // Retrieve the 'kode_arsip' based on the selected 'kode_klasifikasi'
-        $result = $kodeArsipSuratKeluarModel->where('kode_klasifikasi', $kodeKlasifikasi)->first();
+        $result = $kodeArsipFPModel->where('kode_klasifikasi', $kodeKlasifikasi)->first();
         $this->response->setHeader('X-CSRF-Token', csrf_hash());
         // Return the result as JSON
         if ($result) {
-            return $this->response->setJSON(['kode_arsip' => $result['kode']]);
+            return $this->response->setJSON(['kode' => $result['kode']]);
         } else {
             return $this->response->setJSON(null);
         }
@@ -154,23 +113,12 @@ class SuratKeluar26 extends BaseController
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
 
-        $model = new SuratKeluar26Model();
+        $model = new FP26Model();
 
         $username = session()->get('username');
 
         $tanggal = $this->request->getPost('tanggal');
         list($year, $month, $day) = explode('-', $tanggal);
-
-        $sifat = $this->request->getPost('sifat');
-
-        $prefixMap = [
-            'B' => 'B-',
-            'P' => 'P-',
-            'S' => 'S-',
-            'R' => 'R-',
-        ];
-
-        $prefix = $prefixMap[$sifat] ?? '';
 
         if ($this->request->getPost('jenis_penomoran') == 'urut') {
             $nomor_urut_akhir = $model->selectMax('nomor_urut')->get()->getRowArray()['nomor_urut'];
@@ -179,14 +127,14 @@ class SuratKeluar26 extends BaseController
             $nomor_sisip = 0;
 
             if ($this->request->getPost('kode_arsip') == "") {
-                $nomor = $prefix . $nomor_urut_text . '/' . '18020' . '/' . $year;
+                $nomor = $nomor_urut_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $prefix . $nomor_urut_text . '/' . '18020' . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
+                $nomor = $nomor_urut_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
             $tanggal = $this->request->getPost('tanggal');
 
-            $builder = $this->db->table('surat_keluar_26');
+            $builder = $this->db->table('fp_26');
 
             $query = $builder->select('id, nomor_urut, nomor_sisip')
                 ->where('tanggal', $tanggal)
@@ -210,7 +158,7 @@ class SuratKeluar26 extends BaseController
             }
 
             if (!$result) {
-                $builder = $this->db->table('surat_keluar_26');
+                $builder = $this->db->table('fp_26');
                 $query = $builder
                     ->select('id, nomor_urut, nomor_sisip')
                     ->where('tanggal <', $tanggal)
@@ -242,20 +190,17 @@ class SuratKeluar26 extends BaseController
             $nomor_sisip_text = $this->numberToText2($nomor_sisip);
 
             if ($this->request->getPost('kode_arsip') == "") {
-                $nomor = $prefix . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '18020' . '/' . $year;
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $prefix . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '18020' . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         }
 
         $data = [
-            'sifat' => $sifat,
-            'jenis_penomoran' => $this->request->getPost('jenis_penomoran'),
             'tanggal' => $this->request->getPost('tanggal'),
-            'alamat' => $this->request->getPost('alamat'),
-            'ringkasan' => $this->request->getPost('ringkasan'),
+            'jenis_penomoran' => $this->request->getPost('jenis_penomoran'),
             'kode_arsip' => $this->request->getPost('kode_arsip'),
-            'kategori' => $this->request->getPost('kategori'),
+            'ringkasan' => $this->request->getPost('ringkasan'),
             'catatan' => $this->request->getPost('catatan'),
             // 'url' => $this->request->getPost('url'),
             'nomor' => $nomor,
@@ -265,26 +210,28 @@ class SuratKeluar26 extends BaseController
         ];
 
         if ($model->save($data)) {
-            return redirect()->to(base_url('surat_keluar26/manage'))->with('success', 'Data surat berhasil disimpan.' . '<br>' . 'Nomor surat: ' . $nomor);
+            return redirect()->to(base_url('fp26/manage'))->with('success', 'Data FP berhasil disimpan.' . '<br>' . 'Nomor FP: ' . $nomor);
         }
 
-        return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data surat');
+        return redirect()->back()->withInput()->with('error', 'Gagal menyimpan data FP');
     }
 
-    public function edit($id, string $page = 'Surat Keluar | Edit')
+    public function edit($id, string $page = 'FP | Edit')
     {
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
 
-        $model = new SuratKeluar26Model();
+        $model = new FP26Model();
 
-        $surat = $model->find($id);
-        $data = ['surat' => $surat];
+        // Fetch the fp data by id
+        $fp = $model->find($id);
+        $data = ['fp' => $fp];
         $data['title'] = ucfirst($page);
 
-        if (!$surat) {
-            session()->setFlashdata('error', 'Data surat tidak ditemukan.');
-            return redirect()->to(base_url('surat_keluar26/manage'));
+        // If fp data is not found, show error and redirect
+        if (!$fp) {
+            session()->setFlashdata('error', 'Data fp tidak ditemukan.');
+            return redirect()->to(base_url('/fp26/manage'));
         }
 
         // Get the current logged-in user's username
@@ -293,28 +240,25 @@ class SuratKeluar26 extends BaseController
         if (session()->get('role') === 'admin') {
             // Fetch distinct 'jenis' options from the 'kode_arsip' table
             $db = \Config\Database::connect();
-            $data['jenisOptions'] = $db->table('kode_arsip_surat_keluar')
-                ->select('jenis')
+            $data['kodeKlasifikasiOptions'] = $db->table('kode_arsip_fp')
+                ->select('kode_klasifikasi')
                 ->distinct()
                 ->get()
                 ->getResultArray();
 
-            // Add title to the data array
-            $data['title'] = ucfirst($page);
-
             // Return the view with all the data
             return view('templates/header', $data)
-                . view('surat_keluar26/edit', $data)
+                . view('fp26/edit', $data)
                 . view('templates/footer');
         } else {
-            if ($surat['created_by'] !== $currentUsername) {
-                return redirect()->back()->with('limited', 'Surat hanya bisa diubah oleh orang yang membuatnya.');
+            if ($fp['created_by'] !== $currentUsername) {
+                return redirect()->back()->with('limited', 'FP hanya bisa diubah oleh orang yang membuatnya.');
             }
         }
 
         // Fetch distinct 'jenis' options from the 'kode_arsip' table
         $db = \Config\Database::connect();
-        $data['jenisOptions'] = $db->table('kode_arsip_surat_keluar')
+        $data['jenisOptions'] = $db->table('kode_arsip')
             ->select('jenis')
             ->distinct()
             ->get()
@@ -325,7 +269,7 @@ class SuratKeluar26 extends BaseController
 
         // Return the view with all the data
         return view('templates/header', $data)
-            . view('surat_keluar26/edit', $data)
+            . view('fp26/edit', $data)
             . view('templates/footer');
     }
 
@@ -342,10 +286,10 @@ class SuratKeluar26 extends BaseController
         $response = $this->response;
         $response->setHeader('X-CSRF-TOKEN', csrf_hash());
 
-        $model = new SuratKeluar26Model();
+        $model = new FP26Model();
 
-        $builder = $this->db->table('surat_keluar');
-        $query = $builder->select('id, tanggal, sifat, jenis_penomoran, nomor_urut, nomor_sisip')
+        $builder = $this->db->table('fp_26');
+        $query = $builder->select('id, tanggal, jenis_penomoran, nomor_urut, nomor_sisip')
             ->where('id', $id)
             ->orderBy('nomor_urut', 'DESC')
             ->orderBy('nomor_sisip', 'DESC')
@@ -354,19 +298,8 @@ class SuratKeluar26 extends BaseController
 
         $result = $query->getRow();
         if (!$result) {
-            return redirect()->to(base_url('surat_keluar26/manage'))->with('error', 'Surat tidak ditemukan');
+            return redirect()->to(base_url('fp26/manage'))->with('error', 'FP tidak ditemukan');
         }
-
-        $sifat = $this->request->getPost('sifat');
-
-        $prefixMap = [
-            'B' => 'B-',
-            'P' => 'P-',
-            'S' => 'S-',
-            'R' => 'R-',
-        ];
-
-        $prefix = $prefixMap[$sifat] ?? '';
 
         $tanggal = $result->tanggal;
         list($year, $month, $day) = explode('-', $tanggal);
@@ -376,75 +309,71 @@ class SuratKeluar26 extends BaseController
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
 
             if ($this->request->getPost('kode_arsip') == "") {
-                $nomor = $prefix . $nomor_urut_text . '/' . '18020' . '/' . $year;
+                $nomor = $nomor_urut_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $prefix . $nomor_urut_text . '/' . '18020' . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
+                $nomor = $nomor_urut_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         } elseif ($result->jenis_penomoran == 'sisip') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
             $nomor_sisip_text = $this->numberToText2($result->nomor_sisip);
-
             if ($this->request->getPost('kode_arsip') == "") {
-                $nomor = $prefix . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '18020' . '/' . $year;
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . ' TAHUN ' . $year;
             } else {
-                $nomor = $prefix . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . '18020' . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
+                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
             }
         }
 
         $updateSuccessful = $model->update($id, [
-            'sifat' => $sifat,
             'kode_arsip' => $this->request->getPost('kode_arsip'),
-            'alamat' => $this->request->getPost('alamat'),
             'ringkasan' => $this->request->getPost('ringkasan'),
             'catatan' => $this->request->getPost('catatan'),
-            'url' => $this->request->getPost('url'),
+            // 'url' => $this->request->getPost('url'),
             'nomor' => $nomor,
         ]);
 
         // Check if update was successful and pass the appropriate message
         if ($updateSuccessful) {
-            return redirect()->to(base_url('surat_keluar26/manage'))->with('success', 'Data surat berhasil diupdate.' . '<br>' . 'Nomor surat: ' . $nomor);
+            return redirect()->to(base_url('fp26/manage'))->with('success', 'Data FP berhasil diupdate.' . '<br>' . 'Nomor FP: ' . $nomor);
         } else {
-            return redirect()->to(base_url('surat_keluar26/manage'))->with('error', 'Gagal mengupdate data surat');
+            return redirect()->to(base_url('fp26/manage'))->with('error', 'Gagal mengupdate data FP');
         }
     }
 
     public function delete($id)
     {
-        $model = new SuratKeluar26Model();
+        $model = new FP26Model();
 
-        $surat = $model->find($id);
+        $fp = $model->find($id);
 
-        if (!$surat) {
-            return redirect()->back()->with('error', 'Data surat dengan nomor tersebut tidak ditemukan');
+        if (!$fp) {
+            return redirect()->back()->with('error', ' Data FP dengan nomor tersebut tidak ditemukan');
         }
 
         if (session()->get('role') === 'admin') {
-
-            $nomor = $surat['nomor'];
+            $nomor = $fp['nomor'];
 
             // Call the delete logic directly here
             $model->delete($id);
 
-            return redirect()->to(base_url('surat_keluar26/manage'))->with('success', 'Data surat berhasil dihapus.' . '<br>' . 'Nomor surat yang terhapus: ' . $nomor);
+            return redirect()->to(base_url('fp26/manage'))->with('success', 'Data FP berhasil dihapus.' . '<br>' . 'Nomor FP yang terhapus: ' . $nomor);
         } else {
-            if (session()->get('username') !== $surat['created_by']) {
-                return redirect()->back()->with('limited', 'Data surat hanya bisa dihapus oleh orang yang membuatnya atau admin');
+            if (session()->get('username') !== $fp['created_by']) {
+                return redirect()->back()->with('limited', 'Data FP hanya bisa dihapus oleh orang yang membuatnya atau admin');
             }
         }
 
-        $nomor = $surat['nomor'];
+        $nomor = $fp['nomor'];
 
         // Call the delete logic directly here
         $model->delete($id);
 
-        return redirect()->to(base_url('surat_keluar26/manage'))->with('success', 'Data surat berhasil dihapus.' . '<br>' . 'Nomor surat yang terhapus: ' . $nomor);
+        return redirect()->to(base_url('fp26/manage'))->with('success', 'Data FP berhasil dihapus.' . '<br>' . 'Nomor FP yang terhapus: ' . $nomor);
     }
 
     public function exportExcel()
     {
         $db = \Config\Database::connect();
-        $query = $db->query("SELECT * FROM surat_keluar26");
+        $query = $db->query("SELECT * FROM fp_26");
         $data = $query->getResultArray();
 
         $spreadsheet = new Spreadsheet();
@@ -474,20 +403,20 @@ class SuratKeluar26 extends BaseController
 
         // Set headers for download
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="surat_keluar.xlsx"');
+        header('Content-Disposition: attachment;filename="surat_keputusan.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer->save('php://output');
         exit;
     }
 
-    public function getSurats()
+    public function getFPs()
     {
-        $model = new SuratKeluar26Model();
-        $surats = $model->findAll();
+        $model = new FP26Model();
+        $fps = $model->findAll();
 
         return view('templates/header')
-            . view('surat_keluar26/index', ['surats' => $surats])
+            . view('fp26/index', ['fps' => $fps])
             . view('templates/footer');
     }
 
