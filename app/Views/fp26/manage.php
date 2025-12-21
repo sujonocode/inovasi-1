@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center flex-wrap">
-                <h1 class="mb-3 mb-md-0">Data Surat Keputusan (FP)</h1>
+                <h1 class="mb-3 mb-md-0">Data FP</h1>
                 <div class="d-flex gap-2 flex-wrap">
                     <a href="<?= base_url('fp26/create') ?>"
                         class="btn btn-primary btn-sm flex-fill text-center"
@@ -26,7 +26,7 @@
                         <tr>
                             <th>Nomor</th>
                             <th>Tanggal</th>
-                            <th>Perihal</th>
+                            <th>Ringkasan Isi</th>
                             <th>Catatan</th>
                             <th>PIC</th>
                             <th>Aksi</th>
@@ -42,7 +42,6 @@
                                     <td><?= $fp['catatan'] ?></td>
                                     <td><?= $fp['created_by'] ?></td>
                                     <td>
-                                        <!-- <a href="#" onclick="handleLinkClick('< ?= $fp['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a> -->
                                         <a href="/fp26/edit/<?= $fp['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
                                         <a href="#" onclick="openDeleteModal(<?= $fp['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
                                     </td>
@@ -109,17 +108,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Notifikasi</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 Apakah Anda yakin ingin menghapus data FP ini?
             </div>
             <div class="modal-footer">
-                <!-- Cancel Button -->
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <!-- Delete Button -->
-                <button id="confirmDeleteBtn" class="btn btn-danger">Hapus</button>
+                <a id="confirmDeleteBtn" class="btn btn-danger" href="#">Hapus</a>
             </div>
         </div>
     </div>
@@ -130,14 +127,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="limitedModalLabel">Notifikasi</h5>
+                    <h5 class="modal-title" id="limitedModalLabel">Limited</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <?= session()->getFlashdata('limited'); ?>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -155,13 +152,13 @@
                 <p id="modal-message"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- <script>
+<script>
     // Function to handle the "eye" icon click event
     function handleLinkClick(url) {
         const modalMessage = document.getElementById('modal-message');
@@ -176,7 +173,7 @@
             window.open(url, '_blank');
         }
     }
-</script> -->
+</script>
 
 <script>
     // Open the modal and set the delete URL dynamically

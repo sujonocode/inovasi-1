@@ -8,6 +8,11 @@
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
             <div class="row g-3 align-items-end">
+                <div class="col-12 text-end mt-2">
+                    <button id="resetFilter" class="btn btn-sm btn-outline-secondary">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Filter
+                    </button>
+                </div>
                 <!-- Filter Tahun -->
                 <div class="col-md-6">
                     <label class="form-label fw-semibold text-secondary">Filter Tahun</label>
@@ -175,6 +180,10 @@
 
 <script>
     $(document).ready(function() {
+
+        /* =========================
+           INIT DATATABLE
+        ========================== */
         var table = $('#tabelBeban').DataTable({
             order: [
                 [7, 'desc']
@@ -183,7 +192,7 @@
             scrollX: true,
             scrollY: '60vh',
             scrollCollapse: true,
-            fixedHeader: true, // 👈 aktifkan sticky header bawaan DataTables
+            fixedHeader: true,
             language: {
                 search: "Cari:",
                 lengthMenu: "Tampilkan _MENU_ data per halaman",
@@ -199,40 +208,76 @@
             }
         });
 
-        // Filter Tahun
-        $('#filterTahun').on('change', function() {
-            var val = $.fn.dataTable.util.escapeRegex($(this).val());
-            table.column(9).search(val ? '^' + val + '$' : '', true, false).draw();
+        /* =========================
+           RESTORE FILTER (LOAD)
+        ========================== */
+        const filters = {
+            filterTahun: 9,
+            filterBulan: 10,
+            filterPegawai: 1,
+            filterKegiatan: 2
+        };
+
+        Object.keys(filters).forEach(function(id) {
+            const value = sessionStorage.getItem(id);
+            if (value !== null) {
+                $('#' + id).val(value);
+                const val = $.fn.dataTable.util.escapeRegex(value);
+                table.column(filters[id])
+                    .search(val ? '^' + val + '$' : '', true, false);
+            }
+        });
+        table.draw();
+
+        /* =========================
+           SAVE FILTER (CHANGE)
+        ========================== */
+        Object.keys(filters).forEach(function(id) {
+            $('#' + id).on('change', function() {
+                const value = this.value;
+                sessionStorage.setItem(id, value);
+
+                const val = $.fn.dataTable.util.escapeRegex(value);
+                table.column(filters[id])
+                    .search(val ? '^' + val + '$' : '', true, false)
+                    .draw();
+            });
         });
 
-        // Filter Bulan
-        $('#filterBulan').on('change', function() {
-            var val = $.fn.dataTable.util.escapeRegex($(this).val());
-            table.column(10).search(val ? '^' + val + '$' : '', true, false).draw();
-        });
-
-        // Filter Pegawai
-        $('#filterPegawai').on('change', function() {
-            var val = $.fn.dataTable.util.escapeRegex($(this).val());
-            table.column(1).search(val ? '^' + val + '$' : '', true, false).draw();
-        });
-
-        // Filter Kegiatan
-        $('#filterKegiatan').on('change', function() {
-            var val = $.fn.dataTable.util.escapeRegex($(this).val());
-            table.column(2).search(val ? '^' + val + '$' : '', true, false).draw();
-        });
-    });
-
-    // Modal event
-    document.getElementById('modalRealisasi').addEventListener('show.bs.modal', function(event) {
-        var button = event.relatedTarget;
-        document.getElementById('modal_id').value = button.getAttribute('data-id');
-        document.getElementById('modal_nama').value = button.getAttribute('data-nama');
-        document.getElementById('modal_target').value = button.getAttribute('data-target');
-        document.getElementById('modal_realisasi').value = button.getAttribute('data-realisasi');
     });
 </script>
+
+<script>
+    /* =========================
+   MODAL UPDATE REALISASI
+========================== */
+    document.getElementById('modalRealisasi')
+        .addEventListener('show.bs.modal', function(event) {
+
+            var button = event.relatedTarget;
+
+            document.getElementById('modal_id').value =
+                button.getAttribute('data-id');
+
+            document.getElementById('modal_nama').value =
+                button.getAttribute('data-nama');
+
+            document.getElementById('modal_target').value =
+                button.getAttribute('data-target');
+
+            document.getElementById('modal_realisasi').value =
+                button.getAttribute('data-realisasi');
+        });
+
+    $('#resetFilter').on('click', function() {
+        sessionStorage.removeItem('filterTahun');
+        sessionStorage.removeItem('filterBulan');
+        sessionStorage.removeItem('filterPegawai');
+        sessionStorage.removeItem('filterKegiatan');
+        location.reload();
+    });
+</script>
+
 
 <style>
     .page-title {

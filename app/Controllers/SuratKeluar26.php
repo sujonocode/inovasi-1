@@ -344,7 +344,7 @@ class SuratKeluar26 extends BaseController
 
         $model = new SuratKeluar26Model();
 
-        $builder = $this->db->table('surat_keluar');
+        $builder = $this->db->table('surat_keluar_26');
         $query = $builder->select('id, tanggal, sifat, jenis_penomoran, nomor_urut, nomor_sisip')
             ->where('id', $id)
             ->orderBy('nomor_urut', 'DESC')

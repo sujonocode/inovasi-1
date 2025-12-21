@@ -127,9 +127,9 @@ class FP26 extends BaseController
             $nomor_sisip = 0;
 
             if ($this->request->getPost('kode_arsip') == "") {
-                $nomor = $nomor_urut_text . ' TAHUN ' . $year;
+                $nomor = 'B-' . $nomor_urut_text . '/' . $year;
             } else {
-                $nomor = $nomor_urut_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = 'B-' . $nomor_urut_text . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
             }
         } elseif ($this->request->getPost('jenis_penomoran') == 'sisip') {
             $tanggal = $this->request->getPost('tanggal');
@@ -190,9 +190,9 @@ class FP26 extends BaseController
             $nomor_sisip_text = $this->numberToText2($nomor_sisip);
 
             if ($this->request->getPost('kode_arsip') == "") {
-                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . ' TAHUN ' . $year;
+                $nomor = 'B-' . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $year;
             } else {
-                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = 'B-' . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
             }
         }
 
@@ -309,17 +309,17 @@ class FP26 extends BaseController
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
 
             if ($this->request->getPost('kode_arsip') == "") {
-                $nomor = $nomor_urut_text . ' TAHUN ' . $year;
+                $nomor = 'B-' . $nomor_urut_text . '/' . $year;
             } else {
-                $nomor = $nomor_urut_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = 'B-' . $nomor_urut_text . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
             }
         } elseif ($result->jenis_penomoran == 'sisip') {
             $nomor_urut_text = $this->numberToText3($result->nomor_urut);
             $nomor_sisip_text = $this->numberToText2($result->nomor_sisip);
             if ($this->request->getPost('kode_arsip') == "") {
-                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . ' TAHUN ' . $year;
+                $nomor = 'B-' . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $year;
             } else {
-                $nomor = $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('kode_arsip') . ' TAHUN ' . $year;
+                $nomor = 'B-' . $nomor_urut_text . '.' . $nomor_sisip_text . '/' . $this->request->getPost('kode_arsip') . '/' . $year;
             }
         }
 
@@ -346,10 +346,11 @@ class FP26 extends BaseController
         $fp = $model->find($id);
 
         if (!$fp) {
-            return redirect()->back()->with('error', ' Data FP dengan nomor tersebut tidak ditemukan');
+            return redirect()->back()->with('error', 'Data surat dengan nomor tersebut tidak ditemukan');
         }
 
         if (session()->get('role') === 'admin') {
+
             $nomor = $fp['nomor'];
 
             // Call the delete logic directly here

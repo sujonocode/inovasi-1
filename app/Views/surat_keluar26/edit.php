@@ -78,12 +78,11 @@
                             <div class="col-md-9">
                                 <select name="sifat" id="sifat" class="form-select select2" required>
                                     <option value="">-- Pilih Sifat Surat --</option>
-                                    <option value="B" <?= set_select('sifat', 'B', $data['sifat'] == 'B') ?>>B - Biasa</option>
-                                    <option value="S" <?= set_select('sifat', 'S', $data['sifat'] == 'S') ?>>S - Segera</option>
-                                    <option value="P" <?= set_select('sifat', 'P', $data['sifat'] == 'P') ?>>P - Penting</option>
-                                    <option value="R" <?= set_select('sifat', 'R', $data['sifat'] == 'R') ?>>R - Rahasia</option>
+                                    <option value="B" <?= ($surat['sifat'] == 'B') ? 'selected' : '' ?>>B - Biasa</option>
+                                    <option value="S" <?= ($surat['sifat'] == 'S') ? 'selected' : '' ?>>S - Segera</option>
+                                    <option value="P" <?= ($surat['sifat'] == 'P') ? 'selected' : '' ?>>P - Penting</option>
+                                    <option value="R" <?= ($surat['sifat'] == 'R') ? 'selected' : '' ?>>R - Rahasia</option>
                                 </select>
-
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">

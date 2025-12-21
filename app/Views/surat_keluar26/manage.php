@@ -56,9 +56,6 @@
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <!-- <tr>
-                                <td colspan="7" style="text-align: center; font-weight: bold;">Belum ada data surat keluar</td>
-                            </tr> -->
                             <?php for ($i = 0; $i < 10; $i++): ?>
                                 <tr>
                                     <td>&nbsp;</td>

@@ -39,8 +39,8 @@
                     <div class="row form-group align-items-center flex-column flex-md-row">
                         <label for="kode_klasifikasi" class="col-md-3 form-label">Kode Klasifikasi:</label>
                         <div class="col-md-9">
-                            <select name="kode_klasifikasi" id="kode_klasifikasi" class="form-control">
-                                <option value="">Select Kode Klasifikasi</option>
+                            <select name="kode_klasifikasi" id="kode_klasifikasi" class="form-control select2">
+                                <option value="">Pilih Kode Klasifikasi</option>
                                 <?php foreach ($kodeKlasifikasiOptions as $option): ?>
                                     <option value="<?= $option['kode_klasifikasi'] ?>"><?= $option['kode_klasifikasi'] ?></option>
                                 <?php endforeach; ?>
@@ -135,6 +135,15 @@
 
 <script>
     $(document).ready(function() {
+        $('#kode_klasifikasi').select2({
+            theme: 'bootstrap-5',
+            width: '100%', // Ensures it matches other Bootstrap inputs
+            placeholder: "Pilih Kode Klasifikasi",
+            allowClear: true,
+            dropdownAutoWidth: false, // Prevents it from becoming too wide
+            scrollAfterSelect: true
+        });
+
         // Update CSRF token dynamically after form submission
         function updateCSRFToken(xhr) {
             const newToken = xhr.getResponseHeader('X-CSRF-TOKEN');
