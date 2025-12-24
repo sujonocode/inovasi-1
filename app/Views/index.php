@@ -30,7 +30,7 @@
         <div class="row g-4 justify-content-center">
             <!-- Feature Item -->
             <div class="col-lg-6 col-md-6">
-                <a href="/dokumen" class="text-decoration-none text-dark">
+                <a href="/dokumen26" class="text-decoration-none text-dark">
                     <div class="icon-box text-center bg-light border h-100 d-flex flex-column justify-content-center align-items-center">
                         <i class="fas fa-file-contract"></i>
                         <h4 class="mt-3">SIPASTI</h4>

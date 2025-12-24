@@ -21,6 +21,7 @@ use App\Controllers\Humas;
 use App\Controllers\QualityGates;
 use App\Controllers\Publikasi;
 use App\Controllers\Lainnya;
+use App\Controllers\Lantas;
 
 $routes->group('', ['filter' => 'role:admin,user'], function ($routes) {
     $routes->get('/dashboard', 'DashboardController::index');
@@ -245,11 +246,19 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/pantau/work_calendar', 'Pantau::workCalendar');
 
     // lantas
-    $routes->get('/lantas', 'Lantas::index');
-    $routes->get('/lantas/manage', 'Lantas::manage');
-    $routes->get('/lantas/edit/(:num)', 'Lantas::edit/$1');
-    $routes->post('/lantas/update/(:num)', 'Lantas::update/$1');
-    $routes->get('/lantas/delete/(:num)', 'Lantas::delete/$1');
+    $routes->get('/lantas', [Lantas::class, 'index']);
+    $routes->group('/lantas', function ($routes) {
+        $routes->get('manage', 'Lantas::manage');
+        $routes->get('create', 'Lantas::create');
+        $routes->post('store', 'Lantas::store');
+        $routes->get('edit/(:num)', 'Lantas::edit/$1');
+        $routes->post('update/(:num)', 'Lantas::update/$1');
+        $routes->get('delete/(:num)', 'Lantas::delete/$1');
+        $routes->post('create/getKode1', 'Lantas::getKode1');
+        $routes->post('create/getKodeKlasifikasi', 'Lantas::getKodeKlasifikasi');
+        $routes->post('create/getKodeArsip', 'Lantas::getKodeArsip');
+        $routes->get('export_xlsx', 'Lantas::exportExcel');
+    });
 });
 
 $routes->get('/profile', 'Profile::index', ['filter' => 'auth']);

@@ -66,19 +66,19 @@
                     <form id="editForm" onsubmit="return validateCheckboxes()" action="<?= base_url('lantas/update/' . $kendala['id']) ?>" method="POST">
                         <?= csrf_field() ?>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="nomor" class="col-md-3 form-label">Nomor</label>
+                            <label for="nomor" class="col-md-3 form-label">Tim</label>
                             <div class="col-md-9">
                                 <input id="tanggal" type="text" name="nomor" class="form-control" value="<?= $kendala['nomor'] ?>" required disabled>
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="tanggal" class="col-md-3 form-label">Tanggal</label>
+                            <label for="tanggal" class="col-md-3 form-label">Nama</label>
                             <div class="col-md-9">
                                 <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $kendala['tanggal'] ?>" required disabled>
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="kode_klasifikasi" class="col-md-3 form-label">Kode Klasifikasi:</label>
+                            <label for="kode_klasifikasi" class="col-md-3 form-label">Tahun</label>
                             <div class="col-md-9">
                                 <select name="kode_klasifikasi" id="kode_klasifikasi" class="form-control">
                                     <option value="">Select Kode Klasifikasi</option>
@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="kode_arsip" class="col-md-3 form-label">Kode arsip:</label>
+                            <label for="kode_arsip" class="col-md-3 form-label">Bulan</label>
                             <div class="col-md-9">
                                 <input id="kode_arsip" type="text" name="kode_arsip" class="form-control" required readonly
                                     style="background-color: #f0f0f0; color: #555555; border: 1px solid #ccc;"
@@ -97,13 +97,13 @@
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="tanggal" class="col-md-3 form-label">Tanggal</label>
+                            <label for="tanggal" class="col-md-3 form-label">Kendala</label>
                             <div class="col-md-9">
                                 <input id="tanggal" type="date" name="tanggal" class="form-control" value="<?= $kendala['tanggal'] ?>" required>
                             </div>
                         </div>
                         <div class="row form-group align-items-center flex-column flex-md-row">
-                            <label for="perihal" class="col-md-3 form-label">Perihal:</label>
+                            <label for="perihal" class="col-md-3 form-label">Solusi</label>
                             <div class="col-md-9">
                                 <input id="perihal" type="text" name="perihal" class="form-control"
                                     value="<?= $kendala['perihal'] ?>" required>

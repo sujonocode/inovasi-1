@@ -107,16 +107,25 @@
                     <li class="nav-item">
                         <a class="nav-link <?= (uri_string() == '' || uri_string() == '/') ? 'active' : '' ?>" href="<?= base_url('') ?>">Beranda</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="<?= base_url('dokumen') ?>" id="dokumenDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SIPASTI</a>
-                        <ul class="dropdown-menu" aria-labelledby="dokumenDropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('dokumen') ?>">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('surat_keluar/manage') ?>">Surat Keluar</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('surat_masuk/manage') ?>">Surat Masuk</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('sk/manage') ?>">SK</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('kontrak/manage') ?>">Kontrak</a></li>
-                        </ul>
-                    </li>
+                    <?php if (date('Y-m-d') < '2026-01-01'): ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                                href="<?= base_url('dokumen') ?>"
+                                id="dokumenDropdown"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                SIPASTI 2025
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dokumenDropdown">
+                                <li><a class="dropdown-item" href="<?= base_url('dokumen') ?>">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('surat_keluar/manage') ?>">Surat Keluar</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('surat_masuk/manage') ?>">Surat Masuk</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('sk/manage') ?>">SK</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('kontrak/manage') ?>">Kontrak</a></li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="<?= base_url('dokumen_26') ?>" id="dokumenDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SIPASTI 2026</a>
                         <ul class="dropdown-menu" aria-labelledby="dokumenDropdown">

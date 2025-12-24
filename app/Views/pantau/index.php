@@ -20,9 +20,6 @@
                 <i class="bi bi-upload"></i> Upload Beban Kerja
             </a>
         <?php endif; ?>
-        <!-- <a href="< ?= base_url('/pantau/beban-kerja') ?>" class="btn btn-outline-success">
-            <i class="bi bi-list-task"></i> Daftar Beban Kerja
-        </a> -->
     </div>
 
     <?php if ($role2 !== 'anggota'): ?>
@@ -125,7 +122,12 @@
                             <?php endforeach; ?>
                             <?php if (empty($kegiatan)): ?>
                                 <tr>
-                                    <td colspan="5" class="text-center text-muted">Tidak ada kegiatan.</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>

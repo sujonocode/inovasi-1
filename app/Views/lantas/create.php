@@ -10,7 +10,7 @@
                 <form id="createForm" action="/lantas/store" method="post">
                     <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
                     <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label class="col-md-3 form-label">Jenis penomoran:</label>
+                        <label class="col-md-3 form-label">Tim:</label>
                         <div class="col-md-9">
                             <div class="row">
                                 <div class="col-6 col-md-3">
@@ -31,13 +31,13 @@
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="tanggal" class="col-md-3 form-label">Tanggal:</label>
+                        <label for="tanggal" class="col-md-3 form-label">Nama:</label>
                         <div class="col-md-9">
                             <input id="tanggal" type="date" name="tanggal" class="form-control" required>
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="kode_klasifikasi" class="col-md-3 form-label">Kode Klasifikasi:</label>
+                        <label for="kode_klasifikasi" class="col-md-3 form-label">Tahun:</label>
                         <div class="col-md-9">
                             <select name="kode_klasifikasi" id="kode_klasifikasi" class="form-control">
                                 <option value="">Select Kode Klasifikasi</option>
@@ -48,20 +48,20 @@
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="kode_arsip" class="col-md-3 form-label">Kode arsip:</label>
+                        <label for="kode_arsip" class="col-md-3 form-label">Bulan:</label>
                         <div class="col-md-9">
                             <input id="kode_arsip" type="text" name="kode_arsip" class="form-control" required readonly
                                 style="background-color: #f0f0f0; color: #555555; border: 1px solid #ccc;">
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="perihal" class="col-md-3 form-label">Perihal:</label>
+                        <label for="perihal" class="col-md-3 form-label">Kendala:</label>
                         <div class="col-md-9">
                             <input id="perihal" type="text" name="perihal" class="form-control" required>
                         </div>
                     </div>
                     <div class="row form-group align-items-center flex-column flex-md-row">
-                        <label for="catatan" class="col-md-3 form-label">Catatan:</label>
+                        <label for="catatan" class="col-md-3 form-label">Solusi:</label>
                         <div class="col-md-9">
                             <textarea id="catatan" name="catatan" class="form-control" rows="3"
                                 placeholder="Tambahkan catatan" required></textarea>

@@ -5,6 +5,9 @@ namespace App\Controllers;
 use App\Models\SuratKeluar26Model;
 use App\Models\SuratMasuk26Model;
 use App\Models\SK26Model;
+use App\Models\SuratKeluarModel;
+use App\Models\SuratMasukModel;
+use App\Models\SKModel;
 use App\Models\Kontrak26Model;
 
 class Dokumen26 extends BaseController
@@ -74,6 +77,13 @@ class Dokumen26 extends BaseController
     public function arsip2025(string $page = 'Dokumen | Arsip')
     {
         $data['title'] = ucfirst($page);
+
+        $model = new SuratKeluarModel();
+        $data['suratKeluars'] = $model->findAll();
+        $model = new SKModel();
+        $data['sks'] = $model->findAll();
+        $model = new SuratMasukModel();
+        $data['suratMasuks'] = $model->findAll();
 
         return view('templates/header', $data)
             . view('dokumen26/arsip', $data)

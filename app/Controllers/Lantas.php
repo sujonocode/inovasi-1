@@ -5,7 +5,7 @@ namespace App\Controllers;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\LantasModel;
-use App\Models\KodeArsipLantasModel;
+use CodeIgniter\I18n\Time;
 
 class Lantas extends BaseController
 {
@@ -50,14 +50,6 @@ class Lantas extends BaseController
             'title' => ucfirst($page),
         ];
 
-        // Fetch distinct 'jenis' options from the 'kode_arsip' table
-        $db = \Config\Database::connect();
-        $data['kodeKlasifikasiOptions'] = $db->table('kode_arsip_sk')
-            ->select('kode_klasifikasi')
-            ->distinct()
-            ->get()
-            ->getResultArray();
-
         return view('templates/header', $data)
             . view('lantas/create', $data)
             . view('templates/footer');
@@ -79,11 +71,14 @@ class Lantas extends BaseController
         $username = session()->get('username');
 
         $data = [
-            'tanggal' => $this->request->getPost('tanggal'),
-            'jenis_penomoran' => $this->request->getPost('jenis_penomoran'),
-            'kode_arsip' => $this->request->getPost('kode_arsip'),
-            'perihal' => $this->request->getPost('perihal'),
-            'catatan' => $this->request->getPost('catatan'),
+            'tim' => $this->request->getPost('tim'),
+            'nama' => $this->request->getPost('nama'),
+            'tahun' => $this->request->getPost('tahun'),
+            'bulan' => $this->request->getPost('bulan'),
+            'kendala' => $this->request->getPost('kendala'),
+            'solusi' => $this->request->getPost('solusi'),
+            'created_at' => Time::now('Asia/Jakarta')->toDateTimeString(),
+            'created_by' => $username,
         ];
 
         if ($model->save($data)) {
@@ -179,10 +174,13 @@ class Lantas extends BaseController
         }
 
         $updateSuccessful = $model->update($id, [
-            'kode_arsip' => $this->request->getPost('kode_arsip'),
-            'perihal' => $this->request->getPost('perihal'),
-            'catatan' => $this->request->getPost('catatan'),
-            'url' => $this->request->getPost('url'),
+            'tim' => $this->request->getPost('tim'),
+            'nama' => $this->request->getPost('nama'),
+            'tahun' => $this->request->getPost('tahun'),
+            'bulan' => $this->request->getPost('bulan'),
+            'kendala' => $this->request->getPost('kendala'),
+            'solusi' => $this->request->getPost('solusi'),
+            'created_at' => Time::now('Asia/Jakarta')->toDateTimeString(),
         ]);
 
         // Check if update was successful and pass the appropriate message

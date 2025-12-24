@@ -12,13 +12,12 @@
                         Jenis Dokumen
                     </label>
                     <select id="pilihDokumen" class="form-select form-select-lg">
-                        <option value="" selected disabled>
+                        <option value="">
                             -- Silakan pilih dokumen --
                         </option>
-                        <option value="surat_keluar_2025">📤 Surat Keluar</option>
+                        <option value="surat_keluar_2025" selected>📤 Surat Keluar</option>
                         <option value="surat_masuk_2025">📥 Surat Masuk</option>
                         <option value="sk_2025">📄 Surat Keputusan (SK)</option>
-                        <option value="kontrak_2025">📝 Kontrak</option>
                     </select>
                 </div>
             </div>
@@ -27,7 +26,7 @@
     </div>
 </div>
 
-<div id="surat_keluar_2025" class="container my-5 d-none">
+<div id="surat_keluar_2025" class="container my-5">
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center flex-wrap">
@@ -49,57 +48,56 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
-                <table id="example_surat_keluar_2025" class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nomor</th>
-                            <th>Tanggal</th>
-                            <th>Alamat/Tujuan</th>
-                            <th>Ringkasan Isi</th>
-                            <th>Catatan</th>
-                            <th>PIC</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($surats)): ?>
-                            <?php foreach ($surats as $surat): ?>
-                                <tr>
-                                    <td><?= $surat['nomor'] ?></td>
-                                    <td><?= $surat['tanggal'] ?></td>
-                                    <td><?= $surat['alamat'] ?></td>
-                                    <td><?= $surat['ringkasan'] ?></td>
-                                    <td><?= $surat['catatan'] ?></td>
-                                    <td><?= $surat['created_by'] ?></td>
-                                    <td>
-                                        <?php if ($surat['kategori'] === 'Surat Keluar (Internal)'): ?>
-                                            <i class="fa-solid fa-flag" style="color: #28a745;" title="Surat Keluar (Internal)"></i>
-                                        <?php elseif ($surat['kategori'] === 'Surat Keluar (Eksternal)'): ?>
-                                            <i class="fa-solid fa-flag" style="color: #fd7e14;" title="Surat Keluar (Eksternal)"></i>
-                                        <?php endif; ?>
-                                        <a href="#" onclick="handleLinkClick('<?= $surat['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a>
-                                        <a href="/surat_keluar/edit/<?= $surat['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
-                                        <a href="#" onclick="openDeleteModal(<?= $surat['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <?php for ($i = 0; $i < 10; $i++): ?>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                            <?php endfor; ?>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
+            <table id="example_surat_keluar_2025" class="table table-striped table-hover nowrap w-100">
+                <thead>
+                    <tr>
+                        <th>Nomor</th>
+                        <th>Tanggal</th>
+                        <th>Alamat/Tujuan</th>
+                        <th>Ringkasan Isi</th>
+                        <th>Catatan</th>
+                        <th>PIC</th>
+                        <!-- <th>Aksi</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if (!empty($suratKeluars)): ?>
+                        <?php foreach ($suratKeluars as $surat): ?>
+                            <tr>
+                                <td><?= $surat['nomor'] ?></td>
+                                <td><?= $surat['tanggal'] ?></td>
+                                <td><?= $surat['alamat'] ?></td>
+                                <td><?= $surat['ringkasan'] ?></td>
+                                <td><?= $surat['catatan'] ?></td>
+                                <td><?= $surat['created_by'] ?></td>
+                                <!-- <td>
+                                    < ?php if ($surat['kategori'] === 'Surat Keluar (Internal)'): ?>
+                                        <i class="fa-solid fa-flag" style="color: #28a745;" title="Surat Keluar (Internal)"></i>
+                                    < ?php elseif ($surat['kategori'] === 'Surat Keluar (Eksternal)'): ?>
+                                        <i class="fa-solid fa-flag" style="color: #fd7e14;" title="Surat Keluar (Eksternal)"></i>
+                                    < ?php endif; ?>
+                                    <a href="#" onclick="handleLinkClick('< ?= $surat['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a>
+                                    <a href="/surat_keluar/edit/< ?= $surat['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
+                                    <a href="#" onclick="openDeleteModal(< ?= $surat['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
+                                </td> -->
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <?php for ($i = 0; $i < 10; $i++): ?>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <!-- <td>&nbsp;</td> -->
+                            </tr>
+                        <?php endfor; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -112,16 +110,17 @@
             autoWidth: false,
             scrollCollapse: true,
             paging: true,
-            fixedHeader: true,
+            fixedHeader: false,
+            responsive: false,
             pageLength: 10,
             lengthMenu: [5, 10, 15, 20],
             columnDefs: [{
                     orderable: true,
-                    targets: [0, 1, 2, 3, 4, 5]
+                    targets: [0, 1, 2, 3, 4]
                 },
                 {
                     orderable: false,
-                    targets: [6]
+                    targets: [5]
                 }
             ],
             order: [
@@ -153,75 +152,74 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
-                <table id="example_surat_masuk_2025"
-                    class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th> Tanggal </th>
-                            <th> Nomor </th>
-                            <th> Asal </th>
-                            <th> Perihal </th>
-                            <th> Catatan </th>
-                            <th> PIC </th>
-                            <th> Aksi </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($surats)): ?>
-                            <?php foreach ($surats as $surat): ?>
-                                <tr>
-                                    <td> <?= $surat['tanggal'] ?> </td>
-                                    <td> <?= $surat['nomor'] ?> </td>
-                                    <td> <?= $surat['asal'] ?> </td>
-                                    <td> <?= $surat['perihal'] ?> </td>
-                                    <td> <?= $surat['catatan'] ?> </td>
-                                    <td> <?= $surat['created_by'] ?> </td>
-                                    <td>
-                                        <?php if ($surat['kategori'] === 'Surat Masuk (Internal)'): ?> <i class="fa-solid fa-flag"
-                                                style="color: #28a745;"
-                                                title="Surat Masuk (Internal)">
-                                            </i>
-                                        <?php elseif ($surat['kategori'] === 'Surat Masuk (Eksternal)'): ?>
-                                            <i class="fa-solid fa-flag"
-                                                style="color: #fd7e14;"
-                                                title="Surat Masuk (Eksternal)">
-                                            </i>
-                                        <?php endif; ?>
-                                        <a href="#"
-                                            onclick="handleLinkClick('<?= $surat['url'] ?>'); return false;">
-                                            <i class="fa-solid fa-eye"
-                                                title="Lihat">
-                                            </i></a>
-                                        <a href="/surat_masuk/edit/<?= $surat['id'] ?>">
-                                            <i class="fa-solid fa-pen-to-square"
-                                                title="Edit">
-                                            </i></a>
-                                        <a href="#"
-                                            onclick="openDeleteModal(<?= $surat['id'] ?>)">
-                                            <i class="fa-solid fa-trash"
-                                                title="Hapus">
-                                            </i></a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <?php for ($i = 0; $i < 10; $i++): ?>
-                                <tr>
-                                    <td> &nbsp; </td>
-                                    <td> &nbsp; </td>
-                                    <td> &nbsp; </td>
-                                    <td> &nbsp; </td>
-                                    <td> &nbsp; </td>
-                                    <td> &nbsp; </td>
-                                    <td> &nbsp; </td>
-                                </tr> <?php endfor; ?> <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
+            <table id="example_surat_masuk_2025"
+                class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th> Tanggal </th>
+                        <th> Nomor </th>
+                        <th> Asal </th>
+                        <th> Perihal </th>
+                        <th> Catatan </th>
+                        <th> PIC </th>
+                        <!-- <th> Aksi </th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($suratMasuks)): ?>
+                        <?php foreach ($suratMasuks as $surat): ?>
+                            <tr>
+                                <td> <?= $surat['tanggal'] ?> </td>
+                                <td> <?= $surat['nomor'] ?> </td>
+                                <td> <?= $surat['asal'] ?> </td>
+                                <td> <?= $surat['perihal'] ?> </td>
+                                <td> <?= $surat['catatan'] ?> </td>
+                                <td> <?= $surat['created_by'] ?> </td>
+                                <!-- <td>
+                                    < ?php if ($surat['kategori'] === 'Surat Masuk (Internal)'): ?> <i class="fa-solid fa-flag"
+                                            style="color: #28a745;"
+                                            title="Surat Masuk (Internal)">
+                                        </i>
+                                    < ?php elseif ($surat['kategori'] === 'Surat Masuk (Eksternal)'): ?>
+                                        <i class="fa-solid fa-flag"
+                                            style="color: #fd7e14;"
+                                            title="Surat Masuk (Eksternal)">
+                                        </i>
+                                    < ?php endif; ?>
+                                    <a href="#"
+                                        onclick="handleLinkClick('< ?= $surat['url'] ?>'); return false;">
+                                        <i class="fa-solid fa-eye"
+                                            title="Lihat">
+                                        </i></a>
+                                    <a href="/surat_masuk/edit/< ?= $surat['id'] ?>">
+                                        <i class="fa-solid fa-pen-to-square"
+                                            title="Edit">
+                                        </i></a>
+                                    <a href="#"
+                                        onclick="openDeleteModal(< ?= $surat['id'] ?>)">
+                                        <i class="fa-solid fa-trash"
+                                            title="Hapus">
+                                        </i></a>
+                                </td> -->
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <?php for ($i = 0; $i < 10; $i++): ?>
+                            <tr>
+                                <td> &nbsp; </td>
+                                <td> &nbsp; </td>
+                                <td> &nbsp; </td>
+                                <td> &nbsp; </td>
+                                <td> &nbsp; </td>
+                                <td> &nbsp; </td>
+                                <!-- <td> &nbsp; </td> -->
+                            </tr> <?php endfor; ?> <?php endif; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+
 <script>
     $(document).ready(function() {
         $('#example_surat_masuk_2025').DataTable({
@@ -230,15 +228,16 @@
             autoWidth: false,
             scrollCollapse: true,
             paging: true,
-            fixedHeader: true,
+            fixedHeader: false,
+            responsive: false,
             pageLength: 10,
             lengthMenu: [5, 10, 15, 20],
             columnDefs: [{
                 orderable: true,
-                targets: [0, 1, 2, 3, 4, 5]
+                targets: [0, 1, 2, 3, 4]
             }, {
                 orderable: false,
-                targets: [6]
+                targets: [5]
             }],
             order: [
                 [0, 'desc']
@@ -246,6 +245,7 @@
         });
     });
 </script>
+
 <div id="sk_2025" class="container my-5 d-none">
     <div class="card">
         <div class="card-header">
@@ -255,42 +255,46 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
-                <table id="example_sk_2025" class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nomor</th>
-                            <th>Tanggal</th>
-                            <th>Perihal</th>
-                            <th>Catatan</th>
-                            <th>PIC</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody> <?php if (!empty($sks)): ?> <?php foreach ($sks as $sk): ?> <tr>
-                                    <td><?= $sk['nomor'] ?></td>
-                                    <td><?= $sk['tanggal'] ?></td>
-                                    <td><?= $sk['perihal'] ?></td>
-                                    <td><?= $sk['catatan'] ?></td>
-                                    <td><?= $sk['created_by'] ?></td>
-                                    <td> <a href="#" onclick="handleLinkClick('<?= $sk['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a> <a href="/sk/edit/<?= $sk['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a> <a href="#" onclick="openDeleteModal(<?= $sk['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a> </td>
-                                </tr> <?php endforeach; ?> <?php else: ?>
-                            <?php for ($i = 0; $i < 10; $i++): ?> <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr> <?php endfor; ?>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
+            <table id="example_sk_2025" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Nomor</th>
+                        <th>Tanggal</th>
+                        <th>Perihal</th>
+                        <th>Catatan</th>
+                        <th>PIC</th>
+                        <!-- <th>Aksi</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($sks)): ?> <?php foreach ($sks as $sk): ?>
+                            <tr>
+                                <td><?= $sk['nomor'] ?></td>
+                                <td><?= $sk['tanggal'] ?></td>
+                                <td><?= $sk['perihal'] ?></td>
+                                <td><?= $sk['catatan'] ?></td>
+                                <td><?= $sk['created_by'] ?></td>
+                                <!-- <td>
+                                    <a href="#" onclick="handleLinkClick('< ?= $sk['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a>
+                                    <a href="/sk/edit/< ?= $sk['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
+                                    <a href="#" onclick="openDeleteModal(< ?= $sk['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
+                                </td> -->
+                            </tr> <?php endforeach; ?> <?php else: ?>
+                        <?php for ($i = 0; $i < 10; $i++): ?> <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <!-- <td>&nbsp;</td> -->
+                            </tr> <?php endfor; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+
 <script>
     $(document).ready(function() {
         $('#example_sk_2025').DataTable({
@@ -299,15 +303,16 @@
             autoWidth: false,
             scrollCollapse: true,
             paging: true,
-            fixedHeader: true,
+            fixedHeader: false,
+            responsive: false,
             pageLength: 10,
             lengthMenu: [5, 10, 15, 20],
             columnDefs: [{
                 orderable: true,
-                targets: [0, 1, 2, 3, 4]
+                targets: [0, 1, 2, 3]
             }, {
                 orderable: false,
-                targets: [5]
+                targets: [4]
             }],
             order: [
                 [0, 'desc']
@@ -315,82 +320,44 @@
         });
     });
 </script>
-<div id="kontrak_2025" class="container my-5 d-none">
-    <div class="card">
-        <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center flex-wrap">
-                <h1 class="mb-3 mb-md-0">Data Kontrak</h1>
-                <div class="d-flex gap-2 flex-wrap"> <a href="<?= base_url('kontrak/create') ?>" class="btn btn-primary btn-sm flex-fill text-center" style="min-width: 120px;" title="Tambah Kontrak Baru"> <i class="fa-solid fa-plus me-1"></i> Tambah </a> <a href="<?= base_url('kontrak/export_xlsx') ?>" class="btn btn-success btn-sm flex-fill text-center" style="min-width: 120px;" title="Download Data Kontrak"> <i class="fa-solid fa-download me-1"></i> Download </a> </div>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="example_kontrak_2025" class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nomor</th>
-                            <th>Tanggal</th>
-                            <th>Uraian Kontrak</th>
-                            <th>Catatan</th>
-                            <th>PIC</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody> <?php if (!empty($kontraks)): ?> <?php foreach ($kontraks as $kontrak): ?> <tr>
-                                    <td><?= $kontrak['nomor'] ?></td>
-                                    <td><?= $kontrak['tanggal'] ?></td>
-                                    <td><?= $kontrak['uraian'] ?></td>
-                                    <td><?= $kontrak['catatan'] ?></td>
-                                    <td><?= $kontrak['created_by'] ?></td>
-                                    <td> <a href="#" onclick="handleLinkClick('<?= $kontrak['url'] ?>'); return false;"><i class="fa-solid fa-eye" title="Lihat"></i></a> <a href="/kontrak/edit/<?= $kontrak['id'] ?>"><i class="fa-solid fa-pen-to-square" title="Edit"></i></a>
-                                        <a href="#" onclick="openDeleteModal(<?= $kontrak['id'] ?>)"><i class="fa-solid fa-trash" title="Hapus"></i></a>
-                                    </td>
-                                </tr> <?php endforeach; ?> <?php else: ?>
-                            <?php for ($i = 0; $i < 10; $i++): ?> <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr> <?php endfor; ?>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
-    $(document).ready(function() {
-        $('#example_kontrak_2025').DataTable({
-            scrollY: '400px',
-            scrollX: true,
-            autoWidth: false,
-            scrollCollapse: true,
-            paging: true,
-            fixedHeader: true,
-            pageLength: 10,
-            lengthMenu: [5, 10, 15, 20],
-            columnDefs: [{
-                orderable: true,
-                targets: [0, 1, 2, 3, 4]
-            }, {
-                orderable: false,
-                targets: [5]
-            }],
-            order: [
-                [0, 'desc']
-            ],
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const select = document.getElementById('pilihDokumen');
+        const sections = ['surat_keluar_2025', 'surat_masuk_2025', 'sk_2025'];
+
+        function showSection(value) {
+            sections.forEach(id => {
+                document.getElementById(id).classList.add('d-none');
+            });
+
+            const el = document.getElementById(value);
+            el.classList.remove('d-none');
+
+            // 🔥 INI KUNCI UTAMANYA
+            setTimeout(() => {
+                $.fn.dataTable
+                    .tables({
+                        visible: true,
+                        api: true
+                    })
+                    .columns.adjust();
+            }, 50);
+        }
+
+        // default
+        showSection(select.value);
+
+        select.addEventListener('change', function() {
+            showSection(this.value);
         });
     });
 </script>
 
 <script>
     document.getElementById('pilihDokumen').addEventListener('change', function() {
-        const sections = ['surat_keluar_2025', 'surat_masuk_2025', 'sk_2025', 'kontrak_2025'];
+        const sections = ['surat_keluar_2025', 'surat_masuk_2025', 'sk_2025'];
 
         sections.forEach(id => {
             document.getElementById(id).classList.add('d-none');
@@ -403,6 +370,11 @@
 </script>
 
 <style>
+    table.dataTable th,
+    table.dataTable td {
+        white-space: nowrap;
+    }
+
     #pilihDokumen {
         transition: all .2s ease-in-out;
     }
