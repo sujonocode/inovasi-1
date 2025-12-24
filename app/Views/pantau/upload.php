@@ -8,7 +8,7 @@
         </h5>
         <div class="mt-0">
             <a class="btn btn-info btn-sm text-white shadow-sm"
-                href="<?= base_url('/assets/templates/20251209_template_beban_kerja.xlsx') ?>">
+                href="<?= base_url('/assets/templates/20251224_template_beban_kerja.xlsx') ?>">
                 <i class="bi bi-download"></i> Download Template Excel
             </a>
 
